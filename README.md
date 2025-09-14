@@ -1,4 +1,4 @@
 Unfortunately, my first attempt at creating a Windows Forms GUI application that implemented my Blackjack engine gave me a lot of trouble. I did not intend to develop a prototype, but I have discovered the architectural limits of my system and have learned many lessons about event-driven applications and the integration of my library and the frontend classes that implement it. This attempt would have been easier if I made my engine event-driven from the beginning and tested the events thoroughly in a CLI application instead of rushing into a GUI application first. I also must adhere better to the principles of DRY and need to also be mindful of the coupling of my classes (PlayerHands and Players, as well as DealerHands and Dealers). Although this version laregly does not work as intended and is unplayable, it will make it much easier for me to eventually come to a solution rather than specifying my system to death. Although I definitely should have thought more about my classes before jumping into this. Oh well!
 
 - Quinn Keenan
-- 13/09/2025
+- 13/09/2025, 10:45PM
