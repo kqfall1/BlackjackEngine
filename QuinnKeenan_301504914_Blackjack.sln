@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36401.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackLib", "BlackjackLib\BlackjackLib.csproj", "{E75F97EA-68FE-4FDD-95B3-710E446761F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleBlackjackApplication", "BlackjackApp\ConsoleBlackjackApplication.csproj", "{CD736164-92F0-4FF6-9FE8-8EF9959BB905}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackApp", "BlackjackApp\BlackjackApp.csproj", "{CD736164-92F0-4FF6-9FE8-8EF9959BB905}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsBlackjackApplication", "WindowsFormsBlackjackApplication\WindowsFormsBlackjackApplication.csproj", "{E5ACF38F-AB48-4616-BE73-60E53BF2B803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackLibrary", "BlackjackLibrary\BlackjackLibrary.csproj", "{8981937D-0CD9-9A03-F592-F980D5B12479}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E75F97EA-68FE-4FDD-95B3-710E446761F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E75F97EA-68FE-4FDD-95B3-710E446761F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E75F97EA-68FE-4FDD-95B3-710E446761F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E75F97EA-68FE-4FDD-95B3-710E446761F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD736164-92F0-4FF6-9FE8-8EF9959BB905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD736164-92F0-4FF6-9FE8-8EF9959BB905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD736164-92F0-4FF6-9FE8-8EF9959BB905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD736164-92F0-4FF6-9FE8-8EF9959BB905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5ACF38F-AB48-4616-BE73-60E53BF2B803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5ACF38F-AB48-4616-BE73-60E53BF2B803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5ACF38F-AB48-4616-BE73-60E53BF2B803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5ACF38F-AB48-4616-BE73-60E53BF2B803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8981937D-0CD9-9A03-F592-F980D5B12479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8981937D-0CD9-9A03-F592-F980D5B12479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8981937D-0CD9-9A03-F592-F980D5B12479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8981937D-0CD9-9A03-F592-F980D5B12479}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
