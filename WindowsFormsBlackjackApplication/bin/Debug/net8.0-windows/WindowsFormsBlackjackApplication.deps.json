@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "WindowsFormsBlackjackApplication/1.0.0": {
+        "dependencies": {
+          "BlackjackLibrary": "1.0.0"
+        },
+        "runtime": {
+          "WindowsFormsBlackjackApplication.dll": {}
+        }
+      },
+      "BlackjackLibrary/1.0.0": {
+        "runtime": {
+          "BlackjackLibrary.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WindowsFormsBlackjackApplication/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BlackjackLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
