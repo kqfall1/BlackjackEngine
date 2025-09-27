@@ -1,34 +1,46 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\",
+  "WorkspaceRootPath": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|solutionrelative:windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|solutionrelative:windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\blackjacklibrary\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\eventargs\\cardaddedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\eventargs\\cardaddedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\blackjacklibrary\\entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\blackjacklibrary\\core\\blackjackentitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\core\\blackjackentitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\core\\blackjackentitiescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\windowsformsblackjackapplication\\windowsformsblackjackapplication.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\cards\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\cards\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\cards\\deck.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\windowsformsblackjackapplication\\windowsformsblackjackapplication.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|solutionrelative:windowsformsblackjackapplication\\windowsformsblackjackapplication.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|d:\\backup\\career\\coding\\comp123-002\\quinnkeenan_301504914_blackjack\\blackjacklibrary\\core\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\core\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\core\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{E5ACF38F-AB48-4616-BE73-60E53BF2B803}|WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.csproj|solutionrelative:windowsformsblackjackapplication\\windowsformsblackjackapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\entities\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|c:\\work\\career\\coding\\comp123-002\\blackjackengine\\blackjacklibrary\\core\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8981937D-0CD9-9A03-F592-F980D5B12479}|BlackjackLibrary\\BlackjackLibrary.csproj|solutionrelative:blackjacklibrary\\core\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,15 +50,51 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
+              "Title": "Card.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Cards\\Card.cs",
+              "RelativeDocumentMoniker": "BlackjackLibrary\\Cards\\Card.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Cards\\Card.cs",
+              "RelativeToolTip": "BlackjackLibrary\\Cards\\Card.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T01:49:32.662Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Deck.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Cards\\Deck.cs",
+              "RelativeDocumentMoniker": "BlackjackLibrary\\Cards\\Deck.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Cards\\Deck.cs",
+              "RelativeToolTip": "BlackjackLibrary\\Cards\\Deck.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T01:49:21.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CardAddedEventArgs.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\EventArgs\\CardAddedEventArgs.cs",
+              "RelativeDocumentMoniker": "BlackjackLibrary\\EventArgs\\CardAddedEventArgs.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\EventArgs\\CardAddedEventArgs.cs",
+              "RelativeToolTip": "BlackjackLibrary\\EventArgs\\CardAddedEventArgs.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T01:49:00.342Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "WindowsFormsBlackjackApplication.cs [Design]",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
               "RelativeDocumentMoniker": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs [Design]",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs [Design]",
               "RelativeToolTip": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-07T04:21:35.563Z",
@@ -54,36 +102,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "WindowsFormsBlackjackApplication.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
               "RelativeDocumentMoniker": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
               "RelativeToolTip": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAqwIoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-06T15:43:14.858Z",
+              "WhenOpened": "2025-09-06T15:43:14.858Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "WindowsFormsBlackjackApplication.Designer.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
+              "RelativeDocumentMoniker": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
+              "RelativeToolTip": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
+              "ViewState": "AgIAAIkBAAAAAAAAAAAQwBUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-03T16:57:24.321Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "WindowsFormsBlackjackApplication.Designer.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
-              "RelativeDocumentMoniker": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
-              "RelativeToolTip": "WindowsFormsBlackjackApplication\\WindowsFormsBlackjackApplication.Designer.cs",
-              "ViewState": "AgIAAGgBAAAAAAAAAAAowF8AAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-03T16:57:24.321Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "GameController.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\GameController.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\GameController.cs",
               "RelativeDocumentMoniker": "BlackjackLibrary\\Core\\GameController.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\GameController.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\GameController.cs",
               "RelativeToolTip": "BlackjackLibrary\\Core\\GameController.cs",
               "ViewState": "AgIAAIoAAAAAAAAAAAAQwJsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -91,11 +139,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Game.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\Game.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\Game.cs",
               "RelativeDocumentMoniker": "BlackjackLibrary\\Core\\Game.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\Game.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\Game.cs",
               "RelativeToolTip": "BlackjackLibrary\\Core\\Game.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAUwFkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -105,9 +153,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "BlackjackEntitiesController.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
               "RelativeDocumentMoniker": "BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
               "RelativeToolTip": "BlackjackLibrary\\Core\\BlackjackEntitiesController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAawDwAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -115,11 +163,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "Player.cs",
-              "DocumentMoniker": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Entities\\Player.cs",
+              "DocumentMoniker": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Entities\\Player.cs",
               "RelativeDocumentMoniker": "BlackjackLibrary\\Entities\\Player.cs",
-              "ToolTip": "D:\\Backup\\Career\\Coding\\COMP123-002\\QuinnKeenan_301504914_Blackjack\\BlackjackLibrary\\Entities\\Player.cs",
+              "ToolTip": "C:\\Work\\Career\\Coding\\COMP123-002\\BlackjackEngine\\BlackjackLibrary\\Entities\\Player.cs",
               "RelativeToolTip": "BlackjackLibrary\\Entities\\Player.cs",
               "ViewState": "AgIAAG0AAAAAAAAAAAAawIMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
