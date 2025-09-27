@@ -1,0 +1,5 @@
+Card faces: 
+https://code.google.com/archive/p/vector-playing-cards/
+
+Card backs: 
+https://github.com/Xadeck/xCards/blob/master/png/back/bicycle_blue%401x.png

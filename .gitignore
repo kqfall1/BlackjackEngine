@@ -6,7 +6,6 @@
 
 # Ignore build output
 obj/
-Images/
 
 # Ignore temporary files
 *.log
