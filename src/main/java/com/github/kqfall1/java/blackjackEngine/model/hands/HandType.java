@@ -1,0 +1,15 @@
+package com.github.kqfall1.java.blackjackEngine.model.hands;
+
+/**
+ * Identifies whether a {@code PlayerHand} object's encapsulated {@code Hand}
+ * originated from a normal deal or from a hand split operation in a blackjack
+ * betting round.
+ *
+ * @author kqfall1
+ * @since 14/12/2025
+ */
+public enum HandType
+{
+	MAIN,
+	SPLIT
+}
