@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.controllers;
+package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 /**
  * A configuration object to be used by a {@code GameEngine} to make gameplay

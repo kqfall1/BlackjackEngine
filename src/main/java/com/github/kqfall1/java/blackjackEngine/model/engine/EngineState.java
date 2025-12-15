@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.controllers;
+package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 /**
  * The 9 states of a blackjack game.

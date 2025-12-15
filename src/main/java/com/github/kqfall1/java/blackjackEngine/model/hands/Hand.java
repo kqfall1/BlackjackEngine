@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.hands;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.RuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import java.util.ArrayDeque;

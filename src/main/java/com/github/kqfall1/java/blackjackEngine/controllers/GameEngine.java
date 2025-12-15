@@ -3,25 +3,27 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandType;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.utils.LoggerUtils;
 import com.github.kqfall1.java.utils.StringUtils;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Orchestrates the entire blackjack library by continuously processing input
- * and executing the main game loop.
+ * Orchestrates the entire blackjack library by continuously processing input and
+ * executing the main game loop.
  *
  * <p>
- * Centralizes all logic that influences gameplay and also emits all internal
- * events for GUI handling.
+ * Centralizes all logic that influences gameplay as a public API, emits all internal
+ * events through {@code EngineListener} hooks, and logs pertinent information.
  * </p>
  */
 public class GameEngine
@@ -30,20 +32,23 @@ public class GameEngine
 	private final Dealer dealer;
 	private Bet insuranceBet;
 	private final Pot insurancePot;
+	private final EngineListener listener;
 	private final Logger logger;
 	private final Pot mainPot;
 	private final Player player;
 	private EngineState state;
 
-	public GameEngine(RuleConfig config, String loggerFilePath,
-					  String loggerName) throws IOException
+	public GameEngine(RuleConfig config, EngineListener listener,
+					  String loggerFilePath, String loggerName) throws IOException
 	{
 		assert config != null : "config == null";
+		assert listener != null : "listener == null";
+		assert loggerFilePath != null : "loggerFilePath == null";
+		assert loggerName != null : "loggerName == null";
 		this.config = config;
 		dealer = new Dealer();
 		insurancePot = new Pot();
-		assert loggerFilePath != null : "loggerFilePath == null";
-		assert loggerName != null : "loggerName == null";
+		this.listener = listener;
 		logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName,
 			true);
 		mainPot = new Pot();
@@ -56,41 +61,52 @@ public class GameEngine
 		logger.entering("GameEngine", "deal");
 		assert getState() == EngineState.BETTING
 			: "getState() != EngineState.BETTING";
-
 		setState(EngineState.DEALING);
 		final var dealerHand = getDealer().getHand();
-		final var playerHand = getPlayer().getHands().getFirst().getHand();
-
+		final var playerHands = getPlayer().getHands();
 		assert dealerHand.getCards().isEmpty() : "!dealerHand.getCards().isEmpty()";
-		assert playerHand.getCards().isEmpty() : "!playerHand.getCards().isEmpty()";
+		assert playerHands.getFirst().getHand().getCards().isEmpty()
+			: "!playerHands.getFirst().getHand().getCards().isEmpty()";
 
 		for (int count = 0; count < RuleConfig.INITIAL_CARD_COUNT; count++)
 		{
-			drawCard(playerHand);
-			drawCard(dealerHand);
+			dealCardForPlayer(playerHands.getFirst());
+			dealCardForDealer(dealerHand);
 		}
-
-		assert playerHand.getCards().size() == RuleConfig.INITIAL_CARD_COUNT
-			: "playerHand.getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
+		assert playerHands.getFirst().getHand().getCards().size() == RuleConfig.INITIAL_CARD_COUNT
+			: "playerHands.getFirst().getHand().getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
 		assert dealerHand.getCards().size() == RuleConfig.INITIAL_CARD_COUNT
 			: "dealerHand.getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
 
 		logger.info(String.format(
 			"The cards have been dealt. Player's hand: %s. The dealer's up card is %s.",
-			playerHand,
-			dealerHand.getCards().get(RuleConfig.INITIAL_CARD_COUNT - 1))
-		);
+			playerHands,
+			dealerHand.getCards().get(RuleConfig.INITIAL_CARD_COUNT - 1)
+		));
 		logger.exiting("GameEngine", "deal");
+		//if dealer's upcard is ace then call insuranceCheck
 	}
 
-	private void drawCard(Hand hand)
+	private void dealCardForDealer(Hand dealerHand)
 	{
-		logger.entering("GameEngine",  "drawCard", hand);
+		logger.entering("GameEngine", "dealCardForDealer",
+			dealerHand);
 		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
 		final var card = getDealer().hit();
-		hand.addCard(card);
-		onCardAdded(card, hand);
-		logger.exiting("GameEngine", "drawCard", card);
+		dealerHand.addCard(card);
+		onCardDealtToDealer(card, dealerHand);
+		logger.exiting("GameEngine", "dealCardForDealer", card);
+	}
+
+	private void dealCardForPlayer(PlayerHand playerHand)
+	{
+		logger.entering("GameEngine", "dealCardForPlayer",
+			playerHand);
+		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		final var card = getDealer().hit();
+		playerHand.getHand().addCard(card);
+		onCardDealtToPlayer(card, playerHand);
+		logger.exiting("GameEngine", "dealCardForPlayer", card);
 	}
 
 	public RuleConfig getConfig()
@@ -113,6 +129,11 @@ public class GameEngine
 		return insurancePot;
 	}
 
+	public EngineListener getListener()
+	{
+		return listener;
+	}
+
 	public Logger getLogger()
 	{
 		return logger;
@@ -133,6 +154,24 @@ public class GameEngine
 		return state;
 	}
 
+	public void insuranceCheck()
+	{
+		logger.entering("GameEngine", "insuranceCheck");
+		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		setState(EngineState.INSURANCE_CHECK);
+		final var dealerHand = getDealer().getHand();
+		final var playerHand = getPlayer().getHands().getFirst().getHand();
+
+		if (dealerHand.isBlackjack())
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+
 	public void placeMainBet(BigDecimal amount)
 	{
 		logger.entering("GameEngine", "placeBet", amount);
@@ -142,7 +181,6 @@ public class GameEngine
 				|| getState() == EngineState.RESETTING
 				|| getState() == EngineState.START
 			: "getState() != EngineState.BETTING && getState() != EngineState.RESETTING && getState() != EngineState.START";
-
 		setState(EngineState.BETTING);
 
 		try
@@ -171,35 +209,44 @@ public class GameEngine
 		logger.entering("GameEngine", "onBetPlaced", playerHand);
 		assert playerHand != null : "playerHand == null";
 		assert getState() == EngineState.BETTING : "getState() != EngineState.BETTING";
-
+		getListener().onBetPlaced(getPlayer(), playerHand);
 		logger.info(String.format(
 			"Player %s has placed a bet of $%.2f on their %s hand.",
 			getPlayer(),
 			playerHand.getBet().getAmount(),
 			StringUtils.normalizeLower(playerHand.getType().toString())
 		));
-
-		//INTERACT WITH APP CONTROLLER FOR GUI COORDINATION
-
 		logger.exiting("GameEngine", "onBetPlaced");
 	}
 
-	private void onCardAdded(Card card, Hand hand)
+	private void onCardDealtToDealer(Card card, Hand dealerHand)
 	{
-		logger.entering("GameEngine", "onCardAdded",
-			new Object[] {card, hand});
+		logger.entering("GameEngine", "onCardDealtToDealer",
+			new Object[] {card, dealerHand});
 		assert card != null : "card == null";
-		assert hand != null : "hand == null";
+		assert dealerHand != null : "hand == null";
 		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
-
+		getListener().onCardDealtToDealer(card, dealerHand);
 		logger.info(String.format(
-			"Added card %s to hand %s.",
-			card,
-			hand
+			"Added card %s to dealer's hand %s.",
+			card, dealerHand
 		));
+		logger.exiting("GameEngine", "onCardDealtToDealer");
+	}
 
-		//INTERACT WITH APP CONTROLLER FOR GUI COORDINATION'
-		logger.exiting("GameEngine", "onCardAdded");
+	private void onCardDealtToPlayer(Card card, PlayerHand playerHand)
+	{
+		logger.entering("GameEngine", "onCardDealtToPlayer",
+			new Object[] {card, playerHand});
+		assert card != null : "card == null";
+		assert playerHand != null : "playerHand == null";
+		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		getListener().onCardDealtToPlayer(card, playerHand);
+		logger.info(String.format(
+			"Added card %s to player's hand %s.",
+			card, playerHand
+		));
+		logger.exiting("GameEngine", "onCardDealtToDealer");
 	}
 
 	private void setInsuranceBet(Bet insuranceBet)
@@ -210,20 +257,25 @@ public class GameEngine
 
 	private void setState(EngineState state)
 	{
+		logger.entering("GameEngine", "setState", state);
 		assert state != null : "state == null";
+		final var oldState = getState();
 		this.state = state;
+		getListener().onStateChanged(oldState, state);
+		logger.exiting("GameEngine", "setState");
 	}
 
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[config=%s,dealer=%s,insuranceBet=%s,insurancePot=%s,logger=%s,mainPot=%s,player=%s,state=%s]",
+			"%s[config=%s,dealer=%s,insuranceBet=%s,insurancePot=%s,listener=%s,logger=%s,mainPot=%s,player=%s,state=%s]",
 			getClass().getName(),
 			getConfig(),
 			getDealer(),
 			getInsuranceBet() != null ? getInsuranceBet() : "null",
 			getInsurancePot(),
+			getListener(),
 			getLogger(),
 			getMainPot(),
 			getPlayer(),
