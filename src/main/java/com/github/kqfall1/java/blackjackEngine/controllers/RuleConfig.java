@@ -16,6 +16,7 @@ public final class RuleConfig
 	private boolean dealerHitsOnSoft17;
 	public static final int DEALER_MINIMUM_STAND_SCORE = 17;
 	public static final int INITIAL_CARD_COUNT = 2;
+	public static final int INITIAL_HAND_COUNT = 1;
 	public static final int TOP_SCORE = 21;
 
 	public boolean getDealerHitsOnSoft17()

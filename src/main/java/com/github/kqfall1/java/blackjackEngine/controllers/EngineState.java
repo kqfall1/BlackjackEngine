@@ -1,18 +1,18 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 /**
- * The 9 main states of a blackjack game.
+ * The 9 states of a blackjack game.
  *
  * <p>
- * This {@code enum} includes an entries {@code GameState.START} and
- * {@code GameState.END} for the periods of time before and after the game starts
+ * This {@code enum} includes an entries {@code EngineState.START} and
+ * {@code EngineState.END} for the periods of time before and after the game starts
  * and ends, respectively.
  * </p>
  *
  * @author kqfall1
  * @since 14/12/2025
  */
-public enum GameState
+public enum EngineState
 {
 	START,
 	BETTING,

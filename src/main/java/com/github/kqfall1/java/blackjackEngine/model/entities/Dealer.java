@@ -1,14 +1,14 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.RuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 import java.util.NoSuchElementException;
 
 /**
- * Controls the {@code Deck} and a {@code Hand}.
+ * Controls the {@code Deck} and a {@code Hand}. Draws {@code Card} objects
+ * one at a time.
  *
  * <p>
  * The encapsulated {@code Hand} is played in a mechanical manner after all
@@ -27,14 +27,6 @@ public final class Dealer
 		setHand(new Hand());
 	}
 
-	public void deal(PlayerHand playerHand)
-	{
-		hit(playerHand.getHand());
-		hit(getHand());
-		hit(playerHand.getHand());
-		hit(getHand());
-	}
-
 	public Deck getDeck()
 	{
 		return deck;
@@ -45,18 +37,11 @@ public final class Dealer
 		return hand;
 	}
 
-//	public boolean getMustHit()
-//	{
-//		return getHand().getScore() < RuleConfig.DEALER_MINIMUM_STAND_SCORE
-//			|| (getHand().getScore() == RuleConfig.DEALER_MINIMUM_STAND_SCORE
-//				&& getHand().hasLowAce());
-//	}
-
-	public void hit(Hand hand)
+	public Card hit()
 	{
 		try
 		{
-			hand.addCard(getDeck().draw());
+			return getDeck().draw();
 		}
 		catch (NoSuchElementException e)
 		{

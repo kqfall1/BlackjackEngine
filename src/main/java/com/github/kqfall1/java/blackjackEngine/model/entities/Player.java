@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,8 +43,13 @@ public final class Player
 
 	public void setChips(BigDecimal chips)
 	{
-		assert chips != null && chips.compareTo(BigDecimal.ZERO) >= 0
-			: "chips == null || chips.compareTo(BigDecimal.ZERO) < 0";
+		assert chips != null : "chips == null";
+
+		if (chips.compareTo(BigDecimal.ZERO) < 0)
+		{
+			throw new InsufficientChipsException(this, chips);
+		}
+
 		this.chips = chips;
 	}
 
