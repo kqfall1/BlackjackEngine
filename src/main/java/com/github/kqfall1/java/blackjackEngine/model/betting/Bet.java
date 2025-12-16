@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.betting;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Immutable wagers placed by {@code Player} roles.
@@ -22,6 +23,11 @@ public final class Bet
 	public BigDecimal getAmount()
 	{
 		return amount;
+	}
+
+	public BigDecimal getHalf()
+	{
+		return amount.divide(BigDecimal.TWO, RoundingMode.HALF_UP);
 	}
 
 	@Override

@@ -20,7 +20,13 @@ public interface EngineListener
 	void onCardDealtToPlayer(Card card, PlayerHand playerHand);
 	void onDrawingRoundCompletedDealer();
 	void onDrawingRoundCompletedPlayer(PlayerHand playerHand);
+	void onDrawingRoundStartedDealer();
+	void onDrawingRoundStartedPlayer(PlayerHand playerHand);
+	void onGameCompleted();
+	void onGameStarted();
 	void onInsuranceBetOpportunityDetected();
 	void onInsuranceBetResolved(boolean wasSuccessful);
+	void onShowdownCompleted(PlayerHand playerHand, boolean playerWon);
+	void onShowdownStarted(PlayerHand playerHand);
 	void onStateChanged(EngineState oldState, EngineState newState);
 }

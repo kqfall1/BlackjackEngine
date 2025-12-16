@@ -31,8 +31,11 @@ public final class RuleConfig
 	public static final PayoutRatio INSURANCE = new PayoutRatio(
 		BigDecimal.TWO, BigDecimal.ONE
 	);
-	public static final PayoutRatio MAIN_BET = new PayoutRatio(
-		BigDecimal.ONE, BigDecimal.ONE
+	public static final PayoutRatio PUSH = new PayoutRatio(
+		BigDecimal.ONE, BigDecimal.TWO
+	);
+	public static final PayoutRatio SURRENDER = new PayoutRatio(
+		BigDecimal.ONE, BigDecimal.valueOf(4)
 	);
 
 	public boolean getDealerHitsOnSoft17()

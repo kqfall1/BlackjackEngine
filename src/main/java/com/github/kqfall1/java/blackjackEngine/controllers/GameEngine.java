@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
@@ -10,6 +11,7 @@ import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
+import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHandType;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
@@ -61,11 +63,13 @@ public class GameEngine
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.INSURANCE_CHECK
 			: "getState() != EngineState.INSURANCE_CHECK";
-		final var amount = getActivePlayerHand().getPot().getHalf();
+		final var amount = getActivePlayerHand().getBet().getHalf();
 		tryDebitForBet(amount);
 		final var insurancePot = new Pot(amount);
 		final boolean wasSuccessful = getDealer().getHand().isBlackjack();
-		final var winnings = insurancePot.scoop();
+		final var winnings = insurancePot.scoop().multiply(
+			RuleConfig.INSURANCE.getPayoutMultiplier()
+		);
 
 		if (wasSuccessful)
 		{
@@ -77,12 +81,11 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "acceptInsuranceBet");
 	}
 
-	public void deal()
+	public void deal() throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "deal");
-		assert getState() == EngineState.BETTING
-			: "getState() != EngineState.BETTING";
-		setState(EngineState.DEALING);
+		assert getState() == EngineState.DEALING
+			: "getState() != EngineState.DEALING";
 		final var dealerHand = getDealer().getHand();
 		assert dealerHand.getCards().isEmpty() : "!dealerHand.getCards().isEmpty()";
 		assert getActivePlayerHand().getHand().getCards().isEmpty()
@@ -111,6 +114,10 @@ public class GameEngine
 			setState(EngineState.INSURANCE_CHECK);
 			getListener().onInsuranceBetOpportunityDetected();
 		}
+		else
+		{
+			setState(EngineState.PLAYER_TURN);
+		}
 	}
 
 	private void dealCardForDealer()
@@ -124,7 +131,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "dealCardForDealer", card);
 	}
 
-	private void dealCardForPlayer()
+	private void dealCardForPlayer() throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "dealCardForPlayer");
 		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
@@ -134,7 +141,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "dealCardForPlayer", card);
 	}
 
-	private void dealerTurn()
+	private void dealerTurn() throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "dealerTurn");
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
@@ -178,12 +185,17 @@ public class GameEngine
 		return dealer;
 	}
 
+	private boolean getGameShouldContinue()
+	{
+		return getPlayer().getChips().compareTo(BigDecimal.ZERO) > 0;
+	}
+
 	private boolean getInsuranceBetPossible()
 	{
 		return getActivePlayerHandIndex() == 0
 			&& getPlayer().getHands().size() == 1
 			&& getActivePlayerHand().getHand().getCards().size() == RuleConfig.INITIAL_CARD_COUNT
-			&& getPlayer().getChips().compareTo(getActivePlayerHand().getPot().getHalf()) >= 0
+			&& getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getHalf()) >= 0
 			&& getDealer().getHand().getCards().getLast().getRank() == Rank.ACE;
 	}
 
@@ -229,7 +241,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "onCardDealtToDealer");
 	}
 
-	private void onCardDealtToPlayer(Card card)
+	private void onCardDealtToPlayer(Card card) throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "onCardDealtToPlayer", card);
 		assert card != null : "card == null";
@@ -246,7 +258,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "onCardDealtToPlayer");
 	}
 
-	private void onDrawingRoundCompletedDealer()
+	private void onDrawingRoundCompletedDealer() throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "onDrawingRoundCompletedDealer");
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
@@ -259,7 +271,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "onDrawingRoundCompletedDealer");
 	}
 
-	private void onDrawingRoundCompletedPlayer()
+	private void onDrawingRoundCompletedPlayer() throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "onDrawingRoundCompletedPlayer");
 		assert getState() == EngineState.PLAYER_TURN
@@ -305,7 +317,29 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "onDrawingRoundCompletedPlayer");
 	}
 
-	private void onMainBetPlaced()
+	private void onDrawingRoundStartedDealer()
+	{
+		getLogger().entering("GameEngine", "onDrawingRoundStartedDealer");
+		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
+		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
+		getListener().onDrawingRoundStartedDealer();
+		getLogger().info("The dealer's drawing round was started.");
+		getLogger().exiting("GameEngine", "onDrawingRoundStartedDealer");
+	}
+
+	private void onDrawingRoundStartedPlayer()
+	{
+		getLogger().entering("GameEngine", "onDrawingRoundStartedPlayer");
+		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
+		getListener().onDrawingRoundStartedPlayer(getActivePlayerHand());
+		getLogger().info(String.format(
+			"The player's drawing round was started on hand %s.",
+			getActivePlayerHand()
+		));
+		getLogger().exiting("GameEngine", "onDrawingRoundStartedPlayer");
+	}
+
+	private void onBetPlaced()
 	{
 		getLogger().entering("GameEngine", "onBetPlaced");
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
@@ -320,16 +354,18 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "onBetPlaced");
 	}
 
-	public void placeMainBet(BigDecimal amount) throws InsufficientChipsException
+	public void placeBet(BigDecimal amount) throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "placeBet", amount);
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0
 			: "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
-		assert getState() == EngineState.BETTING
-				|| getState() == EngineState.RESETTING
-				|| getState() == EngineState.START
-			: "getState() != EngineState.BETTING && getState() != EngineState.RESETTING && getState() != EngineState.START";
+		assert getState() == EngineState.BETTING || getState() == EngineState.START
+			: "getState() != EngineState.BETTING && getState() != EngineState.START";
+		if (getState() == EngineState.START)
+		{
+			getListener().onGameStarted();
+		}
 		setState(EngineState.BETTING);
 		tryDebitForBet(amount);
 
@@ -338,8 +374,9 @@ public class GameEngine
 			PlayerHandType.MAIN
 		);
 		getPlayer().addHand(playerMainHand);
-		getActivePlayerHand().getPot().addChips(amount);
-		onMainBetPlaced();
+		getActivePlayerHand().getPot().addChips(amount.multiply(BigDecimal.TWO));
+		onBetPlaced();
+		setState(EngineState.DEALING);
 		getLogger().exiting("GameEngine", "placeBet", playerMainHand);
 		deal();
 	}
@@ -389,7 +426,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "playerDoubleDown");
 	}
 
-	public void playerHit(int handIndex)
+	public void playerHit(int handIndex) throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "playerHit");
 		assert getState() == EngineState.PLAYER_TURN
@@ -418,7 +455,7 @@ public class GameEngine
 				"An attempt to split a non-pocket pair occurred."
 			);
 		}
-		final var splitAmount = getActivePlayerHand().getPot().getAmount();
+		final var splitAmount = getActivePlayerHand().getBet().getAmount();
 		tryDebitForBet(splitAmount);
 
 		final var playerSplitHand = new PlayerHand(
@@ -437,7 +474,7 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "playerSplit");
 	}
 
-	public void playerStand(int handIndex)
+	public void playerStand(int handIndex) throws InsufficientChipsException
 	{
 		getLogger().entering("GameEngine", "playerStand");
 		assert getState() == EngineState.PLAYER_TURN
@@ -450,7 +487,8 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "playerStand");
 	}
 
-	public void playerSurrender(int handIndex) throws RuleViolationException
+	public void playerSurrender(int handIndex)
+	throws InsufficientChipsException, RuleViolationException
 	{
 		getLogger().entering("GameEngine", "playerSurrender");
 		assert getState() == EngineState.PLAYER_TURN
@@ -474,7 +512,23 @@ public class GameEngine
 
 	private void reset()
 	{
-
+		getLogger().entering("GameEngine", "reset");
+		assert getActivePlayerHandIndex() == 0 : "activeHandPlayerIndex != 0";
+		assert getState() == EngineState.RESETTING : "getState() != EngineState.RESETTING";
+		getDealer().setDeck(new Deck());
+		getDealer().setHand(new Hand());
+		getPlayer().clearHands();
+		if (getGameShouldContinue())
+		{
+			setState(EngineState.BETTING);
+		}
+		else
+		{
+			setState(EngineState.END);
+			getListener().onGameCompleted();
+			getLogger().info("The player has busted.");
+		}
+		getLogger().exiting("GameEngine", "reset");
 	}
 
 	private void setActivePlayerHandIndex(int handIndex)
@@ -497,9 +551,65 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "setState");
 	}
 
-	private void showdown()
+	private void showdown() throws InsufficientChipsException
 	{
+		getLogger().entering("GameEngine", "showdown");
+		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
+		assert getState() == EngineState.SHOWDOWN : "getState() != EngineState.SHOWDOWN";
+		for (PlayerHand playerHand : getPlayer().getHands())
+		{
+			getListener().onShowdownStarted(playerHand);
+			var playerBeatDealer = false;
+			var playerWinnings = BigDecimal.ZERO;
+			if (playerHand.getHasSurrendered())
+			{
+				playerWinnings = playerHand.getPot().scoop().multiply(
+					RuleConfig.SURRENDER.getPayoutMultiplier()
+				);
+			}
+			else if (playerHand.getHand().isBusted())
+			{
+				playerHand.getPot().scoop();
+			}
+			else if (getDealer().getHand().isBusted())
+			{
+				playerBeatDealer = true;
+				playerWinnings = playerHand.getPot().scoop();
+			}
+			else
+			{
+				if (playerHand.getHand().getScore() == getDealer().getHand().getScore())
+				{
+					playerWinnings = playerHand.getPot().scoop().multiply(
+						RuleConfig.PUSH.getPayoutMultiplier()
+					);
+				}
+				else if (playerHand.getHand().getScore() > getDealer().getHand().getScore())
+				{
+					playerBeatDealer = true;
 
+					if (playerHand.getHand().isBlackjack())
+					{
+						playerWinnings = playerHand.getPot().scoop().multiply(
+							RuleConfig.BLACKJACK.getPayoutMultiplier()
+						);
+					}
+					else
+					{
+						playerWinnings = playerHand.getPot().scoop();
+					}
+				}
+			}
+			getPlayer().setChips(getPlayer().getChips().add(playerWinnings));
+			getLogger().info(String.format(
+				"Player's hand %s was showed down against dealer's hand %s.",
+				playerHand, getDealer().getHand()
+			));
+			getListener().onShowdownCompleted(playerHand, playerBeatDealer);
+		}
+		setState(EngineState.RESETTING);
+		reset();
+		getLogger().exiting("GameEngine", "showdown");
 	}
 
 	@Override

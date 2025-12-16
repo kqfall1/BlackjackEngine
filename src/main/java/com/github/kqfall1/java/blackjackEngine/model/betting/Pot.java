@@ -37,11 +37,6 @@ public final class Pot
 		return amount;
 	}
 
-	public BigDecimal getHalf()
-	{
-		return amount.divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP);
-	}
-
 	private void setAmount(BigDecimal amount)
 	{
 		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) >= 0 :
