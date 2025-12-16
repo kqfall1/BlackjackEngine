@@ -14,7 +14,7 @@ public final class Bet
 
 	public Bet(BigDecimal amount)
 	{
-		assert amount != null && amount.compareTo(BigDecimal.ZERO) >= 0 :
+		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 :
 			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		this.amount = amount;
 	}

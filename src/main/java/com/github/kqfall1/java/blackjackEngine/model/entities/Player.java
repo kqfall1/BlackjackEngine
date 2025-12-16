@@ -16,19 +16,24 @@ import java.util.List;
 public final class Player
 {
 	private BigDecimal chips;
-	private List<PlayerHand> hands;
+	private final List<PlayerHand> hands;
 
 	public Player() throws InsufficientChipsException
 	{
 		setChips(BigDecimal.ZERO);
-		setHands(new ArrayList<>());
+		hands = new ArrayList<>();
 	}
 
 	public void addHand(PlayerHand hand)
 	{
-		assert hand != null && !hands.contains(hand)
+		assert hand != null && !getHands().contains(hand)
 			: "hand == null || hands.contains(hand)";
 		hands.add(hand);
+	}
+
+	public void clearHands()
+	{
+		hands.clear();
 	}
 
 	public BigDecimal getChips()
@@ -51,12 +56,6 @@ public final class Player
 		}
 
 		this.chips = chips;
-	}
-
-	public void setHands(List<PlayerHand> hands)
-	{
-		assert hands != null : "cards == null";
-		this.hands = hands;
 	}
 
 	@Override

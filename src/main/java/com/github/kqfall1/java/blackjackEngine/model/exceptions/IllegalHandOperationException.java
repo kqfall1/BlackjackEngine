@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import java.io.IOException;
 
 /**
  * Encapsulates data about failures resulting from illegal operations on
@@ -17,7 +16,7 @@ import java.io.IOException;
  * @author kqfall1
  * @since 15/12/2025
  */
-public class IllegalHandOperationException extends IOException
+public class IllegalHandOperationException extends Exception
 {
 	public IllegalHandOperationException(Hand hand, String message)
 	{

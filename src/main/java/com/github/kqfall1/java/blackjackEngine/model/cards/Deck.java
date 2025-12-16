@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
 import java.util.*;
 
 /**
@@ -30,14 +31,12 @@ public final class Deck
 
 	public Card draw()
 	{
-		if (!cards.isEmpty())
+		if (cards.isEmpty())
 		{
-			return cards.pop();
+			throw new EmptyDeckException(this);
 		}
-		else
-		{
-			return null;
-		}
+
+		return cards.pop();
 	}
 
 	@Override

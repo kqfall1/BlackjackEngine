@@ -37,15 +37,7 @@ public final class Dealer
 
 	public Card hit()
 	{
-		var card = getDeck().draw();
-
-		if (card == null)
-		{
-			setDeck(new Deck());
-			card = hit();
-		}
-
-		return card;
+		return getDeck().draw();
 	}
 
 	public void setDeck(Deck deck)

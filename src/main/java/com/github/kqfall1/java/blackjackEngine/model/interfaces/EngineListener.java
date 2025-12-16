@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.HandType;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 
 /**

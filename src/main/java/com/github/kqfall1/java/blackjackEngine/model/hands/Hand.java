@@ -23,7 +23,7 @@ public final class Hand
 
 	public void addCard(Card card)
 	{
-		assert card != null && !cards.contains(card)
+		assert card != null && !getCards().contains(card)
 			: "card == null || cards.contains(card)";
 		cards.add(card);
 	}
@@ -41,12 +41,6 @@ public final class Hand
 		}
 
 		final var otherHand = (Hand) otherObject;
-
-		if (getCards().size() != otherHand.getCards().size())
-		{
-			return false;
-		}
-
 		return getCards().equals(otherHand.getCards());
 	}
 
@@ -136,7 +130,7 @@ public final class Hand
 
 	public boolean isBlackjack()
 	{
-		return cards.size() == RuleConfig.INITIAL_CARD_COUNT
+		return getCards().size() == RuleConfig.INITIAL_CARD_COUNT
 			&& getScore() == RuleConfig.TOP_SCORE;
 	}
 
@@ -147,12 +141,12 @@ public final class Hand
 
 	public boolean isPocketPair()
 	{
-		if (cards.size() != RuleConfig.INITIAL_CARD_COUNT)
+		if (getCards().size() != RuleConfig.INITIAL_CARD_COUNT)
 		{
 			return false;
 		}
 
-		final var iterator = cards.iterator();
+		final var iterator = getCards().iterator();
 		final var firstCard = iterator.next();
 		final var secondCard = iterator.next();
 		return firstCard.getRank() == secondCard.getRank();
@@ -160,8 +154,8 @@ public final class Hand
 
 	public void removeCard(int cardIndex)
 	{
-		assert cardIndex >= 0 && cardIndex < RuleConfig.INITIAL_CARD_COUNT
-			: "cardIndex < 0 && cardIndex >= RuleConfig.INITIAL_CARD_COUNT";
+		assert cardIndex >= 0 && cardIndex < getCards().size()
+			: "cardIndex < 0 && cardIndex >= getCards().size()";
 		cards.remove(cardIndex);
 	}
 

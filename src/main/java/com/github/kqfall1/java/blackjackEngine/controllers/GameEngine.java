@@ -43,7 +43,7 @@ public class GameEngine
 
 	public GameEngine(RuleConfig config, EngineListener listener,
 					  String loggerFilePath, String loggerName)
-	throws IOException
+	throws InsufficientChipsException, IOException
 	{
 		assert config != null : "config == null";
 		assert listener != null : "listener == null";
@@ -243,7 +243,11 @@ public class GameEngine
 			"Added card %s to player's hand %s.",
 			card, getActivePlayerHand()
 		));
-		getLogger().exiting("GameEngine", "onCardDealtToDealer");
+		if (getActivePlayerHand().getHand().isBusted())
+		{
+			onDrawingRoundCompletedPlayer();
+		}
+		getLogger().exiting("GameEngine", "onCardDealtToPlayer");
 	}
 
 	private void onDrawingRoundCompletedDealer()
@@ -262,12 +266,31 @@ public class GameEngine
 		assert getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.PLAYER_TURN";
 		getListener().onDrawingRoundCompletedPlayer(getActivePlayerHand());
-		if (getActivePlayerHand().getType() != HandType.MAIN)
+		if (getActivePlayerHand().getType() == HandType.MAIN)
+		{
+			if (getActivePlayerHand().getHand().isBusted())
+			{
+				setState(EngineState.SHOWDOWN);
+				getLogger().info(String.format(
+					"Player has busted with a score of %d on hand %s.",
+					getActivePlayerHand().getHand().getScore(),
+					getActivePlayerHand().getHand()
+				));
+			}
+			else
+			{
+				setState(EngineState.DEALER_TURN);
+			}
+		}
+		else
 		{
 			setActivePlayerHandIndex(getActivePlayerHandIndex() - 1);
 		}
-		getLogger().info("The player's drawing round was completed for hand %s");
-		logger.exiting("GameEngine", "onDrawingRoundCompletedPlayer");
+		getLogger().info(String.format(
+			"The player's drawing round was completed for hand %s",
+			getActivePlayerHand()
+		));
+		getLogger().exiting("GameEngine", "onDrawingRoundCompletedPlayer");
 	}
 
 	private void onMainBetPlaced()
@@ -319,7 +342,7 @@ public class GameEngine
 			return;
 		}
 
-		final var playerHand = getPlayer().getHands().get(handIndex);
+		final var playerHand = getActivePlayerHand();
 		if (playerHand.getHand().getCards().size()
 			!= RuleConfig.INITIAL_CARD_COUNT)
 		{
@@ -336,7 +359,7 @@ public class GameEngine
 		{
 			throw new RuleViolationException("Player cannot double down on split hands.");
 		}
-		final var doubleDownAmount = getMainPot().getAmount();
+		final var doubleDownAmount = getActivePlayerHand().getBet().getAmount();
 		tryDebitForBet(doubleDownAmount);
 
 		playerHand.setBet(
@@ -361,22 +384,7 @@ public class GameEngine
 		{
 			return;
 		}
-
 		dealCardForPlayer();
-		if (getActivePlayerHand().getHand().isBusted())
-		{
-			onDrawingRoundCompletedPlayer();
-			if (getActivePlayerHand().getType() == HandType.MAIN)
-			{
-				setState(EngineState.SHOWDOWN);
-			}
-			getLogger().info(String.format(
-				"Player has busted with a score of %d on hand %s.",
-				getActivePlayerHand().getHand().getScore(),
-				getActivePlayerHand().getHand()
-			));
-		}
-
 		getLogger().exiting("GameEngine", "playerHit");
 	}
 	
@@ -403,11 +411,13 @@ public class GameEngine
 			HandType.SPLIT
 		);
 		playerSplitHand.getHand().addCard(playerMainHand.getHand().getCards().getLast());
+		getPlayer().addHand(playerSplitHand);
 		playerMainHand.getHand().removeCard(RuleConfig.INITIAL_CARD_COUNT - 1);
+		setActivePlayerHandIndex(getActivePlayerHandIndex() + 1);
 		getLogger().info(String.format(
 			"Player has elected to split. They now have a main hand of %s and a split hand of %s.",
 			getPlayer().getHands().getFirst(),
-			playerMainHand
+			playerSplitHand
 		));
 		getLogger().exiting("GameEngine", "playerSplit");
 	}
@@ -422,7 +432,6 @@ public class GameEngine
 			return;
 		}
 		onDrawingRoundCompletedPlayer();
-		setState(EngineState.DEALER_TURN);
 		getLogger().exiting("GameEngine", "playerStand");
 		dealerPlay();
 	}
@@ -436,19 +445,16 @@ public class GameEngine
 		{
 			return;
 		}
-
-		onDrawingRoundCompletedPlayer();
-		if (getActivePlayerHand().getType() == HandType.SPLIT)
+		else if (getActivePlayerHand().getType() == HandType.SPLIT)
 		{
 			if (!getConfig().getPlayerCanSurrenderOnSplitHands())
 			{
 				throw new RuleViolationException("Player cannot surrender on split hands.");
 			}
 		}
-		else
-		{
-			setState(EngineState.SHOWDOWN);
-		}
+
+		getActivePlayerHand().setHasSurrendered(true);
+		onDrawingRoundCompletedPlayer();
 		getLogger().exiting("GameEngine", "playerSurrender");
 	}
 
