@@ -3,10 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.model.hands;
 import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * A collection of {@code Card} objects, held by a {@code Dealer} or {@code Player}
@@ -17,11 +14,11 @@ import java.util.Objects;
  */
 public final class Hand
 {
-	private final Deque<Card> cards;
+	private final List<Card> cards;
 
 	public Hand()
 	{
-		cards = new ArrayDeque<>();
+		cards = new ArrayList<>();
 	}
 
 	public void addCard(Card card)
@@ -50,18 +47,7 @@ public final class Hand
 			return false;
 		}
 
-		final var otherHandIterator = otherHand.getCards().iterator();
-		final var thisHandIterator = getCards().iterator();
-
-		while (otherHandIterator.hasNext() && thisHandIterator.hasNext())
-		{
-			if (!otherHandIterator.next().equals(thisHandIterator.next()))
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return getCards().equals(otherHand.getCards());
 	}
 
 	public int getAceCount()
@@ -145,7 +131,7 @@ public final class Hand
  	 */
 	public boolean hasLowAce()
 	{
-		return getScore() == getLowScore();
+		return getScore() != getLowScore();
 	}
 
 	public boolean isBlackjack()
@@ -170,6 +156,13 @@ public final class Hand
 		final var firstCard = iterator.next();
 		final var secondCard = iterator.next();
 		return firstCard.getRank() == secondCard.getRank();
+	}
+
+	public void removeCard(int cardIndex)
+	{
+		assert cardIndex >= 0 && cardIndex < RuleConfig.INITIAL_CARD_COUNT
+			: "cardIndex < 0 && cardIndex >= RuleConfig.INITIAL_CARD_COUNT";
+		cards.remove(cardIndex);
 	}
 
 	@Override

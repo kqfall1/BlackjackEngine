@@ -2,9 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.entities;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import java.util.NoSuchElementException;
 
 /**
  * Controls the {@code Deck} and a {@code Hand}. Draws {@code Card} objects
@@ -39,16 +37,15 @@ public final class Dealer
 
 	public Card hit()
 	{
-		try
+		var card = getDeck().draw();
+
+		if (card == null)
 		{
-			return getDeck().draw();
+			setDeck(new Deck());
+			card = hit();
 		}
-		catch (NoSuchElementException e)
-		{
-			final var ex = new EmptyDeckException(this, getDeck());
-			ex.initCause(e);
-			throw ex;
-		}
+
+		return card;
 	}
 
 	public void setDeck(Deck deck)

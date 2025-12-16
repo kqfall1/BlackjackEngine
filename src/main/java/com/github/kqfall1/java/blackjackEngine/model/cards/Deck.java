@@ -25,12 +25,19 @@ public final class Deck
 		}
 
 		Collections.shuffle(cardsList);
-		cards = new ArrayDeque<Card>(cardsList);
+		cards = new ArrayDeque<>(cardsList);
 	}
 
 	public Card draw()
 	{
-		return cards.pop();
+		if (!cards.isEmpty())
+		{
+			return cards.pop();
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	@Override

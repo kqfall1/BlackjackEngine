@@ -16,8 +16,8 @@ public final class PayoutRatio
 
 	public PayoutRatio(BigDecimal numerator, BigDecimal denominator)
 	{
-		assert numerator != null && numerator.compareTo(BigDecimal.ZERO) > 0 :
-			"numerator == null || numerator.compareTo(BigDecimal.ZERO) <= 0";
+		assert numerator != null && numerator.compareTo(BigDecimal.ZERO) >= 0 :
+			"numerator == null || numerator.compareTo(BigDecimal.ZERO) < 0";
 		assert denominator != null && denominator.compareTo(BigDecimal.ZERO) > 0 :
 			"denominator == null || denominator.compareTo(BigDecimal.ZERO) <= 0";
 		this.numerator = numerator;

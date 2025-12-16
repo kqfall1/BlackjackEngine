@@ -18,7 +18,7 @@ public final class Player
 	private BigDecimal chips;
 	private List<PlayerHand> hands;
 
-	public Player()
+	public Player() throws InsufficientChipsException
 	{
 		setChips(BigDecimal.ZERO);
 		setHands(new ArrayList<>());
@@ -41,7 +41,7 @@ public final class Player
 		return List.copyOf(hands);
 	}
 
-	public void setChips(BigDecimal chips)
+	public void setChips(BigDecimal chips) throws InsufficientChipsException
 	{
 		assert chips != null : "chips == null";
 

@@ -12,15 +12,15 @@ import java.util.Objects;
  */
 public final class PlayerHand
 {
-	private final Bet bet;
+	private Bet bet;
 	private final Hand hand;
+	private boolean hasSurrendered;
 	private final HandType type;
 
 	public PlayerHand(Bet bet, HandType type)
 	{
-		assert bet != null : "bet == null";
 		assert  type != null : "type == null";
-		this.bet = bet;
+		setBet(bet);
 		this.hand = new Hand();
 		this.type = type;
 	}
@@ -53,6 +53,11 @@ public final class PlayerHand
 		return hand;
 	}
 
+	public boolean getHasSurrendered()
+	{
+		return hasSurrendered;
+	}
+
 	public HandType getType()
 	{
 		return type;
@@ -64,14 +69,26 @@ public final class PlayerHand
 		return Objects.hash(getBet(), getHand(), getType());
 	}
 
+	public void setBet(Bet bet)
+	{
+		assert bet != null : "bet == null";
+		this.bet = bet;
+	}
+
+	public void setHasSurrendered(boolean value)
+	{
+		hasSurrendered = value;
+	}
+
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[bet=%s,hand=%s,type=%s]",
+			"%s[bet=%s,hand=%s,hasSurrendered=%s,type=%s]",
 			getClass().getName(),
 			getBet(),
 			getHand(),
+			getHasSurrendered(),
 			getType()
 		);
 	}

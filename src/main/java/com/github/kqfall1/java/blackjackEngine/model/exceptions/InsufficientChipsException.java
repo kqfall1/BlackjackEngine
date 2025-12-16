@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
-
+import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
@@ -11,10 +11,9 @@ import java.math.BigDecimal;
  * @author kqfall1
  * @since 14/12/2025
  */
-public final class InsufficientChipsException extends RuntimeException
+public final class InsufficientChipsException extends IOException
 {
-	public InsufficientChipsException
-	(Player player, BigDecimal requiredChips)
+	public InsufficientChipsException(Player player, BigDecimal requiredChips)
 	{
 		super(String.format(
 			"Player %s has insufficient chips to bet $%s.",
