@@ -8,7 +8,7 @@ package com.github.kqfall1.java.blackjackEngine.model.hands;
  * @author kqfall1
  * @since 14/12/2025
  */
-public enum HandType
+public enum PlayerHandType
 {
 	MAIN,
 	SPLIT

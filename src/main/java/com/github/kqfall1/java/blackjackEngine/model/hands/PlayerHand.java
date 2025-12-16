@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.hands;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
+import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import java.util.Objects;
 
 /**
@@ -15,13 +16,15 @@ public final class PlayerHand
 	private Bet bet;
 	private final Hand hand;
 	private boolean hasSurrendered;
-	private final HandType type;
+	private final Pot pot;
+	private final PlayerHandType type;
 
-	public PlayerHand(Bet bet, HandType type)
+	public PlayerHand(Bet bet, PlayerHandType type)
 	{
 		assert  type != null : "type == null";
 		setBet(bet);
 		this.hand = new Hand();
+		this.pot = new Pot();
 		this.type = type;
 	}
 
@@ -58,7 +61,12 @@ public final class PlayerHand
 		return hasSurrendered;
 	}
 
-	public HandType getType()
+	public Pot getPot()
+	{
+		return pot;
+	}
+
+	public PlayerHandType getType()
 	{
 		return type;
 	}
@@ -84,11 +92,12 @@ public final class PlayerHand
 	public String toString()
 	{
 		return String.format(
-			"%s[bet=%s,hand=%s,hasSurrendered=%s,type=%s]",
+			"%s[bet=%s,hand=%s,hasSurrendered=%s,pot=%s,type=%s]",
 			getClass().getName(),
 			getBet(),
 			getHand(),
 			getHasSurrendered(),
+			getPot(),
 			getType()
 		);
 	}
