@@ -116,7 +116,8 @@ public class GameEngine
 	private void dealCardForDealer()
 	{
 		getLogger().entering("GameEngine", "dealCardForDealer");
-		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
+			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
 		final var card = getDealer().hit();
 		getDealer().getHand().addCard(card);
 		onCardDealtToDealer(card);
@@ -133,13 +134,18 @@ public class GameEngine
 		getLogger().exiting("GameEngine", "dealCardForPlayer", card);
 	}
 
-	private void dealerPlay()
+	private void dealerTurn()
 	{
-		getLogger().entering("GameEngine", "dealerPlay");
-
-		//DO SOMETHING
-
-		getLogger().exiting("GameEngine", "dealerPlay");
+		getLogger().entering("GameEngine", "dealerTurn");
+		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
+		assert getState() == EngineState.DEALER_TURN
+			: "getState() != EngineState.DEALER_TURN";
+		while (getShouldDealerPlay())
+		{
+			dealCardForDealer();
+		}
+		onDrawingRoundCompletedDealer();
+		getLogger().exiting("GameEngine", "dealerTurn");
 	}
 
 	public void declineInsuranceBet()
@@ -196,6 +202,14 @@ public class GameEngine
 		return player;
 	}
 
+	private boolean getShouldDealerPlay()
+	{
+		final int MINIMUM_SCORE_TO_STAND = getConfig().getDealerHitsOnSoft17()
+			? RuleConfig.TOP_SCORE + 1
+			: RuleConfig.TOP_SCORE;
+		return getDealer().getHand().getScore() < MINIMUM_SCORE_TO_STAND;
+	}
+
 	public EngineState getState()
 	{
 		return state;
@@ -205,7 +219,8 @@ public class GameEngine
 	{
 		getLogger().entering("GameEngine", "onCardDealtToDealer", card);
 		assert card != null : "card == null";
-		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
+			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
 		getListener().onCardDealtToDealer(card, getDealer().getHand());
 		getLogger().info(String.format(
 			"Added card %s to dealer's hand %s.",
@@ -275,7 +290,7 @@ public class GameEngine
 			else
 			{
 				setState(EngineState.DEALER_TURN);
-				dealerPlay();
+				dealerTurn();
 			}
 		}
 		else
@@ -491,7 +506,6 @@ public class GameEngine
 	public String toString()
 	{
 		final var NULL_STRING = "null";
-
 		return String.format(
 			"%s[config=%s,dealer=%s,listener=%s,logger=%s,player=%s,state=%s]",
 			getClass().getName(),
