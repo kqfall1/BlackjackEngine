@@ -67,4 +67,16 @@ public final class RuleConfig
 	{
 		playerCanSurrenderOnSplitHands = value;
 	}
+
+	@Override
+	public String toString()
+	{
+		return String.format(
+			"%s[dealerHitsOnSoft17=%s,playerCanDoubleDownOnSplitHands=%s,playerCanSurrenderOnSplitHands=%s]",
+			getClass().getName(),
+			getDealerHitsOnSoft17(),
+			getPlayerCanDoubleDownOnSplitHands(),
+			getPlayerCanSurrenderOnSplitHands()
+		);
+	}
 }

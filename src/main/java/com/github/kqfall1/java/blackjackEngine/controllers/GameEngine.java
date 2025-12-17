@@ -625,7 +625,6 @@ public class GameEngine
 	@Override
 	public String toString()
 	{
-		final var NULL_STRING = "null";
 		return String.format(
 			"%s[config=%s,dealer=%s,listener=%s,logger=%s,player=%s,state=%s]",
 			getClass().getName(),
