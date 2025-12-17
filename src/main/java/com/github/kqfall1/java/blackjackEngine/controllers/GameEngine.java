@@ -6,7 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
@@ -39,18 +39,19 @@ public class GameEngine
 	 *
 	 * <p>
 	 * During the {@code EngineState.PLAYER_TURN} state, it indicates the {@code PlayerHand} that
-	 * the player is actively making decisions on; during other phases, it remains at 0.
+	 * the player is actively making decisions on; during other states, it remains at 0.
 	 * </p>
  	 */
 	private int activeHandPlayerIndex;
-	private final RuleConfig config;
+	private final StandardRuleConfig config;
 	private final Dealer dealer;
 	private final EngineListener listener;
 	private final Logger logger;
 	private final Player player;
+	private static final String RULE_VIOLATION_MESSAGE = "A blackjack rule was violated.";
 	private EngineState state;
 
-	public GameEngine(RuleConfig config, EngineListener listener,
+	public GameEngine(StandardRuleConfig config, EngineListener listener,
 					  String loggerFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
@@ -67,24 +68,69 @@ public class GameEngine
 		setState(EngineState.START);
 	}
 
-	public void acceptInsuranceBet() throws InsufficientChipsException
+	public void acceptInsuranceBet()
+	throws IllegalHandOperationException, InsufficientChipsException, RuleViolationException
 	{
 		getLogger().entering("GameEngine", "acceptInsuranceBet");
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.INSURANCE_CHECK
 			: "getState() != EngineState.INSURANCE_CHECK";
+		if (!getConfig().isInsuranceBetPossible(getActivePlayerHand(), getPlayer(),
+			getDealer().getHand()))
+		{
+			if (getActivePlayerHand().isAltered())
+			{
+				throw new IllegalHandOperationException(
+					getActivePlayerHand().getHand(),
+					String.format(
+						"Player cannot place an insurance side bet with a hand with more than %d cards.",
+						StandardRuleConfig.INITIAL_CARD_COUNT
+					)
+				);
+			}
+			else if (getDealer().getHand().getCards().getLast().getRank() != Rank.ACE)
+			{
+				throw new IllegalHandOperationException(
+					getActivePlayerHand().getHand(),
+					"Player cannot place an insurance side bet when the dealer's up card isn't an ace."
+				);
+			}
+			else if (getPlayer().getHands().size() != 1)
+			{
+				throw new IllegalHandOperationException(
+					getActivePlayerHand().getHand(),
+					"Player cannot place an insurance side bet when they have already split."
+				);
+			}
+			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getHalf()) < 0)
+			{
+				throw new InsufficientChipsException(
+					getPlayer(),
+					getActivePlayerHand().getBet().getHalf()
+				);
+			}
+			else
+			{
+				throw new RuleViolationException(RULE_VIOLATION_MESSAGE);
+			}
+		}
 		final var amount = getActivePlayerHand().getBet().getHalf();
-		tryDebitForBet(amount);
+		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
 		final boolean wasSuccessful = getDealer().getHand().isBlackjack();
 		final var winnings = insurancePot.scoop().multiply(
-			RuleConfig.INSURANCE.getPayoutMultiplier()
+			StandardRuleConfig.INSURANCE.getPayoutMultiplier()
 		);
 
 		if (wasSuccessful)
 		{
 			getPlayer().setChips(getPlayer().getChips().add(winnings));
 			setState(EngineState.SHOWDOWN);
+		}
+		else
+		{
+			setState(EngineState.PLAYER_TURN);
+			onDrawingRoundStartedPlayer();
 		}
 
 		getListener().onInsuranceBetResolved(wasSuccessful);
@@ -102,24 +148,25 @@ public class GameEngine
 			: "!getActivePlayerHand().getHand().getCards().isEmpty()";
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 
-		for (int count = 0; count < RuleConfig.INITIAL_CARD_COUNT; count++)
+		for (int count = 0; count < StandardRuleConfig.INITIAL_CARD_COUNT; count++)
 		{
 			dealCardForPlayer();
 			dealCardForDealer();
 		}
-		assert getActivePlayerHand().getHand().getCards().size() == RuleConfig.INITIAL_CARD_COUNT
+		assert getActivePlayerHand().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
 			: "getActivePlayerHand().getHand().getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
-		assert dealerHand.getCards().size() == RuleConfig.INITIAL_CARD_COUNT
+		assert dealerHand.getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
 			: "dealerHand.getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
 
 		getLogger().info(String.format(
 			"The cards have been dealt. Player's hand: %s. The dealer's up card is %s.",
 			getActivePlayerHand(),
-			dealerHand.getCards().get(RuleConfig.INITIAL_CARD_COUNT - 1)
+			dealerHand.getCards().get(StandardRuleConfig.INITIAL_CARD_COUNT - 1)
 		));
 		getLogger().exiting("GameEngine", "deal");
 
-		if (getInsuranceBetPossible())
+		if (getConfig().isInsuranceBetPossible(
+			getActivePlayerHand(), getPlayer(), getDealer().getHand()))
 		{
 			setState(EngineState.INSURANCE_CHECK);
 			getListener().onInsuranceBetOpportunityDetected();
@@ -127,6 +174,7 @@ public class GameEngine
 		else
 		{
 			setState(EngineState.PLAYER_TURN);
+			onDrawingRoundStartedPlayer();
 		}
 	}
 
@@ -157,7 +205,8 @@ public class GameEngine
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.DEALER_TURN
 			: "getState() != EngineState.DEALER_TURN";
-		while (getShouldDealerPlay())
+		onDrawingRoundStartedDealer();
+		while (getConfig().isDealerTurnActive(getState(), getDealer()))
 		{
 			dealCardForDealer();
 		}
@@ -193,7 +242,7 @@ public class GameEngine
 		return activeHandPlayerIndex;
 	}
 
-	public RuleConfig getConfig()
+	public StandardRuleConfig getConfig()
 	{
 		return config;
 	}
@@ -201,20 +250,6 @@ public class GameEngine
 	public Dealer getDealer()
 	{
 		return dealer;
-	}
-
-	public boolean getGameShouldContinue()
-	{
-		return getPlayer().getChips().compareTo(BigDecimal.ZERO) > 0;
-	}
-
-	public boolean getInsuranceBetPossible()
-	{
-		return getActivePlayerHandIndex() == 0
-			&& getPlayer().getHands().size() == 1
-			&& getActivePlayerHand().getHand().getCards().size() == RuleConfig.INITIAL_CARD_COUNT
-			&& getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getHalf()) >= 0
-			&& getDealer().getHand().getCards().getLast().getRank() == Rank.ACE;
 	}
 
 	public EngineListener getListener()
@@ -230,14 +265,6 @@ public class GameEngine
 	public Player getPlayer()
 	{
 		return player;
-	}
-
-	public boolean getShouldDealerPlay()
-	{
-		final int MINIMUM_SCORE_TO_STAND = getConfig().getDealerHitsOnSoft17()
-			? RuleConfig.TOP_SCORE + 1
-			: RuleConfig.TOP_SCORE;
-		return getDealer().getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
 
 	public EngineState getState()
@@ -263,8 +290,13 @@ public class GameEngine
 	{
 		getLogger().entering("GameEngine", "onCardDealtToPlayer", card);
 		assert card != null : "card == null";
-		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN
+			: "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
 		getListener().onCardDealtToPlayer(card);
+		if (getState() != EngineState.DEALING)
+		{
+			getActivePlayerHand().markAsAltered();
+		}
 		getLogger().info(String.format(
 			"Added card %s to player's hand %s.",
 			card, getActivePlayerHand()
@@ -380,19 +412,25 @@ public class GameEngine
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.BETTING || getState() == EngineState.START
 			: "getState() != EngineState.BETTING && getState() != EngineState.START";
-		if (getState() == EngineState.START)
+		if (getPlayer().getChips().compareTo(amount) < 0)
+		{
+			throw new InsufficientChipsException(
+				getPlayer(),
+				amount
+			);
+		}
+		else if (getState() == EngineState.START)
 		{
 			getListener().onGameStarted();
 		}
 		setState(EngineState.BETTING);
-		tryDebitForBet(amount);
 		getListener().onBettingRoundStarted();
-
 		final var playerMainHand = new PlayerHand(
 			new Bet(amount),
 			PlayerHandType.MAIN
 		);
 		getPlayer().addHand(playerMainHand);
+		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		getActivePlayerHand().getPot().addChips(amount.multiply(BigDecimal.TWO));
 		onBetPlaced();
 		setState(EngineState.DEALING);
@@ -401,34 +439,39 @@ public class GameEngine
 	}
 
 	public void playerDoubleDown(int handIndex)
-	throws IllegalHandOperationException, InsufficientChipsException,
-	RuleViolationException
+	throws IllegalHandOperationException, InsufficientChipsException, RuleViolationException
 	{
 		getLogger().entering("GameEngine",  "playerDoubleDown");
 		assert handIndex == getActivePlayerHandIndex() : "handIndex = getActivePlayerHandIndex()";
 		assert getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.PLAYER_TURN";
-
 		final var playerHand = getActivePlayerHand();
-		if (playerHand.getHand().getCards().size()
-			!= RuleConfig.INITIAL_CARD_COUNT)
+		if (!getConfig().isDoubleDownPossible(getActivePlayerHand(), getPlayer()))
 		{
-			throw new IllegalHandOperationException(
-				playerHand.getHand(),
-				String.format(
-					"An attempt to double down occurred on a hand with more than %d cards",
-					RuleConfig.INITIAL_CARD_COUNT
-				)
-			);
-		}
-		else if (playerHand.getType() != PlayerHandType.MAIN
-			&& !getConfig().getPlayerCanDoubleDownOnSplitHands())
-		{
-			throw new RuleViolationException("Player cannot double down on split hands.");
+			if (getActivePlayerHand().isAltered())
+			{
+				throw new IllegalHandOperationException(
+					playerHand.getHand(),
+					String.format(
+						"Player cannot double down on a hand with more than %d cards",
+						StandardRuleConfig.INITIAL_CARD_COUNT
+					)
+				);
+			}
+			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getAmount()) < 0)
+			{
+				throw new InsufficientChipsException(
+					getPlayer(),
+					getActivePlayerHand().getBet().getAmount()
+				);
+			}
+			else
+			{
+				throw new RuleViolationException(RULE_VIOLATION_MESSAGE);
+			}
 		}
 		final var doubleDownAmount = getActivePlayerHand().getBet().getAmount();
-		tryDebitForBet(doubleDownAmount);
-
+		getPlayer().setChips(getPlayer().getChips().subtract(doubleDownAmount));
 		playerHand.setBet(
 			new Bet(
 				doubleDownAmount.multiply(BigDecimal.TWO)
@@ -457,34 +500,62 @@ public class GameEngine
 	}
 	
 	public void playerSplit()
-	throws IllegalHandOperationException, InsufficientChipsException
+	throws IllegalHandOperationException, InsufficientChipsException, RuleViolationException
 	{
 		getLogger().entering("GameEngine", "playerSplit");
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.PLAYER_TURN";
-		final var playerMainHand = getPlayer().getHands().getFirst();
-		if (playerMainHand.getHand().getCards().size() != RuleConfig.INITIAL_CARD_COUNT
-			|| !playerMainHand.getHand().isPocketPair())
+		final var playerMainHand = getActivePlayerHand();
+		if (!getConfig().isSplitPossible(getActivePlayerHand(), getActivePlayerHandIndex(),
+			getPlayer()))
 		{
-			throw new IllegalHandOperationException(
-				playerMainHand.getHand(),
-				"An attempt to split a non-pocket pair occurred."
-			);
+			if (getActivePlayerHand().isAltered()
+				|| !playerMainHand.getHand().isPocketPair())
+			{
+				throw new IllegalHandOperationException(
+					playerMainHand.getHand(),
+					"An attempt to split a non-pocket pair occurred."
+				);
+			}
+			else if (getActivePlayerHandIndex() + 1 >= StandardRuleConfig.MAXIMUM_PLAYER_HANDS_PER_BETTING_ROUND)
+			{
+				throw new IllegalHandOperationException(
+					getActivePlayerHand().getHand(),
+					String.format(
+						"Player cannot have more than %d hands.",
+						StandardRuleConfig.MAXIMUM_PLAYER_HANDS_PER_BETTING_ROUND
+					)
+				);
+			}
+			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getAmount()) < 0)
+			{
+				throw new InsufficientChipsException(
+					getPlayer(),
+					getActivePlayerHand().getBet().getAmount()
+				);
+			}
+			else
+			{
+				throw new RuleViolationException(RULE_VIOLATION_MESSAGE);
+			}
 		}
 		final var splitAmount = getActivePlayerHand().getBet().getAmount();
-		tryDebitForBet(splitAmount);
-
+		getPlayer().setChips(getPlayer().getChips().subtract(splitAmount));
 		final var playerSplitHand = new PlayerHand(
 			new Bet(splitAmount),
 			PlayerHandType.SPLIT
 		);
 		playerSplitHand.getHand().addCard(playerMainHand.getHand().getCards().getLast());
 		getPlayer().addHand(playerSplitHand);
-		playerMainHand.getHand().removeCard(RuleConfig.INITIAL_CARD_COUNT - 1);
+		playerMainHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
+		playerMainHand.markAsAltered();
+		playerMainHand.getHand().addCard(getDealer().getDeck().draw());
+		playerSplitHand.getHand().addCard(getDealer().getDeck().draw());
 		setActivePlayerHandIndex(getActivePlayerHandIndex() + 1);
+		onDrawingRoundStartedPlayer();
 		getLogger().info(String.format(
-			"Player has elected to split. They now have a main hand of %s and a split hand of %s.",
+			"Player has elected to split. Player now has a main hand of %s and a split hand of %s.",
 			getPlayer().getHands().getFirst(),
 			playerSplitHand
 		));
@@ -497,21 +568,34 @@ public class GameEngine
 		assert handIndex == getActivePlayerHandIndex() : "handIndex = getActivePlayerHandIndex()";
 		assert getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.PLAYER_TURN";
+		getActivePlayerHand().markAsAltered();
 		onDrawingRoundCompletedPlayer();
 		getLogger().exiting("GameEngine", "playerStand");
 	}
 
 	public void playerSurrender(int handIndex)
-	throws InsufficientChipsException, RuleViolationException
+	throws IllegalHandOperationException, InsufficientChipsException, RuleViolationException
 	{
 		getLogger().entering("GameEngine", "playerSurrender");
 		assert handIndex == getActivePlayerHandIndex() : "handIndex = getActivePlayerHandIndex()";
 		assert getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.PLAYER_TURN";
-		if (getActivePlayerHand().getType() == PlayerHandType.SPLIT
-			&& !getConfig().getPlayerCanSurrenderOnSplitHands())
+		if (!getConfig().isSurrenderPossible(getActivePlayerHand(), getPlayer()))
 		{
-			throw new RuleViolationException("Player cannot surrender on split hands.");
+			if (getActivePlayerHand().isAltered())
+			{
+				throw new IllegalHandOperationException(
+					getActivePlayerHand().getHand(),
+					String.format(
+						"Player cannot surrender on a hand with more than %d cards",
+						StandardRuleConfig.INITIAL_CARD_COUNT
+					)
+				);
+			}
+			else
+			{
+				throw new RuleViolationException(RULE_VIOLATION_MESSAGE);
+			}
 		}
 		getActivePlayerHand().setHasSurrendered(true);
 		onDrawingRoundCompletedPlayer();
@@ -527,7 +611,7 @@ public class GameEngine
 		getDealer().setHand(new Hand());
 		getPlayer().clearHands();
 		getListener().onReset();
-		if (getGameShouldContinue())
+		if (getConfig().isGameActive(getPlayer()))
 		{
 			setState(EngineState.BETTING);
 		}
@@ -573,7 +657,7 @@ public class GameEngine
 			if (playerHand.getHasSurrendered())
 			{
 				playerWinnings = playerHand.getPot().scoop().multiply(
-					RuleConfig.SURRENDER.getPayoutMultiplier()
+					StandardRuleConfig.SURRENDER.getPayoutMultiplier()
 				);
 			}
 			else if (playerHand.getHand().isBusted())
@@ -590,7 +674,7 @@ public class GameEngine
 				if (playerHand.getHand().getScore() == getDealer().getHand().getScore())
 				{
 					playerWinnings = playerHand.getPot().scoop().multiply(
-						RuleConfig.PUSH.getPayoutMultiplier()
+						StandardRuleConfig.PUSH.getPayoutMultiplier()
 					);
 				}
 				else if (playerHand.getHand().getScore() > getDealer().getHand().getScore())
@@ -600,7 +684,7 @@ public class GameEngine
 					if (playerHand.getHand().isBlackjack())
 					{
 						playerWinnings = playerHand.getPot().scoop().multiply(
-							RuleConfig.BLACKJACK.getPayoutMultiplier()
+							StandardRuleConfig.BLACKJACK.getPayoutMultiplier()
 						);
 					}
 					else
@@ -635,23 +719,5 @@ public class GameEngine
 			getPlayer(),
 			getState()
 		);
-	}
-
-	/**
- 	 * Attempts to subtract a given amount from the {@code Player} object's {@code chips}.
- 	 * @param amount The amount to subtract.
-	 * @throws InsufficientChipsException if the {@code Player} has insufficient {@code chips}.
- 	 */
-	private void tryDebitForBet(BigDecimal amount) throws InsufficientChipsException
-	{
-		try
-		{
-			getPlayer().setChips(getPlayer().getChips().subtract(amount));
-		}
-		catch (InsufficientChipsException e)
-		{
-			getLogger().throwing("GameEngine", "placeMainBet", e);
-			throw e;
-		}
 	}
 }

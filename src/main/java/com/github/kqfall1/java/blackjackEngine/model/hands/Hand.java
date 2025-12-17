@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.hands;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import java.util.*;
@@ -85,7 +85,7 @@ public final class Hand
 				case Rank.EIGHT -> 8;
 				case Rank.NINE -> 9;
 				case Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING -> 10;
-				case Rank.ACE -> RuleConfig.ACE_LOW_VALUE;
+				case Rank.ACE -> StandardRuleConfig.ACE_LOW_VALUE;
 			};
 		}
 
@@ -98,10 +98,10 @@ public final class Hand
 
 		for (int count = 0; count < getAceCount(); count++)
 		{
-			if (score + RuleConfig.ACE_VALUE_DIFFERENTIAL
-				<= RuleConfig.TOP_SCORE)
+			if (score + StandardRuleConfig.ACE_VALUE_DIFFERENTIAL
+				<= StandardRuleConfig.TOP_SCORE)
 			{
-				score += RuleConfig.ACE_VALUE_DIFFERENTIAL;
+				score += StandardRuleConfig.ACE_VALUE_DIFFERENTIAL;
 			}
 			else
 			{
@@ -118,30 +118,20 @@ public final class Hand
 		return Objects.hash(getCards());
 	}
 
-	/**
- 	 * Determines whether {@code cards} contains a {@code Card} of {@code Rank.ACE}
-	 * in which its individual contribution to the hand score equals only 1 point.
-	 * @return {@code true} if this {@code Hand} contains a low ace, {@code false} otherwise.
- 	 */
-	public boolean hasLowAce()
-	{
-		return getScore() != getLowScore();
-	}
-
 	public boolean isBlackjack()
 	{
-		return getCards().size() == RuleConfig.INITIAL_CARD_COUNT
-			&& getScore() == RuleConfig.TOP_SCORE;
+		return getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
+			&& getScore() == StandardRuleConfig.TOP_SCORE;
 	}
 
 	public boolean isBusted()
 	{
-		return getScore() > RuleConfig.TOP_SCORE;
+		return getScore() > StandardRuleConfig.TOP_SCORE;
 	}
 
 	public boolean isPocketPair()
 	{
-		if (getCards().size() != RuleConfig.INITIAL_CARD_COUNT)
+		if (getCards().size() != StandardRuleConfig.INITIAL_CARD_COUNT)
 		{
 			return false;
 		}
@@ -163,9 +153,10 @@ public final class Hand
 	public String toString()
 	{
 		return String.format(
-			"%s[cards=%s]",
+			"%s[cards=%s,score=%d]",
 			getClass().getName(),
-			getCards()
+			getCards(),
+			getScore()
 		);
 	}
 }

@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.RuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
@@ -30,7 +30,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.GameEngine";
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/GameEngine.log";
 
-	private ConsoleBlackjackController(RuleConfig config, ConsoleHandler handler,
+	private ConsoleBlackjackController(StandardRuleConfig config, ConsoleHandler handler,
 									   String logFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
@@ -63,7 +63,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	public static void main(String[] args)
 	throws InsufficientChipsException, IOException
 	{
-		final var config = new RuleConfig();
+		final var config = new StandardRuleConfig();
 		final var handler = new ConsoleHandler();
 		final var controller = new ConsoleBlackjackController(config, handler,
 			LOG_FILE_PATH, LOGGER_NAME);
@@ -213,7 +213,6 @@ public final class ConsoleBlackjackController implements EngineListener
 				case EngineState.START, EngineState.BETTING -> placeBet();
 				case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
 				case EngineState.PLAYER_TURN -> performAction();
-				//default ??
 			}
 		}
 	}

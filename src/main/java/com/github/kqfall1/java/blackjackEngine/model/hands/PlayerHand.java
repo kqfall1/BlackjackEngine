@@ -13,6 +13,12 @@ import java.util.Objects;
  */
 public final class PlayerHand
 {
+	/**
+ 	 * Indicates whether the {@code Player} that encapsulates this {@code PlayerHand} has
+	 * taken any action on this {@code PlayerHand}, such as adding a {@code Card} to this
+	 * {@code PlayerHand} object's {@code Hand}, surrendering, standing, or splitting.
+ 	 */
+	private boolean altered;
 	private Bet bet;
 	private final Hand hand;
 	private boolean hasSurrendered;
@@ -77,6 +83,20 @@ public final class PlayerHand
 		return Objects.hash(getBet(), getHand(), getType());
 	}
 
+	public boolean isAltered()
+	{
+		return altered;
+	}
+
+	/**
+ 	 * All {@code GameEngine} processes involving {@code Player} actions need to call this
+	 * method whenever a {@code PlayerHand} is altered.
+ 	 */
+	public void markAsAltered()
+	{
+		altered = true;
+	}
+
 	public void setBet(Bet bet)
 	{
 		assert bet != null : "bet == null";
@@ -86,14 +106,16 @@ public final class PlayerHand
 	public void setHasSurrendered(boolean value)
 	{
 		hasSurrendered = value;
+		markAsAltered();
 	}
 
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[bet=%s,hand=%s,hasSurrendered=%s,pot=%s,type=%s]",
+			"%s[altered=%s,bet=%s,hand=%s,hasSurrendered=%s,pot=%s,type=%s]",
 			getClass().getName(),
+			isAltered(),
 			getBet(),
 			getHand(),
 			getHasSurrendered(),

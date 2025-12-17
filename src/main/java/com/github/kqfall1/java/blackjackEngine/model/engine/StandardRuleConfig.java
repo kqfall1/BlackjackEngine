@@ -1,6 +1,12 @@
 package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
+import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
+import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHandType;
 import java.math.BigDecimal;
 
 /**
@@ -10,7 +16,7 @@ import java.math.BigDecimal;
  * @author kqfall1
  * @since 14/12/2025
  */
-public final class RuleConfig
+public final class StandardRuleConfig
 {
 	public static final int ACE_HIGH_VALUE = 11;
 	public static final int ACE_LOW_VALUE = 1;
@@ -53,10 +59,57 @@ public final class RuleConfig
 		return playerCanSurrenderOnSplitHands;
 	}
 
-	public void setDealerHitsOnSoft17(boolean value)
+	public boolean isDealerTurnActive(EngineState currentState, Dealer dealer)
 	{
-		dealerHitsOnSoft17 = value;
+		final int MINIMUM_SCORE_TO_STAND = getDealerHitsOnSoft17()
+			? TOP_SCORE + 1
+			: TOP_SCORE;
+		return currentState == EngineState.DEALER_TURN
+			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
+
+	public boolean isGameActive(Player player)
+	{
+		return player.getChips().compareTo(BigDecimal.ZERO) > 0;
+	}
+
+	public boolean isInsuranceBetPossible(PlayerHand activePlayerHand, Player player,
+										  Hand dealerHand)
+	{
+		return !activePlayerHand.isAltered()
+			&& player.getChips().compareTo(activePlayerHand.getBet().getHalf()) >= 0
+			&& dealerHand.getCards().getLast().getRank() == Rank.ACE
+			&& player.getHands().size() == 1;
+	}
+
+	public boolean isDoubleDownPossible(PlayerHand activePlayerHand, Player player)
+	{
+		return !activePlayerHand.isAltered()
+			&& (activePlayerHand.getType() == PlayerHandType.MAIN
+				|| getPlayerCanDoubleDownOnSplitHands())
+			&& player.getChips().compareTo(activePlayerHand.getBet().getAmount()) >= 0;
+	}
+
+	public boolean isSplitPossible(PlayerHand activePlayerHand, int activePlayerHandIndex,
+								   Player player)
+	{
+		return !activePlayerHand.isAltered()
+			&& activePlayerHand.getHand().isPocketPair()
+			&& activePlayerHandIndex + 1 < MAXIMUM_PLAYER_HANDS_PER_BETTING_ROUND
+			&& player.getChips().compareTo(activePlayerHand.getBet().getAmount()) >= 0;
+	}
+
+	public boolean isSurrenderPossible(PlayerHand activePlayerHand, Player player)
+	{
+		return !activePlayerHand.isAltered()
+			&& (activePlayerHand.getType() == PlayerHandType.MAIN
+				|| getPlayerCanSurrenderOnSplitHands());
+	}
+
+	public void setDealerHitsOnSoft17(boolean value)
+{
+dealerHitsOnSoft17 = value;
+}
 
 	public void setPlayerCanDoubleDownOnSplitHands(boolean value)
 	{
