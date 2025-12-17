@@ -9,7 +9,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
  * @author kqfall1
  * @since 14/12/2025
  */
-public class EmptyDeckException extends RuntimeException
+public final class EmptyDeckException extends RuntimeException
 {
 	public EmptyDeckException(Deck deck)
 	{

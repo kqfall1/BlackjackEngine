@@ -17,7 +17,7 @@ public final class InsufficientChipsException extends Exception
 		super(String.format(
 			"Player %s has insufficient chips to bet $%s.",
 			player,
-			requiredChips.intValue()
+			requiredChips.toPlainString()
 		));
 	}
 }

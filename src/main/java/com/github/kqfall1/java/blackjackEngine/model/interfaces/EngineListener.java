@@ -15,18 +15,21 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
  */
 public interface EngineListener
 {
-	void onBetPlaced(Player player, PlayerHand playerHand);
-	void onCardDealtToDealer(Card card, Hand dealerHand);
-	void onCardDealtToPlayer(Card card, PlayerHand playerHand);
+	void onBetPlaced();
+	void onBettingRoundCompleted();
+	void onBettingRoundStarted();
+	void onCardDealtToDealer(Card card);
+	void onCardDealtToPlayer(Card card);
 	void onDrawingRoundCompletedDealer();
-	void onDrawingRoundCompletedPlayer(PlayerHand playerHand);
+	void onDrawingRoundCompletedPlayer();
 	void onDrawingRoundStartedDealer();
-	void onDrawingRoundStartedPlayer(PlayerHand playerHand);
+	void onDrawingRoundStartedPlayer();
 	void onGameCompleted();
 	void onGameStarted();
 	void onInsuranceBetOpportunityDetected();
-	void onInsuranceBetResolved(boolean wasSuccessful);
-	void onShowdownCompleted(PlayerHand playerHand, boolean playerWon);
-	void onShowdownStarted(PlayerHand playerHand);
-	void onStateChanged(EngineState oldState, EngineState newState);
+	void onInsuranceBetResolved(boolean playerWon);
+	void onReset();
+	void onShowdownCompleted(boolean playerWon);
+	void onShowdownStarted();
+	void onStateChanged(EngineState oldState);
 }

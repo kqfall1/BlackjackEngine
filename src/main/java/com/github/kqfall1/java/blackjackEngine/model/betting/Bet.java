@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Immutable wagers placed by {@code Player} roles.
+ * Immutable wagers placed by {@code Player} actors.
  *
  * @author kqfall1
  * @since 13/12/2025

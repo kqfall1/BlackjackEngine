@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.betting;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * A container for chips for {@code Dealer} and {@code Player} wagers.
