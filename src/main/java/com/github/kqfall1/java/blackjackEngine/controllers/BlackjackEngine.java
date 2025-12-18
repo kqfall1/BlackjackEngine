@@ -132,8 +132,8 @@ public class BlackjackEngine
 		}
 		else
 		{
-			setState(EngineState.PLAYER_TURN);
 			onDrawingRoundStartedPlayer();
+			setState(EngineState.PLAYER_TURN);
 		}
 		getListener().onInsuranceBetResolved(winnings);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -167,11 +167,12 @@ public class BlackjackEngine
 		if (getConfig().isInsuranceBetPossible(
 			getActivePlayerHand(), getPlayer(), getDealer().getHand()))
 		{
-			setState(EngineState.INSURANCE_CHECK);
 			getListener().onInsuranceBetOpportunityDetected();
+			setState(EngineState.INSURANCE_CHECK);
 		}
 		else
 		{
+			onDrawingRoundStartedPlayer();
 			setState(EngineState.PLAYER_TURN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -329,7 +330,7 @@ public class BlackjackEngine
 			if (getActivePlayerHand().getHand().isBusted())
 			{
 				onDrawingRoundCompletedPlayer();
-			}
+			} //MOVE THIS TO A MORE CENTRALIZED SPOT WHERE THE ENGINE IS MORE STABLE
 			else
 			{
 				setState(EngineState.PLAYER_TURN);
@@ -422,14 +423,10 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void placeBet(BigDecimal amount) throws Exception
+	public void placeHandBet(BigDecimal amount) throws Exception
 	{
 		final var METHOD_NAME = "placeBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME, amount);
-		if (getState() != EngineState.BETTING) //Prevents callback issues
-		{
-			return;
-		}
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0
 			: "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
@@ -634,8 +631,8 @@ public class BlackjackEngine
 		}
 		else
 		{
-			setState(EngineState.END);
 			getListener().onGameCompleted();
+			setState(EngineState.END);
 			getLogger().info("The player has busted.");
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -748,11 +745,10 @@ public class BlackjackEngine
 	public String toString()
 	{
 		return String.format(
-			"%s[config=%s,dealer=%s,listener=%s,logger=%s,player=%s,state=%s]",
+			"%s[config=%s,dealer=%s,logger=%s,player=%s,state=%s]",
 			getClass().getName(),
 			getConfig(),
 			getDealer(),
-			getListener(),
 			getLogger(),
 			getPlayer(),
 			getState()
