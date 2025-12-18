@@ -10,8 +10,8 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHandType;
 import java.math.BigDecimal;
 
 /**
- * A configuration object to be used by a {@code GameEngine} to make gameplay
- * decisions and satisfy end users by providing customization.
+ * A configuration object to be used by a {@code BlackjackEngine} to drive gameplay according
+ * to the standard rules of blackjack.
  *
  * @author kqfall1
  * @since 14/12/2025
@@ -20,16 +20,17 @@ public final class StandardRuleConfig
 {
 	public static final int ACE_HIGH_VALUE = 11;
 	public static final int ACE_LOW_VALUE = 1;
-	public static final int ACE_VALUE_DIFFERENTIAL =
-		ACE_HIGH_VALUE - ACE_LOW_VALUE;
-	private boolean dealerHitsOnSoft17;
+	public static final int ACE_VALUE_DIFFERENTIAL = ACE_HIGH_VALUE - ACE_LOW_VALUE;
 	public static final int DEALER_MINIMUM_STAND_SCORE = 17;
 	public static final int INITIAL_CARD_COUNT = 2;
 	public static final int INITIAL_HAND_COUNT = 1;
-	public static final int MAXIMUM_PLAYER_HANDS_PER_BETTING_ROUND = 2;
+	public static final int MAXIMUM_SPLIT_COUNT = 1;
+	public static final int TOP_SCORE = 21;
+
+	private boolean dealerHitsOnSoft17;
 	private boolean playerCanDoubleDownOnSplitHands;
 	private boolean playerCanSurrenderOnSplitHands;
-	public static final int TOP_SCORE = 21;
+	private BigDecimal playerInitialChips;
 
 	public static final PayoutRatio BLACKJACK = new PayoutRatio(
 		BigDecimal.valueOf(3), BigDecimal.TWO
@@ -59,11 +60,16 @@ public final class StandardRuleConfig
 		return playerCanSurrenderOnSplitHands;
 	}
 
+	public BigDecimal getPlayerInitialChips()
+	{
+		return playerInitialChips;
+	}
+
 	public boolean isDealerTurnActive(EngineState currentState, Dealer dealer)
 	{
 		final int MINIMUM_SCORE_TO_STAND = getDealerHitsOnSoft17()
-			? TOP_SCORE + 1
-			: TOP_SCORE;
+			? DEALER_MINIMUM_STAND_SCORE + 1
+			: DEALER_MINIMUM_STAND_SCORE;
 		return currentState == EngineState.DEALER_TURN
 			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
@@ -95,7 +101,7 @@ public final class StandardRuleConfig
 	{
 		return !activePlayerHand.isAltered()
 			&& activePlayerHand.getHand().isPocketPair()
-			&& activePlayerHandIndex + 1 < MAXIMUM_PLAYER_HANDS_PER_BETTING_ROUND
+			&& activePlayerHandIndex < MAXIMUM_SPLIT_COUNT
 			&& player.getChips().compareTo(activePlayerHand.getBet().getAmount()) >= 0;
 	}
 
@@ -119,6 +125,13 @@ dealerHitsOnSoft17 = value;
 	public void setPlayerCanSurrenderOnSplitHands(boolean value)
 	{
 		playerCanSurrenderOnSplitHands = value;
+	}
+
+	public void setPlayerInitialChips(BigDecimal playerInitialChips)
+	{
+		assert playerInitialChips != null && playerInitialChips.compareTo(BigDecimal.ZERO) > 0
+			: "playerInitialChips == null || playerInitialChips.compareTo(BigDecimal.ZERO) <= 0";
+		this.playerInitialChips = playerInitialChips;
 	}
 
 	@Override

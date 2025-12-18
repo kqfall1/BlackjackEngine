@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
-import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 
 /**
  * Encapsulates data about failures resulting from illegal operations on
@@ -18,11 +18,11 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
  */
 public final class IllegalHandOperationException extends Exception
 {
-	public IllegalHandOperationException(Hand hand, String message)
+	public IllegalHandOperationException(PlayerHand playerHand, String message)
 	{
 		super(String.format(
-			"An illegal operation was attempted on hand %s. %s",
-			hand,
+			"An illegal operation was attempted on player hand %s. %s",
+			playerHand,
 			message
 		));
 	}

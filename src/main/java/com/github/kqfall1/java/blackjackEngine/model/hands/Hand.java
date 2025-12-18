@@ -136,10 +136,9 @@ public final class Hand
 			return false;
 		}
 
-		final var iterator = getCards().iterator();
-		final var firstCard = iterator.next();
-		final var secondCard = iterator.next();
-		return firstCard.getRank() == secondCard.getRank();
+		return getCards().getFirst().getRank().equals(
+			getCards().getLast().getRank()
+		);
 	}
 
 	public void removeCard(int cardIndex)

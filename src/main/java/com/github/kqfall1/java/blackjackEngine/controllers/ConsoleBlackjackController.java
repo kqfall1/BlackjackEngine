@@ -5,18 +5,21 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
+import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.managers.InputManager;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.logging.Level;
 
 /**
- * Controls a {@code GameEngine}, a {@code ConsoleHandler}, and an
+ * Controls a {@code BlackjackEngine}, a {@code ConsoleHandler}, and an
  * {@code InputManager} to coordinate {@code Player} with the engine and handle
  * {@code Player} I/O synchronously.
  *
  * <p>
  * Also implements {@code EngineListener} to define app-related logic to execute
- * when internal {@code GameEngine} events occur.
+ * when internal {@code BlackjackEngine} events occur.
  * </p>
  *
  * @author kqfall1
@@ -24,11 +27,12 @@ import java.io.IOException;
  */
 public final class ConsoleBlackjackController implements EngineListener
 {
-	private final GameEngine engine;
+	private final BlackjackEngine engine;
 	private final ConsoleHandler handler;
 	private final InputManager inputManager;
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.GameEngine";
-	private static final String LOG_FILE_PATH = "src/main/resources/logs/GameEngine.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.BlackjackEngine";
+	private static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
+	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
 	private ConsoleBlackjackController(StandardRuleConfig config, ConsoleHandler handler,
 									   String logFilePath, String loggerName)
@@ -40,12 +44,12 @@ public final class ConsoleBlackjackController implements EngineListener
 			: "logFilePath == null || logFilePath.isBlank()";
 		assert loggerName != null && !loggerName.isBlank()
 			: "loggerName == null || loggerName.isBlank()";
-		engine = new GameEngine(config, this, logFilePath, loggerName);
+		engine = new BlackjackEngine(config, this, logFilePath, loggerName);
 		this.handler = handler;
 		inputManager = new InputManager(handler, handler, handler);
 	}
 
-	private GameEngine getEngine()
+	private BlackjackEngine getEngine()
 	{
 		return engine;
 	}
@@ -64,9 +68,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	throws InsufficientChipsException, IOException
 	{
 		final var config = new StandardRuleConfig();
+		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
 		final var handler = new ConsoleHandler();
 		final var controller = new ConsoleBlackjackController(config, handler,
 			LOG_FILE_PATH, LOGGER_NAME);
+		controller.getEngine().getLogger().setLevel(Level.FINE);
 		controller.run();
 	}
 
@@ -91,55 +97,67 @@ public final class ConsoleBlackjackController implements EngineListener
 	@Override
 	public void onCardDealtToDealer(Card card)
 	{
-		getHandler().getOut().printf(
-			"The dealer was dealt %s.",
-			card
-		);
+		if (getEngine().getDealer().getHand().getCards().size() ==
+			StandardRuleConfig.INITIAL_CARD_COUNT)
+		{
+			getHandler().getOut().printf(
+				"The dealer is showing the %s.\n",
+				card.toStringPretty()
+			);
+		}
+		else if (getEngine().getDealer().getHand().getCards().size() !=
+			StandardRuleConfig.INITIAL_CARD_COUNT - 1)
+		{
+			getHandler().getOut().printf(
+				"The dealer was dealt the %s.\n",
+				card.toStringPretty()
+			);
+		}
 	}
 
 	@Override
 	public void onCardDealtToPlayer(Card card)
 	{
 		getHandler().getOut().printf(
-			"You were dealt %s.",
-			card
+			"You were dealt the %s.\n",
+			card.toStringPretty()
 		);
 	}
 
 	@Override
 	public void onDrawingRoundCompletedDealer()
 	{
-		getHandler().getOut().print("The dealer has finished drawing.");
+		getHandler().getOut().println("The dealer has finished drawing.");
 	}
 
 	@Override
 	public void onDrawingRoundCompletedPlayer()
 	{
-		getHandler().getOut().print("You have completed a drawing round.");
+		getHandler().getOut().println("You have completed a drawing round.");
 	}
 
 	@Override
 	public void onDrawingRoundStartedDealer()
 	{
-		getHandler().getOut().print("The dealer has began drawing.");
+		getHandler().getOut().println("The dealer has began drawing.");
 	}
 
 	@Override
 	public void onDrawingRoundStartedPlayer()
 	{
-		getHandler().getOut().print("You have began a new drawing round.");
+		getHandler().getOut().println("You have began a new drawing round.");
 	}
 
 	@Override
 	public void onGameCompleted()
 	{
-		getHandler().getOut().print("Thanks for playing!");
+		getHandler().getOut().println("Thanks for playing!");
 	}
 
 	@Override
 	public void onGameStarted()
 	{
-		getHandler().getOut().print("Welcome to the casino!");
+		getHandler().getOut().println("Welcome to the table!");
 	}
 
 	@Override
@@ -149,11 +167,14 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onInsuranceBetResolved(boolean playerWon)
+	public void onInsuranceBetResolved(BigDecimal playerWinnings)
 	{
-		if (playerWon)
+		if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
 		{
-			getHandler().getOut().println("You have won your insurance bet.");
+			getHandler().getOut().printf(
+				"You have won your insurance bet and collect $%.2f.",
+				playerWinnings
+			);
 		}
 		else
 		{
@@ -168,22 +189,46 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onShowdownCompleted(boolean playerWon)
+	public void onShowdownCompleted(boolean playerWon, BigDecimal playerWinnings)
 	{
+		final var completedString = String.format(
+			"Your score is %d and the dealer's score is %d.",
+			getEngine().getActivePlayerHand().getHand().getScore(),
+			getEngine().getDealer().getHand().getScore()
+		);
+
 		if (playerWon)
 		{
-			getHandler().getOut().println("You have won a showdown.");
+			getHandler().getOut().printf(
+				"%s You have won the showdown and collect $%.2f.\n",
+				completedString,
+				playerWinnings
+			);
+		}
+		else if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
+		{
+			getHandler().getOut().printf(
+				"%s You have lost the showdown, yet still collect $%.2f.\n",
+				completedString,
+				playerWinnings
+			);
 		}
 		else
 		{
-			getHandler().getOut().println("You have lost a showdown.");
+			getHandler().getOut().printf(
+				"%s You have lost the showdown.\n",
+				completedString
+			);
 		}
 	}
 
 	@Override
 	public void onShowdownStarted()
 	{
-		getHandler().getOut().println("You have began a showdown.");
+		getHandler().getOut().printf(
+			"You have began a showdown. The dealer's down card is the %s.\n",
+			getEngine().getDealer().getHand().getCards().getFirst().toStringPretty()
+		);
 	}
 
 	@Override
@@ -191,17 +236,75 @@ public final class ConsoleBlackjackController implements EngineListener
 
 	private void performAction()
 	{
-
+		getInputManager().getStringInputter().getString(
+			String.format(
+				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
+				getEngine().getActivePlayerHand().getHand().getScore()
+			),
+			new String[] {"d", "h", "sp", "st", "su"}
+		).thenAccept(input -> {
+			try
+			{
+				switch (input)
+				{
+					case "d" -> getEngine().playerDoubleDown();
+					case "h" -> getEngine().playerHit();
+					case "sp" -> getEngine().playerSplit();
+					case "st" -> getEngine().playerStand();
+					case "su" -> getEngine().playerSurrender();
+				}
+			}
+			catch (Exception e)
+			{
+				getHandler().showException(e);
+				performAction();
+			}
+		});
 	}
 
 	private void placeBet()
 	{
-
+		getInputManager().getNumberInputter().getNumber(
+			String.format(
+				"You have $%.2f. Please place a bet",
+				getEngine().getPlayer().getChips()
+			),
+			Float.MIN_VALUE,
+			Float.MAX_VALUE
+		).thenAccept(amount -> {
+			try
+			{
+				getEngine().placeBet(BigDecimal.valueOf(amount));
+			}
+			catch (Exception e)
+			{
+				getHandler().showException(e);
+				placeBet();
+			}
+		});
 	}
 
 	private void placeInsuranceBet()
 	{
-
+		getInputManager().getYesNoInputter().getYesNo("Do you wish to place an insurance bet?")
+		.thenAccept(answer -> {
+			try
+			{
+				if (answer == YesNoInput.YES)
+				{
+					getEngine().acceptInsuranceBet();
+				}
+				else
+				{
+					getEngine().declineInsuranceBet();
+				}
+			}
+			catch (Exception e)
+			{
+				getHandler().showException(e);
+				placeInsuranceBet();
+			}
+		});
 	}
 
 	private void run()

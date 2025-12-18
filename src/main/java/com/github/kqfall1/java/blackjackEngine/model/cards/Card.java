@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
+import com.github.kqfall1.java.utils.StringUtils;
 import java.util.Objects;
 
 /**
@@ -63,6 +64,15 @@ public final class Card
 			getClass().getName(),
 			getRank(),
 			getSuit()
+		);
+	}
+
+	public String toStringPretty()
+	{
+		return String.format(
+			"%s of %ss",
+			StringUtils.normalizeLower(getRank().toString()),
+			StringUtils.normalizeLower(getSuit().toString())
 		);
 	}
 }

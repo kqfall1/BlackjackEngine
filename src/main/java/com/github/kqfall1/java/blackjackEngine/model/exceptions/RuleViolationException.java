@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
 /**
- * Encapsulates data about failures resulting from attempted {@code GameEngine}
+ * Encapsulates data about failures resulting from attempted {@code BlackjackEngine}
  * operations that contradict its encapsulated {@code RuleConfig} object's settings.
  *
  * @author kqfall1

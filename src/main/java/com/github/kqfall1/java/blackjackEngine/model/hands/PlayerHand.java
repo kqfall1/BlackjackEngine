@@ -89,8 +89,8 @@ public final class PlayerHand
 	}
 
 	/**
- 	 * All {@code GameEngine} processes involving {@code Player} actions need to call this
-	 * method whenever a {@code PlayerHand} is altered.
+ 	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call
+	 * this method whenever a {@code PlayerHand} is altered.
  	 */
 	public void markAsAltered()
 	{
