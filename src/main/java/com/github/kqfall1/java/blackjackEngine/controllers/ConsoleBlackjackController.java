@@ -44,9 +44,9 @@ public final class ConsoleBlackjackController implements EngineListener
 			: "logFilePath == null || logFilePath.isBlank()";
 		assert loggerName != null && !loggerName.isBlank()
 			: "loggerName == null || loggerName.isBlank()";
-		engine = new BlackjackEngine(config, this, logFilePath, loggerName);
 		this.handler = handler;
 		inputManager = new InputManager(handler, handler, handler);
+		engine = new BlackjackEngine(config, this, logFilePath, loggerName);
 	}
 
 	private BlackjackEngine getEngine()
@@ -73,7 +73,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		final var controller = new ConsoleBlackjackController(config, handler,
 			LOG_FILE_PATH, LOGGER_NAME);
 		controller.getEngine().getLogger().setLevel(Level.FINE);
-		controller.run();
+		controller.getEngine().start();
 	}
 
 	@Override
@@ -146,6 +146,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	public void onDrawingRoundStartedPlayer()
 	{
 		getHandler().getOut().println("You have began a new drawing round.");
+		//performAction();
 	}
 
 	@Override
@@ -208,7 +209,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		else if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
 		{
 			getHandler().getOut().printf(
-				"%s You have lost the showdown, yet still collect $%.2f.\n",
+				"%s You did not win the showdown, yet still collect $%.2f.\n",
 				completedString,
 				playerWinnings
 			);
@@ -232,10 +233,23 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onStateChanged(EngineState oldState) {}
+	public void onStateChanged(EngineState oldState)
+	{
+		switch (getEngine().getState())
+		{
+			case EngineState.BETTING -> placeHandBet();
+			case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
+			case EngineState.PLAYER_TURN -> performAction();
+		}
+	}
 
 	private void performAction()
 	{
+		if (getEngine().getState() != EngineState.PLAYER_TURN)
+		{
+			return;
+		}
+
 		getInputManager().getStringInputter().getString(
 			String.format(
 				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
@@ -243,6 +257,11 @@ public final class ConsoleBlackjackController implements EngineListener
 			),
 			new String[] {"d", "h", "sp", "st", "su"}
 		).thenAccept(input -> {
+			if (getEngine().getState() != EngineState.PLAYER_TURN)
+			{
+				return;
+			}
+
 			try
 			{
 				switch (input)
@@ -262,7 +281,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		});
 	}
 
-	private void placeBet()
+	private void placeHandBet()
 	{
 		getInputManager().getNumberInputter().getNumber(
 			String.format(
@@ -272,6 +291,11 @@ public final class ConsoleBlackjackController implements EngineListener
 			Float.MIN_VALUE,
 			Float.MAX_VALUE
 		).thenAccept(amount -> {
+			if (getEngine().getState() != EngineState.BETTING)
+			{
+				return;
+			}
+
 			try
 			{
 				getEngine().placeBet(BigDecimal.valueOf(amount));
@@ -279,7 +303,7 @@ public final class ConsoleBlackjackController implements EngineListener
 			catch (Exception e)
 			{
 				getHandler().showException(e);
-				placeBet();
+				placeHandBet();
 			}
 		});
 	}
@@ -288,6 +312,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	{
 		getInputManager().getYesNoInputter().getYesNo("Do you wish to place an insurance bet?")
 		.thenAccept(answer -> {
+			if (getEngine().getState() != EngineState.INSURANCE_CHECK)
+			{
+				return;
+			}
+
 			try
 			{
 				if (answer == YesNoInput.YES)
@@ -305,19 +334,6 @@ public final class ConsoleBlackjackController implements EngineListener
 				placeInsuranceBet();
 			}
 		});
-	}
-
-	private void run()
-	{
-		while (getEngine().getState() != EngineState.END)
-		{
-			switch (getEngine().getState())
-			{
-				case EngineState.START, EngineState.BETTING -> placeBet();
-				case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
-				case EngineState.PLAYER_TURN -> performAction();
-			}
-		}
 	}
 
 	@Override

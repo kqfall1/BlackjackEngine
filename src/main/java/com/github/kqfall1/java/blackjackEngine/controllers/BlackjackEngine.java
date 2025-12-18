@@ -67,7 +67,7 @@ public class BlackjackEngine
 			true);
 		player = new Player();
 		getPlayer().setChips(getConfig().getPlayerInitialChips());
-		setState(EngineState.START);
+		state = EngineState.START;
 	}
 
 	public void acceptInsuranceBet() throws Exception
@@ -82,7 +82,7 @@ public class BlackjackEngine
 		{
 			if (getActivePlayerHand().isAltered())
 			{
-			  	logException(new IllegalHandOperationException(
+			  	throwException(new IllegalHandOperationException(
 					getActivePlayerHand(),
 					String.format(
 						"Player cannot place an insurance side bet with a hand with more than %d cards.",
@@ -92,42 +92,43 @@ public class BlackjackEngine
 			}
 			else if (getDealer().getHand().getCards().getLast().getRank() != Rank.ACE)
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					getActivePlayerHand(),
 					"Player cannot place an insurance side bet when the dealer's up card isn't an ace."
 				), METHOD_NAME);
 			}
 			else if (getPlayer().getHands().size() != StandardRuleConfig.INITIAL_HAND_COUNT)
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					getActivePlayerHand(),
 					"Player cannot place an insurance side bet when they have already split."
 				), METHOD_NAME);
 			}
 			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getHalf()) < 0)
 			{
-				logException(new InsufficientChipsException(
+				throwException(new InsufficientChipsException(
 					getPlayer(),
 					getActivePlayerHand().getBet().getHalf()
 				), METHOD_NAME);
 			}
 			else
 			{
-				logException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var amount = getActivePlayerHand().getBet().getHalf();
 		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
 		final boolean wasSuccessful = getDealer().getHand().isBlackjack();
-		final var winnings = insurancePot.scoop().multiply(
-			StandardRuleConfig.INSURANCE.getPayoutMultiplier()
-		);
-
+		var winnings = BigDecimal.ZERO;
 		if (wasSuccessful)
 		{
+			winnings = insurancePot.scoop().multiply(
+				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+			);
 			getPlayer().setChips(getPlayer().getChips().add(winnings));
 			setState(EngineState.SHOWDOWN);
+			showdown();
 		}
 		else
 		{
@@ -172,7 +173,6 @@ public class BlackjackEngine
 		else
 		{
 			setState(EngineState.PLAYER_TURN);
-			onDrawingRoundStartedPlayer();
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -193,7 +193,8 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "dealCardForPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
-		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN
+			: "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
 		final var card = getDealer().hit();
 		getActivePlayerHand().getHand().addCard(card);
 		onCardDealtToPlayer(card);
@@ -275,15 +276,6 @@ public class BlackjackEngine
 		return state;
 	}
 
-	private void logException(Exception e, String sourceMethod) throws Exception
-	{
-		assert e != null : "e == null";
-		assert sourceMethod != null && !sourceMethod.isBlank()
-			: "sourceMethod == null || sourceMethod.isBlank() ";
-		getLogger().throwing(CLASS_NAME, sourceMethod, e);
-		throw e;
-	}
-
 	private void onBetPlaced()
 	{
 		final var METHOD_NAME = "onBetPlaced";
@@ -332,9 +324,16 @@ public class BlackjackEngine
 			"Added card %s to player's hand %s.",
 			card, getActivePlayerHand()
 		));
-		if (getActivePlayerHand().getHand().isBusted())
+		if (getState() == EngineState.PLAYER_TURN)
 		{
-			onDrawingRoundCompletedPlayer();
+			if (getActivePlayerHand().getHand().isBusted())
+			{
+				onDrawingRoundCompletedPlayer();
+			}
+			else
+			{
+				setState(EngineState.PLAYER_TURN);
+			}
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -392,6 +391,8 @@ public class BlackjackEngine
 		{
 			assert getActivePlayerHandIndex() != 0 : "activeHandPlayerIndex == 0";
 			setActivePlayerHandIndex(getActivePlayerHandIndex() - 1);
+			setState(EngineState.PLAYER_TURN);
+			onDrawingRoundCompletedPlayer();
 		}
 		getLogger().info("The player's drawing round was completed.");
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -425,23 +426,21 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "placeBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME, amount);
+		if (getState() != EngineState.BETTING) //Prevents callback issues
+		{
+			return;
+		}
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0
 			: "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
-		assert getState() == EngineState.BETTING || getState() == EngineState.START
-			: "getState() != EngineState.BETTING && getState() != EngineState.START";
+		assert getState() == EngineState.BETTING : "getState() != EngineState.BETTING";
 		if (getPlayer().getChips().compareTo(amount) < 0)
 		{
-			logException(new InsufficientChipsException(
+			throwException(new InsufficientChipsException(
 				getPlayer(),
 				amount
 			), METHOD_NAME);
 		}
-		else if (getState() == EngineState.START)
-		{
-			getListener().onGameStarted();
-		}
-		setState(EngineState.BETTING);
 		getListener().onBettingRoundStarted();
 		final var playerMainHand = new PlayerHand(
 			new Bet(amount),
@@ -467,7 +466,7 @@ public class BlackjackEngine
 		{
 			if (getActivePlayerHand().isAltered())
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					playerHand,
 					String.format(
 						"Player cannot double down on a hand with more than %d cards",
@@ -477,14 +476,14 @@ public class BlackjackEngine
 			}
 			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getAmount()) < 0)
 			{
-				logException(new InsufficientChipsException(
+				throwException(new InsufficientChipsException(
 					getPlayer(),
 					getActivePlayerHand().getBet().getAmount()
 				), METHOD_NAME);
 			}
 			else
 			{
-				logException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var doubleDownAmount = getActivePlayerHand().getBet().getAmount();
@@ -494,6 +493,7 @@ public class BlackjackEngine
 				doubleDownAmount.multiply(BigDecimal.TWO)
 			)
 		);
+		playerHand.getPot().addChips(doubleDownAmount.multiply(BigDecimal.TWO));
 		playerHit();
 		getLogger().info(String.format(
 			"Player has doubled down on hand %s.",
@@ -530,14 +530,14 @@ public class BlackjackEngine
 			if (getActivePlayerHand().isAltered()
 				|| !playerMainHand.getHand().isPocketPair())
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					playerMainHand,
 					"An attempt to split a non-pocket pair occurred."
 				), METHOD_NAME);
 			}
 			else if (getActivePlayerHandIndex() >= StandardRuleConfig.MAXIMUM_SPLIT_COUNT)
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					getActivePlayerHand(),
 					String.format(
 						"Player cannot have more than %d hands.",
@@ -547,14 +547,14 @@ public class BlackjackEngine
 			}
 			else if (getPlayer().getChips().compareTo(getActivePlayerHand().getBet().getAmount()) < 0)
 			{
-				logException(new InsufficientChipsException(
+				throwException(new InsufficientChipsException(
 					getPlayer(),
 					getActivePlayerHand().getBet().getAmount()
 				), METHOD_NAME);
 			}
 			else
 			{
-				logException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var splitAmount = getActivePlayerHand().getBet().getAmount();
@@ -600,7 +600,7 @@ public class BlackjackEngine
 		{
 			if (getActivePlayerHand().isAltered())
 			{
-				logException(new IllegalHandOperationException(
+				throwException(new IllegalHandOperationException(
 					getActivePlayerHand(),
 					String.format(
 						"Player cannot surrender on a hand with more than %d cards",
@@ -610,7 +610,7 @@ public class BlackjackEngine
 			}
 			else
 			{
-				logException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		getActivePlayerHand().setHasSurrendered(true);
@@ -725,6 +725,23 @@ public class BlackjackEngine
 		setState(EngineState.RESETTING);
 		reset();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
+	public void start()
+	{
+		assert getState() == null || getState() == EngineState.START
+			: "getState() != null && getState() != EngineState.START";
+		getListener().onGameStarted();
+		setState(EngineState.BETTING);
+	}
+
+	private void throwException(Exception e, String sourceMethod) throws Exception
+	{
+		assert e != null : "e == null";
+		assert sourceMethod != null && !sourceMethod.isBlank()
+			: "sourceMethod == null || sourceMethod.isBlank() ";
+		getLogger().throwing(CLASS_NAME, sourceMethod, e);
+		throw e;
 	}
 
 	@Override
