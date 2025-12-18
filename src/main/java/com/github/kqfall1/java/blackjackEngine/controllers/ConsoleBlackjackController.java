@@ -97,16 +97,15 @@ public final class ConsoleBlackjackController implements EngineListener
 	@Override
 	public void onCardDealtToDealer(Card card)
 	{
-		if (getEngine().getDealer().getHand().getCards().size() ==
-			StandardRuleConfig.INITIAL_CARD_COUNT)
+		final int handCardCount = getEngine().getDealer().getHand().getCards().size();
+		if (handCardCount == StandardRuleConfig.INITIAL_CARD_COUNT)
 		{
 			getHandler().getOut().printf(
 				"The dealer is showing the %s.\n",
 				card.toStringPretty()
 			);
 		}
-		else if (getEngine().getDealer().getHand().getCards().size() !=
-			StandardRuleConfig.INITIAL_CARD_COUNT - 1)
+		else if (handCardCount > StandardRuleConfig.INITIAL_CARD_COUNT)
 		{
 			getHandler().getOut().printf(
 				"The dealer was dealt the %s.\n",
@@ -146,7 +145,6 @@ public final class ConsoleBlackjackController implements EngineListener
 	public void onDrawingRoundStartedPlayer()
 	{
 		getHandler().getOut().println("You have began a new drawing round.");
-		//performAction();
 	}
 
 	@Override
@@ -173,7 +171,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
 		{
 			getHandler().getOut().printf(
-				"You have won your insurance bet and collect $%.2f.",
+				"You have won your insurance bet and collect $%.2f.\n",
 				playerWinnings
 			);
 		}
@@ -238,6 +236,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		switch (getEngine().getState())
 		{
 			case EngineState.BETTING -> placeHandBet();
+			case EngineState.END -> {}
 			case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
 			case EngineState.PLAYER_TURN -> performAction();
 		}
@@ -272,7 +271,11 @@ public final class ConsoleBlackjackController implements EngineListener
 		catch (Exception e)
 		{
 			getHandler().showException(e);
-			performAction();
+
+			if (getEngine().getState() != EngineState.END)
+			{
+				performAction();
+			}
 		}
 	}
 
@@ -299,7 +302,11 @@ public final class ConsoleBlackjackController implements EngineListener
 		catch (Exception e)
 		{
 			getHandler().showException(e);
-			placeHandBet();
+
+			if (getEngine().getState() != EngineState.END)
+			{
+				placeHandBet();
+			}
 		}
 	}
 
@@ -328,7 +335,11 @@ public final class ConsoleBlackjackController implements EngineListener
 		catch (Exception e)
 		{
 			getHandler().showException(e);
-			placeInsuranceBet();
+
+			if (getEngine().getState() != EngineState.END)
+			{
+				placeInsuranceBet();
+			}
 		}
 	}
 
