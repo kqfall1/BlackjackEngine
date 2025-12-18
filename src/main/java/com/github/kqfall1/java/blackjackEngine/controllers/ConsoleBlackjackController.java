@@ -250,90 +250,86 @@ public final class ConsoleBlackjackController implements EngineListener
 			return;
 		}
 
-		getInputManager().getStringInputter().getString(
+		final var selection = getInputManager().getStringInputter().getString(
 			String.format(
 				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
 				getEngine().getActivePlayerHand().getHand().getScore()
 			),
 			new String[] {"d", "h", "sp", "st", "su"}
-		).thenAccept(input -> {
-			if (getEngine().getState() != EngineState.PLAYER_TURN)
-			{
-				return;
-			}
+		).join();
 
-			try
+		try
+		{
+			switch (selection)
 			{
-				switch (input)
-				{
-					case "d" -> getEngine().playerDoubleDown();
-					case "h" -> getEngine().playerHit();
-					case "sp" -> getEngine().playerSplit();
-					case "st" -> getEngine().playerStand();
-					case "su" -> getEngine().playerSurrender();
-				}
+				case "d" -> getEngine().playerDoubleDown();
+				case "h" -> getEngine().playerHit();
+				case "sp" -> getEngine().playerSplit();
+				case "st" -> getEngine().playerStand();
+				case "su" -> getEngine().playerSurrender();
 			}
-			catch (Exception e)
-			{
-				getHandler().showException(e);
-				performAction();
-			}
-		});
+		}
+		catch (Exception e)
+		{
+			getHandler().showException(e);
+			performAction();
+		}
 	}
 
 	private void placeHandBet()
 	{
-		getInputManager().getNumberInputter().getNumber(
+		if (getEngine().getState() != EngineState.BETTING)
+		{
+			return;
+		}
+
+		final var amount = getInputManager().getNumberInputter().getNumber(
 			String.format(
 				"You have $%.2f. Please place a bet",
 				getEngine().getPlayer().getChips()
 			),
 			Float.MIN_VALUE,
 			Float.MAX_VALUE
-		).thenAccept(amount -> {
-			if (getEngine().getState() != EngineState.BETTING)
-			{
-				return;
-			}
+		).join();
 
-			try
-			{
-				getEngine().placeBet(BigDecimal.valueOf(amount));
-			}
-			catch (Exception e)
-			{
-				getHandler().showException(e);
-				placeHandBet();
-			}
-		});
+		try
+		{
+			getEngine().placeBet(BigDecimal.valueOf(amount));
+		}
+		catch (Exception e)
+		{
+			getHandler().showException(e);
+			placeHandBet();
+		}
 	}
 
 	private void placeInsuranceBet()
 	{
-		getInputManager().getYesNoInputter().getYesNo("Do you wish to place an insurance bet?")
-		.thenAccept(answer -> {
-			if (getEngine().getState() != EngineState.INSURANCE_CHECK)
-			{
-				return;
-			}
+		if (getEngine().getState() != EngineState.INSURANCE_CHECK)
+		{
+			return;
+		}
 
-			try
+		final var answer = getInputManager().getYesNoInputter().getYesNo(
+			"Do you wish to place an insurance bet?"
+		).join();
+
+		try
+		{
+			if (answer == YesNoInput.YES)
 			{
-				if (answer == YesNoInput.YES)
-				{
-					getEngine().acceptInsuranceBet();
-				}
-				else
-				{
-					getEngine().declineInsuranceBet();
-				}
+				getEngine().acceptInsuranceBet();
 			}
-			catch (Exception e)
+			else
 			{
-				getHandler().showException(e);
-				placeInsuranceBet();
+				getEngine().declineInsuranceBet();
 			}
-		});
+		}
+		catch (Exception e)
+		{
+			getHandler().showException(e);
+			placeInsuranceBet();
+		}
 	}
 
 	@Override
