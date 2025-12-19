@@ -158,4 +158,15 @@ public final class Hand
 			getScore()
 		);
 	}
+
+	public String toStringPretty()
+	{
+		final var builder = new StringBuilder();
+		builder.append("[");
+		for (Card card : getCards())
+		{
+			builder.append(String.format("%s,", card.toStringPretty()));
+		}
+		return builder.append("]").toString();
+	}
 }

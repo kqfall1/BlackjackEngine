@@ -526,15 +526,15 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		final var playerMainHand = getActivePlayerHand();
+		final var playerPreviousHand = getActivePlayerHand();
 		if (!getConfig().isSplitPossible(getActivePlayerHand(), getActivePlayerHandIndex(),
 			getPlayer()))
 		{
 			if (getActivePlayerHand().isAltered()
-				|| !playerMainHand.getHand().isPocketPair())
+				|| !playerPreviousHand.getHand().isPocketPair())
 			{
 				throwException(new IllegalHandOperationException(
-					playerMainHand,
+					playerPreviousHand,
 					"An attempt to split a non-pocket pair occurred."
 				), METHOD_NAME);
 			}
@@ -566,18 +566,20 @@ public class BlackjackEngine
 			new Bet(splitAmount),
 			PlayerHandType.SPLIT
 		);
-		playerSplitHand.getHand().addCard(playerMainHand.getHand().getCards().getLast());
+		playerSplitHand.getHand().addCard(playerPreviousHand.getHand().getCards().getLast());
 		getPlayer().addHand(playerSplitHand);
-		playerMainHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
-		playerMainHand.markAsAltered();
-		playerMainHand.getHand().addCard(getDealer().getDeck().draw());
-		playerSplitHand.getHand().addCard(getDealer().getDeck().draw());
+		playerPreviousHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
+		playerPreviousHand.markAsAltered();
+		playerPreviousHand.getHand().addCard(getDealer().hit());
+		playerSplitHand.getHand().addCard(getDealer().hit());
+		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
 		setActivePlayerHandIndex(getActivePlayerHandIndex() + 1);
 		getLogger().info(String.format(
 			"Player has elected to split. Player now has a main hand of %s and a split hand of %s.",
 			getPlayer().getHands().getFirst(),
 			playerSplitHand
 		));
+		getListener().onPlayerSplit(playerPreviousHand, playerSplitHand);
 		onDrawingRoundStartedPlayer();
 		setState(EngineState.PLAYER_TURN);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);

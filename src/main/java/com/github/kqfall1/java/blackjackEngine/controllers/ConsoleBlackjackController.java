@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
@@ -160,6 +161,18 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
+	public void onPlayerSplit(PlayerHand previousHand, PlayerHand splitHand)
+	{
+		getHandler().getOut().printf(
+			String.format(
+				"Your current hand is now %s and your previous hand is now %s.",
+				previousHand.getHand().toStringPretty(),
+				splitHand.getHand().toStringPretty()
+			)
+		);
+	}
+
+	@Override
 	public void onInsuranceBetOpportunityDetected()
 	{
 		getHandler().getOut().println("You are eligible to place an insurance side bet.");
@@ -236,7 +249,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		switch (getEngine().getState())
 		{
 			case EngineState.BETTING -> placeHandBet();
-			case EngineState.END -> {}
+			case EngineState.END -> { System.exit(0); }
 			case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
 			case EngineState.PLAYER_TURN -> performAction();
 		}

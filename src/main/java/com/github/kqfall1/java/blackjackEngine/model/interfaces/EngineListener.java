@@ -2,6 +2,8 @@ package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+
 import java.math.BigDecimal;
 
 /**
@@ -26,6 +28,7 @@ public interface EngineListener
 	void onGameStarted();
 	void onInsuranceBetOpportunityDetected();
 	void onInsuranceBetResolved(BigDecimal playerWinnings);
+	void onPlayerSplit(PlayerHand previousHand, PlayerHand splitHand);
 	void onReset();
 	void onShowdownCompleted(boolean playerWon, BigDecimal playerWinnings);
 	void onShowdownStarted();
