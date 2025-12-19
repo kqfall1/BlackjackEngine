@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.enums.YesNoInput;
@@ -69,8 +70,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	throws InsufficientChipsException, IOException
 	{
 		final var config = new StandardRuleConfig();
-		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
 		final var handler = new ConsoleHandler();
+		config.setDealerHitsOnSoft17(true);
+		config.setPlayerCanDoubleDownOnSplitHands(true);
+		config.setPlayerCanSurrenderOnSplitHands(true);
+		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
 		final var controller = new ConsoleBlackjackController(config, handler,
 			LOG_FILE_PATH, LOGGER_NAME);
 		controller.getEngine().getLogger().setLevel(Level.FINE);
@@ -78,35 +82,30 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onBetPlaced()
+	public void onBetPlaced(PlayerHand playerHand)
 	{
 		getHandler().getOut().printf(
 			"You placed a bet of $%.2f.\n",
-			getEngine().getActivePlayerHand().getBet().getAmount()
+			playerHand.getBet().getAmount()
 		);
 	}
 
 	@Override
-	public void onBettingRoundCompleted() {}
+	public void onBettingRoundCompleted()
+	{
+		getHandler().getOut().println("You have completed a betting round.");
+	}
 
 	@Override
 	public void onBettingRoundStarted()
 	{
-		getHandler().getOut().println("Good luck!");
+		getHandler().getOut().println("You have started a new betting round! Good luck!");
 	}
 
 	@Override
-	public void onCardDealtToDealer(Card card)
+	public void onCardDealtToDealer(Card card, Hand dealerHand, boolean isFaceUp)
 	{
-		final int handCardCount = getEngine().getDealer().getHand().getCards().size();
-		if (handCardCount == StandardRuleConfig.INITIAL_CARD_COUNT)
-		{
-			getHandler().getOut().printf(
-				"The dealer is showing the %s.\n",
-				card.toStringPretty()
-			);
-		}
-		else if (handCardCount > StandardRuleConfig.INITIAL_CARD_COUNT)
+		if (isFaceUp)
 		{
 			getHandler().getOut().printf(
 				"The dealer was dealt the %s.\n",
@@ -116,36 +115,43 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onCardDealtToPlayer(Card card)
+	public void onCardDealtToPlayer(Card card, PlayerHand playerHand)
 	{
 		getHandler().getOut().printf(
-			"You were dealt the %s.\n",
-			card.toStringPretty()
+			"You were dealt the %s. Your current hand is now %s.\n",
+			card.toStringPretty(),
+			playerHand.getHand().toStringPretty()
 		);
 	}
 
 	@Override
-	public void onDrawingRoundCompletedDealer()
+	public void onDrawingRoundCompletedDealer(Hand dealerHand)
 	{
-		getHandler().getOut().println("The dealer has finished drawing.");
+		getHandler().getOut().printf(
+			"The dealer has finished drawing. Their hand is %s.\n",
+			dealerHand.toStringPretty()
+		);
 	}
 
 	@Override
-	public void onDrawingRoundCompletedPlayer()
+	public void onDrawingRoundCompletedPlayer(PlayerHand playerHand)
 	{
-		getHandler().getOut().println("You have completed a drawing round.");
+		getHandler().getOut().printf(
+			"You have completed a drawing round on hand %s.\n",
+			playerHand.getHand().toStringPretty()
+		);
 	}
 
 	@Override
-	public void onDrawingRoundStartedDealer()
+	public void onDrawingRoundStartedDealer(Hand dealerHand)
 	{
-		getHandler().getOut().println("The dealer has began drawing.");
+		getHandler().getOut().println("The dealer has begun drawing.");
 	}
 
 	@Override
-	public void onDrawingRoundStartedPlayer()
+	public void onDrawingRoundStartedPlayer(PlayerHand playerHand)
 	{
-		getHandler().getOut().println("You have began a new drawing round.");
+		getHandler().getOut().println("You have begun a new drawing round.");
 	}
 
 	@Override
@@ -165,23 +171,26 @@ public final class ConsoleBlackjackController implements EngineListener
 	{
 		getHandler().getOut().printf(
 			String.format(
-				"Your current hand is now %s and your previous hand is now %s.",
-				previousHand.getHand().toStringPretty(),
-				splitHand.getHand().toStringPretty()
+				"Your current hand is now %s and your previous hand is now %s.\n",
+				splitHand.getHand().toStringPretty(),
+				previousHand.getHand().toStringPretty()
 			)
 		);
 	}
 
 	@Override
-	public void onInsuranceBetOpportunityDetected()
+	public void onInsuranceBetOpportunityDetected(Card dealerUpCard)
 	{
-		getHandler().getOut().println("You are eligible to place an insurance side bet.");
+		getHandler().getOut().printf(
+			"The dealer is showing the %s. You are eligible to place an insurance side bet.\n",
+			dealerUpCard.toStringPretty()
+		);
 	}
 
 	@Override
-	public void onInsuranceBetResolved(BigDecimal playerWinnings)
+	public void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings)
 	{
-		if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
+		if (wasSuccessful)
 		{
 			getHandler().getOut().printf(
 				"You have won your insurance bet and collect $%.2f.\n",
@@ -201,12 +210,13 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onShowdownCompleted(boolean playerWon, BigDecimal playerWinnings)
+	public void onShowdownCompleted(Hand dealerHand, PlayerHand playerHand,
+									boolean playerWon, BigDecimal playerWinnings)
 	{
 		final var completedString = String.format(
 			"Your score is %d and the dealer's score is %d.",
-			getEngine().getActivePlayerHand().getHand().getScore(),
-			getEngine().getDealer().getHand().getScore()
+			playerHand.getHand().getScore(),
+			dealerHand.getScore()
 		);
 
 		if (playerWon)
@@ -235,11 +245,12 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onShowdownStarted()
+	public void onShowdownStarted(Hand dealerHand, PlayerHand playerHand)
 	{
 		getHandler().getOut().printf(
-			"You have began a showdown. The dealer's down card is the %s.\n",
-			getEngine().getDealer().getHand().getCards().getFirst().toStringPretty()
+			"Your hand %s is being shown down against the dealer's hand %s.\n",
+			playerHand.getHand().toStringPretty(),
+			dealerHand.toStringPretty()
 		);
 	}
 

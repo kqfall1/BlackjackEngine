@@ -119,21 +119,20 @@ public class BlackjackEngine
 		final var amount = getActivePlayerHand().getBet().getHalf();
 		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
-		final boolean wasSuccessful = getDealer().getHand().isBlackjack();
 		var winnings = BigDecimal.ZERO;
-		if (wasSuccessful)
+		if (getDealer().getHand().isBlackjack())
 		{
 			winnings = insurancePot.scoop().multiply(
 				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
 			);
 			getPlayer().setChips(getPlayer().getChips().add(winnings));
-			getListener().onInsuranceBetResolved(winnings);
+			getListener().onInsuranceBetResolved(true, winnings);
 			setState(EngineState.SHOWDOWN);
 			showdown();
 		}
 		else
 		{
-			getListener().onInsuranceBetResolved(winnings);
+			getListener().onInsuranceBetResolved(false, winnings);
 			onDrawingRoundStartedPlayer();
 			setState(EngineState.PLAYER_TURN);
 		}
@@ -168,7 +167,8 @@ public class BlackjackEngine
 		if (getConfig().isInsuranceBetPossible(
 			getActivePlayerHand(), getPlayer(), getDealer().getHand()))
 		{
-			getListener().onInsuranceBetOpportunityDetected();
+			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().
+				getCards().getLast());
 			setState(EngineState.INSURANCE_CHECK);
 		}
 		else if (getActivePlayerHand().getHand().isBlackjack()
@@ -225,15 +225,23 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void declineInsuranceBet()
+	public void declineInsuranceBet() throws InsufficientChipsException
 	{
 		final var METHOD_NAME = "declineInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.INSURANCE_CHECK
 			: "getState() != EngineState.INSURANCE_CHECK";
-		onDrawingRoundStartedPlayer();
-		setState(EngineState.PLAYER_TURN);
+		if (getDealer().getHand().isBlackjack())
+		{
+			setState(EngineState.SHOWDOWN);
+			showdown();
+		}
+		else
+		{
+			onDrawingRoundStartedPlayer();
+			setState(EngineState.PLAYER_TURN);
+		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -304,7 +312,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.BETTING : "getState() != EngineState.BETTING";
-		getListener().onBetPlaced();
+		getListener().onBetPlaced(getActivePlayerHand());
 		getLogger().info(String.format(
 			"Player %s has placed a bet of $%.2f on their %s hand.",
 			getPlayer(),
@@ -321,7 +329,9 @@ public class BlackjackEngine
 		assert card != null : "card == null";
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
-		getListener().onCardDealtToDealer(card);
+		final var isFaceUpCard = getDealer().getHand().getCards().size()
+			> StandardRuleConfig.INITIAL_CARD_COUNT - 1;
+		getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
 		getLogger().info(String.format(
 			"Added card %s to dealer's hand %s.",
 			card, getDealer().getHand()
@@ -336,7 +346,7 @@ public class BlackjackEngine
 		assert card != null : "card == null";
 		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
-		getListener().onCardDealtToPlayer(card);
+		getListener().onCardDealtToPlayer(card, getActivePlayerHand());
 		if (getState() == EngineState.PLAYER_TURN
 			&& getActivePlayerHand().getHand().getCards().size() > StandardRuleConfig.INITIAL_CARD_COUNT)
 		{
@@ -355,7 +365,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
-		getListener().onDrawingRoundCompletedDealer();
+		getListener().onDrawingRoundCompletedDealer(getDealer().getHand());
 		getLogger().info("The dealer's drawing round was completed.");
 		setState(EngineState.SHOWDOWN);
 		showdown();
@@ -367,7 +377,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "onDrawingRoundCompletedPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		getListener().onDrawingRoundCompletedPlayer();
+		getListener().onDrawingRoundCompletedPlayer(getActivePlayerHand());
 		if (getActivePlayerHand().getType() == PlayerHandType.MAIN)
 		{
 			assert getActivePlayerHandIndex() == 0 : "activeHandPlayerIndex != 0";
@@ -413,7 +423,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActivePlayerHandIndex() == 0 :  "activeHandPlayerIndex != 0";
 		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
-		getListener().onDrawingRoundStartedDealer();
+		getListener().onDrawingRoundStartedDealer(getDealer().getHand());
 		getLogger().info("The dealer's drawing round was started.");
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -422,8 +432,7 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "onDrawingRoundStartedPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
-		//assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		getListener().onDrawingRoundStartedPlayer();
+		getListener().onDrawingRoundStartedPlayer(getActivePlayerHand());
 		getLogger().info(String.format(
 			"The player's drawing round was started on hand %s.",
 			getActivePlayerHand()
@@ -676,7 +685,7 @@ public class BlackjackEngine
 		assert getState() == EngineState.SHOWDOWN : "getState() != EngineState.SHOWDOWN";
 		for (PlayerHand playerHand : getPlayer().getHands())
 		{
-			getListener().onShowdownStarted();
+			getListener().onShowdownStarted(getDealer().getHand(), playerHand);
 			var playerBeatDealer = false;
 			var playerWinnings = BigDecimal.ZERO;
 			if (playerHand.getHasSurrendered())
@@ -723,7 +732,8 @@ public class BlackjackEngine
 				"Player's hand %s was showed down against dealer's hand %s.",
 				playerHand, getDealer().getHand()
 			));
-			getListener().onShowdownCompleted(playerBeatDealer, playerWinnings);
+			getListener().onShowdownCompleted(getDealer().getHand(), playerHand,
+				playerBeatDealer, playerWinnings);
 		}
 		getListener().onBettingRoundCompleted();
 		setState(EngineState.RESETTING);
