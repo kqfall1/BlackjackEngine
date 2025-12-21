@@ -76,16 +76,16 @@ public final class Hand
 		{
 			lowScore += switch (card.getRank())
 			{
-				case Rank.TWO -> 2;
-				case Rank.THREE -> 3;
-				case Rank.FOUR -> 4;
-				case Rank.FIVE -> 5;
-				case Rank.SIX -> 6;
-				case Rank.SEVEN -> 7;
-				case Rank.EIGHT -> 8;
-				case Rank.NINE -> 9;
-				case Rank.TEN, Rank.JACK, Rank.QUEEN, Rank.KING -> 10;
-				case Rank.ACE -> StandardRuleConfig.ACE_LOW_VALUE;
+				case TWO -> 2;
+				case THREE -> 3;
+				case FOUR -> 4;
+				case FIVE -> 5;
+				case SIX -> 6;
+				case SEVEN -> 7;
+				case EIGHT -> 8;
+				case NINE -> 9;
+				case TEN, JACK, QUEEN, KING -> 10;
+				case ACE -> StandardRuleConfig.ACE_LOW_VALUE;
 			};
 		}
 

@@ -167,8 +167,7 @@ public class BlackjackEngine
 		if (getConfig().isInsuranceBetPossible(
 			getActivePlayerHand(), getPlayer(), getDealer().getHand()))
 		{
-			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().
-				getCards().getLast());
+			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getLast());
 			setState(EngineState.INSURANCE_CHECK);
 		}
 		else if (getActivePlayerHand().getHand().isBlackjack()

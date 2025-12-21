@@ -259,10 +259,10 @@ public final class ConsoleBlackjackController implements EngineListener
 	{
 		switch (getEngine().getState())
 		{
-			case EngineState.BETTING -> placeHandBet();
-			case EngineState.END -> { System.exit(0); }
-			case EngineState.INSURANCE_CHECK -> placeInsuranceBet();
-			case EngineState.PLAYER_TURN -> performAction();
+			case BETTING -> placeHandBet();
+			case END -> { System.exit(0); }
+			case INSURANCE_CHECK -> placeInsuranceBet();
+			case PLAYER_TURN -> performAction();
 		}
 	}
 
