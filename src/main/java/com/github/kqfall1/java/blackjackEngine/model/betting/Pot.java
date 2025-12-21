@@ -19,9 +19,7 @@ public final class Pot
 
 	public Pot(BigDecimal amount)
 	{
-		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0
-			: "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
-		this.amount = amount;
+		setAmount(amount);
 	}
 
 	public void addChips(BigDecimal amount)

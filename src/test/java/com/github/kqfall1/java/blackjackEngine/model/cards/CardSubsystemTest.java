@@ -1,14 +1,16 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.util.*;
 
 /**
- * Tests the getter methods of {@code Card} and {@code Deck} objects, as well as
- * verifying that {@code Deck} objects function in a reasonable manner.
+ * Tests the getter methods of {@code Card} and {@code Deck} objects; verifies that
+ * {@code Deck} objects function in a reasonable manner.
  *
  * @author kqfall1
  * @since 20/12/2025
@@ -32,21 +34,21 @@ public final class CardSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public void testCard()
+	public void cardsAndDeckTest()
 	{
-		Assertions.assertEquals(aceOfClubs1, aceOfClubs2);
-		Assertions.assertEquals(aceOfClubs1.toString(), aceOfClubs2.toString());
-		Assertions.assertEquals(aceOfClubs1.toStringPretty(), aceOfClubs2.toStringPretty());
-		Assertions.assertEquals(Rank.ACE, aceOfClubs1.getRank());
-		Assertions.assertEquals(Suit.CLUB, aceOfClubs1.getSuit());
-		Assertions.assertEquals(DECK_CARD_COUNT, deck.getCards().size());
+		assertEquals(aceOfClubs1, aceOfClubs2);
+		assertEquals(aceOfClubs1.toString(), aceOfClubs2.toString());
+		assertEquals(aceOfClubs1.toStringPretty(), aceOfClubs2.toStringPretty());
+		assertEquals(Rank.ACE, aceOfClubs1.getRank());
+		assertEquals(Suit.CLUB, aceOfClubs1.getSuit());
+		assertEquals(DECK_CARD_COUNT, deck.getCards().size());
 
 		for (int count = 0; count < DECK_CARD_COUNT + 1; count++)
 		{
 			try
 			{
 				final var card = deck.draw();
-				Assertions.assertEquals(
+				assertEquals(
 					DECK_CARD_COUNT - count - 1,
 					deck.getCards().size()
 				);
@@ -56,7 +58,7 @@ public final class CardSubsystemTest
 			}
 			catch (EmptyDeckException e)
 			{
-				Assertions.assertEquals(DECK_CARD_COUNT, count);
+				assertEquals(DECK_CARD_COUNT, count);
 			}
 		}
 	}
