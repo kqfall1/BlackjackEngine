@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Places {@code Bet} objects and plays before the {@code Dealer} in a
- * blackjack betting round.
+ * An actor that places {@code Bet} objects and plays at least one
+ * {@code Hand} before the {@code Dealer} in a blackjack betting round.
  *
  * @author kqfall1
  * @since 14/12/2025
@@ -27,7 +27,7 @@ public final class Player
 	public void addContext(HandContext context)
 	{
 		assert context != null && !getContexts().contains(context)
-			: "hand == null || hands.contains(hand)";
+			: "context == null || getContexts().contains(context)";
 		contexts.add(context);
 	}
 
@@ -41,6 +41,17 @@ public final class Player
 		return chips;
 	}
 
+	public List<HandContext> getContexts()
+	{
+		return List.copyOf(contexts);
+	}
+
+	public void removeContext(int contextIndex)
+	{
+		assert contextIndex >= 0 && contextIndex < contexts.size();
+		contexts.remove(contextIndex);
+	}
+
 	public void setChips(BigDecimal chips) throws InsufficientChipsException
 	{
 		assert chips != null : "chips == null";
@@ -51,11 +62,6 @@ public final class Player
 		}
 
 		this.chips = chips;
-	}
-
-	public List<HandContext> getContexts()
-	{
-		return List.copyOf(contexts);
 	}
 
 	@Override

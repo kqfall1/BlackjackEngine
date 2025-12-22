@@ -153,7 +153,7 @@ public final class EntityAndHandSubsystemTest
 		assertEquals(PLAYER_INITIAL_CHIP_AMOUNT, player2.getChips());
 		assertEquals(player1.getContexts().size(), player2.getContexts().size());
 		player1.clearContexts();
-		player2.clearContexts();
+		player2.removeContext(0);
 		assertEquals(player1.getContexts().size(), player2.getContexts().size());
 
 		try

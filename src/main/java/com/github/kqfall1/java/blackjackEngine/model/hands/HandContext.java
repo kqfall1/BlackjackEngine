@@ -90,7 +90,7 @@ public final class HandContext
 
 	/**
  	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call
-	 * this method whenever a {@code HandContext} is altered.
+	 * this method whenever this {@code HandContext} is altered.
  	 */
 	public void markAsAltered()
 	{

@@ -41,7 +41,7 @@ public final class Hand
 		}
 
 		final var otherHand = (Hand) otherObject;
-		return getCards().equals(otherHand.getCards());
+		return Objects.equals(getCards(), otherHand.getCards());
 	}
 
 	public int getAceCount()
@@ -94,7 +94,7 @@ public final class Hand
 
 	public int getScore()
 	{
-		int score = getLowScore();
+		var score = getLowScore();
 
 		for (int count = 0; count < getAceCount(); count++)
 		{
