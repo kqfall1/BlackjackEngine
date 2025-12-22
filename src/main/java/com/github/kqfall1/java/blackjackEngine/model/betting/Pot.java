@@ -1,9 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.model.betting;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
- * A container for chips for {@code Dealer} and {@code Player} wagers.
+ * A container for chips for {@code Player} wagers and {@code Dealer} contributions.
  *
  * @author kqfall1
  * @since 13/12/2025
@@ -14,7 +15,7 @@ public final class Pot
 
 	public Pot()
 	{
-		amount = BigDecimal.ZERO;
+		setAmount(BigDecimal.ZERO);
 	}
 
 	public Pot(BigDecimal amount)
@@ -26,7 +27,23 @@ public final class Pot
 	{
 		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) > 0 :
 			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
-		this.amount = this.amount.add(amount);
+		setAmount(getAmount().add(amount));
+	}
+
+	@Override
+	public boolean equals(Object otherObject)
+	{
+		if (this == otherObject)
+		{
+			return true;
+		}
+		else if (otherObject == null || getClass() != otherObject.getClass())
+		{
+			return false;
+		}
+
+		final var otherPot = (Pot) otherObject;
+		return Objects.equals(getAmount(), otherPot.getAmount());
 	}
 
 	public BigDecimal getAmount()
@@ -34,11 +51,17 @@ public final class Pot
 		return amount;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(getAmount());
+	}
+
 	private void setAmount(BigDecimal amount)
 	{
 		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) >= 0 :
 			"amount == null || amount.compareTo(BigDecimal.ZERO) < 0";
-		this.amount = amount;
+		this.amount = amount.stripTrailingZeros();
 	}
 
 	public BigDecimal scoop()

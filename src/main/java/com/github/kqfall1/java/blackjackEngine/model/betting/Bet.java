@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.betting;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  * Immutable wagers placed by {@code Player} actors.
@@ -17,7 +18,23 @@ public final class Bet
 	{
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 :
 			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
-		this.amount = amount;
+		this.amount = amount.stripTrailingZeros();
+	}
+
+	@Override
+	public boolean equals(Object otherObject)
+	{
+		if (this == otherObject)
+		{
+			return true;
+		}
+		else if (otherObject == null || getClass() != otherObject.getClass())
+		{
+			return false;
+		}
+
+		final var otherBet = (Bet) otherObject;
+		return Objects.equals(getAmount(), otherBet.getAmount());
 	}
 
 	public BigDecimal getAmount()
@@ -27,7 +44,13 @@ public final class Bet
 
 	public BigDecimal getHalf()
 	{
-		return amount.divide(BigDecimal.TWO, RoundingMode.HALF_UP);
+		return getAmount().divide(BigDecimal.TWO, RoundingMode.HALF_UP);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(getAmount());
 	}
 
 	@Override

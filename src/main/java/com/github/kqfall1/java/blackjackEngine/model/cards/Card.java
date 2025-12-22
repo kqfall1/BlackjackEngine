@@ -35,7 +35,6 @@ public final class Card
 		}
 
 		final var otherCard = (Card) otherObject;
-
 		return Objects.equals(getRank(), otherCard.getRank())
 			&& Objects.equals(getSuit(), otherCard.getSuit());
 	}

@@ -1,9 +1,12 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
+import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -42,6 +45,8 @@ public final class BettingSubsystemTest
 
 	private void betTest(RepetitionInfo info)
 	{
+		assertEquals(bet1, bet2);
+		Assertions.assertNotEquals(new Bet(BigDecimal.ONE), bet1);
 		assertEquals(initialBetAmount, bet1.getAmount());
 		assertEquals(
 			initialBetAmount.divide(BigDecimal.TWO, RoundingMode.HALF_UP),
@@ -82,11 +87,17 @@ public final class BettingSubsystemTest
 
 	private void payoutRatioTest()
 	{
+		assertEquals(
+			StandardRuleConfig.BLACKJACK,
+			new PayoutRatio(BigDecimal.valueOf(3), BigDecimal.TWO)
+		);
+		Assertions.assertNotEquals(StandardRuleConfig.BLACKJACK, StandardRuleConfig.SURRENDER);
 		assertEquals(BigDecimal.valueOf(3), StandardRuleConfig.BLACKJACK.getNumerator());
 		assertEquals(BigDecimal.TWO, StandardRuleConfig.BLACKJACK.getDenominator());
 		assertEquals(
 			StandardRuleConfig.BLACKJACK.getNumerator().divide(
-				StandardRuleConfig.BLACKJACK.getDenominator()
+				StandardRuleConfig.BLACKJACK.getDenominator(),
+				RoundingMode.HALF_UP
 			),
 			StandardRuleConfig.BLACKJACK.getPayoutMultiplier()
 		);
@@ -105,7 +116,8 @@ public final class BettingSubsystemTest
 		assertEquals(BigDecimal.TWO, StandardRuleConfig.PUSH.getDenominator());
 		assertEquals(
 			StandardRuleConfig.PUSH.getNumerator().divide(
-				StandardRuleConfig.PUSH.getDenominator()
+				StandardRuleConfig.PUSH.getDenominator(),
+				RoundingMode.HALF_UP
 			),
 			StandardRuleConfig.PUSH.getPayoutMultiplier()
 		);
@@ -114,7 +126,8 @@ public final class BettingSubsystemTest
 		assertEquals(BigDecimal.valueOf(4), StandardRuleConfig.SURRENDER.getDenominator());
 		assertEquals(
 			StandardRuleConfig.SURRENDER.getNumerator().divide(
-				StandardRuleConfig.SURRENDER.getDenominator()
+				StandardRuleConfig.SURRENDER.getDenominator(),
+				RoundingMode.HALF_UP
 			),
 			StandardRuleConfig.SURRENDER.getPayoutMultiplier()
 		);
@@ -122,12 +135,16 @@ public final class BettingSubsystemTest
 
 	private void potTest(RepetitionInfo info)
 	{
+		Assertions.assertNotEquals(pot1, pot2);
 		assertEquals(BigDecimal.ZERO, pot1.getAmount());
 		assertEquals(initialPotAmount, pot2.getAmount());
 		pot1.addChips(bet1.getAmount());
 		pot2.addChips(bet2.getAmount());
 		assertEquals(bet1.getAmount(), pot1.getAmount());
-		assertEquals(initialPotAmount.add(bet2.getAmount()), pot2.getAmount());
+		assertEquals(
+			initialPotAmount.add(bet2.getAmount()).stripTrailingZeros(),
+			pot2.getAmount()
+		);
 		pot1.scoop();
 		pot2.scoop();
 		assertEquals(pot1.getAmount(), pot2.getAmount());
