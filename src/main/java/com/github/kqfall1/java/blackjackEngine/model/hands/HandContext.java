@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * A wrapper for a {@code Player} object's associated {@code Bet}, {@code Hand},
- * and {@code HandType} in a blackjack betting round.
+ * {@code HandType}, and {@code Pot} in a blackjack betting round.
  *
  * @author kqfall1
  * @since 14/12/2025
@@ -62,11 +62,6 @@ public final class HandContext
 		return hand;
 	}
 
-	public boolean getHasSurrendered()
-	{
-		return hasSurrendered;
-	}
-
 	public Pot getPot()
 	{
 		return pot;
@@ -75,6 +70,11 @@ public final class HandContext
 	public HandContextType getType()
 	{
 		return type;
+	}
+
+	public boolean hasSurrendered()
+	{
+		return hasSurrendered;
 	}
 
 	@Override
@@ -103,9 +103,9 @@ public final class HandContext
 		this.bet = bet;
 	}
 
-	public void setHasSurrendered(boolean value)
+	public void setHasSurrendered()
 	{
-		hasSurrendered = value;
+		hasSurrendered = true;
 		markAsAltered();
 	}
 
@@ -118,7 +118,7 @@ public final class HandContext
 			isAltered(),
 			getBet(),
 			getHand(),
-			getHasSurrendered(),
+			hasSurrendered(),
 			getPot(),
 			getType()
 		);

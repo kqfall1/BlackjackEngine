@@ -1,14 +1,18 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
+import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import com.github.kqfall1.java.managers.InputManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+
+import java.math.BigDecimal;
 
 /**
  * Tests the getter methods of {@code Dealer}, {@code Hand}, {@code Player}, and
@@ -19,14 +23,18 @@ import org.junit.jupiter.api.RepeatedTest;
  */
 public final class EntityAndHandSubsystemTest
 {
+	private final Bet BET = new Bet(BigDecimal.valueOf(BET_AMOUNT));
+	private static final int BET_AMOUNT = 1000;
 	private Hand blackjack;
-	private HandContext context;
+	private HandContext mainContext;
 	private Dealer dealer;
 	private Hand dealerHand;
 	private static final int INITIAL_CHIP_AMOUNT = 5000;
-	private Hand playerHand;
+	private Hand playerMainHand;
+	private Hand playerSplitHand;
 	private Hand pocketPair = new Hand();
 	private Deck sideDeck;
+	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 1000;
 
 	@BeforeEach
@@ -35,9 +43,12 @@ public final class EntityAndHandSubsystemTest
 		blackjack = randomBlackjack();
 		dealer = new Dealer();
 		dealerHand = new Hand();
-		playerHand = new Hand();
+		mainContext = new HandContext(BET, HandContextType.MAIN);
+		playerMainHand = new Hand();
+		playerSplitHand = new Hand();
 		pocketPair = randomPocketPair();
 		sideDeck = new Deck();
+		splitContext = new HandContext(BET, HandContextType.SPLIT);
 	}
 
 	private void dealerTest()
@@ -64,23 +75,23 @@ public final class EntityAndHandSubsystemTest
 			Float.MAX_VALUE
 		);
 		assertEquals(expectedSize, dealerHand.getCards().size());
-		assertEquals(expectedSize, playerHand.getCards().size());
-		assertEquals(dealerHand, playerHand);
-		assertEquals(dealerHand.toString(), playerHand.toString());
-		assertEquals(dealerHand.toStringPretty(), playerHand.toStringPretty());
+		assertEquals(expectedSize, playerMainHand.getCards().size());
+		assertEquals(dealerHand, playerMainHand);
+		assertEquals(dealerHand.toString(), playerMainHand.toString());
+		assertEquals(dealerHand.toStringPretty(), playerMainHand.toStringPretty());
 	}
 
 	private void handTest()
 	{
 		_handTest(0);
-		playerHand.addCard(sideDeck.draw());
+		playerMainHand.addCard(sideDeck.draw());
 		dealerHand.addCard(sideDeck.draw());
-		Assertions.assertNotEquals(dealerHand, playerHand);
-		playerHand.removeCard(0);
+		Assertions.assertNotEquals(dealerHand, playerMainHand);
+		playerMainHand.removeCard(0);
 		dealerHand.removeCard(0);
 		final var newCard = sideDeck.draw();
 		dealerHand.addCard(newCard);
-		playerHand.addCard(newCard);
+		playerMainHand.addCard(newCard);
 		_handTest(1);
 
 		Assertions.assertTrue(blackjack.isBlackjack());
@@ -96,7 +107,26 @@ public final class EntityAndHandSubsystemTest
 
 	private void handContextTest()
 	{
+		assertEquals(mainContext, new HandContext(BET, HandContextType.MAIN));
+		assertEquals(BET, mainContext.getBet());
+		assertEquals(BigDecimal.ZERO, mainContext.getPot().getAmount());
+		assertEquals(splitContext, new HandContext(BET, HandContextType.SPLIT));
+		assertEquals(BET, splitContext.getBet());
+		assertEquals(BigDecimal.ZERO, splitContext.getPot().getAmount());
+		Assertions.assertFalse(mainContext.isAltered());
+		Assertions.assertFalse(mainContext.hasSurrendered());
+		Assertions.assertFalse(splitContext.isAltered());
+		Assertions.assertFalse(splitContext.hasSurrendered());
+		Assertions.assertNotEquals(mainContext.getType(), splitContext.getType());
 
+		mainContext.getPot().addChips(BigDecimal.valueOf(BET_AMOUNT));
+		splitContext.getPot().addChips(BigDecimal.valueOf(BET_AMOUNT));
+		assertEquals(mainContext.getPot().getAmount(), splitContext.getPot().getAmount());
+		mainContext.setBet(new Bet(BigDecimal.valueOf(100)));
+		Assertions.assertNotEquals(mainContext.getBet(), splitContext.getBet());
+		mainContext.setHasSurrendered();
+		Assertions.assertTrue(mainContext.hasSurrendered());
+		Assertions.assertNotEquals(mainContext.hasSurrendered(), splitContext.hasSurrendered());
 	}
 
 	private void playerTest()

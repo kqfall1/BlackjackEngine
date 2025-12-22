@@ -390,7 +390,7 @@ public class BlackjackEngine
 				setState(EngineState.SHOWDOWN);
 				showdown();
 			}
-			else if (getActiveHandContext().getHasSurrendered())
+			else if (getActiveHandContext().hasSurrendered())
 			{
 				getLogger().info(String.format(
 					"Player has surrendered on hand %s.",
@@ -625,7 +625,7 @@ public class BlackjackEngine
 				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
-		getActiveHandContext().setHasSurrendered(true);
+		getActiveHandContext().setHasSurrendered();
 		onDrawingRoundCompletedPlayer();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -687,7 +687,7 @@ public class BlackjackEngine
 			getListener().onShowdownStarted(getDealer().getHand(), handContext);
 			var playerBeatDealer = false;
 			var playerWinnings = BigDecimal.ZERO;
-			if (handContext.getHasSurrendered())
+			if (handContext.hasSurrendered())
 			{
 				playerWinnings = handContext.getPot().scoop().multiply(
 					StandardRuleConfig.SURRENDER.getPayoutMultiplier()
