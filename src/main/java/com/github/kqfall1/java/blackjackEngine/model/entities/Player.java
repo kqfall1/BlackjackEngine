@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,34 +16,29 @@ import java.util.List;
 public final class Player
 {
 	private BigDecimal chips;
-	private final List<PlayerHand> hands;
+	private final List<HandContext> contexts;
 
 	public Player() throws InsufficientChipsException
 	{
 		setChips(BigDecimal.ZERO);
-		hands = new ArrayList<>();
+		contexts = new ArrayList<>();
 	}
 
-	public void addHand(PlayerHand hand)
+	public void addContext(HandContext context)
 	{
-		assert hand != null && !getHands().contains(hand)
+		assert context != null && !getContexts().contains(context)
 			: "hand == null || hands.contains(hand)";
-		hands.add(hand);
+		contexts.add(context);
 	}
 
-	public void clearHands()
+	public void clearContexts()
 	{
-		hands.clear();
+		contexts.clear();
 	}
 
 	public BigDecimal getChips()
 	{
 		return chips;
-	}
-
-	public List<PlayerHand> getHands()
-	{
-		return List.copyOf(hands);
 	}
 
 	public void setChips(BigDecimal chips) throws InsufficientChipsException
@@ -58,14 +53,19 @@ public final class Player
 		this.chips = chips;
 	}
 
+	public List<HandContext> getContexts()
+	{
+		return List.copyOf(contexts);
+	}
+
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[chips=%s,hands=%s]",
+			"%s[chips=%s,contexts=%s]",
 			getClass().getName(),
 			getChips(),
-			getHands()
+			getContexts()
 		);
 	}
 }

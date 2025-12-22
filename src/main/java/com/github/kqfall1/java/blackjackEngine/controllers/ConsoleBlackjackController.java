@@ -5,7 +5,7 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
@@ -82,11 +82,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onBetPlaced(PlayerHand playerHand)
+	public void onBetPlaced(HandContext handContext)
 	{
 		getHandler().getOut().printf(
 			"You placed a bet of $%.2f.\n",
-			playerHand.getBet().getAmount()
+			handContext.getBet().getAmount()
 		);
 	}
 
@@ -115,12 +115,12 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onCardDealtToPlayer(Card card, PlayerHand playerHand)
+	public void onCardDealtToPlayer(Card card, HandContext handContext)
 	{
 		getHandler().getOut().printf(
 			"You were dealt the %s. Your current hand is now %s.\n",
 			card.toStringPretty(),
-			playerHand.getHand().toStringPretty()
+			handContext.getHand().toStringPretty()
 		);
 	}
 
@@ -134,11 +134,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onDrawingRoundCompletedPlayer(PlayerHand playerHand)
+	public void onDrawingRoundCompletedPlayer(HandContext handContext)
 	{
 		getHandler().getOut().printf(
 			"You have completed a drawing round on hand %s.\n",
-			playerHand.getHand().toStringPretty()
+			handContext.getHand().toStringPretty()
 		);
 	}
 
@@ -149,7 +149,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onDrawingRoundStartedPlayer(PlayerHand playerHand)
+	public void onDrawingRoundStartedPlayer(HandContext handContext)
 	{
 		getHandler().getOut().println("You have begun a new drawing round.");
 	}
@@ -167,7 +167,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onPlayerSplit(PlayerHand previousHand, PlayerHand splitHand)
+	public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
 	{
 		getHandler().getOut().printf(
 			String.format(
@@ -210,12 +210,12 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onShowdownCompleted(Hand dealerHand, PlayerHand playerHand,
+	public void onShowdownCompleted(Hand dealerHand, HandContext handContext,
 									boolean playerWon, BigDecimal playerWinnings)
 	{
 		final var completedString = String.format(
 			"Your score is %d and the dealer's score is %d.",
-			playerHand.getHand().getScore(),
+			handContext.getHand().getScore(),
 			dealerHand.getScore()
 		);
 
@@ -245,11 +245,11 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onShowdownStarted(Hand dealerHand, PlayerHand playerHand)
+	public void onShowdownStarted(Hand dealerHand, HandContext handContext)
 	{
 		getHandler().getOut().printf(
 			"Your hand %s is being shown down against the dealer's hand %s.\n",
-			playerHand.getHand().toStringPretty(),
+			handContext.getHand().toStringPretty(),
 			dealerHand.toStringPretty()
 		);
 	}
@@ -276,7 +276,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		final var selection = getInputManager().getStringInputter().getString(
 			String.format(
 				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
-				getEngine().getActivePlayerHand().getHand().getScore()
+				getEngine().getActiveHandContext().getHand().getScore()
 			),
 			new String[] {"d", "h", "sp", "st", "su"}
 		).join();

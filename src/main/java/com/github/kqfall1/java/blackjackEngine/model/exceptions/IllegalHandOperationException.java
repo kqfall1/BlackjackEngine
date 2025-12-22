@@ -1,16 +1,16 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 
 /**
  * Encapsulates data about failures resulting from illegal operations on
- * {@code PlayerHand} objects.
+ * {@code HandContext} objects.
  *
  * <p>
  * The most prominent use case of this abstraction is preventing a {@code Player} from
  * doubling down, splitting, or surrendering when the {@code Player} has more than two
  * {@code Card} objects encapsulated within its {@code hand}. Another example is preventing
- * a {@code Player} from splitting if they don't have a pocket pair.
+ * a {@code HandContext} from splitting if its {@code Hand} is not a pocket pair.
  * </p>
  *
  * @author kqfall1
@@ -18,11 +18,11 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
  */
 public final class IllegalHandOperationException extends Exception
 {
-	public IllegalHandOperationException(PlayerHand playerHand, String message)
+	public IllegalHandOperationException(HandContext handContext, String message)
 	{
 		super(String.format(
 			"An illegal operation was attempted on player hand %s. %s",
-			playerHand,
+		handContext,
 			message
 		));
 	}

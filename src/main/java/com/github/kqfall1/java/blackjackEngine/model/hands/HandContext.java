@@ -11,21 +11,21 @@ import java.util.Objects;
  * @author kqfall1
  * @since 14/12/2025
  */
-public final class PlayerHand
+public final class HandContext
 {
 	/**
- 	 * Indicates whether the {@code Player} that encapsulates this {@code PlayerHand} has
-	 * taken any action on this {@code PlayerHand}, such as adding a {@code Card} to this
-	 * {@code PlayerHand} object's {@code Hand}, surrendering, standing, or splitting.
+ 	 * Indicates whether the {@code Player} that encapsulates this {@code HandContext} has
+	 * taken any action on this {@code HandContext}, such as adding a {@code Card} to this
+	 * {@code HandContext} object's {@code Hand}, surrendering, standing, or splitting.
  	 */
 	private boolean altered;
 	private Bet bet;
 	private final Hand hand;
 	private boolean hasSurrendered;
 	private final Pot pot;
-	private final PlayerHandType type;
+	private final HandContextType type;
 
-	public PlayerHand(Bet bet, PlayerHandType type)
+	public HandContext(Bet bet, HandContextType type)
 	{
 		assert  type != null : "type == null";
 		setBet(bet);
@@ -46,10 +46,10 @@ public final class PlayerHand
 			return false;
 		}
 
-		final var otherPlayerHand = (PlayerHand) otherObject;
-		return Objects.equals(getBet(), otherPlayerHand.getBet())
-			&& Objects.equals(getHand(), otherPlayerHand.getHand())
-			&& Objects.equals(getType(), otherPlayerHand.getType());
+		final var otherContext = (HandContext) otherObject;
+		return Objects.equals(getBet(), otherContext.getBet())
+			&& Objects.equals(getHand(), otherContext.getHand())
+			&& Objects.equals(getType(), otherContext.getType());
 	}
 
 	public Bet getBet()
@@ -72,7 +72,7 @@ public final class PlayerHand
 		return pot;
 	}
 
-	public PlayerHandType getType()
+	public HandContextType getType()
 	{
 		return type;
 	}
@@ -90,7 +90,7 @@ public final class PlayerHand
 
 	/**
  	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call
-	 * this method whenever a {@code PlayerHand} is altered.
+	 * this method whenever a {@code HandContext} is altered.
  	 */
 	public void markAsAltered()
 	{

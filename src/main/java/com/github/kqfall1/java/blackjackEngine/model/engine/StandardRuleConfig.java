@@ -5,8 +5,8 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.PlayerHandType;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import java.math.BigDecimal;
 
 /**
@@ -79,36 +79,36 @@ public final class StandardRuleConfig
 		return player.getChips().compareTo(BigDecimal.ZERO) > 0;
 	}
 
-	public boolean isInsuranceBetPossible(PlayerHand activePlayerHand, Player player,
+	public boolean isInsuranceBetPossible(HandContext activeHandContext, Player player,
 										  Hand dealerHand)
 	{
-		return !activePlayerHand.isAltered()
-			&& player.getChips().compareTo(activePlayerHand.getBet().getHalf()) >= 0
+		return !activeHandContext.isAltered()
+			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
 			&& dealerHand.getCards().getLast().getRank() == Rank.ACE
-			&& player.getHands().size() == 1;
+			&& player.getContexts().size() == 1;
 	}
 
-	public boolean isDoubleDownPossible(PlayerHand activePlayerHand, Player player)
+	public boolean isDoubleDownPossible(HandContext activeHandContext, Player player)
 	{
-		return !activePlayerHand.isAltered()
-			&& (activePlayerHand.getType() == PlayerHandType.MAIN
+		return !activeHandContext.isAltered()
+			&& (activeHandContext.getType() == HandContextType.MAIN
 				|| getPlayerCanDoubleDownOnSplitHands())
-			&& player.getChips().compareTo(activePlayerHand.getBet().getAmount()) >= 0;
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
 	}
 
-	public boolean isSplitPossible(PlayerHand activePlayerHand, int activePlayerHandIndex,
+	public boolean isSplitPossible(HandContext activeHandContext, int activeHandContextIndex,
 								   Player player)
 	{
-		return !activePlayerHand.isAltered()
-			&& activePlayerHand.getHand().isPocketPair()
-			&& activePlayerHandIndex < MAXIMUM_SPLIT_COUNT
-			&& player.getChips().compareTo(activePlayerHand.getBet().getAmount()) >= 0;
+		return !activeHandContext.isAltered()
+			&& activeHandContext.getHand().isPocketPair()
+			&& activeHandContextIndex < MAXIMUM_SPLIT_COUNT
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
 	}
 
-	public boolean isSurrenderPossible(PlayerHand activePlayerHand, Player player)
+	public boolean isSurrenderPossible(HandContext activeHandContext, Player player)
 	{
-		return !activePlayerHand.isAltered()
-			&& (activePlayerHand.getType() == PlayerHandType.MAIN
+		return !activeHandContext.isAltered()
+			&& (activeHandContext.getType() == HandContextType.MAIN
 				|| getPlayerCanSurrenderOnSplitHands());
 	}
 

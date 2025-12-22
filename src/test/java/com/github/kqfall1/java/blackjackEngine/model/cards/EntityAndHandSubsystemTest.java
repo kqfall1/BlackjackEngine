@@ -3,15 +3,16 @@ package com.github.kqfall1.java.blackjackEngine.model.cards;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.managers.InputManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 /**
  * Tests the getter methods of {@code Dealer}, {@code Hand}, {@code Player}, and
- * {@code PlayerHand} objects. Also verifies the functionalities of all those aforementioned.
+ * {@code HandContext} objects. Also verifies the functionalities of all those aforementioned.
  *
  * @author kqfall1
  * @since 21/12/2025
@@ -19,10 +20,11 @@ import org.junit.jupiter.api.RepeatedTest;
 public final class EntityAndHandSubsystemTest
 {
 	private Hand blackjack;
+	private HandContext context;
 	private Dealer dealer;
 	private Hand dealerHand;
 	private static final int INITIAL_CHIP_AMOUNT = 5000;
-	private Hand pHand;
+	private Hand playerHand;
 	private Hand pocketPair = new Hand();
 	private Deck sideDeck;
 	private static final int TEST_ITERATIONS = 1000;
@@ -33,7 +35,7 @@ public final class EntityAndHandSubsystemTest
 		blackjack = randomBlackjack();
 		dealer = new Dealer();
 		dealerHand = new Hand();
-		pHand = new Hand();
+		playerHand = new Hand();
 		pocketPair = randomPocketPair();
 		sideDeck = new Deck();
 	}
@@ -50,7 +52,7 @@ public final class EntityAndHandSubsystemTest
 		final int PREVIOUS_DECK_SIZE = dealer.getDeck().getCards().size();
 		dealer.getHand().addCard(dealer.hit());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
-		Assertions.assertTrue(dealer.getDeck().getCards().size() > PREVIOUS_DECK_SIZE);
+		Assertions.assertTrue(dealer.getDeck().getCards().size() < PREVIOUS_DECK_SIZE);
 	}
 
 	private void _handTest(int expectedSize)
@@ -62,23 +64,23 @@ public final class EntityAndHandSubsystemTest
 			Float.MAX_VALUE
 		);
 		assertEquals(expectedSize, dealerHand.getCards().size());
-		assertEquals(expectedSize, pHand.getCards().size());
-		assertEquals(dealerHand, pHand);
-		assertEquals(dealerHand.toString(), pHand.toString());
-		assertEquals(dealerHand.toStringPretty(), pHand.toStringPretty());
+		assertEquals(expectedSize, playerHand.getCards().size());
+		assertEquals(dealerHand, playerHand);
+		assertEquals(dealerHand.toString(), playerHand.toString());
+		assertEquals(dealerHand.toStringPretty(), playerHand.toStringPretty());
 	}
 
 	private void handTest()
 	{
 		_handTest(0);
-		pHand.addCard(sideDeck.draw());
+		playerHand.addCard(sideDeck.draw());
 		dealerHand.addCard(sideDeck.draw());
-		Assertions.assertNotEquals(dealerHand, pHand);
-		pHand.removeCard(0);
+		Assertions.assertNotEquals(dealerHand, playerHand);
+		playerHand.removeCard(0);
 		dealerHand.removeCard(0);
 		final var newCard = sideDeck.draw();
 		dealerHand.addCard(newCard);
-		pHand.addCard(newCard);
+		playerHand.addCard(newCard);
 		_handTest(1);
 
 		Assertions.assertTrue(blackjack.isBlackjack());
@@ -92,7 +94,7 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertTrue(bustHand.isBusted());
 	}
 
-	private void playerHandTest()
+	private void handContextTest()
 	{
 
 	}
@@ -146,7 +148,8 @@ public final class EntityAndHandSubsystemTest
 	public void testEntityAndHandSubsystem()
 	{
 		handTest();
-		playerHandTest();
+		dealerTest();
+		handContextTest();
 		playerTest();
 	}
 }
