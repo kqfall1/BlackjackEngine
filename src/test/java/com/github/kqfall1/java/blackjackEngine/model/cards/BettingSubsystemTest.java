@@ -7,13 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Tests the getters methods of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
- * objects; verifies the functionalities of {@code PayoutRatio} and {@code Pot} objects.
+ * Tests the getter methods of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
+ * objects. Also verifies the functionalities of {@code PayoutRatio} and {@code Pot} objects.
  *
  * @author kqfall1
  * @since 20/12/2025
@@ -39,14 +38,6 @@ public final class BettingSubsystemTest
 		bet2 = new Bet(initialBetAmount);
 		pot1 = new Pot();
 		pot2 = new Pot(initialPotAmount);
-	}
-
-	@RepeatedTest(TEST_ITERATIONS)
-	public void bettingSubsystemTest(RepetitionInfo info)
-	{
-		payoutRatioTest();
-		betTest(info);
-		potTest(info);
 	}
 
 	private void betTest(RepetitionInfo info)
@@ -79,6 +70,14 @@ public final class BettingSubsystemTest
 		{
 			System.out.printf("%s\n", e.getMessage());
 		}
+	}
+
+	@RepeatedTest(TEST_ITERATIONS)
+	public void bettingSubsystemTest(RepetitionInfo info)
+	{
+		payoutRatioTest();
+		betTest(info);
+		potTest(info);
 	}
 
 	private void payoutRatioTest()

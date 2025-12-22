@@ -2,22 +2,21 @@ package com.github.kqfall1.java.blackjackEngine.model.cards;
 
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.util.*;
 
 /**
- * Tests the getter methods of {@code Card} and {@code Deck} objects; verifies that
- * {@code Deck} objects function in a reasonable manner.
+ * Tests the getter methods of {@code Card} and {@code Deck} objects. Also verifies
+ * the functionalities of {@code Deck} objects.
  *
  * @author kqfall1
  * @since 20/12/2025
  */
 public final class CardSubsystemTest
 {
-	private Card aceOfClubs1;
+	private final Card aceOfClubs1 = new Card(Rank.ACE, Suit.CLUB);
 	private Card aceOfClubs2;
 	private Deck deck;
 	private static final int DECK_CARD_COUNT = Rank.values().length * Suit.values().length;
@@ -27,7 +26,6 @@ public final class CardSubsystemTest
 	@BeforeEach
 	public void init()
 	{
-		aceOfClubs1 = new Card(Rank.ACE, Suit.CLUB);
 		aceOfClubs2 = aceOfClubs1;
 		deck = new Deck();
 		drawnCards = new HashSet<>();
