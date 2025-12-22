@@ -3,6 +3,8 @@ package com.github.kqfall1.java.blackjackEngine.model.cards;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
+import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
@@ -23,13 +25,15 @@ import java.math.BigDecimal;
  */
 public final class EntityAndHandSubsystemTest
 {
-	private final Bet BET = new Bet(BigDecimal.valueOf(BET_AMOUNT));
-	private static final int BET_AMOUNT = 1000;
+	private final Bet BET = new Bet(BET_AND_POT_INITIAL_AMOUNT);
+	private static final BigDecimal BET_AND_POT_INITIAL_AMOUNT = BigDecimal.valueOf(1000);
 	private Hand blackjack;
-	private HandContext mainContext;
 	private Dealer dealer;
 	private Hand dealerHand;
-	private static final int INITIAL_CHIP_AMOUNT = 5000;
+	private HandContext mainContext;
+	private Player player1;
+	private Player player2;
+	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	private Hand playerMainHand;
 	private Hand playerSplitHand;
 	private Hand pocketPair = new Hand();
@@ -38,12 +42,14 @@ public final class EntityAndHandSubsystemTest
 	private static final int TEST_ITERATIONS = 1000;
 
 	@BeforeEach
-	public void init()
+	public void init() throws InsufficientChipsException
 	{
 		blackjack = randomBlackjack();
 		dealer = new Dealer();
 		dealerHand = new Hand();
 		mainContext = new HandContext(BET, HandContextType.MAIN);
+		player1 = new Player();
+		player2 = new Player();
 		playerMainHand = new Hand();
 		playerSplitHand = new Hand();
 		pocketPair = randomPocketPair();
@@ -119,19 +125,42 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertFalse(splitContext.hasSurrendered());
 		Assertions.assertNotEquals(mainContext.getType(), splitContext.getType());
 
-		mainContext.getPot().addChips(BigDecimal.valueOf(BET_AMOUNT));
-		splitContext.getPot().addChips(BigDecimal.valueOf(BET_AMOUNT));
+		mainContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
+		splitContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
 		assertEquals(mainContext.getPot().getAmount(), splitContext.getPot().getAmount());
 		mainContext.setBet(new Bet(BigDecimal.valueOf(100)));
 		Assertions.assertNotEquals(mainContext.getBet(), splitContext.getBet());
 		mainContext.setHasSurrendered();
 		Assertions.assertTrue(mainContext.hasSurrendered());
 		Assertions.assertNotEquals(mainContext.hasSurrendered(), splitContext.hasSurrendered());
+
+		try
+		{
+			new Bet(BigDecimal.ZERO);
+		}
+		catch (AssertionError ignored) {}
 	}
 
-	private void playerTest()
+	private void playerTest() throws InsufficientChipsException
 	{
+		assertEquals(player1.getChips(), player2.getChips());
+		assertEquals(player1.toString(), player1.toString());
+		player1.addContext(mainContext);
+		player1.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
+		player2.addContext(splitContext);
+		player2.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
+		assertEquals(PLAYER_INITIAL_CHIP_AMOUNT, player1.getChips());
+		assertEquals(PLAYER_INITIAL_CHIP_AMOUNT, player2.getChips());
+		assertEquals(player1.getContexts().size(), player2.getContexts().size());
+		player1.clearContexts();
+		player2.clearContexts();
+		assertEquals(player1.getContexts().size(), player2.getContexts().size());
 
+		try
+		{
+			player1.setChips(BigDecimal.valueOf(-1));
+		}
+		catch (InsufficientChipsException ignored) {}
 	}
 
 	private Hand randomBlackjack()
@@ -175,7 +204,7 @@ public final class EntityAndHandSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public void testEntityAndHandSubsystem()
+	public void testEntityAndHandSubsystem() throws InsufficientChipsException
 	{
 		handTest();
 		dealerTest();
