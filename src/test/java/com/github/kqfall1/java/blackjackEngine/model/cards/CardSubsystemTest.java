@@ -24,7 +24,7 @@ public final class CardSubsystemTest
 	private static final int TEST_ITERATIONS = 1000;
 
 	@BeforeEach
-	public void init()
+	void init()
 	{
 		aceOfClubs2 = aceOfClubs1;
 		deck = new Deck();
@@ -32,7 +32,7 @@ public final class CardSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public void cardsAndDeckTest()
+	void cardsAndDeckTest()
 	{
 		assertEquals(aceOfClubs1, aceOfClubs2);
 		assertEquals(aceOfClubs1.toString(), aceOfClubs2.toString());

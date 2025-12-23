@@ -36,7 +36,7 @@ public final class ConsoleBlackjackController implements EngineListener
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
-	private ConsoleBlackjackController(StandardRuleConfig config, ConsoleHandler handler,
+	ConsoleBlackjackController(StandardRuleConfig config, ConsoleHandler handler,
 									   String logFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
@@ -51,7 +51,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		engine = new BlackjackEngine(config, this, logFilePath, loggerName);
 	}
 
-	private BlackjackEngine getEngine()
+	BlackjackEngine getEngine()
 	{
 		return engine;
 	}
@@ -72,6 +72,7 @@ public final class ConsoleBlackjackController implements EngineListener
 		final var config = new StandardRuleConfig();
 		final var handler = new ConsoleHandler();
 		config.setDealerHitsOnSoft17(true);
+		config.setLoggingEnabled(true);
 		config.setPlayerCanDoubleDownOnSplitHands(true);
 		config.setPlayerCanSurrenderOnSplitHands(true);
 		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
@@ -167,18 +168,6 @@ public final class ConsoleBlackjackController implements EngineListener
 	}
 
 	@Override
-	public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
-	{
-		getHandler().getOut().printf(
-			String.format(
-				"Your current hand is now %s and your previous hand is now %s.\n",
-				splitHand.getHand().toStringPretty(),
-				previousHand.getHand().toStringPretty()
-			)
-		);
-	}
-
-	@Override
 	public void onInsuranceBetOpportunityDetected(Card dealerUpCard)
 	{
 		getHandler().getOut().printf(
@@ -201,6 +190,18 @@ public final class ConsoleBlackjackController implements EngineListener
 		{
 			getHandler().getOut().println("You have lost your insurance bet.");
 		}
+	}
+
+	@Override
+	public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
+	{
+		getHandler().getOut().printf(
+			String.format(
+				"Your current hand is now %s and your previous hand is now %s.\n",
+				splitHand.getHand().toStringPretty(),
+				previousHand.getHand().toStringPretty()
+			)
+		);
 	}
 
 	@Override

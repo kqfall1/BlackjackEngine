@@ -28,6 +28,7 @@ public final class StandardRuleConfig
 	public static final int TOP_SCORE = 21;
 
 	private boolean dealerHitsOnSoft17;
+	private boolean loggingEnabled;
 	private boolean playerCanDoubleDownOnSplitHands;
 	private boolean playerCanSurrenderOnSplitHands;
 	private BigDecimal playerInitialChips;
@@ -48,6 +49,11 @@ public final class StandardRuleConfig
 	public boolean getDealerHitsOnSoft17()
 	{
 		return dealerHitsOnSoft17;
+	}
+
+	public boolean getLoggingEnabled()
+	{
+		return loggingEnabled;
 	}
 
 	public boolean getPlayerCanDoubleDownOnSplitHands()
@@ -116,6 +122,11 @@ public final class StandardRuleConfig
 {
 dealerHitsOnSoft17 = value;
 }
+
+	public void setLoggingEnabled(boolean value)
+	{
+		loggingEnabled = value;
+	}
 
 	public void setPlayerCanDoubleDownOnSplitHands(boolean value)
 	{

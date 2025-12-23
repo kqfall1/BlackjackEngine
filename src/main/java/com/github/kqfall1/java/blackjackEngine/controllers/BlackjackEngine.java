@@ -63,8 +63,15 @@ public class BlackjackEngine
 		this.config = config;
 		dealer = new Dealer();
 		this.listener = listener;
-		logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName,
-			true);
+		if (getConfig().getLoggingEnabled())
+		{
+			logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName,
+				true);
+		}
+		else
+		{
+			logger = Logger.getLogger(loggerName);
+		}
 		player = new Player();
 		getPlayer().setChips(getConfig().getPlayerInitialChips());
 		state = EngineState.START;
@@ -345,12 +352,12 @@ public class BlackjackEngine
 		assert card != null : "card == null";
 		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
-		getListener().onCardDealtToPlayer(card, getActiveHandContext());
 		if (getState() == EngineState.PLAYER_TURN
 			&& getActiveHandContext().getHand().getCards().size() > StandardRuleConfig.INITIAL_CARD_COUNT)
 		{
 			getActiveHandContext().markAsAltered();
 		}
+		getListener().onCardDealtToPlayer(card, getActiveHandContext());
 		getLogger().info(String.format(
 			"Added card %s to player's hand %s.",
 			card, getActiveHandContext()
@@ -507,7 +514,7 @@ public class BlackjackEngine
 			"Player has doubled down on hand %s.",
 			context.getHand()
 		));
-		if (getActiveHandContext() != null)
+		if (getState() == EngineState.PLAYER_TURN)
 		{
 			onDrawingRoundCompletedPlayer();
 		}
@@ -520,7 +527,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
 		drawCardForPlayerAction();
-		if (getActiveHandContext() != null
+		if (getState() == EngineState.PLAYER_TURN
 			&& !getActiveHandContext().getHand().isBusted())
 		{
 			setState(EngineState.PLAYER_TURN);
@@ -648,6 +655,7 @@ public class BlackjackEngine
 		{
 			getLogger().info("The player has busted.");
 			getListener().onGameCompleted();
+			getLogger().getHandlers()[0].close();
 			setState(EngineState.END);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);

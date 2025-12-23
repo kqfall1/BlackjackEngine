@@ -1,6 +1,10 @@
-package com.github.kqfall1.java.blackjackEngine.model.cards;
+package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
@@ -31,18 +35,17 @@ public final class EntityAndHandSubsystemTest
 	private Dealer dealer;
 	private Hand dealerHand;
 	private HandContext mainContext;
+	private Hand mainHand;
 	private Player player1;
 	private Player player2;
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
-	private Hand playerMainHand;
-	private Hand playerSplitHand;
 	private Hand pocketPair = new Hand();
 	private Deck sideDeck;
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 1000;
 
 	@BeforeEach
-	public void init() throws InsufficientChipsException
+	void init() throws InsufficientChipsException
 	{
 		blackjack = randomBlackjack();
 		dealer = new Dealer();
@@ -50,8 +53,7 @@ public final class EntityAndHandSubsystemTest
 		mainContext = new HandContext(BET, HandContextType.MAIN);
 		player1 = new Player();
 		player2 = new Player();
-		playerMainHand = new Hand();
-		playerSplitHand = new Hand();
+		mainHand = new Hand();
 		pocketPair = randomPocketPair();
 		sideDeck = new Deck();
 		splitContext = new HandContext(BET, HandContextType.SPLIT);
@@ -81,23 +83,23 @@ public final class EntityAndHandSubsystemTest
 			Float.MAX_VALUE
 		);
 		assertEquals(expectedSize, dealerHand.getCards().size());
-		assertEquals(expectedSize, playerMainHand.getCards().size());
-		assertEquals(dealerHand, playerMainHand);
-		assertEquals(dealerHand.toString(), playerMainHand.toString());
-		assertEquals(dealerHand.toStringPretty(), playerMainHand.toStringPretty());
+		assertEquals(expectedSize, mainHand.getCards().size());
+		assertEquals(dealerHand, mainHand);
+		assertEquals(dealerHand.toString(), mainHand.toString());
+		assertEquals(dealerHand.toStringPretty(), mainHand.toStringPretty());
 	}
 
 	private void handTest()
 	{
 		_handTest(0);
-		playerMainHand.addCard(sideDeck.draw());
+		mainHand.addCard(sideDeck.draw());
 		dealerHand.addCard(sideDeck.draw());
-		Assertions.assertNotEquals(dealerHand, playerMainHand);
-		playerMainHand.removeCard(0);
+		Assertions.assertNotEquals(dealerHand, mainHand);
+		mainHand.removeCard(0);
 		dealerHand.removeCard(0);
 		final var newCard = sideDeck.draw();
 		dealerHand.addCard(newCard);
-		playerMainHand.addCard(newCard);
+		mainHand.addCard(newCard);
 		_handTest(1);
 
 		Assertions.assertTrue(blackjack.isBlackjack());
@@ -204,7 +206,7 @@ public final class EntityAndHandSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public void testEntityAndHandSubsystem() throws InsufficientChipsException
+	void testEntityAndHandSubsystem() throws InsufficientChipsException
 	{
 		handTest();
 		dealerTest();

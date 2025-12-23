@@ -1,8 +1,5 @@
-package com.github.kqfall1.java.blackjackEngine.model.cards;
+package com.github.kqfall1.java.blackjackEngine.model.betting;
 
-import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
-import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
-import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +17,7 @@ import java.math.RoundingMode;
  * @author kqfall1
  * @since 20/12/2025
  */
-public final class BettingSubsystemTest
+final class BettingSubsystemTest
 {
 	private Bet bet1;
 	private Bet bet2;
@@ -33,7 +30,7 @@ public final class BettingSubsystemTest
 	private static final int TEST_ITERATIONS = 1000;
 
 	@BeforeEach
-	public void init()
+	void init()
 	{
 		initialBetAmount = new BigDecimal(Math.random() * MAXIMUM_BET_AMOUNT);
 		initialPotAmount = new BigDecimal(Math.random() * MAXIMUM_POT_AMOUNT);
@@ -78,7 +75,7 @@ public final class BettingSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public void bettingSubsystemTest(RepetitionInfo info)
+	void bettingSubsystemTest(RepetitionInfo info)
 	{
 		payoutRatioTest();
 		betTest(info);
