@@ -15,18 +15,16 @@ final class HitTest extends EngineTestTemplate
 	@RepeatedTest(TEST_ITERATIONS)
 	void hitTest() throws Exception
 	{
-		final var previousChipAmount = engine.getPlayer().getChips();
-		engine.placeHandBet(DEFAULT_BET);
-
-		if (engine.getState() == EngineState.DEALING)
-		{
-			Assertions.assertTrue(previousChipAmount.compareTo(engine.getPlayer().getChips()) > 0);
-			engine.declineInsuranceBet();
-		}
+		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
+		engine.placeHandBet(DEFAULT_BET_AMOUNT);
+		super.deal();
 
 		if (engine.getState() == EngineState.PLAYER_TURN)
 		{
-			Assertions.assertTrue(previousChipAmount.compareTo(engine.getPlayer().getChips()) > 0);
+			Assertions.assertEquals(
+				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT),
+				engine.getPlayer().getChips()
+			);
 
 			int previousCardCount;
 			while (engine.getState() == EngineState.PLAYER_TURN)
@@ -42,6 +40,11 @@ final class HitTest extends EngineTestTemplate
 				Assertions.assertTrue(
 					engine.getActiveHandContext().getHand().getCards().size() > previousCardCount);
 			}
+
+			Assertions.assertEquals(
+				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT),
+				engine.getPlayer().getChips()
+			);
 		}
 	}
 

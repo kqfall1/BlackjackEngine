@@ -18,11 +18,19 @@ import org.junit.jupiter.api.BeforeEach;
 abstract class EngineTestTemplate
 {
 	StandardRuleConfig config;
-	static final BigDecimal DEFAULT_BET = BigDecimal.valueOf(100);
+	static final BigDecimal DEFAULT_BET_AMOUNT = BigDecimal.valueOf(100);
 	BlackjackEngine engine;
 	ConsoleHandler handler;
 	static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	static final int TEST_ITERATIONS = 1000;
+
+	void deal() throws InsufficientChipsException
+	{
+		if (engine.getState() == EngineState.DEALING)
+		{
+			engine.declineInsuranceBet();
+		}
+	}
 
 	@BeforeEach
 	void init() throws InsufficientChipsException, IOException
