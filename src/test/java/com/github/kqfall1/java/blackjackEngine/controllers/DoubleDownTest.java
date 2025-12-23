@@ -12,8 +12,17 @@ final class DoubleDownTest extends EngineTestTemplate
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DoubleDownTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.DoubleDownTest.log";
 
+	@BeforeEach
+		void init() throws InsufficientChipsException, IOException
+	{
+		super.init();
+		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
+		engine.start();
+	}
+
+	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	void doubleDownTest() throws Exception
+	void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
 		engine.placeHandBet(DEFAULT_BET_AMOUNT);
@@ -28,13 +37,5 @@ final class DoubleDownTest extends EngineTestTemplate
 			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
 			engine.playerDoubleDown();
 		}
-	}
-
-	@BeforeEach
-	void init() throws InsufficientChipsException, IOException
-	{
-		super.init();
-		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
-		engine.start();
 	}
 }

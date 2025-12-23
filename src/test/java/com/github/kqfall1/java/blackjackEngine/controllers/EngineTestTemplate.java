@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
 abstract class EngineTestTemplate
 {
@@ -39,6 +40,9 @@ abstract class EngineTestTemplate
 		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
 		handler = new ConsoleHandler();
 	}
+
+	@RepeatedTest(TEST_ITERATIONS)
+	abstract void main() throws Exception;
 
 	final EngineListener LISTENER = new EngineListener()
 	{

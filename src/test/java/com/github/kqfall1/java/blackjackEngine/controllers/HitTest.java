@@ -12,8 +12,17 @@ final class HitTest extends EngineTestTemplate
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/HitTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.HitTest.log";
 
+	@BeforeEach
+	void init() throws InsufficientChipsException, IOException
+	{
+		super.init();
+		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
+		engine.start();
+	}
+
+	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	void hitTest() throws Exception
+	void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
 		engine.placeHandBet(DEFAULT_BET_AMOUNT);
@@ -46,13 +55,5 @@ final class HitTest extends EngineTestTemplate
 				engine.getPlayer().getChips()
 			);
 		}
-	}
-
-	@BeforeEach
-	void init() throws InsufficientChipsException, IOException
-	{
-		super.init();
-		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
-		engine.start();
 	}
 }

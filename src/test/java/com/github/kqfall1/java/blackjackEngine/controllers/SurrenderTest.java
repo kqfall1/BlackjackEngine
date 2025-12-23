@@ -20,8 +20,9 @@ final class SurrenderTest extends EngineTestTemplate
 		engine.start();
 	}
 
+	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	void surrenderTest() throws Exception
+	void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
 		engine.placeHandBet(DEFAULT_BET_AMOUNT);

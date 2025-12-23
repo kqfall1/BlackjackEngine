@@ -9,9 +9,9 @@ import java.util.*;
  * @author kqfall1
  * @since 13/12/2025
  */
-public final class Deck
+public class Deck
 {
-	private final Deque<Card> cards;
+	final Queue<Card> cards;
 
 	public Deck()
 	{
@@ -36,7 +36,7 @@ public final class Deck
 			throw new EmptyDeckException(this);
 		}
 
-		return cards.pop();
+		return cards.poll();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public final class Deck
 		{
 			return true;
 		}
-		else if (otherObject == null || getClass() != otherObject.getClass())
+		else if (otherObject == null || otherObject instanceof Deck)
 		{
 			return false;
 		}
