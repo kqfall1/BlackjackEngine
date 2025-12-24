@@ -15,30 +15,39 @@ import java.util.*;
  */
 public final class CardSubsystemTest
 {
-	private final Card aceOfClubs1 = new Card(Rank.ACE, Suit.CLUB);
-	private Card aceOfClubs2;
-	private Deck deck;
+	private static final Card ACE_OF_CLUBS_1 = new Card(Rank.ACE, Suit.CLUB);
+	private static Card ACE_OF_CLUBS_2;
+	private static Deck deck;
 	private static final int DECK_CARD_COUNT = Rank.values().length * Suit.values().length;
-	private Set<Card> drawnCards;
+	private static Set<Card> drawnCards;
+	private static TestDeck testDeck;
 	private static final int TEST_ITERATIONS = 1000;
+	private static final Card TWO_OF_DIAMONDS = new Card(Rank.TWO, Suit.DIAMOND);
 
 	@BeforeEach
 	void init()
 	{
-		aceOfClubs2 = aceOfClubs1;
+		ACE_OF_CLUBS_2 = ACE_OF_CLUBS_1;
 		deck = new Deck();
 		drawnCards = new HashSet<>();
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(ACE_OF_CLUBS_1, TWO_OF_DIAMONDS)));
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
 	void cardsAndDeckTest()
 	{
-		assertEquals(aceOfClubs1, aceOfClubs2);
-		assertEquals(aceOfClubs1.toString(), aceOfClubs2.toString());
-		assertEquals(aceOfClubs1.toStringPretty(), aceOfClubs2.toStringPretty());
-		assertEquals(Rank.ACE, aceOfClubs1.getRank());
-		assertEquals(Suit.CLUB, aceOfClubs1.getSuit());
+		assertEquals(ACE_OF_CLUBS_1, ACE_OF_CLUBS_2);
+		assertEquals(ACE_OF_CLUBS_1.toString(), ACE_OF_CLUBS_2.toString());
+		assertEquals(ACE_OF_CLUBS_1.toStringPretty(), ACE_OF_CLUBS_2.toStringPretty());
+		assertEquals(Rank.ACE, ACE_OF_CLUBS_1.getRank());
+		assertEquals(Suit.CLUB, ACE_OF_CLUBS_1.getSuit());
 		assertEquals(DECK_CARD_COUNT, deck.getCards().size());
+
+		assertEquals(ACE_OF_CLUBS_1, testDeck.draw());
+		assertEquals(TWO_OF_DIAMONDS, testDeck.draw());
+		Assertions.assertTrue(!testDeck.getCards().contains(ACE_OF_CLUBS_1)
+			&&  !testDeck.getCards().contains(TWO_OF_DIAMONDS));
 
 		for (int count = 0; count < DECK_CARD_COUNT + 1; count++)
 		{
