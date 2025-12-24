@@ -1,30 +1,33 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
+import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
- * Tests the {@code BlackjackEngine} hitting mechanism.
+ * To test the {@code BlackjackEngine} splitting mechanism in isolation.
  *
  * @author kqfall1
- * @since 22/12/2025
+ * @since 23/12/2025
  */
-final class HitTest extends EngineTestTemplate
+final class SimpleSplitTest extends SplitTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/HitTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.HitTest.log";
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SimpleSplitTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.SimpleSplitTest.log";
 
 	@BeforeEach
 	@Override
 	void init() throws InsufficientChipsException, IOException
 	{
+		super.initCardsForPocket7s();
 		super.init();
 		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
-		engine.start();
+		super.start();
 	}
 
 	@Override
@@ -33,7 +36,7 @@ final class HitTest extends EngineTestTemplate
 	{
 		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
 		engine.placeHandBet(DEFAULT_BET_AMOUNT);
-		super.deal();
+		deal();
 
 		if (engine.getState() == EngineState.PLAYER_TURN)
 		{
@@ -41,24 +44,15 @@ final class HitTest extends EngineTestTemplate
 				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT),
 				engine.getPlayer().getChips()
 			);
-
-			int previousCardCount;
-			while (engine.getState() == EngineState.PLAYER_TURN)
-			{
-				previousCardCount = engine.getActiveHandContext().getHand().getCards().size();
-				engine.playerHit();
-
-				if (engine.getState() == EngineState.PLAYER_TURN)
-				{
-					Assertions.assertTrue(
-						engine.getActiveHandContext().getHand().getCards().size() > previousCardCount);
-				}
-			}
+			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
+			engine.playerSplit();
 
 			Assertions.assertEquals(
-				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT),
+				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT.multiply(BigDecimal.TWO)),
 				engine.getPlayer().getChips()
 			);
+			engine.playerStand();
+			engine.playerStand();
 		}
 	}
 }

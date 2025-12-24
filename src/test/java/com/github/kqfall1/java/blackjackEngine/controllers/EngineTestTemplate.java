@@ -13,9 +13,17 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
+/**
+ * Provides abstraction for creating {@code BlackjackEngine}-related tests.
+ *
+ * @author kqfall1
+ * @since 22/12/2025
+ */
 abstract class EngineTestTemplate
 {
 	StandardRuleConfig config;
@@ -156,7 +164,8 @@ abstract class EngineTestTemplate
 		public void onDrawingRoundStartedPlayer(HandContext handContext)
 		{
 			assertTrue(engine.getState() == EngineState.DEALING
-				|| engine.getState() == EngineState.INSURANCE_CHECK);
+				|| engine.getState() == EngineState.INSURANCE_CHECK
+				|| engine.getState() == EngineState.PLAYER_TURN);
 			handler.getOut().println("You have begun a new drawing round.");
 		}
 
@@ -210,7 +219,7 @@ abstract class EngineTestTemplate
 		@Override
 		public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			Assertions.assertTrue(engine.getActiveHandContextIndex() > 0);
 			assertEquals(EngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
 				String.format(

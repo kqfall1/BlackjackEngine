@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Tests the getter methods of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
- * objects. Also verifies the functionalities of {@code PayoutRatio} and {@code Pot} objects.
+ * Tests the functionalities of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
+ * objects.
  *
  * @author kqfall1
  * @since 20/12/2025

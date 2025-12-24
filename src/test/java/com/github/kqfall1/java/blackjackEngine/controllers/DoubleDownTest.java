@@ -7,13 +7,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 
+/**
+ * Tests the {@code BlackjackEngine} doubling-down mechanism.
+ *
+ * @author kqfall1
+ * @since 23/12/2025
+ */
 final class DoubleDownTest extends EngineTestTemplate
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DoubleDownTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.DoubleDownTest.log";
 
 	@BeforeEach
-		void init() throws InsufficientChipsException, IOException
+	@Override
+	void init() throws InsufficientChipsException, IOException
 	{
 		super.init();
 		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);

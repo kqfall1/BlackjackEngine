@@ -7,12 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 
+/**
+ * Tests the {@code BlackjackEngine} surrendering mechanism.
+ *
+ * @author kqfall1
+ * @since 23/12/2025
+ */
 final class SurrenderTest extends EngineTestTemplate
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.SurrenderTest.log";
 
 	@BeforeEach
+	@Override
 	void init() throws InsufficientChipsException, IOException
 	{
 		super.init();

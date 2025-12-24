@@ -1,10 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
-import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.utils.StringUtils;
+import java.util.List;
+import java.util.Queue;
 
 /**
- * Exposes public methods that make {@code BlackjackEngine} testing significantly
+ * Exposes public mechanisms that make {@code BlackjackEngine} testing significantly
  * easier, especially regarding splitting operations.
  *
  * @author kqfall1
@@ -12,30 +12,36 @@ import com.github.kqfall1.java.utils.StringUtils;
  */
 public final class TestDeck extends Deck
 {
-	public Hand drawPair(Rank rank)
-	{
-		final var hand = new Hand();
-		hand.addCard(drawRank(rank));
-		hand.addCard(drawRank(rank));
-		return hand;
-	}
+	private Queue<Card> initialCards;
 
-	public Card drawRank(Rank rank)
+	@Override
+	public Card draw()
 	{
-		assert rank != null : "rank == null";
-
-		for (Card card : super.getCards())
+		if (!getInitialCards().isEmpty())
 		{
-			if (card.getRank() == rank)
-			{
-				super.cards.remove(card);
-				return card;
-			}
+			return initialCards.poll();
 		}
 
-		throw new IllegalStateException(String.format(
-			"The deck does not contain another %s.",
-			StringUtils.normalizeLower(rank.toString())
-		));
+		return cards.poll();
+	}
+
+	public List<Card> getInitialCards()
+	{
+		return initialCards == null
+			? List.of()
+			: List.copyOf(initialCards);
+	}
+
+	public void setInitialCards(Queue<Card> initialCards)
+	{
+		this.initialCards = initialCards;
+
+		if (initialCards != null)
+		{
+			for (Card card : initialCards)
+			{
+				cards.remove(card);
+			}
+		}
 	}
 }

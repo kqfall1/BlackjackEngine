@@ -1,26 +1,45 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
+import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.List;
 
+/**
+ * Provides abstraction for creating tests that verify the integrity of the
+ * {@code BlackjackEngine} splitting mechanism.
+ *
+ * @author kqfall1
+ * @since 23/12/2025
+ */
 abstract class SplitTest extends EngineTestTemplate
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.SplitTest.log";
+	TestDeck testDeck;
 
-	@BeforeEach
-	void init() throws InsufficientChipsException, IOException
+	void initCardsForPocket7s()
 	{
-		super.init();
-		final var testDeck = new TestDeck();
-		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
-		engine.getDealer().setDeck(testDeck);
-		engine.start();
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.SEVEN, Suit.CLUB),
+			new Card(Rank.JACK, Suit.SPADE),
+			new Card(Rank.SEVEN, Suit.HEART),
+			new Card(Rank.THREE, Suit.DIAMOND)
+		)));
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
 	abstract void main() throws Exception;
+
+	void start()
+	{
+		if (testDeck != null)
+		{
+			engine.getDealer().setDeck(testDeck);
+		}
+
+		engine.start();
+	}
 }

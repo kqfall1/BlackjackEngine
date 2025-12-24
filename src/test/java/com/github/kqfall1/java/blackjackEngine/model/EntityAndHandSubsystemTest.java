@@ -17,12 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-
 import java.math.BigDecimal;
 
 /**
- * Tests the getter methods of {@code Dealer}, {@code Hand}, {@code Player}, and
- * {@code HandContext} objects. Also verifies the functionalities of all those aforementioned.
+ * Tests the functionalities of {@code Dealer}, {@code Hand}, {@code Player}, and
+ * {@code HandContext} objects.
  *
  * @author kqfall1
  * @since 21/12/2025

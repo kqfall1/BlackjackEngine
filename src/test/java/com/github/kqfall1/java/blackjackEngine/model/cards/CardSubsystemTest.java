@@ -8,8 +8,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import java.util.*;
 
 /**
- * Tests the getter methods of {@code Card} and {@code Deck} objects. Also verifies
- * the functionalities of {@code Deck} objects.
+ * Tests the functionalities of {@code Card} and {@code Deck} objects.
  *
  * @author kqfall1
  * @since 20/12/2025
