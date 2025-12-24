@@ -655,7 +655,6 @@ public class BlackjackEngine
 		{
 			getLogger().info("The player has busted.");
 			getListener().onGameCompleted();
-			getLogger().getHandlers()[0].close();
 			setState(EngineState.END);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);

@@ -4,7 +4,9 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.RepeatedTest;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.List;
 
@@ -33,13 +35,14 @@ abstract class SplitTest extends EngineTestTemplate
 	@RepeatedTest(TEST_ITERATIONS)
 	abstract void main() throws Exception;
 
-	void start()
+	@Override
+	void start() throws InsufficientChipsException, IOException
 	{
 		if (testDeck != null)
 		{
-			engine.getDealer().setDeck(testDeck);
+			super.engine.getDealer().setDeck(testDeck);
 		}
 
-		engine.start();
+		super.start();
 	}
 }

@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -27,13 +26,14 @@ import org.junit.jupiter.api.RepeatedTest;
 abstract class EngineTestTemplate
 {
 	StandardRuleConfig config;
-	static final BigDecimal DEFAULT_BET_AMOUNT = BigDecimal.valueOf(100);
 	BlackjackEngine engine;
 	ConsoleHandler handler;
 	static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
+	String logFilePath;
+	String loggerName;
 	static final int TEST_ITERATIONS = 1000;
 
-	void deal() throws InsufficientChipsException
+	void advanceToPlayerTurn() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALING)
 		{
@@ -68,8 +68,8 @@ abstract class EngineTestTemplate
 				|| engine.getState() == EngineState.INSURANCE_CHECK
 				|| engine.getState() == EngineState.PLAYER_TURN);
 			assertEquals(
-				handContext.getBet().getAmount().multiply(BigDecimal.TWO),
-				handContext.getPot().getAmount()
+				0,
+				handContext.getPot().getAmount().compareTo(handContext.getBet().getAmount().multiply(BigDecimal.TWO))
 			);
 			handler.getOut().printf(
 				"You placed a bet of $%.2f.\n",
@@ -173,7 +173,7 @@ abstract class EngineTestTemplate
 		public void onGameCompleted()
 		{
 			assertEquals(0, engine.getActiveHandContextIndex());
-			assertEquals(EngineState.END, engine.getState());
+			assertEquals(EngineState.RESETTING, engine.getState());
 			handler.getOut().println("Thanks for playing!");
 		}
 
@@ -291,4 +291,19 @@ abstract class EngineTestTemplate
 		@Override
 		public void onStateChanged(EngineState oldState) {}
 	};
+
+	void placeHandBet(BigDecimal maximumBetAmount) throws Exception
+	{
+		engine.placeHandBet(
+			maximumBetAmount.multiply(
+				BigDecimal.valueOf(Math.random())
+			)
+		);
+	}
+
+	void start() throws InsufficientChipsException, IOException
+	{
+		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
+		engine.start();
+	}
 }

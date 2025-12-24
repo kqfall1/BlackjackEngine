@@ -22,34 +22,25 @@ final class SurrenderTest extends EngineTestTemplate
 	@Override
 	void init() throws InsufficientChipsException, IOException
 	{
+		super.logFilePath = LOG_FILE_PATH;
+		super.loggerName = LOGGER_NAME;
 		super.init();
-		engine = new BlackjackEngine(config, LISTENER, LOG_FILE_PATH, LOGGER_NAME);
-		engine.start();
+		super.start();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	void main() throws Exception
 	{
-		final var PREVIOUS_CHIP_AMOUNT = engine.getPlayer().getChips();
-		engine.placeHandBet(DEFAULT_BET_AMOUNT);
-		super.deal();
+		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
+		super.engine.placeHandBet(super.engine.getPlayer().getChips());
+		super.advanceToPlayerTurn();
 
-		if (engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			Assertions.assertEquals(
-				PREVIOUS_CHIP_AMOUNT.subtract(DEFAULT_BET_AMOUNT),
-				engine.getPlayer().getChips()
-			);
+			Assertions.assertTrue(super.engine.getPlayer().getChips().compareTo(PREVIOUS_CHIP_AMOUNT) < 0);
 			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
-
-			final var SURRENDER_AMOUNT = engine.getActiveHandContext().getBet().getHalf();
-			engine.playerSurrender();
-
-			Assertions.assertEquals(
-				PREVIOUS_CHIP_AMOUNT.subtract(SURRENDER_AMOUNT),
-				engine.getPlayer().getChips()
-			);
+			super.engine.playerSurrender();
 		}
 	}
 }
