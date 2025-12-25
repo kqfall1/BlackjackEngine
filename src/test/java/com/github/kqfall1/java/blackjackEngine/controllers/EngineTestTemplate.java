@@ -24,17 +24,17 @@ import org.junit.jupiter.api.RepeatedTest;
  * @author kqfall1
  * @since 22/12/2025
  */
-abstract class EngineTestTemplate
+public abstract class EngineTestTemplate
 {
-	StandardRuleConfig config;
-	BlackjackEngine engine;
-	ConsoleHandler handler;
-	static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
-	String logFilePath;
-	String loggerName;
-	static final int TEST_ITERATIONS = 5000;
+	public StandardRuleConfig config;
+	public BlackjackEngine engine;
+	public ConsoleHandler handler;
+	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
+	public String logFilePath;
+	public String loggerName;
+	public static final int TEST_ITERATIONS = 5000;
 
-	void advanceToPlayerTurn() throws InsufficientChipsException
+	public void advanceToPlayerTurn() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALING)
 		{
@@ -43,7 +43,7 @@ abstract class EngineTestTemplate
 	}
 
 	@BeforeEach
-	void init() throws InsufficientChipsException, IOException
+	public void init() throws InsufficientChipsException, IOException
 	{
 		config = new StandardRuleConfig();
 		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
@@ -51,7 +51,7 @@ abstract class EngineTestTemplate
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	abstract void main() throws Exception;
+	public abstract void main() throws Exception;
 
 	final EngineListener LISTENER = new EngineListener()
 	{
@@ -293,7 +293,7 @@ abstract class EngineTestTemplate
 		public void onStateChanged(EngineState oldState) {}
 	};
 
-	void placeHandBet(BigDecimal maximumBetAmount) throws Exception
+	public void placeHandBet(BigDecimal maximumBetAmount) throws Exception
 	{
 		engine.placeHandBet(
 			maximumBetAmount.multiply(
@@ -302,7 +302,7 @@ abstract class EngineTestTemplate
 		);
 	}
 
-	void start(TestDeck deck) throws InsufficientChipsException, IOException
+	public void start(TestDeck deck) throws InsufficientChipsException, IOException
 	{
 		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
 

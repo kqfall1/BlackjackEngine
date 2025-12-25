@@ -583,7 +583,6 @@ public class BlackjackEngine
 		playerSplitHand.getHand().addCard(playerPreviousHand.getHand().getCards().getLast());
 		getPlayer().addContext(playerSplitHand);
 		playerPreviousHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
-		playerPreviousHand.markAsAltered();
 		playerPreviousHand.getHand().addCard(getDealer().hit());
 		playerSplitHand.getHand().addCard(getDealer().hit());
 		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));

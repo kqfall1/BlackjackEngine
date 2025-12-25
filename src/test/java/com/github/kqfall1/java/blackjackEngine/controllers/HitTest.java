@@ -20,7 +20,7 @@ final class HitTest extends EngineTestTemplate
 
 	@BeforeEach
 	@Override
-	void init() throws InsufficientChipsException, IOException
+	public void init() throws InsufficientChipsException, IOException
 	{
 		super.logFilePath = LOG_FILE_PATH;
 		super.loggerName = LOGGER_NAME;
@@ -30,7 +30,7 @@ final class HitTest extends EngineTestTemplate
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	void main() throws Exception
+	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 		super.engine.placeHandBet(PREVIOUS_CHIP_AMOUNT);

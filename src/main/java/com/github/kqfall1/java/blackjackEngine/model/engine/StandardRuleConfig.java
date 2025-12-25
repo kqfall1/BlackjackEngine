@@ -182,9 +182,10 @@ dealerHitsOnSoft17 = value;
 	public String toString()
 	{
 		return String.format(
-			"%s[dealerHitsOnSoft17=%s,playerCanDoubleDownOnSplitHands=%s,playerCanSurrenderOnSplitHands=%s]",
+			"%s[dealerHitsOnSoft17=%s,maximumSplitCount=%s,playerCanDoubleDownOnSplitHands=%s,playerCanSurrenderOnSplitHands=%s]",
 			getClass().getName(),
 			getDealerHitsOnSoft17(),
+			getMaximumSplitCount(),
 			getPlayerCanDoubleDownOnSplitHands(),
 			getPlayerCanSurrenderOnSplitHands()
 		);
