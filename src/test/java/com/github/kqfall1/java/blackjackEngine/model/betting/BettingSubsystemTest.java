@@ -27,7 +27,7 @@ final class BettingSubsystemTest
 	private static final int MAXIMUM_POT_AMOUNT = 10000;
 	private Pot pot1;
 	private Pot pot2;
-	private static final int TEST_ITERATIONS = 1000;
+	private static final int TEST_ITERATIONS = 5000;
 
 	@BeforeEach
 	void init()

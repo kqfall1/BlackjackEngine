@@ -46,7 +46,7 @@ public class Deck
 		{
 			return true;
 		}
-		else if (otherObject == null || otherObject instanceof Deck)
+		else if (!(otherObject instanceof Deck))
 		{
 			return false;
 		}

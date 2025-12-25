@@ -41,7 +41,7 @@ public final class EntityAndHandSubsystemTest
 	private Hand pocketPair = new Hand();
 	private Deck sideDeck;
 	private HandContext splitContext;
-	private static final int TEST_ITERATIONS = 1000;
+	private static final int TEST_ITERATIONS = 5000;
 
 	@BeforeEach
 	void init() throws InsufficientChipsException
@@ -75,12 +75,7 @@ public final class EntityAndHandSubsystemTest
 
 	private void _handTest(int expectedSize)
 	{
-		InputManager.validateNumber(
-			expectedSize,
-			"expectedSize",
-			0,
-			Float.MAX_VALUE
-		);
+		Assertions.assertTrue(expectedSize >= 0);
 		assertEquals(expectedSize, dealerHand.getCards().size());
 		assertEquals(expectedSize, mainHand.getCards().size());
 		assertEquals(dealerHand, mainHand);

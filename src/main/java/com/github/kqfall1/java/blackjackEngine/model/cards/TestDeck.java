@@ -44,4 +44,14 @@ public final class TestDeck extends Deck
 			}
 		}
 	}
+
+	@Override
+	public String toString()
+	{
+		return String.format(
+			"%s[initialCards=%s]",
+			super.toString(),
+			getInitialCards()
+		);
+	}
 }

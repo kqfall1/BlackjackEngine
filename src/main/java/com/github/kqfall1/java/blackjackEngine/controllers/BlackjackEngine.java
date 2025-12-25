@@ -539,7 +539,6 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "playerSplit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
-		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
 		final var playerPreviousHand = getActiveHandContext();
 		if (!getConfig().isSplitPossible(getActiveHandContext(), getActiveHandContextIndex(),
@@ -553,13 +552,13 @@ public class BlackjackEngine
 					"An attempt to split a non-pocket pair occurred."
 				), METHOD_NAME);
 			}
-			else if (getActiveHandContextIndex() >= StandardRuleConfig.MAXIMUM_SPLIT_COUNT)
+			else if (getActiveHandContextIndex() >= getConfig().getMaximumSplitCount())
 			{
 				throwException(new IllegalHandOperationException(
 					getActiveHandContext(),
 					String.format(
 						"Player cannot have more than %d hands.",
-						StandardRuleConfig.MAXIMUM_SPLIT_COUNT + 1
+						getConfig().getMaximumSplitCount() + 1
 					)
 				), METHOD_NAME);
 			}

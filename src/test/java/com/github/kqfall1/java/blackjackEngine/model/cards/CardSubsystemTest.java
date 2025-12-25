@@ -21,7 +21,7 @@ public final class CardSubsystemTest
 	private static final int DECK_CARD_COUNT = Rank.values().length * Suit.values().length;
 	private static Set<Card> drawnCards;
 	private static TestDeck testDeck;
-	private static final int TEST_ITERATIONS = 1000;
+	private static final int TEST_ITERATIONS = 5000;
 	private static final Card TWO_OF_DIAMONDS = new Card(Rank.TWO, Suit.DIAMOND);
 
 	@BeforeEach

@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
@@ -31,7 +32,7 @@ abstract class EngineTestTemplate
 	static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	String logFilePath;
 	String loggerName;
-	static final int TEST_ITERATIONS = 1000;
+	static final int TEST_ITERATIONS = 5000;
 
 	void advanceToPlayerTurn() throws InsufficientChipsException
 	{
@@ -301,9 +302,15 @@ abstract class EngineTestTemplate
 		);
 	}
 
-	void start() throws InsufficientChipsException, IOException
+	void start(TestDeck deck) throws InsufficientChipsException, IOException
 	{
 		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
+
+		if (deck != null)
+		{
+			engine.getDealer().setDeck(deck);
+		}
+
 		engine.start();
 	}
 }

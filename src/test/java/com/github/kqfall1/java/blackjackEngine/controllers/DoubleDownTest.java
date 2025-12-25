@@ -28,7 +28,7 @@ final class DoubleDownTest extends EngineTestTemplate
 		super.logFilePath = LOG_FILE_PATH;
 		super.loggerName = LOGGER_NAME;
 		super.init();
-		super.start();
+		super.start(null);
 	}
 
 	@Override
