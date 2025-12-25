@@ -734,7 +734,7 @@ public class BlackjackEngine
 			getPlayer().setChips(getPlayer().getChips().add(playerWinnings));
 			getLogger().info(String.format(
 				"Player's hand %s was showed down against dealer's hand %s.",
-			handContext, getDealer().getHand()
+				handContext, getDealer().getHand()
 			));
 			getListener().onShowdownCompleted(getDealer().getHand(), handContext,
 				playerBeatDealer, playerWinnings);

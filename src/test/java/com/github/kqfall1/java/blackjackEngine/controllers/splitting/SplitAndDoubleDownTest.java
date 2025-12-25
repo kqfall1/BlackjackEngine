@@ -16,8 +16,8 @@ import java.math.RoundingMode;
  */
 final class SplitAndDoubleDownTest extends SplitTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndDoubleDown.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.splitting.SplitAndDoubleDown.log";
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndDoubleDownTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.splitting.SplitAndDoubleDownTest.log";
 	private static final BigDecimal MAXIMUM_INITIAL_BET_AMOUNT = INITIAL_PLAYER_CHIP_AMOUNT.divide(
 		BigDecimal.valueOf((MAXIMUM_SPLIT_COUNT + 2) * 2),
 		RoundingMode.HALF_UP

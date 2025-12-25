@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.betting;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 import java.util.Objects;
 
 /**
@@ -55,7 +55,7 @@ public final class PayoutRatio
 
 	public BigDecimal getPayoutMultiplier()
 	{
-		return getNumerator().divide(getDenominator(), RoundingMode.HALF_UP);
+		return getNumerator().divide(getDenominator(), MathContext.DECIMAL128);
 	}
 
 	@Override
