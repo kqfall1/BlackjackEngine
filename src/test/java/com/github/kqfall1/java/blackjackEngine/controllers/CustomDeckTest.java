@@ -33,7 +33,7 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		}
 	}
 
-	public void initCardsForDealerBust()
+	public void initCardsForBust1()
 	{
 		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
@@ -45,6 +45,30 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		)));
 	}
 
+	public void initCardsForBust2()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.FIVE, Suit.HEART),
+			new Card(Rank.QUEEN, Suit.DIAMOND),
+			new Card(Rank.KING, Suit.DIAMOND),
+			new Card(Rank.TWO, Suit.DIAMOND),
+			new Card(Rank.JACK, Suit.CLUB)
+		)));
+	}
+
+	public void initCardsForBust3()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.NINE, Suit.SPADE),
+			new Card(Rank.EIGHT, Suit.SPADE),
+			new Card(Rank.FOUR, Suit.CLUB),
+			new Card(Rank.FIVE, Suit.DIAMOND),
+			new Card(Rank.QUEEN, Suit.CLUB)
+		)));
+	}
+
 	public void initCardsForDealerWin()
 	{
 		testDeck = new TestDeck();
@@ -53,6 +77,18 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			new Card(Rank.TEN, Suit.DIAMOND),
 			new Card(Rank.EIGHT, Suit.CLUB),
 			new Card(Rank.SIX, Suit.HEART),
+			new Card(Rank.THREE, Suit.DIAMOND)
+		)));
+	}
+
+	public void initCardsForPlayerWin()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.TEN, Suit.SPADE),
+			new Card(Rank.TEN, Suit.DIAMOND),
+			new Card(Rank.SIX, Suit.HEART),
+			new Card(Rank.EIGHT, Suit.CLUB),
 			new Card(Rank.THREE, Suit.DIAMOND)
 		)));
 	}
