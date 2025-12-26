@@ -34,7 +34,7 @@ public abstract class EngineTestTemplate
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
-	public void advanceToPlayerTurn() throws InsufficientChipsException
+public void advanceToPlayerTurn() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALING)
 		{
@@ -300,6 +300,11 @@ public abstract class EngineTestTemplate
 				BigDecimal.valueOf(Math.random())
 			)
 		);
+	}
+
+	public BigDecimal randomBetAmount(BigDecimal maximumBetAmount)
+	{
+		return maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()));
 	}
 
 	public void start(TestDeck deck) throws InsufficientChipsException, IOException

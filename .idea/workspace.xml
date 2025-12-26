@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/tests/controllers/dealerTurn/DealerHitAndBustTestResult.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealerTurn/DealerHitAndBustTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealerTurn/DealerHitAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/ConsoleBlackjackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/ConsoleBlackjackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardRuleConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardRuleConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/DoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/DoubleDownTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/HitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/HitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/StandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/SurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/SurrenderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/splitting/SplitAndDoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndDoubleDownTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/splitting/SplitAndHitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndHitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/splitting/SplitAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/splitting/SplitAndSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndSurrenderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/splitting/SplitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/betting/BettingSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/BettingSubsystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/cards/CardSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/CardSubsystemTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportTestResults" outputFolder="$PROJECT_DIR$/src/main/resources/tests/controllers/dealerTurn" userTempatePath="" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="37MlMYmPp9lxKPZcDAeGPI64pg3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.BettingSubsystemTest.executor": "Run",
+    "JUnit.CardSubsystemTest.executor": "Run",
+    "JUnit.DealerHitAndBustTest.executor": "Run",
+    "JUnit.DealerHitAndStandTest.executor": "Run",
+    "JUnit.DoubleDownTest.executor": "Run",
+    "JUnit.EntityAndHandSubsystemTest.executor": "Run",
+    "JUnit.StandTest.executor": "Run",
+    "JUnit.SurrenderTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Work\Career\Coding\Java\BlackjackEngine\src\main\resources\tests\controllers\playerAction" />
+      <recent name="C:\Work\Career\Coding\Java\BlackjackEngine\src\main\resources\tests\controllers\playerAction\splitting" />
+      <recent name="C:\Work\Career\Coding\Java\BlackjackEngine\src\main\resources\tests\model" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.github.kqfall1.java.blackjackEngine.model" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="" />
+      <created>1766720775435</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766720775435</updated>
+    </task>
+    <servers />
+  </component>
+</project>
