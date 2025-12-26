@@ -61,7 +61,7 @@ public final class Player
 			throw new InsufficientChipsException(this, chips);
 		}
 
-		this.chips = chips;
+		this.chips = chips.stripTrailingZeros();
 	}
 
 	@Override

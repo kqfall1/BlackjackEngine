@@ -69,7 +69,7 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		)));
 	}
 
-	public void initCardsForDealerWin()
+	public void initCardsForDealerWin1()
 	{
 		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
@@ -81,15 +81,39 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		)));
 	}
 
-	public void initCardsForPlayerWin()
+	public void initCardsForDealerWin2()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.NINE, Suit.DIAMOND),
+			new Card(Rank.TEN, Suit.DIAMOND),
+			new Card(Rank.JACK, Suit.CLUB),
+			new Card(Rank.FOUR, Suit.HEART),
+			new Card(Rank.SEVEN, Suit.DIAMOND)
+		)));
+	}
+
+	public void initCardsForPlayerWin1()
 	{
 		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.TEN, Suit.SPADE),
 			new Card(Rank.TEN, Suit.DIAMOND),
-			new Card(Rank.SIX, Suit.HEART),
-			new Card(Rank.EIGHT, Suit.CLUB),
-			new Card(Rank.THREE, Suit.DIAMOND)
+			new Card(Rank.NINE, Suit.HEART),
+			new Card(Rank.EIGHT, Suit.CLUB)
+		)));
+	}
+
+	public void initCardsForPlayerWin2()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.KING, Suit.SPADE),
+			new Card(Rank.FOUR, Suit.CLUB),
+			new Card(Rank.JACK, Suit.SPADE),
+			new Card(Rank.THREE, Suit.SPADE),
+			new Card(Rank.THREE, Suit.DIAMOND),
+			new Card(Rank.EIGHT, Suit.CLUB)
 		)));
 	}
 
@@ -105,6 +129,29 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			new Card(Rank.SEVEN, Suit.DIAMOND),
 			new Card(Rank.KING, Suit.HEART),
 			new Card(Rank.SEVEN, Suit.SPADE)
+		)));
+	}
+
+	public void initCardsForPush1()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.QUEEN, Suit.CLUB),
+			new Card(Rank.KING, Suit.HEART),
+			new Card(Rank.JACK, Suit.CLUB),
+			new Card(Rank.JACK, Suit.DIAMOND)
+		)));
+	}
+
+	public void initCardsForPush2()
+	{
+		testDeck = new TestDeck();
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			new Card(Rank.ACE, Suit.HEART),
+			new Card(Rank.EIGHT, Suit.CLUB),
+			new Card(Rank.SIX, Suit.DIAMOND),
+			new Card(Rank.FOUR, Suit.DIAMOND),
+			new Card(Rank.FIVE, Suit.SPADE)
 		)));
 	}
 
