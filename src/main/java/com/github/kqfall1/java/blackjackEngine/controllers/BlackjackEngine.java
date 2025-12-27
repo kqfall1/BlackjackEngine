@@ -215,7 +215,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);
 	}
 
-	private void dealerTurn() throws InsufficientChipsException
+	void dealerTurn() throws InsufficientChipsException
 	{
 		final var METHOD_NAME = "dealerTurn";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -472,7 +472,6 @@ public class BlackjackEngine
 		onBetPlaced();
 		setState(EngineState.DEALING);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, playerMainHand);
-		deal();
 	}
 
 	public void playerDoubleDown() throws Exception

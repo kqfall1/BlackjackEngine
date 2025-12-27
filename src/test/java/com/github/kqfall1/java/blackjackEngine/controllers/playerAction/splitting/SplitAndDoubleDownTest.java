@@ -3,11 +3,11 @@ package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitti
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
 /**
  * Tests the {@code BlackjackEngine} splitting and double down mechanisms together.
@@ -28,13 +28,11 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.logFilePath = LOG_FILE_PATH;
-		super.loggerName = LOGGER_NAME;
 		super.initCardsForSplitting7s();
-		super.init();
+		super.initDependencies();
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 		super.config.setPlayerCanDoubleDownOnSplitHands(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.start(testDeck);
 	}
 
 	@Override

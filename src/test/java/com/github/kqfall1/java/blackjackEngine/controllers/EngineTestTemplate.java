@@ -34,7 +34,7 @@ public abstract class EngineTestTemplate
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
-public void advanceToPlayerTurn() throws InsufficientChipsException
+	public final void advanceToPlayerTurn() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALING)
 		{
@@ -43,11 +43,21 @@ public void advanceToPlayerTurn() throws InsufficientChipsException
 	}
 
 	@BeforeEach
-	public void init() throws InsufficientChipsException, IOException
+	public abstract void init() throws InsufficientChipsException, IOException;
+
+	public void initDependencies()
 	{
 		config = new StandardRuleConfig();
 		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
 		handler = new ConsoleHandler();
+	}
+
+	public void initEngine(String logFilePath, String loggerName, TestDeck testDeck)
+	throws InsufficientChipsException, IOException
+	{
+		this.logFilePath = logFilePath;
+		this.loggerName = loggerName;
+		start(testDeck);
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
@@ -293,21 +303,14 @@ public void advanceToPlayerTurn() throws InsufficientChipsException
 		public void onStateChanged(EngineState oldState) {}
 	};
 
-	public void placeHandBet(BigDecimal maximumBetAmount) throws Exception
+	public final void placeHandBet(BigDecimal maximumBetAmount) throws Exception
 	{
 		engine.placeHandBet(
-			maximumBetAmount.multiply(
-				BigDecimal.valueOf(Math.random())
-			)
+			maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()))
 		);
 	}
 
-	public BigDecimal randomBetAmount(BigDecimal maximumBetAmount)
-	{
-		return maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()));
-	}
-
-	public void start(TestDeck deck) throws InsufficientChipsException, IOException
+	private void start(TestDeck deck) throws InsufficientChipsException, IOException
 	{
 		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
 

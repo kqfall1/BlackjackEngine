@@ -28,8 +28,8 @@ public class DealerHitAndBustTest extends CustomDeckTest
 			case 2 -> super.initCardsForBust3();
 		}
 
-		super.init();
-		super.start(testDeck);
+		super.initDependencies();
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 	}
 
 	@Override

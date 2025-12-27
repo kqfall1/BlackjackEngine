@@ -5,8 +5,11 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void advanceToDealerTurn() throws Exception
 	{
-		super.engine.placeHandBet(super.randomBetAmount(super.engine.getPlayer().getChips()));
+		super.placeHandBet(super.engine.getPlayer().getChips());
 		super.advanceToPlayerTurn();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
@@ -32,6 +35,9 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			super.engine.playerStand();
 		}
 	}
+
+	@BeforeEach
+	public abstract void init() throws InsufficientChipsException, IOException;
 
 	public void initCardsForBust1()
 	{

@@ -28,12 +28,10 @@ final class SplitAndStandTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.logFilePath = LOG_FILE_PATH;
-		super.loggerName = LOGGER_NAME;
 		super.initCardsForSplitting7s();
-		super.init();
+		super.initDependencies();
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.start(testDeck);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 	}
 
 	@Override

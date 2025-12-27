@@ -14,6 +14,8 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import com.github.kqfall1.java.managers.InputManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -145,8 +147,9 @@ public final class EntityAndHandSubsystemTest
 		player1.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
 		player2.addContext(splitContext);
 		player2.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
-		assertEquals(PLAYER_INITIAL_CHIP_AMOUNT, player1.getChips());
-		assertEquals(PLAYER_INITIAL_CHIP_AMOUNT, player2.getChips());
+		assertTrue(PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player1.getChips()) == 0
+			&& PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player2.getChips()) == 0
+		);
 		assertEquals(player1.getContexts().size(), player2.getContexts().size());
 		player1.clearContexts();
 		player2.removeContext(0);

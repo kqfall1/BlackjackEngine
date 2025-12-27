@@ -23,10 +23,8 @@ final class StandTest extends EngineTestTemplate
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.logFilePath = LOG_FILE_PATH;
-		super.loggerName = LOGGER_NAME;
-		super.init();
-		super.start(null);
+		super.initDependencies();
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, null);
 	}
 
 	@Override
@@ -34,7 +32,7 @@ final class StandTest extends EngineTestTemplate
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.engine.placeHandBet(super.randomBetAmount(PREVIOUS_CHIP_AMOUNT));
+		super.engine.placeHandBet(PREVIOUS_CHIP_AMOUNT);
 		super.advanceToPlayerTurn();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)

@@ -34,8 +34,8 @@ final class DealerHitAndStandTest extends CustomDeckTest
 			case 5 -> super.initCardsForPush2();
 		}
 
-		super.init();
-		super.start(testDeck);
+		super.initDependencies();
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 	}
 
 	@Override
