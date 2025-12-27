@@ -32,7 +32,7 @@ final class StandTest extends EngineTestTemplate
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.engine.placeHandBet(PREVIOUS_CHIP_AMOUNT);
+		super.placeRandomHandBet(PREVIOUS_CHIP_AMOUNT);
 		super.declinePossibleInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)

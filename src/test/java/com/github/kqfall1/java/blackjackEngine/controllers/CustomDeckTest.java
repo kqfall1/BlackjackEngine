@@ -128,7 +128,14 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 	{
 		final var RANDOM_ACE = randomCardOfRank(Rank.ACE);
 		randomCards = new TestDeck();
-		randomCards.removeCards(RANDOM_ACE);
+		randomCards.removeCards(
+			RANDOM_ACE,
+			SEVEN_OF_CLUBS,
+			SEVEN_OF_DIAMONDS,
+			SEVEN_OF_HEARTS,
+			SEVEN_OF_CLUBS,
+			SEVEN_OF_DIAMONDS
+		);
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			SEVEN_OF_CLUBS,

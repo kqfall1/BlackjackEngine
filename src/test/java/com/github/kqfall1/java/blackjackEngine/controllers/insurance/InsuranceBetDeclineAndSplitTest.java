@@ -3,12 +3,11 @@ package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
 final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 {
@@ -37,12 +36,11 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 			)
 		);
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN
-			&& super.engine.getActiveHandContext().getHand().isPocketPair())
+		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.initSplitHands();
 
-			while (super.engine.getState() == EngineState.PLAYER_TURN)
+			for (int count = 0; count < MAXIMUM_SPLIT_COUNT + 1; count++)
 			{
 				super.engine.playerStand();
 			}

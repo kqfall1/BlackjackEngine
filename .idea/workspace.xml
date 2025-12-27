@@ -6,11 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Bet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Bet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetAcceptTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndDoubleDownTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndHitTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndStandTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndSurrenderTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/playerAction/DealTestResult.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/playerAction/PlaceBetTestResult.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetAcceptTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetAcceptTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/BettingSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/BettingSubsystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +56,7 @@
     "JUnit.DealerHitAndStandTest.executor": "Run",
     "JUnit.DoubleDownTest.executor": "Run",
     "JUnit.EntityAndHandSubsystemTest.executor": "Run",
+    "JUnit.HitTest.executor": "Run",
     "JUnit.InsuranceBetAcceptTest.executor": "Run",
     "JUnit.InsuranceBetDeclineAndDoubleDownTest.executor": "Run",
     "JUnit.InsuranceBetDeclineAndHitTest.executor": "Run",
@@ -103,5 +110,16 @@
       <updated>1766720775435</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/Hand.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

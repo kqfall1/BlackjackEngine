@@ -1,13 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 final class InsuranceBetDeclineAndStandTest extends CustomDeckTest
 {
