@@ -11,7 +11,6 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 /**
  * Tests the functionalities of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
@@ -49,7 +48,7 @@ final class BettingSubsystemTest
 		Assertions.assertNotEquals(new Bet(BigDecimal.ONE), bet1);
 		assertEquals(initialBetAmount, bet1.getAmount());
 		assertEquals(
-			initialBetAmount.divide(BigDecimal.TWO, RoundingMode.HALF_UP),
+			initialBetAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128),
 			bet1.getHalf()
 		);
 		assertEquals(bet1.getAmount(), bet2.getAmount());

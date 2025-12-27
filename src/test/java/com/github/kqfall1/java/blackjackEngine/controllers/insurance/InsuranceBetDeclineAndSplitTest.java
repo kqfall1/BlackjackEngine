@@ -1,0 +1,51 @@
+package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
+
+import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
+{
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetDeclineAndSplitTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetDeclineAndSplitTest.log";
+
+	@BeforeEach
+	@Override
+	public void init() throws InsufficientChipsException, IOException
+	{
+		super.initCardsForInsuranceAndSplitting7s();
+		super.initDependencies();
+		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		super.engine.getDealer().setDeck(testDeck);
+	}
+
+	@Override
+	@RepeatedTest(TEST_ITERATIONS)
+	public void main() throws Exception
+	{
+		super.advanceToPlayerTurn(
+			super.engine.getPlayer().getChips().divide(
+				BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2),
+				MathContext.DECIMAL128
+			)
+		);
+
+		if (super.engine.getState() == EngineState.PLAYER_TURN
+			&& super.engine.getActiveHandContext().getHand().isPocketPair())
+		{
+			super.initSplitHands();
+
+			while (super.engine.getState() == EngineState.PLAYER_TURN)
+			{
+				super.engine.playerStand();
+			}
+		}
+	}
+}

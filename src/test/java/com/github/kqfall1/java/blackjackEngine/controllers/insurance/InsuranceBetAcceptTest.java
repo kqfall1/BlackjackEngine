@@ -3,17 +3,17 @@ package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
 final class InsuranceBetAcceptTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetAcceptTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.InsuranceBetAcceptTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetAcceptTest.log";
 
 	@BeforeEach
 	@Override

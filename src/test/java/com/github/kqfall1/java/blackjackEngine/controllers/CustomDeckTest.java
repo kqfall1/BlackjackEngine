@@ -22,6 +22,10 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 {
 	public static final int MAXIMUM_SPLIT_COUNT = 3;
 	public TestDeck randomCards;
+	private static final Card SEVEN_OF_CLUBS = new Card(Rank.SEVEN, Suit.CLUB);
+	private static final Card SEVEN_OF_DIAMONDS = new Card(Rank.SEVEN, Suit.DIAMOND);
+	private final Card SEVEN_OF_HEARTS = new Card(Rank.SEVEN, Suit.HEART);
+	private final Card SEVEN_OF_SPADES = new Card(Rank.SEVEN, Suit.SPADE);
 	public TestDeck testDeck;
 
 	public CustomDeckTest()
@@ -108,10 +112,7 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForInsurance()
 	{
-		final var RANDOM_ACE = new Card(
-			Rank.ACE,
-			Suit.values()[(int) (Suit.values().length * Math.random())]
-		);
+		final var RANDOM_ACE = randomCardOfRank(Rank.ACE);
 		randomCards = new TestDeck();
 		randomCards.removeCards(RANDOM_ACE);
 
@@ -120,6 +121,24 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			RANDOM_ACE,
 			randomCards.draw(),
 			randomCards.draw()
+		)));
+	}
+
+	public void initCardsForInsuranceAndSplitting7s()
+	{
+		final var RANDOM_ACE = randomCardOfRank(Rank.ACE);
+		randomCards = new TestDeck();
+		randomCards.removeCards(RANDOM_ACE);
+
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			SEVEN_OF_CLUBS,
+			RANDOM_ACE,
+			SEVEN_OF_DIAMONDS,
+			randomCards.draw(),
+			randomCards.draw(),
+			SEVEN_OF_HEARTS,
+			randomCards.draw(),
+			SEVEN_OF_SPADES
 		)));
 	}
 
@@ -188,11 +207,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForSplitting7s()
 	{
-		final var SEVEN_OF_CLUBS = new Card(Rank.SEVEN, Suit.CLUB);
-		final var SEVEN_OF_DIAMONDS = new Card(Rank.SEVEN, Suit.DIAMOND);
-		final var SEVEN_OF_HEARTS = new Card(Rank.SEVEN, Suit.HEART);
-		final var SEVEN_OF_SPADES = new Card(Rank.SEVEN, Suit.SPADE);
-
 		randomCards = new TestDeck();
 		randomCards.removeCards(SEVEN_OF_CLUBS, SEVEN_OF_DIAMONDS, SEVEN_OF_HEARTS, SEVEN_OF_CLUBS);
 
@@ -210,4 +224,13 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	@RepeatedTest(TEST_ITERATIONS)
 	public abstract void main() throws Exception;
+
+	private Card randomCardOfRank (Rank rank)
+	{
+		Assertions.assertNotNull(rank);
+		return new Card(
+			rank,
+			Suit.values()[(int) (Suit.values().length * Math.random())]
+		);
+	}
 }
