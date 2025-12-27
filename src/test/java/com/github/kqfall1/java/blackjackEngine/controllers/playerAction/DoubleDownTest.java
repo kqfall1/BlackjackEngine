@@ -38,8 +38,8 @@ final class DoubleDownTest extends EngineTestTemplate
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.placeHandBet(MAXIMUM_INITIAL_BET_AMOUNT);
-		super.advanceToPlayerTurn();
+		super.placeRandomHandBet(MAXIMUM_INITIAL_BET_AMOUNT);
+		super.declinePossibleInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

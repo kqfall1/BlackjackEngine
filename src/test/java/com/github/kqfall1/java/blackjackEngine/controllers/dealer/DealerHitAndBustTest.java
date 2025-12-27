@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.controllers.dealerTurn;
+package com.github.kqfall1.java.blackjackEngine.controllers.dealer;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
@@ -11,7 +11,7 @@ public class DealerHitAndBustTest extends CustomDeckTest
 {
 	private static final int BUST_METHOD_COUNT = 3;
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DealerHitAndBustTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealerTurn.DealerHitAndBustTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.DealerHitAndBustTest.log";
 
 	@BeforeEach
 	@Override
@@ -37,7 +37,7 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceToDealerTurn();
+		super.advanceToDealerTurn(PREVIOUS_CHIP_AMOUNT);
 		Assertions.assertTrue(super.engine.getPlayer().getChips().compareTo(PREVIOUS_CHIP_AMOUNT) > 0);
 	}
 }

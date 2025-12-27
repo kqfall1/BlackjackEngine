@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.List;
 
@@ -25,15 +26,22 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 	public static final int MAXIMUM_SPLIT_COUNT = 3;
 	public TestDeck testDeck;
 
-	public void advanceToDealerTurn() throws Exception
+	public void advanceToDealerTurn(BigDecimal maximumBetAmount) throws Exception
 	{
-		super.placeHandBet(super.engine.getPlayer().getChips());
-		super.advanceToPlayerTurn();
+		advanceToPlayerTurn(maximumBetAmount);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
 		}
+	}
+
+	public void advanceToPlayerTurn(BigDecimal maximumBetAmount) throws Exception
+	{
+		super.placeRandomHandBet(maximumBetAmount);
+		super.engine.deal();
+		super.engine.advanceAfterDeal();
+		super.declinePossibleInsuranceBet();
 	}
 
 	@BeforeEach
@@ -173,7 +181,7 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			super.engine.playerSplit();
 
 			Assertions.assertEquals(
-				previousChipAmount.subtract(BET_AMOUNT),
+				previousChipAmount.subtract(BET_AMOUNT).stripTrailingZeros(),
 				super.engine.getPlayer().getChips()
 			);
 

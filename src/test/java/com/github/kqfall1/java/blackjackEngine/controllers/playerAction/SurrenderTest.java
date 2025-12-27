@@ -33,7 +33,7 @@ final class SurrenderTest extends EngineTestTemplate
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 		super.engine.placeHandBet(PREVIOUS_CHIP_AMOUNT);
-		super.advanceToPlayerTurn();
+		super.declinePossibleInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

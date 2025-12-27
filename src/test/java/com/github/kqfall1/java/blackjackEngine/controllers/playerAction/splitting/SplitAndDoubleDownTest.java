@@ -30,17 +30,16 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	{
 		super.initCardsForSplitting7s();
 		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 		super.config.setPlayerCanDoubleDownOnSplitHands(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.placeHandBet(MAXIMUM_INITIAL_BET_AMOUNT);
-		super.advanceToPlayerTurn();
+		super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

@@ -34,9 +34,9 @@ public abstract class EngineTestTemplate
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
-	public final void advanceToPlayerTurn() throws InsufficientChipsException
+	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
 	{
-		if (engine.getState() == EngineState.DEALING)
+		if (engine.getState() == EngineState.INSURANCE_CHECK)
 		{
 			engine.declineInsuranceBet();
 		}
@@ -303,7 +303,7 @@ public abstract class EngineTestTemplate
 		public void onStateChanged(EngineState oldState) {}
 	};
 
-	public final void placeHandBet(BigDecimal maximumBetAmount) throws Exception
+	public final void placeRandomHandBet(BigDecimal maximumBetAmount) throws Exception
 	{
 		engine.placeHandBet(
 			maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()))

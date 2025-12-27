@@ -38,8 +38,7 @@ final class SplitAndStandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.placeHandBet(MAXIMUM_INITIAL_BET_AMOUNT);
-		super.advanceToPlayerTurn();
+		super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

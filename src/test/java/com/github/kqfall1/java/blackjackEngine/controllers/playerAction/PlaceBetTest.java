@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.controllers.EngineTestTemplate;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-final class PlaceBetTest extends CustomDeckTest
+public final class PlaceBetTest extends EngineTestTemplate
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/PlaceBetTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.PlaceBetTest.log";
@@ -26,7 +26,7 @@ final class PlaceBetTest extends CustomDeckTest
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.placeHandBet(PREVIOUS_CHIP_AMOUNT);
+		super.placeRandomHandBet(PREVIOUS_CHIP_AMOUNT);
 
 		Assertions.assertTrue(PREVIOUS_CHIP_AMOUNT.compareTo(super.engine.getPlayer().getChips()) > 0);
 		Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());

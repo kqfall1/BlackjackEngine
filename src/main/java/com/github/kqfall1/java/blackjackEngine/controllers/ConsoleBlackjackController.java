@@ -88,6 +88,12 @@ public final class ConsoleBlackjackController implements EngineListener
 			"You placed a bet of $%.2f.\n",
 			handContext.getBet().getAmount()
 		);
+
+		try
+		{
+			getEngine().deal();
+		}
+		catch (InsufficientChipsException ignored) {}
 	}
 
 	@Override

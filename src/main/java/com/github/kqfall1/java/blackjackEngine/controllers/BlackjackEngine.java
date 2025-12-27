@@ -146,12 +146,38 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
+	public void advanceAfterDeal() throws InsufficientChipsException
+	{
+		final var METHOD_NAME = "advanceAfterDeal";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
+		if (getConfig().isInsuranceBetPossible(
+			getActiveHandContext(), getPlayer(), getDealer().getHand()))
+		{
+			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getLast());
+			setState(EngineState.INSURANCE_CHECK);
+		}
+		else if (getActiveHandContext().getHand().isBlackjack()
+			|| getDealer().getHand().isBlackjack())
+		{
+			setState(EngineState.SHOWDOWN);
+			showdown();
+		}
+		else
+		{
+			onDrawingRoundStartedPlayer();
+			setState(EngineState.PLAYER_TURN);
+		}
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
 	public void deal() throws InsufficientChipsException
 	{
 		final var METHOD_NAME = "deal";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
-		assert getState() == EngineState.DEALING
-			: "getState() != EngineState.DEALING";
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.DEALING : "getState() != EngineState.DEALING";
 		final var dealerHand = getDealer().getHand();
 		assert dealerHand.getCards().isEmpty() : "!dealerHand.getCards().isEmpty()";
 		assert getActiveHandContext().getHand().getCards().isEmpty()
@@ -171,23 +197,6 @@ public class BlackjackEngine
 			getActiveHandContext(),
 			dealerHand.getCards().get(StandardRuleConfig.INITIAL_CARD_COUNT - 1)
 		));
-		if (getConfig().isInsuranceBetPossible(
-			getActiveHandContext(), getPlayer(), getDealer().getHand()))
-		{
-			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getLast());
-			setState(EngineState.INSURANCE_CHECK);
-		}
-		else if (getActiveHandContext().getHand().isBlackjack()
-			|| getDealer().getHand().isBlackjack())
-		{
-			setState(EngineState.SHOWDOWN);
-			showdown();
-		}
-		else
-		{
-			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
-		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -217,7 +226,7 @@ public class BlackjackEngine
 
 	void dealerTurn() throws InsufficientChipsException
 	{
-		final var METHOD_NAME = "dealerTurn";
+		final var METHOD_NAME = "dealer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
 		assert getState() == EngineState.DEALER_TURN
