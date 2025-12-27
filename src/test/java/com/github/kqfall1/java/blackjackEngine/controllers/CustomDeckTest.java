@@ -1,9 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
-import com.github.kqfall1.java.blackjackEngine.model.cards.TestDeck;
+import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +21,14 @@ import java.util.List;
 public abstract class CustomDeckTest extends EngineTestTemplate
 {
 	public static final int MAXIMUM_SPLIT_COUNT = 3;
+	public TestDeck randomCards;
 	public TestDeck testDeck;
+
+	public CustomDeckTest()
+	{
+		randomCards = new TestDeck();
+		testDeck = new TestDeck();
+	}
 
 	public void advanceToDealerTurn(BigDecimal maximumBetAmount) throws Exception
 	{
@@ -49,7 +53,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForBust1()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.TEN, Suit.SPADE),
 			new Card(Rank.TEN, Suit.DIAMOND),
@@ -61,7 +64,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForBust2()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.FIVE, Suit.HEART),
 			new Card(Rank.QUEEN, Suit.DIAMOND),
@@ -73,7 +75,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForBust3()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.NINE, Suit.SPADE),
 			new Card(Rank.EIGHT, Suit.SPADE),
@@ -85,7 +86,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForDealerWin1()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.TEN, Suit.SPADE),
 			new Card(Rank.TEN, Suit.DIAMOND),
@@ -97,7 +97,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForDealerWin2()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.NINE, Suit.DIAMOND),
 			new Card(Rank.TEN, Suit.DIAMOND),
@@ -107,9 +106,25 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		)));
 	}
 
+	public void initCardsForInsurance()
+	{
+		final var RANDOM_ACE = new Card(
+			Rank.ACE,
+			Suit.values()[(int) (Suit.values().length * Math.random())]
+		);
+		randomCards = new TestDeck();
+		randomCards.removeCards(RANDOM_ACE);
+
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.draw(),
+			RANDOM_ACE,
+			randomCards.draw(),
+			randomCards.draw()
+		)));
+	}
+
 	public void initCardsForPlayerWin1()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.TEN, Suit.SPADE),
 			new Card(Rank.TEN, Suit.DIAMOND),
@@ -120,7 +135,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForPlayerWin2()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.KING, Suit.SPADE),
 			new Card(Rank.FOUR, Suit.CLUB),
@@ -131,24 +145,8 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 		)));
 	}
 
-	public void initCardsForSplitting7s()
-	{
-		testDeck = new TestDeck();
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.SEVEN, Suit.CLUB),
-			new Card(Rank.JACK, Suit.SPADE),
-			new Card(Rank.SEVEN, Suit.HEART),
-			new Card(Rank.THREE, Suit.DIAMOND),
-			new Card(Rank.NINE, Suit.CLUB),
-			new Card(Rank.SEVEN, Suit.DIAMOND),
-			new Card(Rank.KING, Suit.HEART),
-			new Card(Rank.SEVEN, Suit.SPADE)
-		)));
-	}
-
 	public void initCardsForPush1()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.QUEEN, Suit.CLUB),
 			new Card(Rank.KING, Suit.HEART),
@@ -159,7 +157,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	public void initCardsForPush2()
 	{
-		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			new Card(Rank.ACE, Suit.HEART),
 			new Card(Rank.EIGHT, Suit.CLUB),
@@ -187,6 +184,28 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 			previousChipAmount = super.engine.getPlayer().getChips();
 		}
+	}
+
+	public void initCardsForSplitting7s()
+	{
+		final var SEVEN_OF_CLUBS = new Card(Rank.SEVEN, Suit.CLUB);
+		final var SEVEN_OF_DIAMONDS = new Card(Rank.SEVEN, Suit.DIAMOND);
+		final var SEVEN_OF_HEARTS = new Card(Rank.SEVEN, Suit.HEART);
+		final var SEVEN_OF_SPADES = new Card(Rank.SEVEN, Suit.SPADE);
+
+		randomCards = new TestDeck();
+		randomCards.removeCards(SEVEN_OF_CLUBS, SEVEN_OF_DIAMONDS, SEVEN_OF_HEARTS, SEVEN_OF_CLUBS);
+
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			SEVEN_OF_CLUBS,
+			randomCards.draw(),
+			SEVEN_OF_DIAMONDS,
+			randomCards.draw(),
+			randomCards.draw(),
+			SEVEN_OF_HEARTS,
+			randomCards.draw(),
+			SEVEN_OF_SPADES
+		)));
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
@@ -22,7 +23,7 @@ final class DoubleDownTest extends EngineTestTemplate
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.DoubleDownTest.log";
 	private static final BigDecimal MAXIMUM_INITIAL_BET_AMOUNT = INITIAL_PLAYER_CHIP_AMOUNT.divide(
 		BigDecimal.TWO,
-		RoundingMode.HALF_UP
+		MathContext.DECIMAL128
 	);
 
 	@BeforeEach
@@ -30,7 +31,7 @@ final class DoubleDownTest extends EngineTestTemplate
 	public void init() throws InsufficientChipsException, IOException
 	{
 		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, null);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
 
 	@Override

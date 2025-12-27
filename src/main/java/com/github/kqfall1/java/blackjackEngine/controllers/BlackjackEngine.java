@@ -126,22 +126,13 @@ public class BlackjackEngine
 		final var amount = getActiveHandContext().getBet().getHalf();
 		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
-		var winnings = BigDecimal.ZERO;
 		if (getDealer().getHand().isBlackjack())
 		{
-			winnings = insurancePot.scoop().multiply(
-				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
-			);
-			getPlayer().setChips(getPlayer().getChips().add(winnings));
-			getListener().onInsuranceBetResolved(true, winnings);
-			setState(EngineState.SHOWDOWN);
-			showdown();
-		}
-		else
-		{
-			getListener().onInsuranceBetResolved(false, winnings);
-			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
+			getPlayer().setChips(getPlayer().getChips().add(
+				insurancePot.scoop().multiply(
+					StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+				)
+			));
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -155,7 +146,7 @@ public class BlackjackEngine
 		if (getConfig().isInsuranceBetPossible(
 			getActiveHandContext(), getPlayer(), getDealer().getHand()))
 		{
-			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getLast());
+			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getFirst());
 			setState(EngineState.INSURANCE_CHECK);
 		}
 		else if (getActiveHandContext().getHand().isBlackjack()
@@ -170,6 +161,23 @@ public class BlackjackEngine
 			setState(EngineState.PLAYER_TURN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
+	public void advanceAfterInsuranceBet(BigDecimal winnings) throws InsufficientChipsException
+	{
+		if (getDealer().getHand().isBlackjack())
+		{
+
+			getListener().onInsuranceBetResolved(true, winnings);
+			setState(EngineState.SHOWDOWN);
+			showdown();
+		}
+		else
+		{
+			getListener().onInsuranceBetResolved(false, winnings);
+			onDrawingRoundStartedPlayer();
+			setState(EngineState.PLAYER_TURN);
+		}
 	}
 
 	public void deal() throws InsufficientChipsException
@@ -345,7 +353,7 @@ public class BlackjackEngine
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
 		final var isFaceUpCard = getDealer().getHand().getCards().size()
-			> StandardRuleConfig.INITIAL_CARD_COUNT - 1;
+			< StandardRuleConfig.INITIAL_CARD_COUNT;
 		getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
 		getLogger().info(String.format(
 			"Added card %s to dealer's hand %s.",

@@ -32,6 +32,14 @@ public final class TestDeck extends Deck
 			: List.copyOf(initialCards);
 	}
 
+	public void removeCards(Card... cards)
+	{
+		for (Card card : cards)
+		{
+			this.cards.remove(card);
+		}
+	}
+
 	public void setInitialCards(Queue<Card> initialCards)
 	{
 		this.initialCards = initialCards;
@@ -40,7 +48,7 @@ public final class TestDeck extends Deck
 		{
 			for (Card card : initialCards)
 			{
-				cards.remove(card);
+				removeCards(card);
 			}
 		}
 	}

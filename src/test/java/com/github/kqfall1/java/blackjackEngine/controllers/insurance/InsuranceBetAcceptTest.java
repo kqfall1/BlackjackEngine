@@ -1,0 +1,69 @@
+package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
+
+import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+final class InsuranceBetAcceptTest extends CustomDeckTest
+{
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetAcceptTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.InsuranceBetAcceptTest.log";
+
+	@BeforeEach
+	@Override
+	public void init() throws InsufficientChipsException, IOException
+	{
+		super.initCardsForInsurance();
+		super.initDependencies();
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		super.engine.getDealer().setDeck(testDeck);
+	}
+
+	@Override
+	@RepeatedTest(TEST_ITERATIONS)
+	public void main() throws Exception
+	{
+		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(
+			BigDecimal.TWO,
+			MathContext.DECIMAL128
+		));
+		super.engine.deal();
+		super.engine.advanceAfterDeal();
+
+		final var CHIPS_BEFORE_INSURANCE = super.engine.getPlayer().getChips();
+		final var HALF_OF_ACTIVE_BET = super.engine.getActiveHandContext().getBet().getHalf();
+		super.engine.acceptInsuranceBet();
+
+		var winnings = BigDecimal.ZERO;
+		if (super.engine.getDealer().getHand().isBlackjack())
+		{
+			winnings = HALF_OF_ACTIVE_BET.multiply(
+				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+			);
+			Assertions.assertEquals(
+				CHIPS_BEFORE_INSURANCE
+					.subtract(HALF_OF_ACTIVE_BET)
+					.add(winnings)
+					.stripTrailingZeros(),
+				super.engine.getPlayer().getChips()
+			);
+		}
+		else
+		{
+			Assertions.assertEquals(
+				CHIPS_BEFORE_INSURANCE
+					.subtract(HALF_OF_ACTIVE_BET)
+					.stripTrailingZeros(),
+				super.engine.getPlayer().getChips()
+			);
+		}
+
+		super.engine.advanceAfterInsuranceBet(winnings);
+	}
+}

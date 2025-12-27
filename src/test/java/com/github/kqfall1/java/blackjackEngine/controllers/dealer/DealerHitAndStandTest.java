@@ -33,7 +33,8 @@ final class DealerHitAndStandTest extends CustomDeckTest
 		}
 
 		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, testDeck);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		super.engine.getDealer().setDeck(testDeck);
 	}
 
 	@Override

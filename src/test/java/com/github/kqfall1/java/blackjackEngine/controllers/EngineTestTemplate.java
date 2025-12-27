@@ -52,12 +52,12 @@ public abstract class EngineTestTemplate
 		handler = new ConsoleHandler();
 	}
 
-	public void initEngine(String logFilePath, String loggerName, TestDeck testDeck)
+	public void initEngine(String logFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
 		this.logFilePath = logFilePath;
 		this.loggerName = loggerName;
-		start(testDeck);
+		start();
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
@@ -310,15 +310,9 @@ public abstract class EngineTestTemplate
 		);
 	}
 
-	private void start(TestDeck deck) throws InsufficientChipsException, IOException
+	private void start() throws InsufficientChipsException, IOException
 	{
 		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
-
-		if (deck != null)
-		{
-			engine.getDealer().setDeck(deck);
-		}
-
 		engine.start();
 	}
 }

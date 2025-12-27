@@ -18,7 +18,7 @@ final class DealTest extends EngineTestTemplate
 	public void init() throws InsufficientChipsException, IOException
 	{
 		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME, null);
+		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
 
 	@Override

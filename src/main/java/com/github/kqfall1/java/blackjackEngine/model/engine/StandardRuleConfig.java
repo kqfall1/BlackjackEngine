@@ -111,7 +111,7 @@ public final class StandardRuleConfig
 	{
 		return !activeHandContext.isAltered()
 			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
-			&& dealerHand.getCards().getLast().getRank() == Rank.ACE
+			&& dealerHand.getCards().getFirst().getRank() == Rank.ACE
 			&& player.getContexts().size() == 1;
 	}
 
