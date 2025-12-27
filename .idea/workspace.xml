@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetAcceptTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndDoubleDownTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndHitTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndStandTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/insurance/InsuranceBetDeclineAndSurrenderTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/playerAction/DealTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tests/controllers/playerAction/PlaceBetTestResult.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
