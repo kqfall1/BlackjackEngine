@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
@@ -65,5 +66,12 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 		}
 
 		super.engine.advanceAfterInsuranceBet(winnings);
+
+		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		{
+			super.engine.playerStand();
+			super.engine.advanceAfterPlayerTurn();
+			super.advanceToEndAfterPotentialDealerTurn();
+		}
 	}
 }

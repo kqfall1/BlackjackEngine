@@ -37,8 +37,8 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceToDealerTurn(PREVIOUS_CHIP_AMOUNT);
-		Assertions.assertTrue(super.engine.getPlayer().getChips().compareTo(PREVIOUS_CHIP_AMOUNT) > 0);
+		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+		Assertions.assertTrue(super.engine.getDealer().getHand().isBusted());
+		super.advanceToEndAfterPotentialDealerTurn();
 	}
 }

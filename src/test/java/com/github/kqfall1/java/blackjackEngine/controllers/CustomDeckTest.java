@@ -1,13 +1,11 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.List;
 
@@ -32,24 +30,6 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 	{
 		randomCards = new TestDeck();
 		testDeck = new TestDeck();
-	}
-
-	public void advanceToDealerTurn(BigDecimal maximumBetAmount) throws Exception
-	{
-		advanceToPlayerTurn(maximumBetAmount);
-
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
-		{
-			super.engine.playerStand();
-		}
-	}
-
-	public void advanceToPlayerTurn(BigDecimal maximumBetAmount) throws Exception
-	{
-		super.placeRandomHandBet(maximumBetAmount);
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
-		super.declinePossibleInsuranceBet();
 	}
 
 	@BeforeEach
@@ -206,6 +186,9 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			Assertions.assertEquals(
 				previousChipAmount.subtract(BET_AMOUNT).stripTrailingZeros(),
 				super.engine.getPlayer().getChips()
+			);
+			Assertions.assertFalse(super.engine.getPlayer().getContexts().get(
+				super.engine.getActiveHandContextIndex() - 1).isAltered()
 			);
 
 			previousChipAmount = super.engine.getPlayer().getChips();

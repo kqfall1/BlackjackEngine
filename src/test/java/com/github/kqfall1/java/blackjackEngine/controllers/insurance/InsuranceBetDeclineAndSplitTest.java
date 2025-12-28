@@ -29,21 +29,29 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.advanceToPlayerTurn(
+		super.placeRandomHandBet(
 			super.engine.getPlayer().getChips().divide(
 				BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2),
 				MathContext.DECIMAL128
 			)
 		);
+		super.engine.deal();
+		super.engine.advanceAfterDeal();
+		super.declinePossibleInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.initSplitHands();
 
-			for (int count = 0; count < MAXIMUM_SPLIT_COUNT + 1; count++)
+			for (int count = 0
+				; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				; count ++)
 			{
 				super.engine.playerStand();
 			}
+
+			super.engine.advanceAfterPlayerTurn();
+			super.advanceToEndAfterPotentialDealerTurn();
 		}
 	}
 }

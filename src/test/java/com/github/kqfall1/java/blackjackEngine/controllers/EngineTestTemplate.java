@@ -33,6 +33,37 @@ public abstract class EngineTestTemplate
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
+	public void advanceToDealerTurn(BigDecimal maximumBetAmount) throws Exception
+	{
+		advanceToPlayerTurn(maximumBetAmount);
+
+		if (engine.getState() == EngineState.PLAYER_TURN)
+		{
+			engine.playerStand();
+		}
+
+		engine.advanceAfterPlayerTurn();
+	}
+
+	public void advanceToPlayerTurn(BigDecimal maximumBetAmount) throws Exception
+	{
+		placeRandomHandBet(maximumBetAmount);
+		engine.deal();
+		engine.advanceAfterDeal();
+		declinePossibleInsuranceBet();
+	}
+
+	public final void advanceToEndAfterPotentialDealerTurn()
+	throws InsufficientChipsException
+	{
+		if (engine.getState() == EngineState.DEALER_TURN)
+		{
+			engine.advanceAfterDealerTurn();
+			engine.advanceAfterShowdown();
+			engine.advanceAfterReset();
+		}
+	}
+
 	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.INSURANCE_CHECK)
@@ -154,6 +185,7 @@ public abstract class EngineTestTemplate
 
 		@Override
 		public void onDrawingRoundCompletedPlayer(HandContext handContext)
+		throws InsufficientChipsException
 		{
 			assertEquals(EngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(

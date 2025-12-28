@@ -2,10 +2,10 @@ package com.github.kqfall1.java.blackjackEngine.controllers.dealer;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import java.io.IOException;
 
 final class DealerHitAndStandTest extends CustomDeckTest
 {
@@ -41,20 +41,30 @@ final class DealerHitAndStandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceToDealerTurn(PREVIOUS_CHIP_AMOUNT);
+		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 
 		if (showdownMethodIndex < SHOWDOWN_DEALER_WIN_METHOD_COUNT)
 		{
-			Assertions.assertTrue(super.engine.getPlayer().getChips().compareTo(PREVIOUS_CHIP_AMOUNT) < 0);
+			Assertions.assertTrue(
+				super.engine.getActiveHandContext().getHand().getScore()
+				< super.engine.getDealer().getHand().getScore()
+			);
 		}
 		else if (showdownMethodIndex < SHOWDOWN_DEALER_WIN_METHOD_COUNT + SHOWDOWN_PLAYER_WIN_METHOD_COUNT)
 		{
-			Assertions.assertTrue(super.engine.getPlayer().getChips().compareTo(PREVIOUS_CHIP_AMOUNT) > 0);
+			Assertions.assertTrue(
+				super.engine.getActiveHandContext().getHand().getScore()
+				> super.engine.getDealer().getHand().getScore()
+			);
 		}
 		else
 		{
-			Assertions.assertEquals(PREVIOUS_CHIP_AMOUNT, super.engine.getPlayer().getChips());
+			Assertions.assertEquals(
+				super.engine.getActiveHandContext().getHand().getScore(),
+				super.engine.getDealer().getHand().getScore()
+			);
 		}
+
+		super.advanceToEndAfterPotentialDealerTurn();
 	}
 }

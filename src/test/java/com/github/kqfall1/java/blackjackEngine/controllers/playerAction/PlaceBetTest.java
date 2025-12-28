@@ -1,12 +1,13 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.EngineTestTemplate;
+import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import java.io.IOException;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import java.io.IOException;
-import java.math.BigDecimal;
 
 public final class PlaceBetTest extends EngineTestTemplate
 {
@@ -35,5 +36,16 @@ public final class PlaceBetTest extends EngineTestTemplate
 			super.engine.getActiveHandContext().getBet().getAmount().multiply(BigDecimal.TWO).stripTrailingZeros(),
 			super.engine.getActiveHandContext().getPot().getAmount()
 		);
+
+		super.engine.deal();
+		super.engine.advanceAfterDeal();
+		super.declinePossibleInsuranceBet();
+
+		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		{
+			super.engine.playerStand();
+			super.engine.advanceAfterPlayerTurn();
+			super.advanceToEndAfterPotentialDealerTurn();
+		}
 	}
 }

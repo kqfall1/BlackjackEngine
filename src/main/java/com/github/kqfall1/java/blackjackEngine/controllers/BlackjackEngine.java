@@ -163,8 +163,23 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
+	public void advanceAfterDealerTurn() throws InsufficientChipsException
+	{
+		final var METHOD_NAME = "advanceAfterDealerTurn";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
+		setState(EngineState.SHOWDOWN);
+		showdown();
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
 	public void advanceAfterInsuranceBet(BigDecimal winnings) throws InsufficientChipsException
 	{
+		final var METHOD_NAME = "advanceAfterInsuranceBet";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.INSURANCE_CHECK : "getState() != EngineState.INSURANCE_CHECK";
 		if (getDealer().getHand().isBlackjack())
 		{
 
@@ -178,6 +193,69 @@ public class BlackjackEngine
 			onDrawingRoundStartedPlayer();
 			setState(EngineState.PLAYER_TURN);
 		}
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
+	public void advanceAfterPlayerTurn() throws InsufficientChipsException
+	{
+		final var METHOD_NAME = "advanceAfterPlayerTurn";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
+		if (getActiveHandContext().getHand().isBusted())
+		{
+			getLogger().info(String.format(
+				"Player has busted with a score of %d on hand %s.",
+				getActiveHandContext().getHand().getScore(),
+				getActiveHandContext().getHand()
+			));
+			setState(EngineState.SHOWDOWN);
+			showdown();
+		}
+		else if (getActiveHandContext().hasSurrendered())
+		{
+			getLogger().info(String.format(
+				"Player has surrendered on hand %s.",
+				getActiveHandContext().getHand()
+			));
+			setState(EngineState.SHOWDOWN);
+			showdown();
+		}
+		else
+		{
+			setState(EngineState.DEALER_TURN);
+			dealerTurn();
+		}
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+	}
+
+	public void advanceAfterReset()
+	{
+		final var METHOD_NAME = "advanceAfterReset";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.RESETTING : "getState().EngineState.RESETTING";
+		if (getConfig().isGameActive(getPlayer()))
+		{
+			setState(EngineState.BETTING);
+		}
+		else
+		{
+			getLogger().info("The player has busted.");
+			getListener().onGameCompleted();
+			setState(EngineState.END);
+		}
+	}
+
+	public void advanceAfterShowdown()
+	{
+		final var METHOD_NAME = "advanceAfterShowdown";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
+		assert getState() == EngineState.SHOWDOWN : "getState() != EngineState.SHOWDOWN";
+		setState(EngineState.RESETTING);
+		reset();
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
 	public void deal() throws InsufficientChipsException
@@ -237,8 +315,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "dealer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == 0 :  "activeHandContextIndex != 0";
-		assert getState() == EngineState.DEALER_TURN
-			: "getState() != EngineState.DEALER_TURN";
+		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
 		onDrawingRoundStartedDealer();
 		while (getConfig().isDealerTurnActive(getState(), getDealer()))
 		{
@@ -390,8 +467,6 @@ public class BlackjackEngine
 		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
 		getListener().onDrawingRoundCompletedDealer(getDealer().getHand());
 		getLogger().info("The dealer's drawing round was completed.");
-		setState(EngineState.SHOWDOWN);
-		showdown();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -401,35 +476,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
 		getListener().onDrawingRoundCompletedPlayer(getActiveHandContext());
-		if (getActiveHandContext().getType() == HandContextType.MAIN)
-		{
-			assert getActiveHandContextIndex() == 0 : "activeHandContextIndex != 0";
-			if (getActiveHandContext().getHand().isBusted())
-			{
-				getLogger().info(String.format(
-					"Player has busted with a score of %d on hand %s.",
-					getActiveHandContext().getHand().getScore(),
-					getActiveHandContext().getHand()
-				));
-				setState(EngineState.SHOWDOWN);
-				showdown();
-			}
-			else if (getActiveHandContext().hasSurrendered())
-			{
-				getLogger().info(String.format(
-					"Player has surrendered on hand %s.",
-					getActiveHandContext().getHand()
-				));
-				setState(EngineState.SHOWDOWN);
-				showdown();
-			}
-			else
-			{
-				setState(EngineState.DEALER_TURN);
-				dealerTurn();
-			}
-		}
-		else
+		if (getActiveHandContext().getType() == HandContextType.SPLIT)
 		{
 			assert getActiveHandContextIndex() != 0 : "activeHandContextIndex == 0";
 			setActiveHandContextIndex(getActiveHandContextIndex() - 1);
@@ -504,7 +551,7 @@ public class BlackjackEngine
 				throwException(new IllegalHandOperationException(
 					context,
 					String.format(
-						"Player cannot double down on a hand with more than %d cards",
+						"Player cannot double down on an already altered hand",
 						StandardRuleConfig.INITIAL_CARD_COUNT
 					)
 				), METHOD_NAME);
@@ -530,10 +577,7 @@ public class BlackjackEngine
 			"Player has doubled down on hand %s.",
 			context.getHand()
 		));
-		if (getState() == EngineState.PLAYER_TURN)
-		{
-			onDrawingRoundCompletedPlayer();
-		}
+		onDrawingRoundCompletedPlayer();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -661,16 +705,6 @@ public class BlackjackEngine
 		getDealer().setHand(new Hand());
 		getPlayer().clearContexts();
 		getListener().onReset();
-		if (getConfig().isGameActive(getPlayer()))
-		{
-			setState(EngineState.BETTING);
-		}
-		else
-		{
-			getLogger().info("The player has busted.");
-			getListener().onGameCompleted();
-			setState(EngineState.END);
-		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -756,8 +790,6 @@ public class BlackjackEngine
 				playerBeatDealer, playerWinnings);
 		}
 		getListener().onBettingRoundCompleted();
-		setState(EngineState.RESETTING);
-		reset();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 

@@ -3,20 +3,13 @@ package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitti
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
+import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
-/**
- * Tests the {@code BlackjackEngine} splitting and standing mechanisms together.
- *
- * @author kqfall1
- * @since 24/12/2025
- */
 final class SplitAndHitTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndStandTest.log";
@@ -47,17 +40,16 @@ final class SplitAndHitTest extends CustomDeckTest
 		{
 			super.initSplitHands();
 
-			while (super.engine.getState() == EngineState.PLAYER_TURN)
+			while (super.engine.getActiveHandContextIndex() != HandContextType.MAIN.ordinal()
+				&& !super.engine.getActiveHandContext().getHand().isBusted())
 			{
-				final var activeHandContextIndex = super.engine.getActiveHandContextIndex();
-				final int previousCardCount = super.engine.getActiveHandContext().getHand().getCards().size();
 				super.engine.playerHit();
 
-				if (super.engine.getActiveHandContextIndex() == activeHandContextIndex
-					&& super.engine.getState() == EngineState.PLAYER_TURN)
+				if (super.engine.getActiveHandContextIndex() == HandContextType.MAIN.ordinal()
+					|| super.engine.getActiveHandContext().getHand().isBusted())
 				{
-					Assertions.assertTrue(
-						super.engine.getActiveHandContext().getHand().getCards().size() > previousCardCount);
+					super.engine.advanceAfterPlayerTurn();
+					super.advanceToEndAfterPotentialDealerTurn();
 				}
 			}
 		}

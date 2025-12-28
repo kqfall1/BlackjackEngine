@@ -8,7 +8,6 @@ import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 /**
  * Tests the {@code BlackjackEngine} splitting and surrendering mechanisms together.
@@ -49,7 +48,15 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 
 			while (super.engine.getState() == EngineState.PLAYER_TURN)
 			{
-				super.engine.playerSurrender();
+				for (int count = 0
+				 	; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				 	; count++)
+				{
+					super.engine.playerSurrender();
+				}
+
+				super.engine.advanceAfterPlayerTurn();
+				super.advanceToEndAfterPotentialDealerTurn();
 			}
 		}
 	}

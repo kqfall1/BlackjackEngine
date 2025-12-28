@@ -6,7 +6,6 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChip
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -47,10 +46,15 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 		{
 			super.initSplitHands();
 
-			while (super.engine.getState() == EngineState.PLAYER_TURN)
+			for (int count = 0
+			 	; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				; count++)
 			{
 				super.engine.playerDoubleDown();
 			}
+
+			super.engine.advanceAfterPlayerTurn();
+			super.advanceToEndAfterPotentialDealerTurn();
 		}
 	}
 }

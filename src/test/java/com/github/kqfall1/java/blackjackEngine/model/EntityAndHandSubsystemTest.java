@@ -12,22 +12,13 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChip
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
-import com.github.kqfall1.java.managers.InputManager;
+import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import java.math.BigDecimal;
 
-/**
- * Tests the functionalities of {@code Dealer}, {@code Hand}, {@code Player}, and
- * {@code HandContext} objects.
- *
- * @author kqfall1
- * @since 21/12/2025
- */
 public final class EntityAndHandSubsystemTest
 {
 	private final Bet BET = new Bet(BET_AND_POT_INITIAL_AMOUNT);

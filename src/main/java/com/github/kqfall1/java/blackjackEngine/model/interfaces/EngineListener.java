@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ public interface EngineListener
 	void onCardDealtToDealer(Card card, Hand dealerHand, boolean isFaceUp);
 	void onCardDealtToPlayer(Card card, HandContext handContext);
 	void onDrawingRoundCompletedDealer(Hand dealerHand);
-	void onDrawingRoundCompletedPlayer(HandContext handContext);
+	void onDrawingRoundCompletedPlayer(HandContext handContext) throws InsufficientChipsException;
 	void onDrawingRoundStartedDealer(Hand dealerHand);
 	void onDrawingRoundStartedPlayer(HandContext handContext);
 	void onGameCompleted();

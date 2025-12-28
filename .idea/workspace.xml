@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="" />
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/EngineListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/EngineListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTestTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealerHitAndBustTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealerHitAndBustTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealerHitAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/dealer/DealerHitAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetAcceptTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetAcceptTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndDoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndDoubleDownTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndHitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndHitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSplitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/insurance/InsuranceBetDeclineAndSurrenderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/DoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/DoubleDownTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/HitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/HitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/PlaceBetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/PlaceBetTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/StandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/SurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/SurrenderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndDoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndDoubleDownTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndHitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndHitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndStandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/playerAction/splitting/SplitAndSurrenderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/BettingSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/BettingSubsystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/CardSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/CardSubsystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/EntityAndHandSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/EntityAndHandSubsystemTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +69,7 @@
     "JUnit.DealerHitAndBustTest.executor": "Run",
     "JUnit.DealerHitAndStandTest.executor": "Run",
     "JUnit.DoubleDownTest.executor": "Run",
+    "JUnit.EngineTestTemplate.executor": "Run",
     "JUnit.EntityAndHandSubsystemTest.executor": "Run",
     "JUnit.HitTest.executor": "Run",
     "JUnit.InsuranceBetAcceptTest.executor": "Run",
@@ -54,7 +82,7 @@
     "JUnit.InsuranceBetDeclineAndSurrenderTest.executor": "Run",
     "JUnit.InsuranceBetDeclineStand.executor": "Run",
     "JUnit.PlaceBetTest.executor": "Run",
-    "JUnit.SplitAndDoubleDownTest.executor": "Run",
+    "JUnit.SplitAndDoubleDownTest.executor": "Debug",
     "JUnit.SplitAndHitTest.executor": "Run",
     "JUnit.SplitAndStandTest.executor": "Run",
     "JUnit.SplitAndSurrenderTest.executor": "Run",
@@ -102,9 +130,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/Hand.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/HandContext.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

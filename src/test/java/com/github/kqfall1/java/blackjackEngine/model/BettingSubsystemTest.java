@@ -4,21 +4,14 @@ import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
-/**
- * Tests the functionalities of {@code Betting}, {@code PayoutRatio}, and {@code Pot}
- * objects.
- *
- * @author kqfall1
- * @since 20/12/2025
- */
 final class BettingSubsystemTest
 {
 	private Bet bet1;

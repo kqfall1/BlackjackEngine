@@ -3,19 +3,12 @@ package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitti
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 
-/**
- * Tests the {@code BlackjackEngine} splitting and standing mechanisms together.
- *
- * @author kqfall1
- * @since 23/12/2025
- */
 final class SplitAndStandTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndStandTest.log";
@@ -46,10 +39,15 @@ final class SplitAndStandTest extends CustomDeckTest
 		{
 			super.initSplitHands();
 
-			for (int count = 0; count < MAXIMUM_SPLIT_COUNT + 1; count++)
+			for (int count = 0
+			 	; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				; count++)
 			{
 				super.engine.playerStand();
 			}
+
+			super.engine.advanceAfterPlayerTurn();
+			super.advanceToEndAfterPotentialDealerTurn();
 		}
 	}
 }

@@ -2,18 +2,12 @@ package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import java.util.*;
 
-/**
- * Tests the functionalities of {@code Card} and {@code Deck} objects.
- *
- * @author kqfall1
- * @since 20/12/2025
- */
 public final class CardSubsystemTest
 {
 	private static final Card ACE_OF_CLUBS_1 = new Card(Rank.ACE, Suit.CLUB);
