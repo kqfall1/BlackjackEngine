@@ -6,15 +6,11 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChip
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-/**
- * Tests the {@code BlackjackEngine} splitting and double down mechanisms together.
- *
- * @author kqfall1
- * @since 24/12/2025
- */
 final class SplitAndDoubleDownTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndDoubleDownTest.log";
@@ -46,9 +42,7 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 		{
 			super.initSplitHands();
 
-			for (int count = 0
-			 	; count < super.engine.getConfig().getMaximumSplitCount() + 1
-				; count++)
+			while (!super.engine.getActiveHandContext().isAltered())
 			{
 				super.engine.playerDoubleDown();
 			}
