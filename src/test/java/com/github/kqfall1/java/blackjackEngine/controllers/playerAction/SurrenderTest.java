@@ -36,7 +36,7 @@ final class SurrenderTest extends EngineTestTemplate
 				&& super.engine.getActiveHandContext().isAltered()
 			);
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

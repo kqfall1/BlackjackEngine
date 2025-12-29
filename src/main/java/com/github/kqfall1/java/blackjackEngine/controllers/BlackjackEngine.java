@@ -42,7 +42,7 @@ public class BlackjackEngine
 	 *
 	 * <p>
 	 * During the {@code EngineState.PLAYER_TURN} state, it indicates the {@code HandContext} that
-	 * the player is actively making decisions on; during other states, it remains at 0.
+	 * the {@code Player} is actively making decisions on; during other states, it remains at 0.
 	 * </p>
  	 */
 	private int activeHandContextIndex;

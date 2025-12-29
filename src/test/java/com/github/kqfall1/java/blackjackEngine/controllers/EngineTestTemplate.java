@@ -53,7 +53,7 @@ public abstract class EngineTestTemplate
 		declinePossibleInsuranceBet();
 	}
 
-	public final void advanceToEndAfterPotentialDealerTurn()
+	public final void advanceToEndOfRoundAfterPotentialDealerTurn()
 	throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALER_TURN)

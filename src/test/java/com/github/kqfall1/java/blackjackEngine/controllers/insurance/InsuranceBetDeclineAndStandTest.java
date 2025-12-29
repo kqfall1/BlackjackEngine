@@ -35,7 +35,7 @@ final class InsuranceBetDeclineAndStandTest extends CustomDeckTest
 		{
 			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

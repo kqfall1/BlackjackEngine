@@ -45,7 +45,7 @@ public final class PlaceBetTest extends EngineTestTemplate
 		{
 			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

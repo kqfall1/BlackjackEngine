@@ -18,9 +18,6 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	public void init() throws InsufficientChipsException, IOException
 	{
 		final var BUST_METHOD_INDEX = (int) (Math.random() * BUST_METHOD_COUNT);
-		super.logFilePath = LOG_FILE_PATH;
-		super.loggerName = LOGGER_NAME;
-
 		switch (BUST_METHOD_INDEX)
 		{
 			case 0 -> super.initCardsForBust1();
@@ -39,6 +36,6 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 		Assertions.assertTrue(super.engine.getDealer().getHand().isBusted());
-		super.advanceToEndAfterPotentialDealerTurn();
+		super.advanceToEndOfRoundAfterPotentialDealerTurn();
 	}
 }

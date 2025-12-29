@@ -51,7 +51,7 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 			}
 
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

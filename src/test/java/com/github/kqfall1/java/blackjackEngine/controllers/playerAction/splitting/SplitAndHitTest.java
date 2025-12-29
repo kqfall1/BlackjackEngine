@@ -49,7 +49,7 @@ final class SplitAndHitTest extends CustomDeckTest
 					|| super.engine.getActiveHandContext().getHand().isBusted())
 				{
 					super.engine.advanceAfterPlayerTurn();
-					super.advanceToEndAfterPotentialDealerTurn();
+					super.advanceToEndOfRoundAfterPotentialDealerTurn();
 				}
 			}
 		}

@@ -45,7 +45,7 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 			if (super.engine.getActiveHandContext().getHand().isBusted())
 			{
 				super.engine.advanceAfterPlayerTurn();
-				super.advanceToEndAfterPotentialDealerTurn();
+				super.advanceToEndOfRoundAfterPotentialDealerTurn();
 			}
 		}
 	}

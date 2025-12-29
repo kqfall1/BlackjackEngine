@@ -43,7 +43,7 @@ final class DoubleDownTest extends EngineTestTemplate
 				&& super.engine.getActiveHandContext().isAltered()
 			);
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

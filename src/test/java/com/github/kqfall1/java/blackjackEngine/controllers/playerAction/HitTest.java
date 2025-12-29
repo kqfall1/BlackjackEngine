@@ -41,7 +41,7 @@ final class HitTest extends EngineTestTemplate
 				if (super.engine.getActiveHandContext().getHand().isBusted())
 				{
 					super.engine.advanceAfterPlayerTurn();
-					super.advanceToEndAfterPotentialDealerTurn();
+					super.advanceToEndOfRoundAfterPotentialDealerTurn();
 				}
 			}
 		}

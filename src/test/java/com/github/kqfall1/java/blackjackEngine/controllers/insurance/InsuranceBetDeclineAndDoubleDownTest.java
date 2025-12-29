@@ -42,7 +42,7 @@ final class InsuranceBetDeclineAndDoubleDownTest extends CustomDeckTest
 		{
 			super.engine.playerDoubleDown();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }

@@ -47,7 +47,7 @@ final class SplitAndStandTest extends CustomDeckTest
 			}
 
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndAfterPotentialDealerTurn();
+			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
 	}
 }
