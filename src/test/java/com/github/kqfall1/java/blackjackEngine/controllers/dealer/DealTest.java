@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.dealer;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.EngineTestTemplate;
+import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-final class DealTest extends EngineTestTemplate
+final class DealTest extends EngineTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DealTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.DealTest.log";
@@ -43,7 +43,7 @@ final class DealTest extends EngineTestTemplate
 		);
 
 		super.engine.advanceAfterDeal();
-		super.declinePossibleInsuranceBet();
+		super.declinePotentialInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

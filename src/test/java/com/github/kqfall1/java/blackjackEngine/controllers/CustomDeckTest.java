@@ -16,14 +16,18 @@ import java.util.List;
  * @author kqfall1
  * @since 23/12/2025
  */
-public abstract class CustomDeckTest extends EngineTestTemplate
+public abstract class CustomDeckTest extends EngineTest
 {
+	private static final int BUST_METHOD_COUNT = 3;
 	public static final int MAXIMUM_SPLIT_COUNT = 3;
 	public TestDeck randomCards;
 	private static final Card SEVEN_OF_CLUBS = new Card(Rank.SEVEN, Suit.CLUB);
 	private static final Card SEVEN_OF_DIAMONDS = new Card(Rank.SEVEN, Suit.DIAMOND);
 	private final Card SEVEN_OF_HEARTS = new Card(Rank.SEVEN, Suit.HEART);
 	private final Card SEVEN_OF_SPADES = new Card(Rank.SEVEN, Suit.SPADE);
+	public static final int SHOWDOWN_DEALER_WIN_METHOD_COUNT = 2;
+	public static final int SHOWDOWN_PLAYER_WIN_METHOD_COUNT = 2;
+	public static final int SHOWDOWN_METHOD_COUNT = 6;
 	public TestDeck testDeck;
 
 	public CustomDeckTest()
@@ -34,6 +38,17 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 
 	@BeforeEach
 	public abstract void init() throws InsufficientChipsException, IOException;
+
+	public void _initCardsForBust()
+	{
+		final var BUST_METHOD_INDEX = (int) (Math.random() * BUST_METHOD_COUNT);
+		switch (BUST_METHOD_INDEX)
+		{
+			case 0 -> initCardsForBust1();
+			case 1 -> initCardsForBust2();
+			case 2 -> initCardsForBust3();
+		}
+	}
 
 	public void initCardsForBust1()
 	{
@@ -127,6 +142,23 @@ public abstract class CustomDeckTest extends EngineTestTemplate
 			randomCards.draw(),
 			SEVEN_OF_SPADES
 		)));
+	}
+
+	public int _initCardsForNormalShowdown()
+	{
+		final var SHOWDOWN_METHOD_INDEX = (int) (Math.random() * SHOWDOWN_METHOD_COUNT);
+
+		switch (SHOWDOWN_METHOD_INDEX)
+		{
+			case 0 -> initCardsForDealerWin1();
+			case 1 -> initCardsForDealerWin2();
+			case 2 -> initCardsForPlayerWin1();
+			case 3 -> initCardsForPlayerWin2();
+			case 4 -> initCardsForPush1();
+			case 5 -> initCardsForPush2();
+		}
+
+		return SHOWDOWN_METHOD_INDEX;
 	}
 
 	public void initCardsForPlayerWin1()

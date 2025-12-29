@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.EngineTestTemplate;
+import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-final class HitTest extends EngineTestTemplate
+final class HitAndBustTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/HitTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.HitTest.log";
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/HitAndBustTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.HitAndBustTest.log";
 
 	@BeforeEach
 	@Override

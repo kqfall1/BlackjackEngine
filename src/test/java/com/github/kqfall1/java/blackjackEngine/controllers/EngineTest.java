@@ -23,7 +23,7 @@ import org.junit.jupiter.api.RepeatedTest;
  * @author kqfall1
  * @since 22/12/2025
  */
-public abstract class EngineTestTemplate
+public abstract class EngineTest
 {
 	public StandardRuleConfig config;
 	public BlackjackEngine engine;
@@ -33,9 +33,10 @@ public abstract class EngineTestTemplate
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
-	public void advanceToDealerTurn(BigDecimal maximumBetAmount) throws Exception
+	public BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
+	throws Exception
 	{
-		advanceToPlayerTurn(maximumBetAmount);
+		final var BET_AMOUNT = advanceToPlayerTurn(maximumBetAmount);
 
 		if (engine.getState() == EngineState.PLAYER_TURN)
 		{
@@ -43,14 +44,17 @@ public abstract class EngineTestTemplate
 		}
 
 		engine.advanceAfterPlayerTurn();
+		return BET_AMOUNT;
 	}
 
-	public void advanceToPlayerTurn(BigDecimal maximumBetAmount) throws Exception
+	public BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
+	throws Exception
 	{
-		placeRandomHandBet(maximumBetAmount);
+		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
 		engine.deal();
 		engine.advanceAfterDeal();
-		declinePossibleInsuranceBet();
+		declinePotentialInsuranceBet();
+		return BET_AMOUNT;
 	}
 
 	public final void advanceToEndOfRoundAfterPotentialDealerTurn()
@@ -64,7 +68,7 @@ public abstract class EngineTestTemplate
 		}
 	}
 
-	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
+	public final void declinePotentialInsuranceBet() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.INSURANCE_CHECK)
 		{
@@ -185,7 +189,6 @@ public abstract class EngineTestTemplate
 
 		@Override
 		public void onDrawingRoundCompletedPlayer(HandContext handContext)
-		throws InsufficientChipsException
 		{
 			assertEquals(EngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
@@ -334,11 +337,12 @@ public abstract class EngineTestTemplate
 		public void onStateChanged(EngineState oldState) {}
 	};
 
-	public final void placeRandomHandBet(BigDecimal maximumBetAmount) throws Exception
+	public final BigDecimal placeRandomHandBet(BigDecimal maximumBetAmount)
+	throws Exception
 	{
-		engine.placeHandBet(
-			maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()))
-		);
+		final var BET_AMOUNT = maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()));
+		engine.placeHandBet(BET_AMOUNT);
+		return BET_AMOUNT;
 	}
 
 	private void start() throws InsufficientChipsException, IOException

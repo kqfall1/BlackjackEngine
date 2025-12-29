@@ -36,7 +36,7 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 		);
 		super.engine.deal();
 		super.engine.advanceAfterDeal();
-		super.declinePossibleInsuranceBet();
+		super.declinePotentialInsuranceBet();
 
 		while (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

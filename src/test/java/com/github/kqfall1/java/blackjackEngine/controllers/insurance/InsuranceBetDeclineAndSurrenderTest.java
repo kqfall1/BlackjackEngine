@@ -29,7 +29,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT);
 		super.engine.deal();
 		super.engine.advanceAfterDeal();
-		super.declinePossibleInsuranceBet();
+		super.declinePotentialInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{

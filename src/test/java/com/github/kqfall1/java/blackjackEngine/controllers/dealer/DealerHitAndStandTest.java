@@ -11,27 +11,13 @@ final class DealerHitAndStandTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DealerHitAndStandTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.DealerHitAndStandTest.log";
-	private static final int SHOWDOWN_DEALER_WIN_METHOD_COUNT = 2;
-	private static final int SHOWDOWN_PLAYER_WIN_METHOD_COUNT = 2;
-	private static final int SHOWDOWN_METHOD_COUNT = 6;
 	private int showdownMethodIndex;
 
 	@BeforeEach
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		showdownMethodIndex = (int) (Math.random() * SHOWDOWN_METHOD_COUNT);
-
-		switch (showdownMethodIndex)
-		{
-			case 0 -> super.initCardsForDealerWin1();
-			case 1 -> super.initCardsForDealerWin2();
-			case 2 -> super.initCardsForPlayerWin1();
-			case 3 -> super.initCardsForPlayerWin2();
-			case 4 -> super.initCardsForPush1();
-			case 5 -> super.initCardsForPush2();
-		}
-
+		showdownMethodIndex = super._initCardsForNormalShowdown();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setDeck(testDeck);
