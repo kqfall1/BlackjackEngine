@@ -41,9 +41,9 @@ public abstract class EngineTest
 		if (engine.getState() == EngineState.PLAYER_TURN)
 		{
 			engine.playerStand();
+			engine.advanceAfterPlayerTurn();
 		}
 
-		engine.advanceAfterPlayerTurn();
 		return BET_AMOUNT;
 	}
 
@@ -53,22 +53,27 @@ public abstract class EngineTest
 		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
 		engine.deal();
 		engine.advanceAfterDeal();
-		declinePotentialInsuranceBet();
+		declinePossibleInsuranceBet();
 		return BET_AMOUNT;
 	}
 
-	public final void advanceToEndOfRoundAfterPotentialDealerTurn()
+	public final void advanceToEndOfRound()
 	throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALER_TURN)
 		{
 			engine.advanceAfterDealerTurn();
-			engine.advanceAfterShowdown();
-			engine.advanceAfterReset();
 		}
+
+		if (engine.getState() == EngineState.SHOWDOWN)
+		{
+			engine.advanceAfterShowdown();
+		}
+
+		engine.advanceAfterReset();
 	}
 
-	public final void declinePotentialInsuranceBet() throws InsufficientChipsException
+	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.INSURANCE_CHECK)
 		{

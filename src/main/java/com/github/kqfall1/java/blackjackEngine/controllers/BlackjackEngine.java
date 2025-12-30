@@ -293,7 +293,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
 		final var card = getDealer().hit();
-		getDealer().getHand().addCard(card);
+		getDealer().getHand().addCards(card);
 		onCardDealtToDealer(card);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);
 	}
@@ -304,7 +304,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN : "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
 		final var card = getDealer().hit();
-		getActiveHandContext().getHand().addCard(card);
+		getActiveHandContext().getHand().addCards(card);
 		onCardDealtToPlayer(card);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);
 	}
@@ -331,7 +331,8 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == EngineState.INSURANCE_CHECK
 			: "getState() != EngineState.INSURANCE_CHECK";
-		if (getDealer().getHand().isBlackjack())
+		if (getDealer().getHand().isBlackjack()
+			|| getActiveHandContext().getHand().isBlackjack())
 		{
 			setState(EngineState.SHOWDOWN);
 			showdown();
@@ -636,11 +637,11 @@ public class BlackjackEngine
 			new Bet(splitAmount),
 			HandContextType.SPLIT
 		);
-		playerSplitHand.getHand().addCard(playerPreviousHand.getHand().getCards().getLast());
+		playerSplitHand.getHand().addCards(playerPreviousHand.getHand().getCards().getLast());
 		getPlayer().addContext(playerSplitHand);
 		playerPreviousHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
-		playerPreviousHand.getHand().addCard(getDealer().hit());
-		playerSplitHand.getHand().addCard(getDealer().hit());
+		playerPreviousHand.getHand().addCards(getDealer().hit());
+		playerSplitHand.getHand().addCards(getDealer().hit());
 		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
 		setActiveHandContextIndex(getActiveHandContextIndex() + 1);
 		getLogger().info(String.format(

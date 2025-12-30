@@ -41,6 +41,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 				CHIP_AMOUNT_AFTER_BETTING,
 				super.engine.getPlayer().getChips()
 			);
+			Assertions.assertTrue(super.engine.getActiveHandContext().hasSurrendered());
 
 			super.engine.advanceAfterPlayerTurn();
 		}

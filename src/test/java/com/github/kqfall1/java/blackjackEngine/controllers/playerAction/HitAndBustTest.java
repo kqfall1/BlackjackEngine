@@ -38,12 +38,11 @@ final class HitAndBustTest extends EngineTest
 					super.engine.getActiveHandContext().getHand().getCards().size() == previousCardCount + 1
 					&& super.engine.getActiveHandContext().isAltered()
 				);
-				if (super.engine.getActiveHandContext().getHand().isBusted())
-				{
-					super.engine.advanceAfterPlayerTurn();
-					super.advanceToEndOfRoundAfterPotentialDealerTurn();
-				}
 			}
+
+			super.engine.advanceAfterPlayerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

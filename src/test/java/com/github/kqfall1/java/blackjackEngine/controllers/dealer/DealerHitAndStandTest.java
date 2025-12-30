@@ -29,14 +29,14 @@ final class DealerHitAndStandTest extends CustomDeckTest
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 
-		if (showdownMethodIndex < SHOWDOWN_DEALER_WIN_METHOD_COUNT)
+		if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT)
 		{
 			Assertions.assertTrue(
 				super.engine.getActiveHandContext().getHand().getScore()
 				< super.engine.getDealer().getHand().getScore()
 			);
 		}
-		else if (showdownMethodIndex < SHOWDOWN_DEALER_WIN_METHOD_COUNT + SHOWDOWN_PLAYER_WIN_METHOD_COUNT)
+		else if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT + SHOWDOWN_NORMAL_PLAYER_WIN_METHOD_COUNT)
 		{
 			Assertions.assertTrue(
 				super.engine.getActiveHandContext().getHand().getScore()
@@ -51,6 +51,6 @@ final class DealerHitAndStandTest extends CustomDeckTest
 			);
 		}
 
-		super.advanceToEndOfRoundAfterPotentialDealerTurn();
+		super.advanceToEndOfRound();
 	}
 }

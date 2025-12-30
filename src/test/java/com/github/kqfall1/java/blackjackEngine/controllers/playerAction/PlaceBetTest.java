@@ -27,29 +27,29 @@ public final class PlaceBetTest extends EngineTest
 	public void main() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		final var BET_AMOUNT = super.placeRandomHandBet(PREVIOUS_CHIP_AMOUNT);
-
-		Assertions.assertTrue(PREVIOUS_CHIP_AMOUNT.compareTo(super.engine.getPlayer().getChips()) > 0);
-		Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
-		Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
-		Assertions.assertEquals(
-			BET_AMOUNT.stripTrailingZeros(),
-			super.engine.getActiveHandContext().getBet().getAmount()
-		);
-		Assertions.assertEquals(
-			BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
-			super.engine.getActiveHandContext().getPot().getAmount()
-		);
-
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
-		super.declinePotentialInsuranceBet();
+		final var BET_AMOUNT = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
+
+			Assertions.assertTrue(
+				PREVIOUS_CHIP_AMOUNT.compareTo(
+					super.engine.getPlayer().getChips()) > 0
+			);
+			Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
+			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
+			Assertions.assertEquals(
+				BET_AMOUNT.stripTrailingZeros(),
+				super.engine.getActiveHandContext().getBet().getAmount()
+			);
+			Assertions.assertEquals(
+				BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
+				super.engine.getActiveHandContext().getPot().getAmount()
+			);
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

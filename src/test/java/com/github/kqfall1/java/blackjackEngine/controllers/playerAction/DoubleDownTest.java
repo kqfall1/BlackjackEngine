@@ -48,8 +48,10 @@ final class DoubleDownTest extends EngineTest
 				super.engine.getActiveHandContext().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT + 1
 				&& super.engine.getActiveHandContext().isAltered()
 			);
+
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

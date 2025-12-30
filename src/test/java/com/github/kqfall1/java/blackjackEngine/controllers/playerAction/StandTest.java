@@ -32,7 +32,8 @@ final class StandTest extends EngineTest
 			super.engine.playerStand();
 			Assertions.assertTrue(super.engine.getActiveHandContext().isAltered());
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

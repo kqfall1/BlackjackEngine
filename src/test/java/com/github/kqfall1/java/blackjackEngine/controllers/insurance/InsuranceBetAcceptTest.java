@@ -71,7 +71,8 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 		{
 			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

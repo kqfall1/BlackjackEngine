@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -27,28 +28,45 @@ final class ShowdownBustTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
-		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
+		BigDecimal chipAmountAfterBetting;
+		BigDecimal potAmount;
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if ((int) (Math.random() * 2) == 0)
 		{
+			super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+			chipAmountAfterBetting = super.engine.getPlayer().getChips();
 			super.engine.playerHit();
-
 			Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isBusted());
+			super.engine.advanceAfterPlayerTurn();
+
+			if (super.engine.getState() == EngineState.DEALER_TURN)
+			{
+				super.engine.advanceAfterDealerTurn();
+			}
+
+			super.engine.advanceAfterShowdown();
+
 			Assertions.assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING,
+				chipAmountAfterBetting,
 				super.engine.getPlayer().getChips()
 			);
-
-			super.engine.advanceAfterPlayerTurn();
 		}
+		else
+		{
+			super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+			chipAmountAfterBetting = super.engine.getPlayer().getChips();
+			potAmount = super.engine.getActiveHandContext().getPot().getAmount();
+			Assertions.assertTrue(super.engine.getDealer().getHand().isBusted());
+			super.engine.advanceAfterDealerTurn();
+			super.engine.advanceAfterShowdown();
 
-		super.engine.advanceAfterShowdown();
-
-		Assertions.assertEquals(
-			CHIP_AMOUNT_AFTER_BETTING,
-			super.engine.getPlayer().getChips()
-		);
+			Assertions.assertEquals(
+				chipAmountAfterBetting
+					.add(potAmount)
+					.stripTrailingZeros(),
+				super.engine.getPlayer().getChips()
+			);
+		}
 
 		super.engine.advanceAfterReset();
 	}

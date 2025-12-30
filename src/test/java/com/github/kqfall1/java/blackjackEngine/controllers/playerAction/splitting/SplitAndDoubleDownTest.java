@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
@@ -23,7 +24,7 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting7s();
+		super.initCardsForSplitting(Rank.KING);
 		super.initDependencies();
 		super.config.setPlayerCanDoubleDownOnSplitHands(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
@@ -47,7 +48,8 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 			}
 
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

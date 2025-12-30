@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
@@ -18,7 +19,7 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForInsuranceAndSplitting7s();
+		super.initCardsForInsuranceAndSplitting(Rank.JACK);
 		super.initDependencies();
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -29,15 +30,12 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.placeRandomHandBet(
+		super.advanceToPlayerTurn(
 			super.engine.getPlayer().getChips().divide(
 				BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2),
 				MathContext.DECIMAL128
 			)
 		);
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
-		super.declinePotentialInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
@@ -51,7 +49,8 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 			}
 
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

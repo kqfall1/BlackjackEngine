@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
@@ -23,7 +24,7 @@ final class SplitAndHitTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting7s();
+		super.initCardsForSplitting(Rank.FOUR);
 		super.initDependencies();
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -44,14 +45,11 @@ final class SplitAndHitTest extends CustomDeckTest
 				&& !super.engine.getActiveHandContext().getHand().isBusted())
 			{
 				super.engine.playerHit();
-
-				if (super.engine.getActiveHandContextIndex() == HandContextType.MAIN.ordinal()
-					|| super.engine.getActiveHandContext().getHand().isBusted())
-				{
-					super.engine.advanceAfterPlayerTurn();
-					super.advanceToEndOfRoundAfterPotentialDealerTurn();
-				}
 			}
+
+			super.engine.advanceAfterPlayerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

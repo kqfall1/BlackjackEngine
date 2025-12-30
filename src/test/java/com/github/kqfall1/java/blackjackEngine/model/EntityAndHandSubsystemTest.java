@@ -61,7 +61,7 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertNotEquals(PREVIOUS_DECK, dealer.getDeck());
 		final int PREVIOUS_DEALER_HAND_SIZE = dealer.getHand().getCards().size();
 		final int PREVIOUS_DECK_SIZE = dealer.getDeck().getCards().size();
-		dealer.getHand().addCard(dealer.hit());
+		dealer.getHand().addCards(dealer.hit());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
 		Assertions.assertTrue(dealer.getDeck().getCards().size() < PREVIOUS_DECK_SIZE);
 	}
@@ -79,14 +79,14 @@ public final class EntityAndHandSubsystemTest
 	private void handTest()
 	{
 		_handTest(0);
-		mainHand.addCard(sideDeck.draw());
-		dealerHand.addCard(sideDeck.draw());
+		mainHand.addCards(sideDeck.draw());
+		dealerHand.addCards(sideDeck.draw());
 		Assertions.assertNotEquals(dealerHand, mainHand);
 		mainHand.removeCard(0);
 		dealerHand.removeCard(0);
 		final var newCard = sideDeck.draw();
-		dealerHand.addCard(newCard);
-		mainHand.addCard(newCard);
+		dealerHand.addCards(newCard);
+		mainHand.addCards(newCard);
 		_handTest(1);
 
 		Assertions.assertTrue(blackjack.isBlackjack());
@@ -95,7 +95,7 @@ public final class EntityAndHandSubsystemTest
 		final var bustHand = new Hand();
 		while (bustHand.getScore() <= StandardRuleConfig.TOP_SCORE)
 		{
-			bustHand.addCard(sideDeck.draw());
+			bustHand.addCards(sideDeck.draw());
 		}
 		Assertions.assertTrue(bustHand.isBusted());
 	}
@@ -162,8 +162,8 @@ public final class EntityAndHandSubsystemTest
 		final int RANDOM_RANK_INDEX = (int) (Math.random() *
 			(MAX_ORDINAL - MIN_ORDINAL) + MIN_ORDINAL);
 
-		BLACKJACK_HAND.addCard(ACE);
-		BLACKJACK_HAND.addCard(new Card(
+		BLACKJACK_HAND.addCards(ACE);
+		BLACKJACK_HAND.addCards(new Card(
 			Rank.values()[RANDOM_RANK_INDEX],
 			randomSuit()
 		));
@@ -176,11 +176,11 @@ public final class EntityAndHandSubsystemTest
 		final var POCKET_PAIR = new Hand();
 		final int RANDOM_RANK_INDEX = (int) (Math.random() * Rank.values().length);
 
-		POCKET_PAIR.addCard(new Card(
+		POCKET_PAIR.addCards(new Card(
 			Rank.values()[RANDOM_RANK_INDEX],
 			Suit.values()[0]
 		));
-		POCKET_PAIR.addCard(new Card(
+		POCKET_PAIR.addCards(new Card(
 			Rank.values()[RANDOM_RANK_INDEX],
 			Suit.values()[1]
 		));

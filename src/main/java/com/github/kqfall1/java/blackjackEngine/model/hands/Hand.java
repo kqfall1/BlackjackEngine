@@ -21,11 +21,16 @@ public final class Hand
 		cards = new ArrayList<>();
 	}
 
-	public void addCard(Card card)
+	public void addCards(Card... cards)
 	{
-		assert card != null && !getCards().contains(card)
-			: "card == null || cards.contains(card)";
-		cards.add(card);
+		assert cards != null && cards.length > 0 : "cards == null || cards.length <= 0";
+
+		for (Card card : cards)
+		{
+			assert card != null && !this.cards.contains(card) :
+				"card == null && this.cards.contains(card)";
+			this.cards.add(card);
+		}
 	}
 
 	@Override

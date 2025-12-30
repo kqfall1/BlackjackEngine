@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting7s();
+		super.initCardsForSplitting(Rank.SIX);
 		super.initDependencies();
 		super.config.setPlayerCanSurrenderOnSplitHands(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
@@ -56,8 +57,9 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 				}
 
 				super.engine.advanceAfterPlayerTurn();
-				super.advanceToEndOfRoundAfterPotentialDealerTurn();
 			}
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

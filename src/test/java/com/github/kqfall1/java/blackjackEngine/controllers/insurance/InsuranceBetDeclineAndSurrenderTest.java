@@ -26,16 +26,14 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT);
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
-		super.declinePotentialInsuranceBet();
+		super.advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerSurrender();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

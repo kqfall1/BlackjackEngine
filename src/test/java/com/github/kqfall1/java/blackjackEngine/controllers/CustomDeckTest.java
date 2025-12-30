@@ -1,7 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -21,13 +23,12 @@ public abstract class CustomDeckTest extends EngineTest
 	private static final int BUST_METHOD_COUNT = 3;
 	public static final int MAXIMUM_SPLIT_COUNT = 3;
 	public TestDeck randomCards;
-	private static final Card SEVEN_OF_CLUBS = new Card(Rank.SEVEN, Suit.CLUB);
-	private static final Card SEVEN_OF_DIAMONDS = new Card(Rank.SEVEN, Suit.DIAMOND);
-	private final Card SEVEN_OF_HEARTS = new Card(Rank.SEVEN, Suit.HEART);
-	private final Card SEVEN_OF_SPADES = new Card(Rank.SEVEN, Suit.SPADE);
-	public static final int SHOWDOWN_DEALER_WIN_METHOD_COUNT = 2;
-	public static final int SHOWDOWN_PLAYER_WIN_METHOD_COUNT = 2;
-	public static final int SHOWDOWN_METHOD_COUNT = 6;
+	public static final int SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT = 2;
+	public static final int SHOWDOWN_BLACKJACK_METHOD_COUNT = 4;
+	public static final int SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT = 2;
+	public static final int SHOWDOWN_NORMAL_METHOD_COUNT = 6;
+	public static final int SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT = 2;
+	public static final int SHOWDOWN_NORMAL_PLAYER_WIN_METHOD_COUNT = 2;
 	public TestDeck testDeck;
 
 	public CustomDeckTest()
@@ -39,114 +40,178 @@ public abstract class CustomDeckTest extends EngineTest
 	@BeforeEach
 	public abstract void init() throws InsufficientChipsException, IOException;
 
-	public void _initCardsForBust()
+	public int _initCardsForBlackjack()
+	{
+		final var BLACKJACK_METHOD_INDEX =
+			(int) (Math.random() * SHOWDOWN_BLACKJACK_METHOD_COUNT);
+
+		Hand testHand = new Hand();
+		testHand.addCards(randomCards.draw(), randomCards.draw());
+
+		while (testHand.isBlackjack())
+		{
+			testHand.removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
+			testHand.addCards(randomCards.draw());
+		}
+
+		final var CARD_1 = testHand.getCards().getFirst();
+		final var CARD_2 = testHand.getCards().getLast();
+
+		switch (BLACKJACK_METHOD_INDEX)
+		{
+			case 0 -> initCardsForDealerBlackjack1(CARD_1, CARD_2);
+			case 1 -> initCardsForDealerBlackjack2(CARD_1, CARD_2);
+			case 2 -> initCardsForPlayerBlackjack1(CARD_1, CARD_2);
+			case 3 -> initCardsForPlayerBlackjack2(CARD_1, CARD_2);
+			case 4 -> initBlackjackPush1();
+			case 5 -> initBlackjackPush2();
+		}
+
+		return BLACKJACK_METHOD_INDEX;
+	}
+
+	private void initBlackjackPush1()
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.QUEEN),
+			randomCards.removeCardOfRank(Rank.ACE),
+			randomCards.removeCardOfRank(Rank.ACE),
+			randomCards.removeCardOfRank(Rank.TEN)
+		)));
+	}
+
+	private void initBlackjackPush2()
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.ACE),
+			randomCards.removeCardOfRank(Rank.ACE),
+			randomCards.removeCardOfRank(Rank.KING),
+			randomCards.removeCardOfRank(Rank.JACK)
+		)));
+	}
+
+	public int _initCardsForBust()
 	{
 		final var BUST_METHOD_INDEX = (int) (Math.random() * BUST_METHOD_COUNT);
+
 		switch (BUST_METHOD_INDEX)
 		{
 			case 0 -> initCardsForBust1();
 			case 1 -> initCardsForBust2();
 			case 2 -> initCardsForBust3();
 		}
+
+		return BUST_METHOD_INDEX;
 	}
 
-	public void initCardsForBust1()
+	private void initCardsForBust1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.TEN, Suit.SPADE),
-			new Card(Rank.TEN, Suit.DIAMOND),
-			new Card(Rank.SEVEN, Suit.CLUB),
-			new Card(Rank.SIX, Suit.HEART),
-			new Card(Rank.SIX, Suit.SPADE)
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.SEVEN),
+			randomCards.removeCardOfRank(Rank.SIX),
+			randomCards.removeCardOfRank(Rank.SIX)
 		)));
 	}
 
-	public void initCardsForBust2()
+	private void initCardsForBust2()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.FIVE, Suit.HEART),
-			new Card(Rank.QUEEN, Suit.DIAMOND),
-			new Card(Rank.KING, Suit.DIAMOND),
-			new Card(Rank.TWO, Suit.DIAMOND),
-			new Card(Rank.JACK, Suit.CLUB)
+			randomCards.removeCardOfRank(Rank.FIVE),
+			randomCards.removeCardOfRank(Rank.QUEEN),
+			randomCards.removeCardOfRank(Rank.KING),
+			randomCards.removeCardOfRank(Rank.TWO),
+			randomCards.removeCardOfRank(Rank.JACK)
+		)));
+}
+
+	private void initCardsForBust3()
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.NINE),
+			randomCards.removeCardOfRank(Rank.EIGHT),
+			randomCards.removeCardOfRank(Rank.FOUR),
+			randomCards.removeCardOfRank(Rank.FIVE),
+			randomCards.removeCardOfRank(Rank.NINE)
 		)));
 	}
 
-	public void initCardsForBust3()
+	private void initCardsForDealerBlackjack1 (Card playerCard1, Card playerCard2)
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.NINE, Suit.SPADE),
-			new Card(Rank.EIGHT, Suit.SPADE),
-			new Card(Rank.FOUR, Suit.CLUB),
-			new Card(Rank.FIVE, Suit.DIAMOND),
-			new Card(Rank.QUEEN, Suit.CLUB)
+			playerCard1,
+			randomCards.removeCardOfRank(Rank.ACE),
+			playerCard2,
+			randomCards.removeCardOfRank(Rank.JACK)
 		)));
 	}
 
-	public void initCardsForDealerWin1()
+	private void initCardsForDealerBlackjack2(Card playerCard1, Card playerCard2)
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.TEN, Suit.SPADE),
-			new Card(Rank.TEN, Suit.DIAMOND),
-			new Card(Rank.EIGHT, Suit.CLUB),
-			new Card(Rank.SIX, Suit.HEART),
-			new Card(Rank.THREE, Suit.DIAMOND)
+			playerCard1,
+			randomCards.removeCardOfRank(Rank.TEN),
+			playerCard2,
+			randomCards.removeCardOfRank(Rank.ACE)
 		)));
 	}
 
-	public void initCardsForDealerWin2()
+	private void initCardsForDealerWin1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.NINE, Suit.DIAMOND),
-			new Card(Rank.TEN, Suit.DIAMOND),
-			new Card(Rank.JACK, Suit.CLUB),
-			new Card(Rank.FOUR, Suit.HEART),
-			new Card(Rank.SEVEN, Suit.DIAMOND)
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.EIGHT),
+			randomCards.removeCardOfRank(Rank.SIX),
+			randomCards.removeCardOfRank(Rank.THREE)
+		)));
+	}
+
+	private void initCardsForDealerWin2()
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.NINE),
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.JACK),
+			randomCards.removeCardOfRank(Rank.FOUR),
+			randomCards.removeCardOfRank(Rank.SEVEN)
 		)));
 	}
 
 	public void initCardsForInsurance()
 	{
-		final var RANDOM_ACE = randomCardOfRank(Rank.ACE);
-		randomCards = new TestDeck();
-		randomCards.removeCards(RANDOM_ACE);
-
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.draw(),
-			RANDOM_ACE,
+			randomCards.removeCardOfRank(Rank.ACE),
 			randomCards.draw(),
-			randomCards.draw()
+			randomCards.removeCardOfRank(Rank.THREE)
 		)));
 	}
 
-	public void initCardsForInsuranceAndSplitting7s()
+	public void initCardsForInsuranceAndSplitting(Rank rank)
 	{
-		final var RANDOM_ACE = randomCardOfRank(Rank.ACE);
-		randomCards = new TestDeck();
-		randomCards.removeCards(
-			RANDOM_ACE,
-			SEVEN_OF_CLUBS,
-			SEVEN_OF_DIAMONDS,
-			SEVEN_OF_HEARTS,
-			SEVEN_OF_CLUBS,
-			SEVEN_OF_DIAMONDS
-		);
+		Assertions.assertNotNull(rank);
+		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_2 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_3 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_4 = randomCards.removeCardOfRank(rank);
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			SEVEN_OF_CLUBS,
-			RANDOM_ACE,
-			SEVEN_OF_DIAMONDS,
+			SPLIT_CARD_1,
+			randomCards.removeCardOfRank(Rank.ACE),
+			SPLIT_CARD_2,
 			randomCards.draw(),
 			randomCards.draw(),
-			SEVEN_OF_HEARTS,
+			SPLIT_CARD_3,
 			randomCards.draw(),
-			SEVEN_OF_SPADES
+			SPLIT_CARD_4
 		)));
 	}
 
 	public int _initCardsForNormalShowdown()
 	{
-		final var SHOWDOWN_METHOD_INDEX = (int) (Math.random() * SHOWDOWN_METHOD_COUNT);
+		final var SHOWDOWN_METHOD_INDEX = (int) (Math.random() * SHOWDOWN_NORMAL_METHOD_COUNT);
 
 		switch (SHOWDOWN_METHOD_INDEX)
 		{
@@ -161,46 +226,66 @@ public abstract class CustomDeckTest extends EngineTest
 		return SHOWDOWN_METHOD_INDEX;
 	}
 
+	private void initCardsForPlayerBlackjack1(Card dealerCard1, Card dealerCard2)
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.ACE),
+			dealerCard1,
+			randomCards.removeCardOfRank(Rank.KING),
+			dealerCard2
+		)));
+	}
+
+	private void initCardsForPlayerBlackjack2(Card dealerCard1, Card dealerCard2)
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.removeCardOfRank(Rank.QUEEN),
+			dealerCard1,
+			randomCards.removeCardOfRank(Rank.ACE),
+			dealerCard2
+		)));
+	}
+
 	public void initCardsForPlayerWin1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.TEN, Suit.SPADE),
-			new Card(Rank.TEN, Suit.DIAMOND),
-			new Card(Rank.NINE, Suit.HEART),
-			new Card(Rank.EIGHT, Suit.CLUB)
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.TEN),
+			randomCards.removeCardOfRank(Rank.NINE),
+			randomCards.removeCardOfRank(Rank.EIGHT)
 		)));
 	}
 
 	public void initCardsForPlayerWin2()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.KING, Suit.SPADE),
-			new Card(Rank.FOUR, Suit.CLUB),
-			new Card(Rank.JACK, Suit.SPADE),
-			new Card(Rank.THREE, Suit.SPADE),
-			new Card(Rank.THREE, Suit.DIAMOND),
-			new Card(Rank.EIGHT, Suit.CLUB)
+			randomCards.removeCardOfRank(Rank.KING),
+			randomCards.removeCardOfRank(Rank.FOUR),
+			randomCards.removeCardOfRank(Rank.JACK),
+			randomCards.removeCardOfRank(Rank.THREE),
+			randomCards.removeCardOfRank(Rank.THREE),
+			randomCards.removeCardOfRank(Rank.EIGHT)
 		)));
 	}
 
 	public void initCardsForPush1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.QUEEN, Suit.CLUB),
-			new Card(Rank.KING, Suit.HEART),
-			new Card(Rank.JACK, Suit.CLUB),
-			new Card(Rank.JACK, Suit.DIAMOND)
+			randomCards.removeCardOfRank(Rank.QUEEN),
+			randomCards.removeCardOfRank(Rank.KING),
+			randomCards.removeCardOfRank(Rank.JACK),
+			randomCards.removeCardOfRank(Rank.JACK)
 		)));
 	}
 
 	public void initCardsForPush2()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			new Card(Rank.ACE, Suit.HEART),
-			new Card(Rank.EIGHT, Suit.CLUB),
-			new Card(Rank.SIX, Suit.DIAMOND),
-			new Card(Rank.FOUR, Suit.DIAMOND),
-			new Card(Rank.FIVE, Suit.SPADE)
+			randomCards.removeCardOfRank(Rank.ACE),
+			randomCards.removeCardOfRank(Rank.EIGHT),
+			randomCards.removeCardOfRank(Rank.SIX),
+			randomCards.removeCardOfRank(Rank.FOUR),
+			randomCards.removeCardOfRank(Rank.FIVE)
 		)));
 	}
 
@@ -227,32 +312,26 @@ public abstract class CustomDeckTest extends EngineTest
 		}
 	}
 
-	public void initCardsForSplitting7s()
+	public void initCardsForSplitting (Rank rank)
 	{
-		randomCards = new TestDeck();
-		randomCards.removeCards(SEVEN_OF_CLUBS, SEVEN_OF_DIAMONDS, SEVEN_OF_HEARTS, SEVEN_OF_CLUBS);
+		Assertions.assertNotNull(rank);
+		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_2 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_3 = randomCards.removeCardOfRank(rank);
+		final var SPLIT_CARD_4 = randomCards.removeCardOfRank(rank);
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			SEVEN_OF_CLUBS,
+			SPLIT_CARD_1,
 			randomCards.draw(),
-			SEVEN_OF_DIAMONDS,
+			SPLIT_CARD_2,
 			randomCards.draw(),
 			randomCards.draw(),
-			SEVEN_OF_HEARTS,
+			SPLIT_CARD_3,
 			randomCards.draw(),
-			SEVEN_OF_SPADES
+			SPLIT_CARD_4
 		)));
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
 	public abstract void main() throws Exception;
-
-	private Card randomCardOfRank (Rank rank)
-	{
-		Assertions.assertNotNull(rank);
-		return new Card(
-			rank,
-			Suit.values()[(int) (Suit.values().length * Math.random())]
-		);
-	}
 }

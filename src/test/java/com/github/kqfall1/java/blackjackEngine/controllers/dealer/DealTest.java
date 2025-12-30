@@ -43,13 +43,14 @@ final class DealTest extends EngineTest
 		);
 
 		super.engine.advanceAfterDeal();
-		super.declinePotentialInsuranceBet();
+		super.declinePossibleInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

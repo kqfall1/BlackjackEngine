@@ -28,21 +28,19 @@ final class InsuranceBetDeclineAndDoubleDownTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.placeRandomHandBet(
+		super.advanceToPlayerTurn(
 			super.engine.getPlayer().getChips().divide(
 				BigDecimal.TWO,
 				MathContext.DECIMAL128
 			)
 		);
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
-		super.declinePotentialInsuranceBet();
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerDoubleDown();
 			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterPotentialDealerTurn();
 		}
+
+		super.advanceToEndOfRound();
 	}
 }

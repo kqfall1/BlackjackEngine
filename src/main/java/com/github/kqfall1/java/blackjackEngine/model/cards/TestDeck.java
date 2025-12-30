@@ -1,5 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import com.github.kqfall1.java.utils.StringUtils;
 import java.util.List;
 import java.util.Queue;
 
@@ -21,6 +23,10 @@ public final class TestDeck extends Deck
 		{
 			return initialCards.poll();
 		}
+		else if (getCards().isEmpty())
+		{
+			throw new EmptyDeckException(this);
+		}
 
 		return cards.poll();
 	}
@@ -38,6 +44,31 @@ public final class TestDeck extends Deck
 		{
 			this.cards.remove(card);
 		}
+	}
+
+	public Card removeCardOfRank(Rank rank)
+	{
+		assert rank != null : "rank == null";
+
+		for (Card card : getCards())
+		{
+			if (card.getRank() == rank)
+			{
+				if (initialCards != null)
+				{
+					initialCards.remove(card);
+				}
+
+				this.cards.remove(card);
+				return card;
+			}
+		}
+
+		throw new IllegalStateException(String.format(
+			"No %s is present in test deck %s.",
+			StringUtils.normalizeLower(rank.toString()),
+			this
+		));
 	}
 
 	public void setInitialCards(Queue<Card> initialCards)
