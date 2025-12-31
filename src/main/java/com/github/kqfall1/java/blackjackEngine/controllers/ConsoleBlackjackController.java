@@ -72,8 +72,8 @@ public final class ConsoleBlackjackController implements EngineListener
 		final var config = new StandardRuleConfig();
 		final var handler = new ConsoleHandler();
 		config.setDealerHitsOnSoft17(true);
-		config.setPlayerCanDoubleDownOnSplitHands(true);
-		config.setPlayerCanSurrenderOnSplitHands(true);
+		config.setDoublingDownOnSplitHandsAllowed(true);
+		config.setSurrenderingOnSplitHandsAllowed(true);
 		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
 		final var controller = new ConsoleBlackjackController(config, handler,
 			LOG_FILE_PATH, LOGGER_NAME);

@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -28,7 +27,7 @@ final class SurrenderingAllowedOnAllHandsTest extends CustomDeckTest
 		super.initCardsForSplitting(Rank.QUEEN);
 		super.initDependencies();
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.config.setPlayerCanSurrenderOnSplitHands(true);
+		super.config.setSurrenderingOnSplitHandsAllowed(true);
 		super.config.setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setDeck(testDeck);
@@ -39,7 +38,7 @@ final class SurrenderingAllowedOnAllHandsTest extends CustomDeckTest
 	public void main() throws Exception
 	{
 		Assertions.assertTrue(super.engine.getConfig().isSurrenderingAllowed());
-		Assertions.assertTrue(super.engine.getConfig().getPlayerCanSurrenderOnSplitHands());
+		Assertions.assertTrue(super.engine.getConfig().isSurrenderingOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)

@@ -32,13 +32,13 @@ public final class StandardRuleConfig
 	public static final int TOP_SCORE = 21;
 
 	private boolean dealerHitsOnSoft17;
+	private boolean doublingDownOnSplitHandsAllowed;
 	private boolean loggingEnabled;
 	private int maximumSplitCount;
 	private BigDecimal minimumBetAmount;
-	private boolean playerCanDoubleDownOnSplitHands;
-	private boolean playerCanSurrenderOnSplitHands;
 	private BigDecimal playerInitialChips;
 	private boolean surrenderingAllowed;
+	private boolean surrenderingOnSplitHandsAllowed;
 
 	public static final PayoutRatio BLACKJACK = new PayoutRatio(
 		BigDecimal.valueOf(3),
@@ -74,11 +74,6 @@ public final class StandardRuleConfig
 		return dealerHitsOnSoft17;
 	}
 
-	public boolean getLoggingEnabled()
-	{
-		return loggingEnabled;
-	}
-
 	public int getMaximumSplitCount()
 	{
 		return maximumSplitCount;
@@ -87,16 +82,6 @@ public final class StandardRuleConfig
 	public BigDecimal getMinimumBetAmount()
 	{
 		return minimumBetAmount;
-	}
-
-	public boolean getPlayerCanDoubleDownOnSplitHands()
-	{
-		return playerCanDoubleDownOnSplitHands;
-	}
-
-	public boolean getPlayerCanSurrenderOnSplitHands()
-	{
-		return playerCanSurrenderOnSplitHands;
 	}
 
 	public BigDecimal getPlayerInitialChips()
@@ -113,8 +98,23 @@ public final class StandardRuleConfig
 			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
 
+	public boolean isDoubleDownPossible(HandContext activeHandContext,
+										EngineState currentState, Player player)
+	{
+		return currentState == EngineState.PLAYER_TURN
+			&& !activeHandContext.isAltered()
+			&& (activeHandContext.getType() == HandContextType.MAIN
+				|| isDoublingDownOnSplitHandsAllowed())
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
+	}
+
+	public boolean isDoublingDownOnSplitHandsAllowed()
+	{
+		return doublingDownOnSplitHandsAllowed;
+	}
+
 	public boolean isInsuranceBetPossible(HandContext activeHandContext, EngineState currentState,
-										  Player player, Hand dealerHand)
+									  	Player player, Hand dealerHand)
 	{
 		return (currentState == EngineState.DEALING || currentState == EngineState.INSURANCE_CHECK)
 			&& !activeHandContext.isAltered()
@@ -123,14 +123,9 @@ public final class StandardRuleConfig
 			&& player.getContexts().size() == 1;
 	}
 
-	public boolean isDoubleDownPossible(HandContext activeHandContext,
-										EngineState currentState, Player player)
+	public boolean isLoggingEnabled()
 	{
-		return currentState == EngineState.PLAYER_TURN
-			&& !activeHandContext.isAltered()
-			&& (activeHandContext.getType() == HandContextType.MAIN
-				|| getPlayerCanDoubleDownOnSplitHands())
-			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
+		return loggingEnabled;
 	}
 
 	public boolean isSplitPossible(HandContext activeHandContext, EngineState currentState,
@@ -148,6 +143,11 @@ public final class StandardRuleConfig
 		return surrenderingAllowed;
 	}
 
+	public boolean isSurrenderingOnSplitHandsAllowed()
+	{
+		return surrenderingOnSplitHandsAllowed;
+	}
+
 	public boolean isSurrenderingPossible(HandContext activeHandContext,
 										  EngineState currentState)
 	{
@@ -155,7 +155,7 @@ public final class StandardRuleConfig
 			&& isSurrenderingAllowed()
 			&& !activeHandContext.isAltered()
 			&& (activeHandContext.getType() == HandContextType.MAIN
-				|| getPlayerCanSurrenderOnSplitHands());
+				|| isSurrenderingOnSplitHandsAllowed());
 	}
 
 	public void setDealerHitsOnSoft17(boolean value)
@@ -163,9 +163,10 @@ public final class StandardRuleConfig
 dealerHitsOnSoft17 = value;
 }
 
-	public void setLoggingEnabled(boolean value)
+
+	public void setDoublingDownOnSplitHandsAllowed(boolean value)
 	{
-		loggingEnabled = value;
+		doublingDownOnSplitHandsAllowed = value;
 	}
 
 	public void setMaximumSplitCount(int maximumSplitCount)
@@ -186,16 +187,6 @@ dealerHitsOnSoft17 = value;
 		this.minimumBetAmount = minimumBetAmount;
 	}
 
-	public void setPlayerCanDoubleDownOnSplitHands(boolean value)
-	{
-		playerCanDoubleDownOnSplitHands = value;
-	}
-
-	public void setPlayerCanSurrenderOnSplitHands(boolean value)
-	{
-		playerCanSurrenderOnSplitHands = value;
-	}
-
 	public void setPlayerInitialChips(BigDecimal playerInitialChips)
 	{
 		assert playerInitialChips != null && playerInitialChips.compareTo(BigDecimal.ZERO) > 0
@@ -208,19 +199,25 @@ dealerHitsOnSoft17 = value;
 		surrenderingAllowed = value;
 	}
 
+	public void setSurrenderingOnSplitHandsAllowed(boolean value)
+	{
+		surrenderingOnSplitHandsAllowed = value;
+	}
+
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[dealerHitsOnSoft17=%s,loggingEnabled=%s,maximumSplitCount=%s,minimumBetAmount=%s,playerCanDoubleDownOnSplitHands=%s,playerCanSurrenderOnSplitHands=%s,surrenderingAllowed=%s]",
+			"%s[dealerHitsOnSoft17=%s,doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%s,minimumBetAmount=%s,playerInitialChips=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
 			getClass().getName(),
 			getDealerHitsOnSoft17(),
-			getLoggingEnabled(), 
+			isDoublingDownOnSplitHandsAllowed(),
+			isLoggingEnabled(),
 			getMaximumSplitCount(),
 			getMinimumBetAmount(),
-			getPlayerCanDoubleDownOnSplitHands(),
-			getPlayerCanSurrenderOnSplitHands(),
-			isSurrenderingAllowed()
+			getPlayerInitialChips(),
+			isSurrenderingAllowed(),
+			isSurrenderingOnSplitHandsAllowed()
 		);
 	}
 }

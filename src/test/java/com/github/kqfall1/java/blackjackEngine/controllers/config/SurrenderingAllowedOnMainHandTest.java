@@ -38,7 +38,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 	public void main() throws Exception
 	{
 		Assertions.assertTrue(super.engine.getConfig().isSurrenderingAllowed());
-		Assertions.assertFalse(super.engine.getConfig().getPlayerCanSurrenderOnSplitHands());
+		Assertions.assertFalse(super.engine.getConfig().isSurrenderingOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)

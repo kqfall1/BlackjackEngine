@@ -67,7 +67,7 @@ public class BlackjackEngine
 		this.config = config;
 		dealer = new Dealer();
 		this.listener = listener;
-		if (getConfig().getLoggingEnabled())
+		if (getConfig().isLoggingEnabled())
 		{
 			logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName,
 				true);
