@@ -149,7 +149,7 @@ public final class StandardRuleConfig
 	}
 
 	public boolean isSurrenderingPossible(HandContext activeHandContext,
-										  EngineState currentState, Player player)
+										  EngineState currentState)
 	{
 		return currentState == EngineState.PLAYER_TURN
 			&& isSurrenderingAllowed()

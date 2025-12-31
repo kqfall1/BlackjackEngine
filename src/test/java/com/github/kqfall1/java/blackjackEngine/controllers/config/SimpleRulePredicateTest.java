@@ -49,8 +49,7 @@ final class SimpleRulePredicateTest extends CustomDeckTest
 				)
 				&& super.engine.getConfig().isSurrenderingPossible(
 					super.engine.getActiveHandContext(),
-					super.engine.getState(),
-					super.engine.getPlayer()
+					super.engine.getState()
 				)
 			);
 
@@ -116,8 +115,7 @@ final class SimpleRulePredicateTest extends CustomDeckTest
 			)
 			&& super.engine.getConfig().isSurrenderingPossible(
 				super.engine.getActiveHandContext(),
-				super.engine.getState(),
-				super.engine.getPlayer()
+				super.engine.getState()
 			)
 		);
 	}

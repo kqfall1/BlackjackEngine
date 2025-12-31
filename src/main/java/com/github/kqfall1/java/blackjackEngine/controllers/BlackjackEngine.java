@@ -526,6 +526,13 @@ public class BlackjackEngine
 				amount
 			), METHOD_NAME);
 		}
+		else if (getConfig().getMinimumBetAmount().compareTo(amount) > 0)
+		{
+			throw new RuleViolationException(String.format(
+				"Cannot place a bet lower than $%.2f.",
+				getConfig().getMinimumBetAmount()
+			));
+		}
 		getListener().onBettingRoundStarted();
 		final var playerMainHand = new HandContext(
 			new Bet(amount),
@@ -671,7 +678,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "playerSurrender";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		if (!getConfig().isSurrenderingPossible(getActiveHandContext(), getState(), getPlayer()))
+		if (!getConfig().isSurrenderingPossible(getActiveHandContext(), getState()))
 		{
 			if (getActiveHandContext().isAltered())
 			{
