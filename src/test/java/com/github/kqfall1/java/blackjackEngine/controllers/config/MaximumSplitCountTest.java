@@ -44,9 +44,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 			{
 				super.initSplitHands();
 
-				for (int count = 0
-				 	; count < MAXIMUM_SPLIT_COUNT + 1
-					; count++)
+				for (int count = 0; count < MAXIMUM_SPLIT_COUNT + 1; count++)
 				{
 					super.engine.playerStand();
 				}

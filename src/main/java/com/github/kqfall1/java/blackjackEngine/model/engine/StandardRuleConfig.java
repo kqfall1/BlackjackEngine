@@ -206,11 +206,6 @@ dealerHitsOnSoft17 = value;
 	public void setSurrenderingAllowed(boolean value)
 	{
 		surrenderingAllowed = value;
-
-		if (!value)
-		{
-			setPlayerCanSurrenderOnSplitHands(false);
-		}
 	}
 
 	@Override
