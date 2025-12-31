@@ -5,8 +5,6 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -30,12 +28,7 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		super.advanceToPlayerTurn(
-			super.engine.getPlayer().getChips().divide(
-				BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2),
-				MathContext.DECIMAL128
-			)
-		);
+		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
