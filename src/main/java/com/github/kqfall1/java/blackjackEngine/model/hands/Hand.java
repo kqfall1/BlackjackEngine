@@ -49,7 +49,7 @@ public final class Hand
 		return Objects.equals(getCards(), otherHand.getCards());
 	}
 
-	public int getAceCount()
+	private int getAceCount()
 	{
 		int aceCount = 0;
 
@@ -73,7 +73,7 @@ public final class Hand
  	* Sums the values of all {@code Card} objects in {@code cards} using
 	 * {@code Card.ACE_LOW_VALUE}.
  	*/
-	public int getLowScore()
+	private int getLowScore()
 	{
 		int lowScore = 0;
 
@@ -144,6 +144,12 @@ public final class Hand
 		return getCards().getFirst().getRank().equals(
 			getCards().getLast().getRank()
 		);
+	}
+
+	public boolean isSoft()
+	{
+		return getAceCount() > 0
+		&& getLowScore() != getScore();
 	}
 
 	public void removeCard(int cardIndex)

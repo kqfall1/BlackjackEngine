@@ -91,9 +91,12 @@ public final class StandardRuleConfig
 
 	public boolean isDealerTurnActive(EngineState currentState, Dealer dealer)
 	{
-		final int MINIMUM_SCORE_TO_STAND = getDealerHitsOnSoft17()
-			? DEALER_MINIMUM_STAND_SCORE + 1
-			: DEALER_MINIMUM_STAND_SCORE;
+		final int MINIMUM_SCORE_TO_STAND =
+			getDealerHitsOnSoft17()
+			&& dealer.getHand().getScore() == DEALER_MINIMUM_STAND_SCORE
+			&& dealer.getHand().isSoft()
+				? DEALER_MINIMUM_STAND_SCORE + 1
+				: DEALER_MINIMUM_STAND_SCORE;
 		return currentState == EngineState.DEALER_TURN
 			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
