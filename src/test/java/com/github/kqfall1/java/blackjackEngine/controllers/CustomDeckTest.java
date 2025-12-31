@@ -137,6 +137,16 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
+	public void initCardsForDealerSoft17()
+	{
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			randomCards.draw(),
+			randomCards.removeCardOfRank(Rank.SIX),
+			randomCards.draw(),
+			randomCards.removeCardOfRank(Rank.ACE)
+		)));
+	}
+
 	private void initCardsForDealerBlackjack1 (Card playerCard1, Card playerCard2)
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
@@ -293,7 +303,9 @@ public abstract class CustomDeckTest extends EngineTest
 	{
 		var previousChipAmount = super.engine.getPlayer().getChips();
 
-		for (int count = 0; count < MAXIMUM_SPLIT_COUNT; count++)
+		for (int count = 0;
+			 count < MAXIMUM_SPLIT_COUNT;
+			 count++)
 		{
 			Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
 			Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());

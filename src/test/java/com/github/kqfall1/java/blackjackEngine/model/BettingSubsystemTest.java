@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -26,17 +25,6 @@ final class BettingSubsystemTest
 	private Pot pot1;
 	private Pot pot2;
 	private static final int TEST_ITERATIONS = 5000;
-
-	@BeforeEach
-	void init()
-	{
-		initialBetAmount = new BigDecimal(Math.random() * MAXIMUM_BET_AMOUNT);
-		initialPotAmount = new BigDecimal(Math.random() * MAXIMUM_POT_AMOUNT);
-		bet1 = new Bet(initialBetAmount);
-		bet2 = new Bet(initialBetAmount);
-		pot1 = new Pot();
-		pot2 = new Pot(initialPotAmount);
-	}
 
 	private void betTest(RepetitionInfo info)
 	{
@@ -93,8 +81,19 @@ final class BettingSubsystemTest
 		}
 	}
 
+	@BeforeEach
+	void init()
+	{
+		initialBetAmount = new BigDecimal(Math.random() * MAXIMUM_BET_AMOUNT);
+		initialPotAmount = new BigDecimal(Math.random() * MAXIMUM_POT_AMOUNT);
+		bet1 = new Bet(initialBetAmount);
+		bet2 = new Bet(initialBetAmount);
+		pot1 = new Pot();
+		pot2 = new Pot(initialPotAmount);
+	}
+
 	@RepeatedTest(TEST_ITERATIONS)
-	void bettingSubsystemTest(RepetitionInfo info)
+	void main(RepetitionInfo info)
 	{
 		payoutRatioTest();
 		betTest(info);

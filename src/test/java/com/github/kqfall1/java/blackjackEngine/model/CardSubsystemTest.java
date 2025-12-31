@@ -30,7 +30,7 @@ public final class CardSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	void cardsAndDeckTest()
+	void main()
 	{
 		assertEquals(ACE_OF_CLUBS_1, ACE_OF_CLUBS_2);
 		assertEquals(ACE_OF_CLUBS_1.toString(), ACE_OF_CLUBS_2.toString());

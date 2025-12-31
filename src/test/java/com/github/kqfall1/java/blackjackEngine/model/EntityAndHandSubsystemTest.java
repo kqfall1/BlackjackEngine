@@ -36,21 +36,6 @@ public final class EntityAndHandSubsystemTest
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 5000;
 
-	@BeforeEach
-	void init() throws InsufficientChipsException
-	{
-		blackjack = randomBlackjack();
-		dealer = new Dealer();
-		dealerHand = new Hand();
-		mainContext = new HandContext(BET, HandContextType.MAIN);
-		player1 = new Player();
-		player2 = new Player();
-		mainHand = new Hand();
-		pocketPair = randomPocketPair();
-		sideDeck = new Deck();
-		splitContext = new HandContext(BET, HandContextType.SPLIT);
-	}
-
 	private void dealerTest()
 	{
 		final var PREVIOUS_HAND = dealer.getHand();
@@ -64,6 +49,36 @@ public final class EntityAndHandSubsystemTest
 		dealer.getHand().addCards(dealer.hit());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
 		Assertions.assertTrue(dealer.getDeck().getCards().size() < PREVIOUS_DECK_SIZE);
+	}
+
+	private void handContextTest()
+	{
+		assertEquals(mainContext, new HandContext(BET, HandContextType.MAIN));
+		assertEquals(BET, mainContext.getBet());
+		assertEquals(BigDecimal.ZERO, mainContext.getPot().getAmount());
+		assertEquals(splitContext, new HandContext(BET, HandContextType.SPLIT));
+		assertEquals(BET, splitContext.getBet());
+		assertEquals(BigDecimal.ZERO, splitContext.getPot().getAmount());
+		Assertions.assertFalse(mainContext.isAltered());
+		Assertions.assertFalse(mainContext.hasSurrendered());
+		Assertions.assertFalse(splitContext.isAltered());
+		Assertions.assertFalse(splitContext.hasSurrendered());
+		Assertions.assertNotEquals(mainContext.getType(), splitContext.getType());
+
+		mainContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
+		splitContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
+		assertEquals(mainContext.getPot().getAmount(), splitContext.getPot().getAmount());
+		mainContext.setBet(new Bet(BigDecimal.valueOf(100)));
+		Assertions.assertNotEquals(mainContext.getBet(), splitContext.getBet());
+		mainContext.setHasSurrendered();
+		Assertions.assertTrue(mainContext.hasSurrendered());
+		Assertions.assertNotEquals(mainContext.hasSurrendered(), splitContext.hasSurrendered());
+
+		try
+		{
+			new Bet(BigDecimal.ZERO);
+		}
+		catch (AssertionError ignored) {}
 	}
 
 	private void _handTest(int expectedSize)
@@ -97,37 +112,32 @@ public final class EntityAndHandSubsystemTest
 		{
 			bustHand.addCards(sideDeck.draw());
 		}
+
 		Assertions.assertTrue(bustHand.isBusted());
 	}
 
-	private void handContextTest()
+	@BeforeEach
+	void init() throws InsufficientChipsException
 	{
-		assertEquals(mainContext, new HandContext(BET, HandContextType.MAIN));
-		assertEquals(BET, mainContext.getBet());
-		assertEquals(BigDecimal.ZERO, mainContext.getPot().getAmount());
-		assertEquals(splitContext, new HandContext(BET, HandContextType.SPLIT));
-		assertEquals(BET, splitContext.getBet());
-		assertEquals(BigDecimal.ZERO, splitContext.getPot().getAmount());
-		Assertions.assertFalse(mainContext.isAltered());
-		Assertions.assertFalse(mainContext.hasSurrendered());
-		Assertions.assertFalse(splitContext.isAltered());
-		Assertions.assertFalse(splitContext.hasSurrendered());
-		Assertions.assertNotEquals(mainContext.getType(), splitContext.getType());
+		blackjack = randomBlackjack();
+		dealer = new Dealer();
+		dealerHand = new Hand();
+		mainContext = new HandContext(BET, HandContextType.MAIN);
+		player1 = new Player();
+		player2 = new Player();
+		mainHand = new Hand();
+		pocketPair = randomPocketPair();
+		sideDeck = new Deck();
+		splitContext = new HandContext(BET, HandContextType.SPLIT);
+	}
 
-		mainContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
-		splitContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
-		assertEquals(mainContext.getPot().getAmount(), splitContext.getPot().getAmount());
-		mainContext.setBet(new Bet(BigDecimal.valueOf(100)));
-		Assertions.assertNotEquals(mainContext.getBet(), splitContext.getBet());
-		mainContext.setHasSurrendered();
-		Assertions.assertTrue(mainContext.hasSurrendered());
-		Assertions.assertNotEquals(mainContext.hasSurrendered(), splitContext.hasSurrendered());
-
-		try
-		{
-			new Bet(BigDecimal.ZERO);
-		}
-		catch (AssertionError ignored) {}
+	@RepeatedTest(TEST_ITERATIONS)
+	void main() throws InsufficientChipsException
+	{
+		handTest();
+		dealerTest();
+		handContextTest();
+		playerTest();
 	}
 
 	private void playerTest() throws InsufficientChipsException
@@ -191,14 +201,5 @@ public final class EntityAndHandSubsystemTest
 	private Suit randomSuit()
 	{
 		return Suit.values()[(int) (Math.random() * Suit.values().length)];
-	}
-
-	@RepeatedTest(TEST_ITERATIONS)
-	void testEntityAndHandSubsystem() throws InsufficientChipsException
-	{
-		handTest();
-		dealerTest();
-		handContextTest();
-		playerTest();
 	}
 }
