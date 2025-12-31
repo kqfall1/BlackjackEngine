@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
@@ -40,9 +41,12 @@ final class ShowdownNormalTest extends CustomDeckTest
 				super.engine.getDealer().getHand().getScore()
 					> super.engine.getActiveHandContext().getHand().getScore()
 			);
-			Assertions.assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING.stripTrailingZeros(),
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					CHIP_AMOUNT_AFTER_BETTING.stripTrailingZeros(),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 
 			super.engine.advanceAfterShowdown();
@@ -62,11 +66,14 @@ final class ShowdownNormalTest extends CustomDeckTest
 
 			super.engine.advanceAfterShowdown();
 
-			Assertions.assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING
-					.add(POT_AMOUNT)
-					.stripTrailingZeros(),
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					CHIP_AMOUNT_AFTER_BETTING
+						.add(POT_AMOUNT)
+						.stripTrailingZeros(),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 		else
@@ -75,9 +82,12 @@ final class ShowdownNormalTest extends CustomDeckTest
 				super.engine.getDealer().getHand().getScore(),
 				super.engine.getActiveHandContext().getHand().getScore()
 			);
-			Assertions.assertEquals(
-				INITIAL_CHIP_AMOUNT,
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					INITIAL_CHIP_AMOUNT,
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 
 			super.engine.advanceAfterShowdown();

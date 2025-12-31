@@ -1,8 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,9 @@ public final class Player
 			throw new InsufficientChipsException(this, chips);
 		}
 
-		this.chips = chips.stripTrailingZeros();
+		this.chips = chips
+			.stripTrailingZeros()
+			.setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 	{
 		super.initCardsForSplitting(Rank.SIX);
 		super.initDependencies();
+		super.config.setSurrenderingAllowed(true);
 		super.config.setPlayerCanSurrenderOnSplitHands(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);

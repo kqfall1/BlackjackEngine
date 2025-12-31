@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 	{
 		super._initCardsForBust();
 		super.initDependencies();
+		super.config.setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setDeck(testDeck);
 	}
@@ -37,9 +39,12 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 		{
 			super.engine.playerSurrender();
 
-			Assertions.assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING,
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					CHIP_AMOUNT_AFTER_BETTING,
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 			Assertions.assertTrue(super.engine.getActiveHandContext().hasSurrendered());
 
@@ -48,11 +53,14 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 
 		super.engine.advanceAfterShowdown();
 
-		Assertions.assertEquals(
-			CHIP_AMOUNT_AFTER_BETTING
-				.add(BET_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128))
-				.stripTrailingZeros(),
-			super.engine.getPlayer().getChips()
+		Assertions.assertTrue(
+			nearlyEquals(
+				CHIP_AMOUNT_AFTER_BETTING
+					.add(BET_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128))
+					.stripTrailingZeros(),
+				super.engine.getPlayer().getChips(),
+				StandardRuleConfig.CHIP_SCALE
+			)
 		);
 
 		super.engine.advanceAfterReset();

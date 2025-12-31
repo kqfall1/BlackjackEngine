@@ -44,9 +44,12 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				super.engine.getActiveHandContext().getHand().getScore()
 					< StandardRuleConfig.TOP_SCORE
 			);
-			assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING,
-				super.engine.getPlayer().getChips()
+			assertTrue(
+				nearlyEquals(
+					CHIP_AMOUNT_AFTER_BETTING,
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 		else if (blackjackMethodIndex
@@ -60,13 +63,16 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				super.engine.getDealer().getHand().getScore()
 					< StandardRuleConfig.TOP_SCORE
 			);
-			assertEquals(
-				CHIP_AMOUNT_AFTER_BETTING.add(
-					POT_AMOUNT.multiply(
-						StandardRuleConfig.INSURANCE.getPayoutMultiplier()
-					)
-				),
-				super.engine.getPlayer().getChips()
+			assertTrue(
+				nearlyEquals(
+					CHIP_AMOUNT_AFTER_BETTING.add(
+						POT_AMOUNT.multiply(
+							StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+						)
+					),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 		else
@@ -77,9 +83,12 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				&& super.engine.getDealer().getHand().getScore()
 					== StandardRuleConfig.TOP_SCORE
 			);
-			assertEquals(
-				INITIAL_CHIP_AMOUNT,
-				super.engine.getPlayer().getChips()
+			assertTrue(
+				nearlyEquals(
+					INITIAL_CHIP_AMOUNT,
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 

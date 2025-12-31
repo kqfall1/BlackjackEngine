@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model;
 
+import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
@@ -7,6 +8,8 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -39,13 +42,34 @@ final class BettingSubsystemTest
 	{
 		assertEquals(bet1, bet2);
 		Assertions.assertNotEquals(new Bet(BigDecimal.ONE), bet1);
-		assertEquals(initialBetAmount, bet1.getAmount());
-		assertEquals(
-			initialBetAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128),
-			bet1.getHalf()
+		assertTrue(
+			EngineTest.nearlyEquals(
+				initialBetAmount,
+				bet1.getAmount(),
+				StandardRuleConfig.CHIP_SCALE
+			)
 		);
-		assertEquals(bet1.getAmount(), bet2.getAmount());
-		assertEquals(bet1.getHalf(), bet2.getHalf());
+		assertTrue(
+			EngineTest.nearlyEquals(
+				initialBetAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128),
+				bet1.getHalf(),
+				StandardRuleConfig.CHIP_SCALE
+			)
+		);
+		assertTrue(
+			EngineTest.nearlyEquals(
+				bet1.getAmount(),
+				bet2.getAmount(),
+				StandardRuleConfig.CHIP_SCALE
+			)
+		);
+		assertTrue(
+			EngineTest.nearlyEquals(
+				bet1.getHalf(),
+				bet2.getHalf(),
+				StandardRuleConfig.CHIP_SCALE
+			)
+		);
 		assertEquals(bet1.toString(), bet2.toString());
 
 		try
@@ -129,12 +153,18 @@ final class BettingSubsystemTest
 	{
 		Assertions.assertNotEquals(pot1, pot2);
 		assertEquals(BigDecimal.ZERO, pot1.getAmount());
-		assertEquals(initialPotAmount, pot2.getAmount());
+		assertTrue(
+			EngineTest.nearlyEquals(
+				initialPotAmount,
+				pot2.getAmount(),
+				StandardRuleConfig.CHIP_SCALE
+			)
+		);
 		pot1.addChips(bet1.getAmount());
 		pot2.addChips(bet2.getAmount());
-		assertEquals(bet1.getAmount(), pot1.getAmount());
+		assertEquals(bet1.getAmount().stripTrailingZeros(), pot1.getAmount());
 		assertEquals(
-			initialPotAmount.add(bet2.getAmount()).stripTrailingZeros(),
+			initialPotAmount.add(bet2.getAmount()),
 			pot2.getAmount()
 		);
 		pot1.scoop();

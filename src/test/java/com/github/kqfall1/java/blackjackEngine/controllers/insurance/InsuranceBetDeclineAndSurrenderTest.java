@@ -18,6 +18,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 	{
 		super.initCardsForInsurance();
 		super.initDependencies();
+		super.config.setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setDeck(testDeck);
 	}

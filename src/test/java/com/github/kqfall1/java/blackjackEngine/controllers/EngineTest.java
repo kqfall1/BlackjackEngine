@@ -11,6 +11,8 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Assertions;
@@ -117,10 +119,12 @@ public abstract class EngineTest
 				engine.getState() == EngineState.BETTING
 				|| engine.getState() == EngineState.INSURANCE_CHECK
 				|| engine.getState() == EngineState.PLAYER_TURN);
-			assertEquals(
-				0,
-				handContext.getPot().getAmount().compareTo(handContext.getBet().getAmount().multiply(BigDecimal.TWO))
-			);
+			assertTrue(nearlyEquals(
+				handContext.getBet().getAmount()
+					.multiply(BigDecimal.TWO),
+				handContext.getPot().getAmount(),
+				StandardRuleConfig.CHIP_SCALE
+			));
 			handler.getOut().printf(
 				"You placed a bet of $%.2f.\n",
 				handContext.getBet().getAmount()
@@ -341,6 +345,18 @@ public abstract class EngineTest
 		@Override
 		public void onStateChanged(EngineState oldState) {}
 	};
+
+	public static boolean nearlyEquals
+	(BigDecimal expectedValue, BigDecimal actualValue, int scale)
+	{
+		Assertions.assertTrue(scale > 0);
+		var threshold = BigDecimal.ONE.movePointLeft(scale);
+
+		return expectedValue
+			.subtract(actualValue)
+			.abs()
+			.compareTo(threshold) <= 0;
+	}
 
 	public final BigDecimal placeRandomHandBet(BigDecimal maximumBetAmount)
 	throws Exception

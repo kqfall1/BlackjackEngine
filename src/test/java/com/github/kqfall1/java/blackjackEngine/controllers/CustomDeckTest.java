@@ -185,7 +185,7 @@ public abstract class CustomDeckTest extends EngineTest
 			randomCards.draw(),
 			randomCards.removeCardOfRank(Rank.ACE),
 			randomCards.draw(),
-			randomCards.removeCardOfRank(Rank.THREE)
+			randomCards.draw()
 		)));
 	}
 
@@ -291,7 +291,6 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public void initSplitHands() throws Exception
 	{
-		final var BET_AMOUNT = super.engine.getActiveHandContext().getBet().getAmount();
 		var previousChipAmount = super.engine.getPlayer().getChips();
 
 		for (int count = 0; count < MAXIMUM_SPLIT_COUNT; count++)
@@ -300,9 +299,14 @@ public abstract class CustomDeckTest extends EngineTest
 			Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
 			super.engine.playerSplit();
 
-			Assertions.assertEquals(
-				previousChipAmount.subtract(BET_AMOUNT).stripTrailingZeros(),
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					previousChipAmount.subtract(
+						super.engine.getActiveHandContext().getBet().getAmount()
+					),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 			Assertions.assertFalse(super.engine.getPlayer().getContexts().get(
 				super.engine.getActiveHandContextIndex() - 1).isAltered()

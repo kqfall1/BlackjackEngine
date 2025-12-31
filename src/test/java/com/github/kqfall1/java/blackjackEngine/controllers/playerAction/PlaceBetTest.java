@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -40,13 +41,19 @@ public final class PlaceBetTest extends EngineTest
 			);
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
-			Assertions.assertEquals(
-				BET_AMOUNT.stripTrailingZeros(),
-				super.engine.getActiveHandContext().getBet().getAmount()
+			Assertions.assertTrue(
+				nearlyEquals(
+					BET_AMOUNT.stripTrailingZeros(),
+					super.engine.getActiveHandContext().getBet().getAmount(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
-			Assertions.assertEquals(
-				BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
-				super.engine.getActiveHandContext().getPot().getAmount()
+			Assertions.assertTrue(
+				nearlyEquals(
+					BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
+					super.engine.getActiveHandContext().getPot().getAmount(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 

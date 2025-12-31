@@ -38,11 +38,14 @@ final class DoubleDownTest extends EngineTest
 		{
 			Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
 			super.engine.playerDoubleDown();
-			Assertions.assertEquals(
-				INITIAL_BET_AMOUNT
-					.multiply(BigDecimal.valueOf(4))
-					.stripTrailingZeros(),
-				super.engine.getActiveHandContext().getPot().getAmount()
+			Assertions.assertTrue(
+				nearlyEquals(
+					INITIAL_BET_AMOUNT
+						.multiply(BigDecimal.valueOf(4))
+						.stripTrailingZeros(),
+					super.engine.getActiveHandContext().getPot().getAmount(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 			Assertions.assertTrue(
 				super.engine.getActiveHandContext().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT + 1

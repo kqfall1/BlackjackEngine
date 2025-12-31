@@ -47,21 +47,27 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 			winnings = HALF_OF_ACTIVE_BET.multiply(
 				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
 			);
-			Assertions.assertEquals(
-				CHIPS_BEFORE_INSURANCE
-					.subtract(HALF_OF_ACTIVE_BET)
-					.add(winnings)
-					.stripTrailingZeros(),
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					CHIPS_BEFORE_INSURANCE
+						.subtract(HALF_OF_ACTIVE_BET)
+						.add(winnings)
+						.stripTrailingZeros(),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 		else
 		{
-			Assertions.assertEquals(
-				CHIPS_BEFORE_INSURANCE
-					.subtract(HALF_OF_ACTIVE_BET)
-					.stripTrailingZeros(),
-				super.engine.getPlayer().getChips()
+			Assertions.assertTrue(
+				nearlyEquals(
+					CHIPS_BEFORE_INSURANCE
+						.subtract(HALF_OF_ACTIVE_BET)
+						.stripTrailingZeros(),
+					super.engine.getPlayer().getChips(),
+					StandardRuleConfig.CHIP_SCALE
+				)
 			);
 		}
 
