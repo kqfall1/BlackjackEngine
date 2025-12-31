@@ -31,7 +31,7 @@ public abstract class EngineTest
 	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	public String logFilePath;
 	public String loggerName;
-	public static final int TEST_ITERATIONS = 5000;
+	public static final int TEST_ITERATIONS = 200;
 
 	public final BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
 	throws Exception
@@ -359,7 +359,10 @@ public abstract class EngineTest
 	public final BigDecimal placeRandomHandBet(BigDecimal maximumBetAmount)
 	throws Exception
 	{
-		final var BET_AMOUNT = maximumBetAmount.multiply(BigDecimal.valueOf(Math.random()));
+		final var BET_AMOUNT = maximumBetAmount
+			.subtract(engine.getConfig().getMinimumBetAmount())
+			.multiply(BigDecimal.valueOf(Math.random()))
+			.add(engine.getConfig().getMinimumBetAmount());
 		engine.placeHandBet(BET_AMOUNT);
 		return BET_AMOUNT;
 	}

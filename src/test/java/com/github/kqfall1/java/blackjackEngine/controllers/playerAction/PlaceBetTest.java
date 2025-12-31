@@ -28,18 +28,8 @@ public final class PlaceBetTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		BigDecimal betAmount;
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-
-		try
-		{
-			betAmount = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
-		}
-		catch (RuleViolationException e)
-		{
-			System.out.println(e.getMessage());
-			return;
-		}
+		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
+		final var BET_AMOUNT = super.advanceToPlayerTurn(INITIAL_CHIP_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
@@ -47,21 +37,21 @@ public final class PlaceBetTest extends EngineTest
 			super.engine.advanceAfterPlayerTurn();
 
 			Assertions.assertTrue(
-				PREVIOUS_CHIP_AMOUNT.compareTo(
+				INITIAL_CHIP_AMOUNT.compareTo(
 					super.engine.getPlayer().getChips()) > 0
 			);
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
 			Assertions.assertTrue(
 				nearlyEquals(
-					betAmount.stripTrailingZeros(),
+					BET_AMOUNT.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getBet().getAmount(),
 					StandardRuleConfig.CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
 				nearlyEquals(
-					betAmount.multiply(BigDecimal.TWO).stripTrailingZeros(),
+					BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),
 					StandardRuleConfig.CHIP_SCALE
 				)
