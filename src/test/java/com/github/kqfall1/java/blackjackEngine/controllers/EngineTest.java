@@ -11,8 +11,6 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Assertions;
@@ -35,7 +33,7 @@ public abstract class EngineTest
 	public String loggerName;
 	public static final int TEST_ITERATIONS = 5000;
 
-	public BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
+	public final BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
 	throws Exception
 	{
 		final var BET_AMOUNT = advanceToPlayerTurn(maximumBetAmount);
@@ -49,7 +47,7 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
-	public BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
+	public final BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
 	throws Exception
 	{
 		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
@@ -86,14 +84,14 @@ public abstract class EngineTest
 	@BeforeEach
 	public abstract void init() throws InsufficientChipsException, IOException;
 
-	public void initDependencies()
+	public final void initDependencies()
 	{
 		config = new StandardRuleConfig();
 		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
 		handler = new ConsoleHandler();
 	}
 
-	public void initEngine(String logFilePath, String loggerName)
+	public final void initEngine(String logFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
 		this.logFilePath = logFilePath;

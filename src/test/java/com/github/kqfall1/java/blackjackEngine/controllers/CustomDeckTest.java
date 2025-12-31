@@ -40,7 +40,7 @@ public abstract class CustomDeckTest extends EngineTest
 	@BeforeEach
 	public abstract void init() throws InsufficientChipsException, IOException;
 
-	public int _initCardsForBlackjack()
+	public final int _initCardsForBlackjack()
 	{
 		final var BLACKJACK_METHOD_INDEX =
 			(int) (Math.random() * SHOWDOWN_BLACKJACK_METHOD_COUNT);
@@ -90,7 +90,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public int _initCardsForBust()
+	public final int _initCardsForBust()
 	{
 		final var BUST_METHOD_INDEX = (int) (Math.random() * BUST_METHOD_COUNT);
 
@@ -179,7 +179,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForInsurance()
+	public final void initCardsForInsurance()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.draw(),
@@ -189,7 +189,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForInsuranceAndSplitting(Rank rank)
+	public final void initCardsForInsuranceAndSplitting(Rank rank)
 	{
 		Assertions.assertNotNull(rank);
 		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);
@@ -209,7 +209,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public int _initCardsForNormalShowdown()
+	public final int _initCardsForNormalShowdown()
 	{
 		final var SHOWDOWN_METHOD_INDEX = (int) (Math.random() * SHOWDOWN_NORMAL_METHOD_COUNT);
 
@@ -246,7 +246,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForPlayerWin1()
+	public final void initCardsForPlayerWin1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.removeCardOfRank(Rank.TEN),
@@ -256,7 +256,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForPlayerWin2()
+	public final void initCardsForPlayerWin2()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.removeCardOfRank(Rank.KING),
@@ -268,7 +268,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForPush1()
+	public final void initCardsForPush1()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.removeCardOfRank(Rank.QUEEN),
@@ -278,7 +278,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initCardsForPush2()
+	public final void initCardsForPush2()
 	{
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
 			randomCards.removeCardOfRank(Rank.ACE),
@@ -289,7 +289,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public void initSplitHands() throws Exception
+	public final void initSplitHands() throws Exception
 	{
 		var previousChipAmount = super.engine.getPlayer().getChips();
 
@@ -316,7 +316,7 @@ public abstract class CustomDeckTest extends EngineTest
 		}
 	}
 
-	public void initCardsForSplitting (Rank rank)
+	public final void initCardsForSplitting (Rank rank)
 	{
 		Assertions.assertNotNull(rank);
 		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);

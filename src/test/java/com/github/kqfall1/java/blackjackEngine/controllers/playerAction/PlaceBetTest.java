@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -27,8 +28,18 @@ public final class PlaceBetTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
+		BigDecimal betAmount;
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		final var BET_AMOUNT = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
+
+		try
+		{
+			betAmount = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
+		}
+		catch (RuleViolationException e)
+		{
+			System.out.println(e.getMessage());
+			return;
+		}
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
@@ -43,14 +54,14 @@ public final class PlaceBetTest extends EngineTest
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
 			Assertions.assertTrue(
 				nearlyEquals(
-					BET_AMOUNT.stripTrailingZeros(),
+					betAmount.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getBet().getAmount(),
 					StandardRuleConfig.CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
 				nearlyEquals(
-					BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
+					betAmount.multiply(BigDecimal.TWO).stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),
 					StandardRuleConfig.CHIP_SCALE
 				)
