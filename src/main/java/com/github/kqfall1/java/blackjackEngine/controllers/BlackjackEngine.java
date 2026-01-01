@@ -706,7 +706,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == EngineState.RESETTING : "getState() != EngineState.RESETTING";
-		getDealer().setDeck(new Deck());
+		getDealer().setCardSource(new Deck());
 		getDealer().setHand(new Hand());
 		getPlayer().clearContexts();
 		getListener().onReset();

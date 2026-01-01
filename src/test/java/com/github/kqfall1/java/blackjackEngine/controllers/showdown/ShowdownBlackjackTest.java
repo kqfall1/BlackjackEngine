@@ -22,7 +22,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 		blackjackMethodIndex = super._initCardsForBlackjack();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override

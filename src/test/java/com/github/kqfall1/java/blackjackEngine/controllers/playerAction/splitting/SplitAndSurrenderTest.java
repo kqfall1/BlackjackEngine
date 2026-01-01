@@ -29,7 +29,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 		super.config.setSurrenderingOnSplitHandsAllowed(true);
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override

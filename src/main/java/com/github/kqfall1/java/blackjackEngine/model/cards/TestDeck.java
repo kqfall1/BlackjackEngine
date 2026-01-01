@@ -23,12 +23,12 @@ public final class TestDeck extends Deck
 		{
 			return initialCards.poll();
 		}
-		else if (getCards().isEmpty())
+		else if (!getCards().isEmpty())
 		{
-			throw new EmptyDeckException(this);
+			return cards.poll();
 		}
 
-		return cards.poll();
+		throw new EmptyDeckException(this);
 	}
 
 	public List<Card> getInitialCards()

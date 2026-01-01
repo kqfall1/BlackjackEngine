@@ -20,7 +20,7 @@ final class DealerHitAndStandTest extends CustomDeckTest
 		showdownMethodIndex = super._initCardsForNormalShowdown();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override

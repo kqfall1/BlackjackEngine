@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
@@ -22,7 +21,7 @@ final class ShowdownPlayerBustTest extends CustomDeckTest
 		super._initCardsForBust();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override

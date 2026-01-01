@@ -3,9 +3,10 @@ package com.github.kqfall1.java.blackjackEngine.model.entities;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
 /**
- * Controls the {@code Deck} and a {@code Hand}. Draws {@code Card} objects
+ * Controls a {@code Drawable} and a {@code Hand}. Draws {@code Card} objects
  * one at a time.
  *
  * <p>
@@ -16,18 +17,18 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
  */
 public final class Dealer
 {
-	private Deck deck;
+	private Drawable cardSource;
 	private Hand hand;
 
 	public Dealer()
 	{
-		setDeck(new Deck());
+		setCardSource(new Deck());
 		setHand(new Hand());
 	}
 
-	public Deck getDeck()
+	public Drawable getCardSource()
 	{
-		return deck;
+		return cardSource;
 	}
 
 	public Hand getHand()
@@ -37,13 +38,13 @@ public final class Dealer
 
 	public Card hit()
 	{
-		return getDeck().draw();
+		return getCardSource().draw();
 	}
 
-	public void setDeck(Deck deck)
+	public void setCardSource(Drawable cardSource)
 	{
-		assert deck != null : "deck == null";
-		this.deck = deck;
+		assert cardSource != null : "deck == null";
+		this.cardSource = cardSource;
 	}
 
 	public void setHand(Hand hand)
@@ -56,9 +57,9 @@ public final class Dealer
 	public String toString()
 	{
 		return String.format(
-			"%s[deck=%s,hand=%s]",
+			"%s[cardSource=%s,hand=%s]",
 			getClass().getName(),
-			getDeck(),
+			getCardSource(),
 			getHand()
 		);
 	}

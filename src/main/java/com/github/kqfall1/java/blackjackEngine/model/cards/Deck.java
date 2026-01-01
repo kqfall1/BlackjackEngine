@@ -1,15 +1,16 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;
 
 /**
- * Represents a standard deck of playing cards.
+ * Represents a standard deck of playing {@code Card} objects.
  *
  * @author kqfall1
  * @since 13/12/2025
  */
-public class Deck
+public class Deck implements Drawable
 {
 	final Queue<Card> cards;
 

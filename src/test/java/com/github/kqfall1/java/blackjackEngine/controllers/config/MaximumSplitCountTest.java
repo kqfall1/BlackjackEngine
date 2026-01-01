@@ -24,7 +24,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 		super.config.setMaximumSplitCount(
 			(int) (Math.random() * (MAXIMUM_SPLIT_COUNT + 1)));
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override

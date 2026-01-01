@@ -24,7 +24,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.config.setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setDeck(testDeck);
+		super.engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
