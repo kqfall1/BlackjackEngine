@@ -40,7 +40,7 @@ final class ResetTest extends EngineTest
 
 		Assertions.assertEquals(
 			StandardRuleConfig.FULL_DECK_CARD_COUNT,
-			source.getCards()
+			source.getCards().size()
 		);
 		Assertions.assertEquals(
 			new Hand(),
