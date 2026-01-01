@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.utils.StringUtils;
 import java.util.List;
 import java.util.Queue;
@@ -28,7 +28,7 @@ public final class TestDeck extends Deck
 			return cards.poll();
 		}
 
-		throw new EmptyDeckException(this);
+		throw new NoMoreCardsException(this);
 	}
 
 	public List<Card> getInitialCards()

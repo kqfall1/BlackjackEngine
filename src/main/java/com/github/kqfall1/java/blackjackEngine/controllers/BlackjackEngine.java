@@ -10,6 +10,7 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
@@ -293,7 +294,16 @@ public class BlackjackEngine
 		final var METHOD_NAME = "dealCardForDealer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
-		final var card = getDealer().hit();
+		Card card;
+		try
+		{
+			card = getDealer().hit();
+		}
+		catch (NoMoreCardsException e)
+		{
+			getDealer().setCardSource(new Deck());
+			card = getDealer().hit();
+		}
 		getDealer().getHand().addCards(card);
 		onCardDealtToDealer(card);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);
@@ -304,7 +314,16 @@ public class BlackjackEngine
 		final var METHOD_NAME = "dealCardForPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN : "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
-		final var card = getDealer().hit();
+		Card card;
+		try
+		{
+			card = getDealer().hit();
+		}
+		catch (NoMoreCardsException e)
+		{
+			getDealer().setCardSource(new Deck());
+			card = getDealer().hit();
+		}
 		getActiveHandContext().getHand().addCards(card);
 		onCardDealtToPlayer(card);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);

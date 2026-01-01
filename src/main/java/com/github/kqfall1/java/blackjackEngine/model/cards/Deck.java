@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.EmptyDeckException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;
 
@@ -30,11 +30,11 @@ public class Deck implements Drawable
 		cards = new ArrayDeque<>(cardsList);
 	}
 
-	public Card draw()
+	public Card draw() throws NoMoreCardsException
 	{
 		if (cards.isEmpty())
 		{
-			throw new EmptyDeckException(this);
+			throw new NoMoreCardsException(this);
 		}
 
 		return cards.poll();

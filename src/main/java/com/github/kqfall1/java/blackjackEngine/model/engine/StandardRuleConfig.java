@@ -26,6 +26,7 @@ public final class StandardRuleConfig
 	public static final int DEALER_MINIMUM_STAND_SCORE = 17;
 	public static final int DEFAULT_MAXIMUM_SPLIT_COUNT = 1;
 	public static final BigDecimal DEFAULT_MINIMUM_BET_AMOUNT = BigDecimal.ONE;
+	public static final int FULL_DECK_CARD_COUNT = 52;
 	public static final int INITIAL_CARD_COUNT = 2;
 	public static final int INITIAL_HAND_COUNT = 1;
 	public static final int TOP_SCORE = 21;
