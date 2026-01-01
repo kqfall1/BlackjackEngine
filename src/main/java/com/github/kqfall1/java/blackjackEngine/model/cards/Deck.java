@@ -30,9 +30,9 @@ public class Deck implements Drawable
 		cards = new ArrayDeque<>(cardsList);
 	}
 
-	public Card draw() throws NoMoreCardsException
+	public Card draw()
 	{
-		if (cards.isEmpty())
+		if (getCards().isEmpty())
 		{
 			throw new NoMoreCardsException(this);
 		}

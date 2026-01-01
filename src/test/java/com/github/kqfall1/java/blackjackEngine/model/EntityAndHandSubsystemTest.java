@@ -78,7 +78,10 @@ public final class EntityAndHandSubsystemTest
 		{
 			new Bet(BigDecimal.ZERO);
 		}
-		catch (AssertionError ignored) {}
+		catch (AssertionError e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private void _handTest(int expectedSize)

@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.model.entities;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
@@ -37,7 +36,7 @@ public final class Dealer
 		return hand;
 	}
 
-	public Card hit() throws NoMoreCardsException
+	public Card hit()
 	{
 		return getCardSource().draw();
 	}
