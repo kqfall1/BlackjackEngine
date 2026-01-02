@@ -6,7 +6,6 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsExcep
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -15,8 +14,8 @@ public final class CardSubsystemTest
 {
 	private static final Card ACE_OF_CLUBS_1 = new Card(Rank.ACE, Suit.CLUB);
 	private static Card ACE_OF_CLUBS_2;
-	private static final int CUTOFF_PERCENTAGE_RANGE =
-		Shoe.MAXIMUM_CUTOFF_PERCENTAGE - Shoe.MINIMUM_CUTOFF_PERCENTAGE;
+	private static final double CUTOFF_PERCENTAGE_RANGE =
+		Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR - Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
 	private static Deck deck1;
 	private static Set<Card> drawnCards;
 	private static double randomCutoffPercentageNumerator;
@@ -34,7 +33,7 @@ public final class CardSubsystemTest
 		deck1 = new Deck();
 		drawnCards = new HashSet<>();
 		randomCutoffPercentageNumerator
-			= Math.random() * CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE;
+			= Math.random() * CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
 		shoe1 = new Shoe(randomCutoffPercentageNumerator, SHOE_DECK_AMOUNT);
 		shoe2 = new Shoe(randomCutoffPercentageNumerator, SHOE_DECK_AMOUNT);
 		testDeck = new TestDeck();

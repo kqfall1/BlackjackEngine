@@ -20,8 +20,7 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var dealer = new Dealer();
-		dealer.setCardSource(testDeck);
+		final var dealer = new Dealer(testDeck);
 		dealer.hit();
 		dealer.getHand().addCards(dealer.hit());
 		dealer.hit();

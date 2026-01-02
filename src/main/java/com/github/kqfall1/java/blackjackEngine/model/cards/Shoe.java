@@ -28,8 +28,8 @@ public class Shoe implements Drawable
 	private final double cutoffPercentageNumerator;
 	private final int numberOfDecks;
 	public static final double ONE_HUNDRED = 100.0;
-	public static final int MAXIMUM_CUTOFF_PERCENTAGE = 90;
-	public static final int MINIMUM_CUTOFF_PERCENTAGE = 10;
+	public static final double MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR = 90.0;
+	public static final double MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR = 10.0;
 
 	/**
  	 * Is used to determine whether the {@code Shoe} should be reused for another
@@ -54,7 +54,7 @@ public class Shoe implements Drawable
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);
 
-		assert cutoffPercentageNumerator >= MINIMUM_CUTOFF_PERCENTAGE && cutoffPercentageNumerator <= MAXIMUM_CUTOFF_PERCENTAGE
+		assert cutoffPercentageNumerator >= MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR && cutoffPercentageNumerator <= MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
 			: "cutoffPercentageNumerator < MINIMUM_CUTOFF_PERCENTAGE || cutoffPercentageNumerator > MAXIMUM_CUTOFF_PERCENTAGE";
 		this.cutoffPercentageNumerator = cutoffPercentageNumerator;
 		cutoffAmount =

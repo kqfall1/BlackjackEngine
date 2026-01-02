@@ -10,6 +10,7 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import java.math.BigDecimal;
+import java.util.concurrent.ThreadLocalRandom;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Assertions;
@@ -23,13 +24,17 @@ public final class EntityAndHandSubsystemTest
 	private Hand blackjack;
 	private Dealer dealer;
 	private Hand dealerHand;
+	private static final int DECK_RANGE = 20;
 	private HandContext mainContext;
 	private Hand mainHand;
+	private static final int MINIMUM_NUMBER_OF_DECKS = 2;
 	private Player player1;
 	private Player player2;
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	private Hand pocketPair = new Hand();
 	private Shoe shoe;
+	public static final double SHOE_CUTOFF_PERCENTAGE_RANGE =
+		Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR - Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 5000;
 
@@ -116,8 +121,12 @@ public final class EntityAndHandSubsystemTest
 	@BeforeEach
 	void init() throws InsufficientChipsException
 	{
+		final var CUTOFF_PERCENTAGE_NUMERATOR
+			= Math.random() * SHOE_CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
+		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(MINIMUM_NUMBER_OF_DECKS, DECK_RANGE + MINIMUM_NUMBER_OF_DECKS);
+
 		blackjack = randomBlackjack();
-		dealer = new Dealer();
+		dealer = new Dealer(CUTOFF_PERCENTAGE_NUMERATOR, NUMBER_OF_DECKS);
 		dealerHand = new Hand();
 		mainContext = new HandContext(BET, HandContextType.MAIN);
 		player1 = new Player();

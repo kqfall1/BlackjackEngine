@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
@@ -26,6 +27,8 @@ public final class StandardRuleConfig
 	public static final int DEALER_MINIMUM_STAND_SCORE = 17;
 	public static final int DEFAULT_MAXIMUM_SPLIT_COUNT = 1;
 	public static final BigDecimal DEFAULT_MINIMUM_BET_AMOUNT = BigDecimal.ONE;
+	public static final double DEFAULT_SHOE_CUTOFF_PERCENTAGE_NUMERATOR = 80.0;
+	public static final int DEFAULT_SHOE_DECK_COUNT = 8;
 	public static final int FULL_DECK_CARD_COUNT = 52;
 	public static final int INITIAL_CARD_COUNT = 2;
 	public static final int INITIAL_HAND_COUNT = 1;
@@ -37,6 +40,8 @@ public final class StandardRuleConfig
 	private int maximumSplitCount;
 	private BigDecimal minimumBetAmount;
 	private BigDecimal playerInitialChips;
+	private double shoeCutoffPercentageNumerator;
+	private int shoeDeckCount;
 	private boolean surrenderingAllowed;
 	private boolean surrenderingOnSplitHandsAllowed;
 
@@ -61,12 +66,8 @@ public final class StandardRuleConfig
 	{
 		setMaximumSplitCount(DEFAULT_MAXIMUM_SPLIT_COUNT);
 		setMinimumBetAmount(DEFAULT_MINIMUM_BET_AMOUNT);
-	}
-
-	public StandardRuleConfig(int maximumSplitCount, BigDecimal minimumBetAmount)
-	{
-		setMaximumSplitCount(maximumSplitCount);
-		setMinimumBetAmount(minimumBetAmount);
+		setShoeCutoffPercentageNumerator(DEFAULT_SHOE_CUTOFF_PERCENTAGE_NUMERATOR);
+		setShoeDeckCount(DEFAULT_SHOE_DECK_COUNT);
 	}
 
 	public boolean getDealerHitsOnSoft17()
@@ -87,6 +88,16 @@ public final class StandardRuleConfig
 	public BigDecimal getPlayerInitialChips()
 	{
 		return playerInitialChips;
+	}
+
+	public double getShoeCutoffPercentageNumerator()
+	{
+		return shoeCutoffPercentageNumerator;
+	}
+
+	public int getShoeDeckCount()
+	{
+		return shoeDeckCount;
 	}
 
 	public boolean isDealerTurnActive(EngineState currentState, Dealer dealer)
@@ -197,6 +208,30 @@ dealerHitsOnSoft17 = value;
 		this.playerInitialChips = playerInitialChips;
 	}
 
+	public void setShoeCutoffPercentageNumerator(double shoeCutoffPercentageNumerator)
+	{
+		InputManager.validateNumber(
+			shoeCutoffPercentageNumerator,
+			"shoeCutoffPercentageNumerator",
+			Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR,
+			Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
+		);
+
+		this.shoeCutoffPercentageNumerator = shoeCutoffPercentageNumerator;
+	}
+
+	public void setShoeDeckCount(int shoeDeckCount)
+	{
+		InputManager.validateNumber(
+			shoeDeckCount,
+			"shoeDeckCount",
+			1,
+			Float.MAX_VALUE
+		);
+
+		this.shoeDeckCount = shoeDeckCount;
+	}
+
 	public void setSurrenderingAllowed(boolean value)
 	{
 		surrenderingAllowed = value;
@@ -211,7 +246,7 @@ dealerHitsOnSoft17 = value;
 	public String toString()
 	{
 		return String.format(
-			"%s[dealerHitsOnSoft17=%s,doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%s,minimumBetAmount=%s,playerInitialChips=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
+			"%s[dealerHitsOnSoft17=%s,doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeCutoffPercentageNumerator=%.2f,shoeDeckCount=%d,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
 			getClass().getName(),
 			getDealerHitsOnSoft17(),
 			isDoublingDownOnSplitHandsAllowed(),
@@ -219,6 +254,8 @@ dealerHitsOnSoft17 = value;
 			getMaximumSplitCount(),
 			getMinimumBetAmount(),
 			getPlayerInitialChips(),
+			getShoeCutoffPercentageNumerator(),
+			getShoeDeckCount(),
 			isSurrenderingAllowed(),
 			isSurrenderingOnSplitHandsAllowed()
 		);

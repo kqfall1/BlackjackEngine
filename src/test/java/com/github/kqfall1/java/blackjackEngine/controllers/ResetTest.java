@@ -1,8 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
@@ -36,12 +34,7 @@ final class ResetTest extends EngineTest
 		}
 
 		super.engine.advanceAfterShowdown();
-		final var source = (Deck) super.engine.getDealer().getCardSource();
 
-		Assertions.assertEquals(
-			StandardRuleConfig.FULL_DECK_CARD_COUNT,
-			source.getCards().size()
-		);
 		Assertions.assertEquals(
 			new Hand(),
 			super.engine.getDealer().getHand()

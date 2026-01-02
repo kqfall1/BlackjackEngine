@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
@@ -20,9 +20,18 @@ public final class Dealer
 	private Drawable cardSource;
 	private Hand hand;
 
-	public Dealer()
+	public Dealer(Drawable cardSource)
 	{
-		setCardSource(new Deck());
+		assert cardSource != null : "cardSource == null";
+		setCardSource(cardSource);
+		setHand(new Hand());
+	}
+
+	public Dealer(double cutoffPercentageNumerator, int numberOfDecks)
+	{
+		assert cutoffPercentageNumerator >= Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR && cutoffPercentageNumerator <= Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
+			: "cutoffPercentageNumerator < Shoe.MINIMUM_CUTOFF_PERCENTAGE || cutoffPercentageNumerator > Shoe.MAXIMUM_CUTOFF_PERCENTAGE";
+		setCardSource(new Shoe(cutoffPercentageNumerator, numberOfDecks));
 		setHand(new Hand());
 	}
 

@@ -5,6 +5,7 @@ import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
@@ -66,7 +67,9 @@ public class BlackjackEngine
 		assert loggerFilePath != null : "loggerFilePath == null";
 		assert loggerName != null : "loggerName == null";
 		this.config = config;
-		dealer = new Dealer();
+		dealer = new Dealer(
+			getConfig().getShoeCutoffPercentageNumerator(), getConfig().getShoeDeckCount()
+		);
 		this.listener = listener;
 		if (getConfig().isLoggingEnabled())
 		{
@@ -725,7 +728,17 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == EngineState.RESETTING : "getState() != EngineState.RESETTING";
-		getDealer().setCardSource(new Deck());
+		if ((getDealer().getCardSource() instanceof Shoe shoe
+				&& shoe.getCards().size() <= shoe.getCutoffAmount())
+			|| getDealer().getCardSource() instanceof Deck)
+		{
+			getDealer().setCardSource(
+				new Shoe(
+					getConfig().getShoeCutoffPercentageNumerator(),
+					StandardRuleConfig.DEFAULT_SHOE_DECK_COUNT
+				)
+			);
+		}
 		getDealer().setHand(new Hand());
 		getPlayer().clearContexts();
 		getListener().onReset();

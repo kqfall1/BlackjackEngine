@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Patched a subtle error in ResetTest.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/Hand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/Hand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Shoe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Shoe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardRuleConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardRuleConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Dealer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Dealer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/ResetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/ResetTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DealerHitsOnSoft17Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DealerHitsOnSoft17Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DealerStandsOnSoft17Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DealerStandsOnSoft17Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/MaximumSplitCountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/MaximumSplitCountTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/CardSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/CardSubsystemTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/EntityAndHandSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/model/EntityAndHandSubsystemTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -215,7 +224,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767300711817</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java.">
+      <option name="closed" value="true" />
+      <created>1767313165488</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1767313165488</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -224,6 +241,7 @@
     <MESSAGE value="Tweaked EmptyDeckException.java to become NoMoreCardsException.java. Also put final touches on Shoe.java." />
     <MESSAGE value="Finalized the Shoe.java abstraction and integrated it into CardSubsystemTest.java." />
     <MESSAGE value="Patched a subtle error in ResetTest.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Patched a subtle error in ResetTest.java." />
+    <MESSAGE value="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java." />
   </component>
 </project>
