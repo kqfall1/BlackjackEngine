@@ -27,8 +27,7 @@ public final class Hand
 
 		for (Card card : cards)
 		{
-			assert card != null && !this.cards.contains(card) :
-				"card == null && this.cards.contains(card)";
+			assert card != null: "card == null";
 			this.cards.add(card);
 		}
 	}

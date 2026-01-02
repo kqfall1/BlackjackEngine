@@ -1,10 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Suit;
+import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
@@ -32,23 +29,21 @@ public final class EntityAndHandSubsystemTest
 	private Player player2;
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	private Hand pocketPair = new Hand();
-	private Deck sideDeck;
+	private Shoe shoe;
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 5000;
 
 	private void dealerTest()
 	{
 		final var PREVIOUS_HAND = dealer.getHand();
-		final var PREVIOUS_DECK = dealer.getCardSource();
+		final var PREVIOUS_SOURCE = dealer.getCardSource();
 		dealer.setHand(dealerHand);
-		dealer.setCardSource(sideDeck);
+		dealer.setCardSource(shoe);
 		Assertions.assertNotEquals(PREVIOUS_HAND, dealer.getHand());
-		Assertions.assertNotEquals(PREVIOUS_DECK, dealer.getCardSource());
+		Assertions.assertNotEquals(PREVIOUS_SOURCE, dealer.getCardSource());
 		final int PREVIOUS_DEALER_HAND_SIZE = dealer.getHand().getCards().size();
-		//final int PREVIOUS_DECK_SIZE = dealer.getCardSource().getCards().size();
 		dealer.getHand().addCards(dealer.hit());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
-		//Assertions.assertTrue(dealer.getCardSource().getCards().size() < PREVIOUS_DECK_SIZE);
 	}
 
 	private void handContextTest()
@@ -97,12 +92,11 @@ public final class EntityAndHandSubsystemTest
 	private void handTest()
 	{
 		_handTest(0);
-		mainHand.addCards(sideDeck.draw());
-		dealerHand.addCards(sideDeck.draw());
-		Assertions.assertNotEquals(dealerHand, mainHand);
+		mainHand.addCards(shoe.draw());
+		dealerHand.addCards(shoe.draw());
 		mainHand.removeCard(0);
 		dealerHand.removeCard(0);
-		final var newCard = sideDeck.draw();
+		final var newCard = shoe.draw();
 		dealerHand.addCards(newCard);
 		mainHand.addCards(newCard);
 		_handTest(1);
@@ -113,7 +107,7 @@ public final class EntityAndHandSubsystemTest
 		final var bustHand = new Hand();
 		while (bustHand.getScore() <= StandardRuleConfig.TOP_SCORE)
 		{
-			bustHand.addCards(sideDeck.draw());
+			bustHand.addCards(shoe.draw());
 		}
 
 		Assertions.assertTrue(bustHand.isBusted());
@@ -130,7 +124,7 @@ public final class EntityAndHandSubsystemTest
 		player2 = new Player();
 		mainHand = new Hand();
 		pocketPair = randomPocketPair();
-		sideDeck = new Deck();
+		shoe = new Shoe(90, 8);
 		splitContext = new HandContext(BET, HandContextType.SPLIT);
 	}
 
