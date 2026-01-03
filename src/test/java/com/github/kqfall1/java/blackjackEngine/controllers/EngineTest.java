@@ -287,7 +287,7 @@ public abstract class EngineTest
 		{
 			assertEquals(0, engine.getActiveHandContextIndex());
 			assertEquals(EngineState.RESETTING, engine.getState());
-			handler.getOut().println("The dealer is shuffling...");
+			handler.getOut().println("The dealer is initializing a new betting round...");
 		}
 
 		@Override

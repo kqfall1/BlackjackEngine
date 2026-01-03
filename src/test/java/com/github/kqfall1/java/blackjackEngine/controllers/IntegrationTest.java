@@ -1,6 +1,5 @@
-package com.github.kqfall1.java.blackjackEngine;
+package com.github.kqfall1.java.blackjackEngine.controllers;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,12 +31,7 @@ final class IntegrationTest extends EngineTest
 			if (super.engine.getState() == EngineState.PLAYER_TURN)
 			{
 				super.engine.playerHit();
-
-				if (super.engine.getState() == EngineState.PLAYER_TURN)
-				{
-					super.engine.playerStand();
-				}
-
+				super.engine.playerStand();
 				super.engine.advanceAfterPlayerTurn();
 			}
 

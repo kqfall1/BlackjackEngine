@@ -66,12 +66,7 @@ final class PredicateTest extends CustomDeckTest
 			{
 				super.engine.playerHit();
 				verifyStandardAssumptions();
-
-				if (super.engine.getState() == EngineState.PLAYER_TURN)
-				{
-					super.engine.playerStand();
-				}
-
+				super.engine.playerStand();
 				super.engine.advanceAfterPlayerTurn();
 			}
 

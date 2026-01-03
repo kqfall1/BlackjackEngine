@@ -173,9 +173,9 @@ public final class StandardRuleConfig
 	}
 
 	public void setDealerHitsOnSoft17(boolean value)
-{
-dealerHitsOnSoft17 = value;
-}
+	{
+		dealerHitsOnSoft17 = value;
+	}
 
 
 	public void setDoublingDownOnSplitHandsAllowed(boolean value)
