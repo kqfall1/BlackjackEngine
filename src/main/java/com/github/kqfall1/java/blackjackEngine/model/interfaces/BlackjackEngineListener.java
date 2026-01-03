@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * @author kqfall1
  * @since 14/12/2025
  */
-public interface EngineListener
+public interface BlackjackEngineListener
 {
 	void onBetPlaced(HandContext handContext);
 	void onBettingRoundCompleted();

@@ -17,7 +17,7 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationExc
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.utils.LoggerUtils;
 import com.github.kqfall1.java.utils.StringUtils;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  *
  * <p>
  * Centralizes all core logic that influences gameplay as a public API, emits all internal
- * events through {@code EngineListener} hooks, and logs pertinent information.
+ * events through {@code BlackjackEngineListener} hooks, and logs pertinent information.
  * </p>
  *
  * @author kqfall1
@@ -53,13 +53,13 @@ public class BlackjackEngine
 	public static final String CLASS_NAME = "BlackjackEngine";
 	private final StandardRuleConfig config;
 	private final Dealer dealer;
-	private final EngineListener listener;
+	private final BlackjackEngineListener listener;
 	private final Logger logger;
 	private final Player player;
 	private static final String RULE_VIOLATION_MESSAGE = "A blackjack rule was violated.";
 	private EngineState state;
 
-	public BlackjackEngine(StandardRuleConfig config, EngineListener listener,
+	public BlackjackEngine(StandardRuleConfig config, BlackjackEngineListener listener,
 						   String loggerFilePath, String loggerName)
 	throws InsufficientChipsException, IOException
 	{
@@ -410,7 +410,7 @@ public class BlackjackEngine
 		return dealer;
 	}
 
-	public EngineListener getListener()
+	public BlackjackEngineListener getListener()
 	{
 		return listener;
 	}

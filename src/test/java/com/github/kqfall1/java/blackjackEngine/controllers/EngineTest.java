@@ -6,7 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -101,7 +101,7 @@ public abstract class EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public abstract void main() throws Exception;
 
-	final EngineListener LISTENER = new EngineListener()
+	final BlackjackEngineListener LISTENER = new BlackjackEngineListener()
 	{
 		@Override
 		public void onBetPlaced(HandContext handContext)

@@ -6,7 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.EngineListener;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.managers.InputManager;
@@ -20,14 +20,14 @@ import java.util.logging.Level;
  * {@code Player} I/O synchronously.
  *
  * <p>
- * Also implements {@code EngineListener} to define app-related logic to execute
+ * Also implements {@code BlackjackEngineListener} to define app-related logic to execute
  * when internal {@code BlackjackEngine} events occur.
  * </p>
  *
  * @author kqfall1
  * @since 15/12/2025
  */
-public final class ConsoleBlackjackController implements EngineListener
+public final class ConsoleBlackjackController implements BlackjackEngineListener
 {
 	private final BlackjackEngine engine;
 	private final ConsoleHandler handler;
