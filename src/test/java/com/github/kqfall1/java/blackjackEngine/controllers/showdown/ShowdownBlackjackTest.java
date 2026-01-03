@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,18 +37,18 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 		if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT)
 		{
 			assertEquals(
-				StandardRuleConfig.TOP_SCORE,
+				BlackjackConstants.DEFAULT_TOP_SCORE,
 				super.engine.getDealer().getHand().getScore()
 			);
 			assertTrue(
 				super.engine.getActiveHandContext().getHand().getScore()
-					< StandardRuleConfig.TOP_SCORE
+					< BlackjackConstants.DEFAULT_TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
 					CHIP_AMOUNT_AFTER_BETTING,
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}
@@ -56,22 +56,22 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 			< SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT + SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT)
 		{
 			assertEquals(
-				StandardRuleConfig.TOP_SCORE,
+				BlackjackConstants.DEFAULT_TOP_SCORE,
 				super.engine.getActiveHandContext().getHand().getScore()
 			);
 			assertTrue(
 				super.engine.getDealer().getHand().getScore()
-					< StandardRuleConfig.TOP_SCORE
+					< BlackjackConstants.DEFAULT_TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
 					CHIP_AMOUNT_AFTER_BETTING.add(
 						POT_AMOUNT.multiply(
-							StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+							BlackjackConstants.INSURANCE.getPayoutMultiplier()
 						)
 					),
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}
@@ -81,13 +81,13 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				super.engine.getActiveHandContext().getHand().getScore()
 					== super.engine.getDealer().getHand().getScore()
 				&& super.engine.getDealer().getHand().getScore()
-					== StandardRuleConfig.TOP_SCORE
+					== BlackjackConstants.DEFAULT_TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
 					INITIAL_CHIP_AMOUNT,
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}

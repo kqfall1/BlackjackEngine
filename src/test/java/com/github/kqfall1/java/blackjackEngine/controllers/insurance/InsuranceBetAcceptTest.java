@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -45,7 +45,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 		if (super.engine.getDealer().getHand().isBlackjack())
 		{
 			winnings = HALF_OF_ACTIVE_BET.multiply(
-				StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+				BlackjackConstants.INSURANCE.getPayoutMultiplier()
 			);
 			Assertions.assertTrue(
 				nearlyEquals(
@@ -54,7 +54,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 						.add(winnings)
 						.stripTrailingZeros(),
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}
@@ -66,7 +66,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 						.subtract(HALF_OF_ACTIVE_BET)
 						.stripTrailingZeros(),
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}

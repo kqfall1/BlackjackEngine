@@ -4,7 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,28 +34,28 @@ final class BettingSubsystemTest
 			EngineTest.nearlyEquals(
 				initialBetAmount,
 				bet1.getAmount(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 		assertTrue(
 			EngineTest.nearlyEquals(
 				initialBetAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128),
 				bet1.getHalf(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 		assertTrue(
 			EngineTest.nearlyEquals(
 				bet1.getAmount(),
 				bet2.getAmount(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 		assertTrue(
 			EngineTest.nearlyEquals(
 				bet1.getHalf(),
 				bet2.getHalf(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 		assertEquals(bet1.toString(), bet2.toString());
@@ -103,48 +103,48 @@ final class BettingSubsystemTest
 	private void payoutRatioTest()
 	{
 		assertEquals(
-			StandardRuleConfig.BLACKJACK,
+			BlackjackConstants.BLACKJACK,
 			new PayoutRatio(BigDecimal.valueOf(3), BigDecimal.TWO)
 		);
-		Assertions.assertNotEquals(StandardRuleConfig.BLACKJACK, StandardRuleConfig.SURRENDER);
-		assertEquals(BigDecimal.valueOf(3), StandardRuleConfig.BLACKJACK.getNumerator());
-		assertEquals(BigDecimal.TWO, StandardRuleConfig.BLACKJACK.getDenominator());
+		Assertions.assertNotEquals(BlackjackConstants.BLACKJACK, BlackjackConstants.SURRENDER);
+		assertEquals(BigDecimal.valueOf(3), BlackjackConstants.BLACKJACK.getNumerator());
+		assertEquals(BigDecimal.TWO, BlackjackConstants.BLACKJACK.getDenominator());
 		assertEquals(
-			StandardRuleConfig.BLACKJACK.getNumerator().divide(
-				StandardRuleConfig.BLACKJACK.getDenominator(),
+			BlackjackConstants.BLACKJACK.getNumerator().divide(
+				BlackjackConstants.BLACKJACK.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			StandardRuleConfig.BLACKJACK.getPayoutMultiplier()
+			BlackjackConstants.BLACKJACK.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.TWO, StandardRuleConfig.INSURANCE.getNumerator());
-		assertEquals(BigDecimal.ONE, StandardRuleConfig.INSURANCE.getDenominator());
+		assertEquals(BigDecimal.TWO,	BlackjackConstants.INSURANCE.getNumerator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.INSURANCE.getDenominator());
 		assertEquals(
-			StandardRuleConfig.INSURANCE.getNumerator().divide(
-				StandardRuleConfig.INSURANCE.getDenominator(),
+			BlackjackConstants.INSURANCE.getNumerator().divide(
+				BlackjackConstants.INSURANCE.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+			BlackjackConstants.INSURANCE.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.ONE, StandardRuleConfig.PUSH.getNumerator());
-		assertEquals(BigDecimal.TWO, StandardRuleConfig.PUSH.getDenominator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.PUSH.getNumerator());
+		assertEquals(BigDecimal.TWO, BlackjackConstants.PUSH.getDenominator());
 		assertEquals(
-			StandardRuleConfig.PUSH.getNumerator().divide(
-				StandardRuleConfig.PUSH.getDenominator(),
+			BlackjackConstants.PUSH.getNumerator().divide(
+				BlackjackConstants.PUSH.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			StandardRuleConfig.PUSH.getPayoutMultiplier()
+			BlackjackConstants.PUSH.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.ONE, StandardRuleConfig.SURRENDER.getNumerator());
-		assertEquals(BigDecimal.valueOf(4), StandardRuleConfig.SURRENDER.getDenominator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.SURRENDER.getNumerator());
+		assertEquals(BigDecimal.valueOf(4), BlackjackConstants.SURRENDER.getDenominator());
 		assertEquals(
-			StandardRuleConfig.SURRENDER.getNumerator().divide(
-				StandardRuleConfig.SURRENDER.getDenominator(),
+			BlackjackConstants.SURRENDER.getNumerator().divide(
+				BlackjackConstants.SURRENDER.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			StandardRuleConfig.SURRENDER.getPayoutMultiplier()
+			BlackjackConstants.SURRENDER.getPayoutMultiplier()
 		);
 	}
 
@@ -156,7 +156,7 @@ final class BettingSubsystemTest
 			EngineTest.nearlyEquals(
 				initialPotAmount,
 				pot2.getAmount(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 		pot1.addChips(bet1.getAmount());

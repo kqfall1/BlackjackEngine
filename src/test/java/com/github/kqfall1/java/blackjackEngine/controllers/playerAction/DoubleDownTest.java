@@ -1,8 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -44,11 +44,12 @@ final class DoubleDownTest extends EngineTest
 						.multiply(BigDecimal.valueOf(4))
 						.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
-				super.engine.getActiveHandContext().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT + 1
+				super.engine.getActiveHandContext().getHand().getCards().size()
+					== BlackjackConstants.INITIAL_CARD_COUNT + 1
 				&& super.engine.getActiveHandContext().isAltered()
 			);
 

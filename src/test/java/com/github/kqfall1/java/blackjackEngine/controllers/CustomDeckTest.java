@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public abstract class CustomDeckTest extends EngineTest
 
 		while (testHand.isBlackjack())
 		{
-			testHand.removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
+			testHand.removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
 			testHand.addCards(randomCards.draw());
 		}
 
@@ -330,7 +330,7 @@ public abstract class CustomDeckTest extends EngineTest
 						super.engine.getActiveHandContext().getBet().getAmount()
 					),
 					super.engine.getPlayer().getChips(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 			Assertions.assertFalse(super.engine.getPlayer().getContexts().get(

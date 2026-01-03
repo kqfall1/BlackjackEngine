@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -41,7 +41,7 @@ final class ShowdownPlayerBustTest extends CustomDeckTest
 			nearlyEquals(
 				chipAmountAfterBetting,
 				super.engine.getPlayer().getChips(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
 

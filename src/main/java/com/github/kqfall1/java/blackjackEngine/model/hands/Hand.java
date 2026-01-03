@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.hands;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import java.util.*;
@@ -89,7 +89,7 @@ public final class Hand
 				case EIGHT -> 8;
 				case NINE -> 9;
 				case TEN, JACK, QUEEN, KING -> 10;
-				case ACE -> StandardRuleConfig.ACE_LOW_VALUE;
+				case ACE -> BlackjackConstants.ACE_LOW_VALUE;
 			};
 		}
 
@@ -102,10 +102,10 @@ public final class Hand
 
 		for (int count = 0; count < getAceCount(); count++)
 		{
-			if (score + StandardRuleConfig.ACE_VALUE_DIFFERENTIAL
-				<= StandardRuleConfig.TOP_SCORE)
+			if (score + BlackjackConstants.ACE_VALUE_DIFFERENTIAL
+				<= BlackjackConstants.DEFAULT_TOP_SCORE)
 			{
-				score += StandardRuleConfig.ACE_VALUE_DIFFERENTIAL;
+				score += BlackjackConstants.ACE_VALUE_DIFFERENTIAL;
 			}
 			else
 			{
@@ -124,18 +124,18 @@ public final class Hand
 
 	public boolean isBlackjack()
 	{
-		return getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
-			&& getScore() == StandardRuleConfig.TOP_SCORE;
+		return getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
+			&& getScore() == BlackjackConstants.DEFAULT_TOP_SCORE;
 	}
 
 	public boolean isBusted()
 	{
-		return getScore() > StandardRuleConfig.TOP_SCORE;
+		return getScore() > BlackjackConstants.DEFAULT_TOP_SCORE;
 	}
 
 	public boolean isPocketPair()
 	{
-		if (getCards().size() != StandardRuleConfig.INITIAL_CARD_COUNT)
+		if (getCards().size() != BlackjackConstants.INITIAL_CARD_COUNT)
 		{
 			return false;
 		}

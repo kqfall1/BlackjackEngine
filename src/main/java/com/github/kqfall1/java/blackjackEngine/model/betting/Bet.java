@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.betting;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
-
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -22,7 +21,7 @@ public final class Bet
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 :
 			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		this.amount = amount.setScale(
-			StandardRuleConfig.CHIP_SCALE,
+			BlackjackConstants.DEFAULT_CHIP_SCALE,
 			RoundingMode.HALF_DOWN
 		).stripTrailingZeros();
 	}

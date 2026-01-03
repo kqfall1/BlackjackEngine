@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,19 +55,19 @@ public final class CardSubsystemTest
 		assertEquals(Rank.ACE, ACE_OF_CLUBS_1.getRank());
 		assertEquals(Suit.CLUB, ACE_OF_CLUBS_1.getSuit());
 
-		assertEquals(StandardRuleConfig.FULL_DECK_CARD_COUNT, deck1.getCards().size());
+		assertEquals(BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT, deck1.getCards().size());
 		assertEquals(ACE_OF_CLUBS_1, testDeck.draw());
 		assertEquals(TWO_OF_DIAMONDS, testDeck.draw());
 		assertTrue(!testDeck.getCards().contains(ACE_OF_CLUBS_1)
 			&&  !testDeck.getCards().contains(TWO_OF_DIAMONDS));
 
-		for (int count = 0; count < StandardRuleConfig.FULL_DECK_CARD_COUNT + 1; count++)
+		for (int count = 0; count < BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT + 1; count++)
 		{
 			try
 			{
 				final var card = deck1.draw();
 				assertEquals(
-				StandardRuleConfig.FULL_DECK_CARD_COUNT - count - 1,
+				BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT - count - 1,
 					deck1.getCards().size()
 				);
 				Assertions.assertFalse(deck1.getCards().contains(card));
@@ -76,7 +76,7 @@ public final class CardSubsystemTest
 			}
 			catch (NoMoreCardsException e)
 			{
-				assertEquals(StandardRuleConfig.FULL_DECK_CARD_COUNT, count);
+				assertEquals(BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT, count);
 			}
 		}
 	}
@@ -97,13 +97,13 @@ public final class CardSubsystemTest
 			shoe2.getCutoffPercentageNumerator()
 		);
 		assertEquals(
-			StandardRuleConfig.FULL_DECK_CARD_COUNT * SHOE_DECK_AMOUNT,
+			BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT * SHOE_DECK_AMOUNT,
 			shoe1.getCards().size()
 		);
 		assertEquals(SHOE_DECK_AMOUNT, shoe1.getNumberOfDecks());
 		assertEquals(shoe1.getNumberOfDecks(), shoe2.getNumberOfDecks());
 
-		final var CARD_COUNT = StandardRuleConfig.FULL_DECK_CARD_COUNT * SHOE_DECK_AMOUNT;
+		final var CARD_COUNT = BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT * SHOE_DECK_AMOUNT;
 		assertEquals(CARD_COUNT, shoe1.getCards().size());
 
 		for (int count = 0; count < CARD_COUNT + 1; count++)

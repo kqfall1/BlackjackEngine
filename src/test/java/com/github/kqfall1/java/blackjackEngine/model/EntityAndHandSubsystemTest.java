@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
@@ -110,7 +110,7 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertTrue(pocketPair.isPocketPair());
 
 		final var bustHand = new Hand();
-		while (bustHand.getScore() <= StandardRuleConfig.TOP_SCORE)
+		while (bustHand.getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE)
 		{
 			bustHand.addCards(shoe.draw());
 		}

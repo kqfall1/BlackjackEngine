@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.math.BigDecimal;
@@ -65,7 +65,7 @@ public final class Player
 
 		this.chips = chips
 			.stripTrailingZeros()
-			.setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+			.setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 	}
 
 	@Override

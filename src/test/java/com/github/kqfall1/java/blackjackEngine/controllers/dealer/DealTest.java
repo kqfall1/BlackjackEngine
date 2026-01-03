@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers.dealer;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,12 +34,12 @@ final class DealTest extends EngineTest
 			&& super.engine.getActiveHandContext().getHand() != null
 		);
 		assertTrue(
-			super.engine.getDealer().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
-			&& super.engine.getActiveHandContext().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
+			super.engine.getDealer().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
+			&& super.engine.getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 		);
 		assertTrue(
-			super.engine.getDealer().getHand().getScore() <= StandardRuleConfig.TOP_SCORE
-			&& super.engine.getActiveHandContext().getHand().getScore() <= StandardRuleConfig.TOP_SCORE
+			super.engine.getDealer().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE
+			&& super.engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE
 		);
 
 		super.engine.advanceAfterDeal();

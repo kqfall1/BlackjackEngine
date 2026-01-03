@@ -2,8 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
+import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
@@ -121,7 +120,7 @@ public abstract class EngineTest
 				handContext.getBet().getAmount()
 					.multiply(BigDecimal.TWO),
 				handContext.getPot().getAmount(),
-				StandardRuleConfig.CHIP_SCALE
+				BlackjackConstants.DEFAULT_CHIP_SCALE
 			));
 			handler.getOut().printf(
 				"You placed a bet of $%.2f.\n",
@@ -171,7 +170,7 @@ public abstract class EngineTest
 				|| engine.getState() == EngineState.PLAYER_TURN
 			);
 
-			if (handContext.getHand().getCards().size() > StandardRuleConfig.INITIAL_CARD_COUNT)
+			if (handContext.getHand().getCards().size() > BlackjackConstants.INITIAL_CARD_COUNT)
 			{
 				assertTrue(handContext.isAltered());
 			}

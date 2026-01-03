@@ -1,10 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.EngineTest;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -46,14 +45,14 @@ public final class PlaceBetTest extends EngineTest
 				nearlyEquals(
 					BET_AMOUNT.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getBet().getAmount(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
 				nearlyEquals(
 					BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),
-					StandardRuleConfig.CHIP_SCALE
+					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}

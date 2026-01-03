@@ -6,6 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
@@ -100,7 +101,7 @@ public class BlackjackEngine
 					getActiveHandContext(),
 					String.format(
 						"Player cannot place an insurance side bet with a hand with more than %d cards.",
-						StandardRuleConfig.INITIAL_CARD_COUNT
+						BlackjackConstants.INITIAL_CARD_COUNT
 					)
 				), METHOD_NAME);
 			}
@@ -111,7 +112,7 @@ public class BlackjackEngine
 					"Player cannot place an insurance side bet when the dealer's up card isn't an ace."
 				), METHOD_NAME);
 			}
-			else if (getPlayer().getContexts().size() != StandardRuleConfig.INITIAL_HAND_COUNT)
+			else if (getPlayer().getContexts().size() != BlackjackConstants.INITIAL_HAND_COUNT)
 			{
 				throwException(new IllegalHandOperationException(
 					getActiveHandContext(),
@@ -137,7 +138,7 @@ public class BlackjackEngine
 		{
 			getPlayer().setChips(getPlayer().getChips().add(
 				insurancePot.scoop().multiply(
-					StandardRuleConfig.INSURANCE.getPayoutMultiplier()
+					BlackjackConstants.INSURANCE.getPayoutMultiplier()
 				)
 			));
 		}
@@ -275,19 +276,19 @@ public class BlackjackEngine
 		assert dealerHand.getCards().isEmpty() : "!dealerHand.getCards().isEmpty()";
 		assert getActiveHandContext().getHand().getCards().isEmpty()
 			: "!getActiveHandContext().getHand().getCards().isEmpty()";
-		for (int count = 0; count < StandardRuleConfig.INITIAL_CARD_COUNT; count++)
+		for (int count = 0; count < BlackjackConstants.INITIAL_CARD_COUNT; count++)
 		{
 			dealCardForPlayer();
 			dealCardForDealer();
 		}
-		assert getActiveHandContext().getHand().getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
+		assert getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 			: "getActiveHandContext().getHand().getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
-		assert dealerHand.getCards().size() == StandardRuleConfig.INITIAL_CARD_COUNT
+		assert dealerHand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 			: "dealerHand.getCards().size() != RuleConfig.INITIAL_CARD_COUNT";
 		getLogger().info(String.format(
 			"The cards have been dealt. Player's hand: %s. The dealer's up card is %s.",
 			getActiveHandContext(),
-			dealerHand.getCards().get(StandardRuleConfig.INITIAL_CARD_COUNT - 1)
+			dealerHand.getCards().get(BlackjackConstants.INITIAL_CARD_COUNT - 1)
 		));
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -453,7 +454,7 @@ public class BlackjackEngine
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
 		final var isFaceUpCard = getDealer().getHand().getCards().size()
-			< StandardRuleConfig.INITIAL_CARD_COUNT;
+			< BlackjackConstants.INITIAL_CARD_COUNT;
 		getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
 		getLogger().info(String.format(
 			"Added card %s to dealer's hand %s.",
@@ -470,7 +471,7 @@ public class BlackjackEngine
 		assert getState() == EngineState.DEALING || getState() == EngineState.PLAYER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.PLAYER_TURN";
 		if (getState() == EngineState.PLAYER_TURN
-			&& getActiveHandContext().getHand().getCards().size() > StandardRuleConfig.INITIAL_CARD_COUNT)
+			&& getActiveHandContext().getHand().getCards().size() > BlackjackConstants.INITIAL_CARD_COUNT)
 		{
 			getActiveHandContext().markAsAltered();
 		}
@@ -669,7 +670,7 @@ public class BlackjackEngine
 		);
 		playerSplitHand.getHand().addCards(playerPreviousHand.getHand().getCards().getLast());
 		getPlayer().addContext(playerSplitHand);
-		playerPreviousHand.getHand().removeCard(StandardRuleConfig.INITIAL_CARD_COUNT - 1);
+		playerPreviousHand.getHand().removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
 		playerPreviousHand.getHand().addCards(getDealer().hit());
 		playerSplitHand.getHand().addCards(getDealer().hit());
 		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
@@ -708,7 +709,7 @@ public class BlackjackEngine
 					getActiveHandContext(),
 					String.format(
 						"Player cannot surrender on a hand with more than %d cards",
-						StandardRuleConfig.INITIAL_CARD_COUNT
+						BlackjackConstants.INITIAL_CARD_COUNT
 					)
 				), METHOD_NAME);
 			}
@@ -735,7 +736,7 @@ public class BlackjackEngine
 			getDealer().setCardSource(
 				new Shoe(
 					getConfig().getShoeCutoffPercentageNumerator(),
-					StandardRuleConfig.DEFAULT_SHOE_DECK_COUNT
+					BlackjackConstants.DEFAULT_SHOE_DECK_COUNT
 				)
 			);
 		}
@@ -780,8 +781,8 @@ public class BlackjackEngine
 			if (handContext.hasSurrendered())
 			{
 				playerWinnings = handContext.getPot().scoop().multiply(
-					StandardRuleConfig.SURRENDER.getPayoutMultiplier()
-				).setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+					BlackjackConstants.SURRENDER.getPayoutMultiplier()
+				).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 			}
 			else if (handContext.getHand().isBusted())
 			{
@@ -791,15 +792,15 @@ public class BlackjackEngine
 			{
 				playerBeatDealer = true;
 				playerWinnings = handContext.getPot().scoop()
-					.setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+					.setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 			}
 			else
 			{
 				if (handContext.getHand().getScore() == getDealer().getHand().getScore())
 				{
 					playerWinnings = handContext.getPot().scoop().multiply(
-						StandardRuleConfig.PUSH.getPayoutMultiplier()
-					).setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+						BlackjackConstants.PUSH.getPayoutMultiplier()
+					).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 				}
 				else if (handContext.getHand().getScore() > getDealer().getHand().getScore())
 				{
@@ -808,13 +809,13 @@ public class BlackjackEngine
 					if (handContext.getHand().isBlackjack())
 					{
 						playerWinnings = handContext.getPot().scoop().multiply(
-							StandardRuleConfig.BLACKJACK.getPayoutMultiplier()
-						).setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+							BlackjackConstants.BLACKJACK.getPayoutMultiplier()
+						).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 					}
 					else
 					{
 						playerWinnings = handContext.getPot().scoop()
-							.setScale(StandardRuleConfig.CHIP_SCALE, RoundingMode.HALF_DOWN);
+							.setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 					}
 				}
 			}
