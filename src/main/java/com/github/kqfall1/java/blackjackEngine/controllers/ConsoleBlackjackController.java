@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
@@ -73,11 +74,9 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	{
 		final var config = new BlackjackRulesetConfiguration();
 		final var handler = new ConsoleHandler();
-		config.setShouldDealerHitOnSoft17(true);
-		config.setDoublingDownOnSplitHandsAllowed(true);
-		config.setSurrenderingOnSplitHandsAllowed(true);
+		config.setLoggingEnabled(true);
+		config.setSurrenderingAllowed(true);
 		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
-		//SET MORE PARAMETERS HERE
 		final var ruleset = new StandardBlackjackRuleset(config);
 		final var controller = new ConsoleBlackjackController(
 			handler,
@@ -101,7 +100,10 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			getEngine().deal();
 		}
-		catch (InsufficientChipsException ignored) {}
+		catch (InsufficientChipsException e)
+		{
+			getHandler().showException(e);
+		}
 	}
 
 	@Override
@@ -121,10 +123,32 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	{
 		if (isFaceUp)
 		{
-			getHandler().getOut().printf(
-				"The dealer was dealt the %s.\n",
-				card.toStringPretty()
-			);
+			if (dealerHand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT - 1)
+			{
+				getHandler().getOut().printf(
+					"The dealer is showing a %s.\n",
+					card.toStringPretty()
+				);
+			}
+			else
+			{
+				getHandler().getOut().printf(
+					"The dealer was dealt the %s.\n",
+					card.toStringPretty()
+				);
+			}
+		}
+
+		if (dealerHand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT)
+		{
+			try
+			{
+				getEngine().advanceAfterDeal();
+			}
+			catch (InsufficientChipsException e)
+			{
+				getHandler().showException(e);
+			}
 		}
 	}
 
@@ -132,7 +156,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	public void onCardDealtToPlayer(Card card, HandContext handContext)
 	{
 		getHandler().getOut().printf(
-			"You were dealt the %s. Your current hand is now %s.\n",
+			"You were dealt a %s. Your current hand is now %s.\n",
 			card.toStringPretty(),
 			handContext.getHand().toStringPretty()
 		);
@@ -145,6 +169,15 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"The dealer has finished drawing. Their hand is %s.\n",
 			dealerHand.toStringPretty()
 		);
+
+		try
+		{
+			getEngine().advanceAfterDealerTurn();
+		}
+		catch (InsufficientChipsException e)
+		{
+			getHandler().showException(e);
+		}
 	}
 
 	@Override
@@ -154,6 +187,18 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"You have completed a drawing round on hand %s.\n",
 			handContext.getHand().toStringPretty()
 		);
+
+		if (getEngine().getActiveHandContext().equals(handContext))
+		{
+			try
+			{
+				getEngine().advanceAfterPlayerTurn();
+			}
+			catch (InsufficientChipsException e)
+			{
+				getHandler().showException(e);
+			}
+		}
 	}
 
 	@Override
@@ -183,10 +228,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	@Override
 	public void onInsuranceBetOpportunityDetected(Card dealerUpCard)
 	{
-		getHandler().getOut().printf(
-			"The dealer is showing the %s. You are eligible to place an insurance side bet.\n",
-			dealerUpCard.toStringPretty()
-		);
+		getHandler().getOut().println("You are eligible to place an insurance side bet.");
 	}
 
 	@Override
@@ -202,6 +244,15 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		else
 		{
 			getHandler().getOut().println("You have lost your insurance bet.");
+		}
+
+		try
+		{
+			getEngine().advanceAfterInsuranceBet(playerWinnings);
+		}
+		catch (InsufficientChipsException e)
+		{
+			getHandler().showException(e);
 		}
 	}
 
@@ -220,7 +271,8 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	@Override
 	public void onReset()
 	{
-		getHandler().getOut().println("The dealer is shuffling...");
+		getHandler().getOut().println("The dealer is setting up a new betting round.");
+		getEngine().advanceAfterReset();
 	}
 
 	@Override
@@ -256,6 +308,8 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				completedString
 			);
 		}
+
+		getEngine().advanceAfterShowdown();
 	}
 
 	@Override
@@ -282,11 +336,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 	private void performAction()
 	{
-		if (getEngine().getState() != EngineState.PLAYER_TURN)
-		{
-			return;
-		}
-
 		final var selection = getInputManager().getStringInputter().getString(
 			String.format(
 				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
@@ -319,11 +368,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 	private void placeHandBet()
 	{
-		if (getEngine().getState() != EngineState.BETTING)
-		{
-			return;
-		}
-
 		final var amount = getInputManager().getNumberInputter().getNumber(
 			String.format(
 				"You have $%.2f. Please place a bet",

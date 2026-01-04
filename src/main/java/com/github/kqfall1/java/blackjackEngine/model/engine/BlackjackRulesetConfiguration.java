@@ -105,6 +105,11 @@ public final class BlackjackRulesetConfiguration
 		this.maximumSplitCount = maximumSplitCount;
 	}
 
+	public void setLoggingEnabled(boolean value)
+	{
+		loggingEnabled = value;
+	}
+
 	public void setMinimumBetAmount(BigDecimal minimumBetAmount)
 	{
 		assert minimumBetAmount.compareTo(BigDecimal.ZERO) > 0;
