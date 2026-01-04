@@ -42,7 +42,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 		super.engine.acceptInsuranceBet();
 
 		var winnings = BigDecimal.ZERO;
-		if (super.engine.getDealer().getHand().isBlackjack())
+		if (super.ruleset.isHandBlackjack(super.engine.getDealer().getHand()))
 		{
 			winnings = HALF_OF_ACTIVE_BET.multiply(
 				BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()

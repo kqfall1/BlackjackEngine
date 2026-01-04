@@ -62,7 +62,7 @@ public abstract class CustomDeckTest extends EngineTest
 		Hand testHand = new Hand();
 		testHand.addCards(randomCards.draw(), randomCards.draw());
 
-		while (testHand.isBlackjack())
+		while (testHand.getScore() == BlackjackConstants.DEFAULT_TOP_SCORE)
 		{
 			testHand.removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
 			testHand.addCards(randomCards.draw());

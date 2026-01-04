@@ -122,17 +122,6 @@ public final class Hand
 		return Objects.hash(getCards());
 	}
 
-	public boolean isBlackjack()
-	{
-		return getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
-			&& getScore() == BlackjackConstants.DEFAULT_TOP_SCORE;
-	}
-
-	public boolean isBusted()
-	{
-		return getScore() > BlackjackConstants.DEFAULT_TOP_SCORE;
-	}
-
 	public boolean isPocketPair()
 	{
 		if (getCards().size() != BlackjackConstants.INITIAL_CARD_COUNT)

@@ -30,7 +30,7 @@ final class HitAndBustTest extends EngineTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			int previousCardCount;
-			while (!super.engine.getActiveHandContext().getHand().isBusted())
+			while (!super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))
 			{
 				previousCardCount = super.engine.getActiveHandContext().getHand().getCards().size();
 				super.engine.playerHit();

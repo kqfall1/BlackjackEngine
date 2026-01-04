@@ -37,7 +37,7 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			while (!super.engine.getActiveHandContext().getHand().isBusted())
+			while (!super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))
 			{
 				super.engine.playerHit();
 			}

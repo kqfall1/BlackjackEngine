@@ -36,7 +36,7 @@ final class SplitAndHitTest extends CustomDeckTest
 			super.initSplitHands();
 
 			while (super.engine.getActiveHandContextIndex() != HandContextType.MAIN.ordinal()
-				&& !super.engine.getActiveHandContext().getHand().isBusted())
+				&& !super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))
 			{
 				super.engine.playerHit();
 			}

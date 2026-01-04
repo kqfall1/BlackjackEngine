@@ -52,7 +52,8 @@ public interface BlackjackRuleset
 
 	default boolean isHandBlackjack(Hand hand)
 	{
-		return hand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT;
+		return hand.getScore() == BlackjackConstants.DEFAULT_TOP_SCORE
+			&& hand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT;
 	}
 
 	default boolean isHandBusted(Hand hand)

@@ -27,7 +27,9 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	public void main() throws Exception
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
-		Assertions.assertTrue(super.engine.getDealer().getHand().isBusted());
+		Assertions.assertTrue(
+			super.ruleset.isHandBusted(super.engine.getDealer().getHand())
+		);
 		super.advanceToEndOfRound();
 	}
 }

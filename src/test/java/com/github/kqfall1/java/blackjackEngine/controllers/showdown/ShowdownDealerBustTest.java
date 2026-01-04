@@ -34,7 +34,9 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 		chipAmountAfterBetting = super.engine.getPlayer().getChips();
 		potAmount = super.engine.getActiveHandContext().getPot().getAmount();
-		Assertions.assertTrue(super.engine.getDealer().getHand().isBusted());
+		Assertions.assertTrue(
+			super.ruleset.isHandBusted(super.engine.getDealer().getHand())
+		);
 		super.engine.advanceAfterDealerTurn();
 		super.engine.advanceAfterShowdown();
 

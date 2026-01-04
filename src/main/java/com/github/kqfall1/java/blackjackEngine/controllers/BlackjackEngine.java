@@ -128,7 +128,7 @@ public class BlackjackEngine
 		final var amount = getActiveHandContext().getBet().getHalf();
 		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
-		if (getDealer().getHand().isBlackjack())
+		if (ruleset.isHandBlackjack(getDealer().getHand()))
 		{
 			getPlayer().setChips(getPlayer().getChips().add(
 				insurancePot.scoop().multiply(
@@ -151,8 +151,8 @@ public class BlackjackEngine
 			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getFirst());
 			setState(EngineState.INSURANCE_CHECK);
 		}
-		else if (getActiveHandContext().getHand().isBlackjack()
-			|| getDealer().getHand().isBlackjack())
+		else if (ruleset.isHandBlackjack(getActiveHandContext().getHand())
+			|| ruleset.isHandBlackjack(getDealer().getHand()))
 		{
 			setState(EngineState.SHOWDOWN);
 			showdown();
@@ -182,7 +182,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal() ";
 		assert getState() == EngineState.INSURANCE_CHECK : "getState() != EngineState.INSURANCE_CHECK";
-		if (getDealer().getHand().isBlackjack())
+		if (ruleset.isHandBlackjack(getDealer().getHand()))
 		{
 
 			getListener().onInsuranceBetResolved(true, winnings);
@@ -204,7 +204,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		if (getActiveHandContext().getHand().isBusted())
+		if (ruleset.isHandBusted(getActiveHandContext().getHand()))
 		{
 			getLogger().info(String.format(
 				"Player has busted with a score of %d on hand %s.",
@@ -349,8 +349,8 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == EngineState.INSURANCE_CHECK
 			: "getState() != EngineState.INSURANCE_CHECK";
-		if (getDealer().getHand().isBlackjack()
-			|| getActiveHandContext().getHand().isBlackjack())
+		if (ruleset.isHandBlackjack(getDealer().getHand())
+			|| ruleset.isHandBlackjack(getActiveHandContext().getHand()))
 		{
 			setState(EngineState.SHOWDOWN);
 			showdown();
@@ -369,7 +369,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
 		dealCardForPlayer();
-		if (getActiveHandContext().getHand().isBusted())
+		if (ruleset.isHandBusted(getActiveHandContext().getHand()))
 		{
 			onDrawingRoundCompletedPlayer();
 		}
@@ -605,7 +605,7 @@ public class BlackjackEngine
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
 		drawCardForPlayerAction();
 		if (getState() == EngineState.PLAYER_TURN
-			&& !getActiveHandContext().getHand().isBusted())
+			&& !ruleset.isHandBusted(getActiveHandContext().getHand()))
 		{
 			setState(EngineState.PLAYER_TURN);
 		}
@@ -773,11 +773,11 @@ public class BlackjackEngine
 					BlackjackConstants.SURRENDER_RATIO.getPayoutMultiplier()
 				).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 			}
-			else if (handContext.getHand().isBusted())
+			else if (ruleset.isHandBusted(handContext.getHand()))
 			{
 				handContext.getPot().scoop();
 			}
-			else if (getDealer().getHand().isBusted())
+			else if (ruleset.isHandBusted(getDealer().getHand()))
 			{
 				playerBeatDealer = true;
 				playerWinnings = handContext.getPot().scoop()
@@ -795,7 +795,7 @@ public class BlackjackEngine
 				{
 					playerBeatDealer = true;
 
-					if (handContext.getHand().isBlackjack())
+					if (ruleset.isHandBlackjack(handContext.getHand()))
 					{
 						playerWinnings = handContext.getPot().scoop().multiply(
 							BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
