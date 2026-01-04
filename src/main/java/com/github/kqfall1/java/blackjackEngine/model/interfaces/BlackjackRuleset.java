@@ -28,7 +28,7 @@ public interface BlackjackRuleset
 		return Rank.values();
 	}
 
-	default HandContext[] getHandContextShowdownOrder(Player player)
+	default HandContext[] getHandContextsInShowdownOrder(Player player)
 	{
 		return player.getContexts().toArray(new HandContext[0]);
 	}
@@ -38,9 +38,9 @@ public interface BlackjackRuleset
 		Map<String, PayoutRatio> payoutRatios = new HashMap<>();
 
 		payoutRatios.put(BlackjackConstants.BLACKJACK_RATIO_KEY, BlackjackConstants.BLACKJACK_RATIO);
-		payoutRatios.put(BlackjackConstants.INSURANCE_RATIO_LABEL, BlackjackConstants.INSURANCE_RATIO);
-		payoutRatios.put(BlackjackConstants.PUSH_RATIO_LABEL, BlackjackConstants.PUSH_RATIO);
-		payoutRatios.put(BlackjackConstants.SURRENDER_RATIO_LABEL, BlackjackConstants.SURRENDER_RATIO);
+		payoutRatios.put(BlackjackConstants.INSURANCE_RATIO_KEY, BlackjackConstants.INSURANCE_RATIO);
+		payoutRatios.put(BlackjackConstants.PUSH_RATIO_KEY, BlackjackConstants.PUSH_RATIO);
+		payoutRatios.put(BlackjackConstants.SURRENDER_RATIO_KEY, BlackjackConstants.SURRENDER_RATIO);
 
 		return payoutRatios;
 	}

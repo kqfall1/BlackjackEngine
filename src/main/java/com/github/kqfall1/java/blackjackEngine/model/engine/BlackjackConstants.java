@@ -34,17 +34,17 @@ public final class BlackjackConstants
 		BigDecimal.TWO,
 		BigDecimal.ONE
 	);
-	public static final String INSURANCE_RATIO_LABEL = "Insurance Payout Ratio";
+	public static final String INSURANCE_RATIO_KEY = "Insurance Payout Ratio";
 	public static final PayoutRatio PUSH_RATIO = new PayoutRatio(
 		BigDecimal.ONE,
 		BigDecimal.TWO
 	);
-	public static final String PUSH_RATIO_LABEL = "Push Payout Ratio";
+	public static final String PUSH_RATIO_KEY = "Push Payout Ratio";
 	public static final PayoutRatio SURRENDER_RATIO = new PayoutRatio(
 		BigDecimal.ONE,
 		BigDecimal.valueOf(4)
 	);
-	public static final String SURRENDER_RATIO_LABEL = "Surrender Payout Ratio";
+	public static final String SURRENDER_RATIO_KEY = "Surrender Payout Ratio";
 
 	private BlackjackConstants() {}
 }
