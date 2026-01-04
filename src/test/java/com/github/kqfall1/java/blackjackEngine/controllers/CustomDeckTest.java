@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.model.engine;
+package com.github.kqfall1.java.blackjackEngine.model.enums;
 
 /**
  * The 9 states of a blackjack game.

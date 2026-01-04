@@ -1,12 +1,13 @@
 package com.github.kqfall1.java.blackjackEngine.model.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.managers.InputManager;
 import java.math.BigDecimal;
 

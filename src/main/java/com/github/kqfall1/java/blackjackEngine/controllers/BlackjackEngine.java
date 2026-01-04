@@ -4,10 +4,10 @@ import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
@@ -15,7 +15,7 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChip
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.utils.LoggerUtils;
@@ -138,7 +138,7 @@ public class BlackjackEngine
 		{
 			getPlayer().setChips(getPlayer().getChips().add(
 				insurancePot.scoop().multiply(
-					BlackjackConstants.INSURANCE.getPayoutMultiplier()
+					BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()
 				)
 			));
 		}
@@ -781,7 +781,7 @@ public class BlackjackEngine
 			if (handContext.hasSurrendered())
 			{
 				playerWinnings = handContext.getPot().scoop().multiply(
-					BlackjackConstants.SURRENDER.getPayoutMultiplier()
+					BlackjackConstants.SURRENDER_RATIO.getPayoutMultiplier()
 				).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 			}
 			else if (handContext.getHand().isBusted())
@@ -799,7 +799,7 @@ public class BlackjackEngine
 				if (handContext.getHand().getScore() == getDealer().getHand().getScore())
 				{
 					playerWinnings = handContext.getPot().scoop().multiply(
-						BlackjackConstants.PUSH.getPayoutMultiplier()
+						BlackjackConstants.PUSH_RATIO.getPayoutMultiplier()
 					).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 				}
 				else if (handContext.getHand().getScore() > getDealer().getHand().getScore())
@@ -809,7 +809,7 @@ public class BlackjackEngine
 					if (handContext.getHand().isBlackjack())
 					{
 						playerWinnings = handContext.getPot().scoop().multiply(
-							BlackjackConstants.BLACKJACK.getPayoutMultiplier()
+							BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
 						).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 					}
 					else

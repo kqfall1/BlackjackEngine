@@ -103,48 +103,48 @@ final class BettingSubsystemTest
 	private void payoutRatioTest()
 	{
 		assertEquals(
-			BlackjackConstants.BLACKJACK,
+			BlackjackConstants.BLACKJACK_RATIO,
 			new PayoutRatio(BigDecimal.valueOf(3), BigDecimal.TWO)
 		);
-		Assertions.assertNotEquals(BlackjackConstants.BLACKJACK, BlackjackConstants.SURRENDER);
-		assertEquals(BigDecimal.valueOf(3), BlackjackConstants.BLACKJACK.getNumerator());
-		assertEquals(BigDecimal.TWO, BlackjackConstants.BLACKJACK.getDenominator());
+		Assertions.assertNotEquals(BlackjackConstants.BLACKJACK_RATIO, BlackjackConstants.SURRENDER_RATIO);
+		assertEquals(BigDecimal.valueOf(3), BlackjackConstants.BLACKJACK_RATIO.getNumerator());
+		assertEquals(BigDecimal.TWO, BlackjackConstants.BLACKJACK_RATIO.getDenominator());
 		assertEquals(
-			BlackjackConstants.BLACKJACK.getNumerator().divide(
-				BlackjackConstants.BLACKJACK.getDenominator(),
+			BlackjackConstants.BLACKJACK_RATIO.getNumerator().divide(
+				BlackjackConstants.BLACKJACK_RATIO.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			BlackjackConstants.BLACKJACK.getPayoutMultiplier()
+			BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.TWO,	BlackjackConstants.INSURANCE.getNumerator());
-		assertEquals(BigDecimal.ONE, BlackjackConstants.INSURANCE.getDenominator());
+		assertEquals(BigDecimal.TWO,	BlackjackConstants.INSURANCE_RATIO.getNumerator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.INSURANCE_RATIO.getDenominator());
 		assertEquals(
-			BlackjackConstants.INSURANCE.getNumerator().divide(
-				BlackjackConstants.INSURANCE.getDenominator(),
+			BlackjackConstants.INSURANCE_RATIO.getNumerator().divide(
+				BlackjackConstants.INSURANCE_RATIO.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			BlackjackConstants.INSURANCE.getPayoutMultiplier()
+			BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.ONE, BlackjackConstants.PUSH.getNumerator());
-		assertEquals(BigDecimal.TWO, BlackjackConstants.PUSH.getDenominator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.PUSH_RATIO.getNumerator());
+		assertEquals(BigDecimal.TWO, BlackjackConstants.PUSH_RATIO.getDenominator());
 		assertEquals(
-			BlackjackConstants.PUSH.getNumerator().divide(
-				BlackjackConstants.PUSH.getDenominator(),
+			BlackjackConstants.PUSH_RATIO.getNumerator().divide(
+				BlackjackConstants.PUSH_RATIO.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			BlackjackConstants.PUSH.getPayoutMultiplier()
+			BlackjackConstants.PUSH_RATIO.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.ONE, BlackjackConstants.SURRENDER.getNumerator());
-		assertEquals(BigDecimal.valueOf(4), BlackjackConstants.SURRENDER.getDenominator());
+		assertEquals(BigDecimal.ONE, BlackjackConstants.SURRENDER_RATIO.getNumerator());
+		assertEquals(BigDecimal.valueOf(4), BlackjackConstants.SURRENDER_RATIO.getDenominator());
 		assertEquals(
-			BlackjackConstants.SURRENDER.getNumerator().divide(
-				BlackjackConstants.SURRENDER.getDenominator(),
+			BlackjackConstants.SURRENDER_RATIO.getNumerator().divide(
+				BlackjackConstants.SURRENDER_RATIO.getDenominator(),
 				MathContext.DECIMAL128
 			),
-			BlackjackConstants.SURRENDER.getPayoutMultiplier()
+			BlackjackConstants.SURRENDER_RATIO.getPayoutMultiplier()
 		);
 	}
 

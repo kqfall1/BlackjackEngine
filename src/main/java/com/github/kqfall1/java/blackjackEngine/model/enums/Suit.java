@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.model.cards;
+package com.github.kqfall1.java.blackjackEngine.model.enums;
 
 /**
  * The 4 suits in a standard deck of playing cards.

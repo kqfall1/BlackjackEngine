@@ -25,22 +25,26 @@ public final class BlackjackConstants
 	public static final int INITIAL_CARD_COUNT = 2;
 	public static final int INITIAL_HAND_COUNT = 1;
 
-	public static final PayoutRatio BLACKJACK = new PayoutRatio(
+	public static final PayoutRatio BLACKJACK_RATIO = new PayoutRatio(
 		BigDecimal.valueOf(3),
 		BigDecimal.TWO
 	);
-	public static final PayoutRatio INSURANCE = new PayoutRatio(
+	public static final String BLACKJACK_RATIO_KEY = "Blackjack Payout Ratio";
+	public static final PayoutRatio INSURANCE_RATIO = new PayoutRatio(
 		BigDecimal.TWO,
 		BigDecimal.ONE
 	);
-	public static final PayoutRatio PUSH = new PayoutRatio(
+	public static final String INSURANCE_RATIO_LABEL = "Insurance Payout Ratio";
+	public static final PayoutRatio PUSH_RATIO = new PayoutRatio(
 		BigDecimal.ONE,
 		BigDecimal.TWO
 	);
-	public static final PayoutRatio SURRENDER = new PayoutRatio(
+	public static final String PUSH_RATIO_LABEL = "Push Payout Ratio";
+	public static final PayoutRatio SURRENDER_RATIO = new PayoutRatio(
 		BigDecimal.ONE,
 		BigDecimal.valueOf(4)
 	);
+	public static final String SURRENDER_RATIO_LABEL = "Surrender Payout Ratio";
 
 	private BlackjackConstants() {}
 }

@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.model.hands;
+package com.github.kqfall1.java.blackjackEngine.model.enums;
 
 /**
  * Identifies whether a {@code HandContext} object's encapsulated {@code Hand}

@@ -67,7 +67,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				nearlyEquals(
 					CHIP_AMOUNT_AFTER_BETTING.add(
 						POT_AMOUNT.multiply(
-							BlackjackConstants.INSURANCE.getPayoutMultiplier()
+							BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()
 						)
 					),
 					super.engine.getPlayer().getChips(),

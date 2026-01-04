@@ -1,5 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.cards;
 
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;

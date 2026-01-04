@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.hands;
 
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import java.util.*;
 
 /**

@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.controllers.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
 import java.math.BigDecimal;

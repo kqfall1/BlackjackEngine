@@ -1,9 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
