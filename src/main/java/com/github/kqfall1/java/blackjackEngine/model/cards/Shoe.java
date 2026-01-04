@@ -1,7 +1,6 @@
-package com.github.kqfall1.java.blackjackEngine.model.betting;
+package com.github.kqfall1.java.blackjackEngine.model.cards;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;
@@ -46,12 +45,12 @@ public class Shoe implements Drawable
  	 */
 	private static final double VARIANCE = 0.05;
 
-	public Shoe(double cutoffPercentageNumerator, int numberOfDecks)
+	public Shoe(double cutoffPercentageNumerator, Rank[] includedRanks, int numberOfDecks)
 	{
 		final List<Card> cardsList = new ArrayList<>();
 		for (int count = 0; count < numberOfDecks; count++)
 		{
-			cardsList.addAll(new Deck().getCards());
+			cardsList.addAll(new Deck(includedRanks).getCards());
 		}
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);

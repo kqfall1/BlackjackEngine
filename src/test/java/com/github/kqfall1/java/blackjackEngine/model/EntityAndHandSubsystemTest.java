@@ -1,9 +1,11 @@
 package com.github.kqfall1.java.blackjackEngine.model;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
-import com.github.kqfall1.java.blackjackEngine.model.betting.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
@@ -50,7 +52,7 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertNotEquals(PREVIOUS_HAND, dealer.getHand());
 		Assertions.assertNotEquals(PREVIOUS_SOURCE, dealer.getCardSource());
 		final int PREVIOUS_DEALER_HAND_SIZE = dealer.getHand().getCards().size();
-		dealer.getHand().addCards(dealer.hit());
+		dealer.getHand().addCards(dealer.getCardSource().draw());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
 	}
 
@@ -124,19 +126,29 @@ public final class EntityAndHandSubsystemTest
 	@BeforeEach
 	void init() throws InsufficientChipsException
 	{
+		final var CONFIG = new BlackjackRulesetConfiguration();
 		final var CUTOFF_PERCENTAGE_NUMERATOR
 			= Math.random() * SHOE_CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
 		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(MINIMUM_NUMBER_OF_DECKS, DECK_RANGE + MINIMUM_NUMBER_OF_DECKS);
+		final var RULESET = new StandardBlackjackRuleset(CONFIG);
 
 		blackjack = randomBlackjack();
-		dealer = new Dealer(CUTOFF_PERCENTAGE_NUMERATOR, NUMBER_OF_DECKS);
+		dealer = new Dealer(
+			CUTOFF_PERCENTAGE_NUMERATOR,
+			RULESET.getIncludedRanks(),
+			NUMBER_OF_DECKS
+		);
 		dealerHand = new Hand();
 		mainContext = new HandContext(BET, HandContextType.MAIN);
 		player1 = new Player();
 		player2 = new Player();
 		mainHand = new Hand();
 		pocketPair = randomPocketPair();
-		shoe = new Shoe(90, 8);
+		shoe = new Shoe(
+			90,
+			RULESET.getIncludedRanks(),
+			8
+		);
 		splitContext = new HandContext(BET, HandContextType.SPLIT);
 	}
 

@@ -23,9 +23,9 @@ public interface BlackjackRuleset
 {
 	BlackjackRulesetConfiguration getConfig();
 
-	default Rank[] getExcludedRanks(Rank... ranks)
+	default Rank[] getIncludedRanks()
 	{
-		return new Rank[0];
+		return Rank.values();
 	}
 
 	default HandContext[] getHandContextShowdownOrder(Player player)

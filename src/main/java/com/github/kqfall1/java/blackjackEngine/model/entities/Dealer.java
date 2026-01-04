@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.betting.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
@@ -27,11 +27,11 @@ public final class Dealer
 		setHand(new Hand());
 	}
 
-	public Dealer(double cutoffPercentageNumerator, int numberOfDecks)
+	public Dealer(double cutoffPercentageNumerator, Rank[] includedRanks, int numberOfDecks)
 	{
 		assert cutoffPercentageNumerator >= Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR && cutoffPercentageNumerator <= Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
 			: "cutoffPercentageNumerator < Shoe.MINIMUM_CUTOFF_PERCENTAGE || cutoffPercentageNumerator > Shoe.MAXIMUM_CUTOFF_PERCENTAGE";
-		setCardSource(new Shoe(cutoffPercentageNumerator, numberOfDecks));
+		setCardSource(new Shoe(cutoffPercentageNumerator, includedRanks, numberOfDecks));
 		setHand(new Hand());
 	}
 
@@ -43,11 +43,6 @@ public final class Dealer
 	public Hand getHand()
 	{
 		return hand;
-	}
-
-	public Card hit()
-	{
-		return getCardSource().draw();
 	}
 
 	public void setCardSource(Drawable cardSource)

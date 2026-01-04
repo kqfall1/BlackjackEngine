@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.model.cards;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.utils.StringUtils;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
@@ -26,7 +27,7 @@ public final class TestDeck extends Deck
 		}
 		else if (!getCards().isEmpty())
 		{
-			return cards.poll();
+			return super.cards.poll();
 		}
 
 		throw new NoMoreCardsException(this);
@@ -43,7 +44,7 @@ public final class TestDeck extends Deck
 	{
 		for (Card card : cards)
 		{
-			this.cards.remove(card);
+			super.cards.remove(card);
 		}
 	}
 
@@ -60,7 +61,7 @@ public final class TestDeck extends Deck
 					initialCards.remove(card);
 				}
 
-				this.cards.remove(card);
+				super.cards.remove(card);
 				return card;
 			}
 		}
@@ -74,14 +75,22 @@ public final class TestDeck extends Deck
 
 	public void setInitialCards(Queue<Card> initialCards)
 	{
-		this.initialCards = initialCards;
+		assert initialCards != null && !initialCards.isEmpty()
+			: "initialCards == null || initialCards.isEmpty()";
 
-		if (initialCards != null)
+		final var includedRanksList = List.of(super.getIncludedRanks());
+
+		for (Card card : initialCards)
 		{
-			for (Card card : initialCards)
-			{
-				removeCards(card);
-			}
+			assert card != null && includedRanksList.contains(card.getRank())
+				: "card == null || !includedRanksList.contains(card.getRank())";
+		}
+
+		this.initialCards = new ArrayDeque<>(initialCards);
+
+		for (Card card : initialCards)
+		{
+			removeCards(card);
 		}
 	}
 

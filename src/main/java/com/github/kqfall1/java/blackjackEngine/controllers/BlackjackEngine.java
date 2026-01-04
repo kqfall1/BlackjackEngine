@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 import com.github.kqfall1.java.blackjackEngine.model.betting.*;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
@@ -63,7 +64,9 @@ public class BlackjackEngine
 		assert ruleset != null : "ruleset == null";
 		this.ruleset = ruleset;
 		dealer = new Dealer(
-			ruleset.getConfig().getShoeCutoffPercentageNumerator(), ruleset.getConfig().getShoeDeckCount()
+			ruleset.getConfig().getShoeCutoffPercentageNumerator(),
+			ruleset.getIncludedRanks(),
+			ruleset.getConfig().getShoeDeckCount()
 		);
 		this.listener = listener;
 		if (ruleset.getConfig().isLoggingEnabled())
@@ -295,12 +298,12 @@ public class BlackjackEngine
 		Card card;
 		try
 		{
-			card = getDealer().hit();
+			card = getDealer().getCardSource().draw();
 		}
 		catch (NoMoreCardsException e)
 		{
 			getDealer().setCardSource(new Deck());
-			card = getDealer().hit();
+			card = getDealer().getCardSource().draw();
 		}
 		getDealer().getHand().addCards(card);
 		onCardDealtToDealer(card);
@@ -315,12 +318,12 @@ public class BlackjackEngine
 		Card card;
 		try
 		{
-			card = getDealer().hit();
+			card = getDealer().getCardSource().draw();
 		}
 		catch (NoMoreCardsException e)
 		{
 			getDealer().setCardSource(new Deck());
-			card = getDealer().hit();
+			card = getDealer().getCardSource().draw();
 		}
 		getActiveHandContext().getHand().addCards(card);
 		onCardDealtToPlayer(card);
@@ -660,8 +663,8 @@ public class BlackjackEngine
 		playerSplitHand.getHand().addCards(playerPreviousHand.getHand().getCards().getLast());
 		getPlayer().addContext(playerSplitHand);
 		playerPreviousHand.getHand().removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
-		playerPreviousHand.getHand().addCards(getDealer().hit());
-		playerSplitHand.getHand().addCards(getDealer().hit());
+		playerPreviousHand.getHand().addCards(getDealer().getCardSource().draw());
+		playerSplitHand.getHand().addCards(getDealer().getCardSource().draw());
 		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
 		setActiveHandContextIndex(getActiveHandContextIndex() + 1);
 		getLogger().info(String.format(
@@ -725,6 +728,7 @@ public class BlackjackEngine
 			getDealer().setCardSource(
 				new Shoe(
 					ruleset.getConfig().getShoeCutoffPercentageNumerator(),
+					ruleset.getIncludedRanks(),
 					BlackjackConstants.DEFAULT_SHOE_DECK_COUNT
 				)
 			);

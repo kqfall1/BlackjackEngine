@@ -1,8 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.model;
 
-import com.github.kqfall1.java.blackjackEngine.model.betting.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
@@ -37,8 +39,18 @@ public final class CardSubsystemTest
 		drawnCards = new HashSet<>();
 		randomCutoffPercentageNumerator
 			= Math.random() * CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
-		shoe1 = new Shoe(randomCutoffPercentageNumerator, SHOE_DECK_AMOUNT);
-		shoe2 = new Shoe(randomCutoffPercentageNumerator, SHOE_DECK_AMOUNT);
+		final var CONFIG = new BlackjackRulesetConfiguration();
+		final var RULESET = new StandardBlackjackRuleset(CONFIG);
+		shoe1 = new Shoe(
+			randomCutoffPercentageNumerator,
+			RULESET.getIncludedRanks(),
+			SHOE_DECK_AMOUNT
+		);
+		shoe2 = new Shoe(
+			randomCutoffPercentageNumerator,
+			RULESET.getIncludedRanks(),
+			SHOE_DECK_AMOUNT
+		);
 		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(ACE_OF_CLUBS_1, TWO_OF_DIAMONDS)));
 	}

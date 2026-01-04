@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.model.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.betting.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.managers.InputManager;
 import java.math.BigDecimal;
 

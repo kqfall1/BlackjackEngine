@@ -21,10 +21,10 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 	public void main()
 	{
 		final var dealer = new Dealer(testDeck);
-		dealer.hit();
-		dealer.getHand().addCards(dealer.hit());
-		dealer.hit();
-		dealer.getHand().addCards(dealer.hit());
+		dealer.getCardSource().draw();
+		dealer.getHand().addCards(dealer.getCardSource().draw());
+		dealer.getCardSource().draw();
+		dealer.getHand().addCards(dealer.getCardSource().draw());
 
 		Assertions.assertTrue(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
 		Assertions.assertTrue(super.ruleset.isDealerTurnActive(

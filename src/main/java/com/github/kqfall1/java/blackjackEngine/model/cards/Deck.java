@@ -15,12 +15,20 @@ import java.util.*;
 public class Deck implements Drawable
 {
 	final Queue<Card> cards;
+	final Rank[] includedRanks;
 
 	public Deck()
 	{
+		this(Rank.values());
+	}
+
+	public Deck(Rank[] includedRanks)
+	{
+		assert includedRanks != null : "includedRanks == null";
+		this.includedRanks = includedRanks;
 		final List<Card> cardsList = new ArrayList<>();
 
-		for (Rank rank : Rank.values())
+		for (Rank rank : includedRanks)
 		{
 			for (Suit suit : Suit.values())
 			{
@@ -55,7 +63,8 @@ public class Deck implements Drawable
 		}
 
 		final var otherDeck = (Deck) otherObject;
-		return Objects.equals(getCards(), otherDeck.getCards());
+		return Objects.equals(getCards(), otherDeck.getCards())
+			&& Arrays.equals(getIncludedRanks(), otherDeck.getIncludedRanks());
 	}
 
 	public List<Card> getCards()
@@ -63,19 +72,25 @@ public class Deck implements Drawable
 		return List.copyOf(cards);
 	}
 
+	Rank[] getIncludedRanks()
+	{
+		return includedRanks;
+	}
+
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(getCards());
+		return Objects.hash(getCards(), Arrays.hashCode(getIncludedRanks()));
 	}
 
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[cards=%s]",
+			"%s[cards=%s,includedRanks=%s]",
 			getClass().getName(),
-			getCards()
+			getCards(),
+			Arrays.toString(includedRanks)
 		);
 	}
 }
