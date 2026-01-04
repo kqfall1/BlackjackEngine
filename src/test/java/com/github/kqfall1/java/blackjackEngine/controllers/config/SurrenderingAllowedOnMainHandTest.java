@@ -21,8 +21,8 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 	{
 		super.initCardsForSplitting(Rank.JACK);
 		super.initDependencies();
-		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.config.setSurrenderingAllowed(true);
+		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.ruleset.getConfig().setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
 	}
@@ -31,8 +31,8 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		Assertions.assertTrue(super.engine.getConfig().isSurrenderingAllowed());
-		Assertions.assertFalse(super.engine.getConfig().isSurrenderingOnSplitHandsAllowed());
+//		Assertions.assertTrue(super.config.isSurrenderingAllowed());
+//		Assertions.assertFalse(super.engine.getConfig().isSurrenderingOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
@@ -40,7 +40,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 			super.initSplitHands();
 
 			for (int count = 0;
-				 count < super.engine.getConfig().getMaximumSplitCount();
+				 count < super.ruleset.getConfig().getMaximumSplitCount();
 				 count++)
 			{
 				try

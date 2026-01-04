@@ -21,7 +21,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 	{
 		super.initCardsForSplitting(Rank.ACE);
 		super.initDependencies();
-		super.config.setMaximumSplitCount(
+		super.ruleset.getConfig().setMaximumSplitCount(
 			ThreadLocalRandom.current().nextInt(MAXIMUM_SPLIT_COUNT + 1)
 		);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);

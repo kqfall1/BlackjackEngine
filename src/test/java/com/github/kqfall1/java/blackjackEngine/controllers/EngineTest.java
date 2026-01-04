@@ -1,14 +1,15 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import java.io.IOException;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,12 +26,12 @@ import org.junit.jupiter.api.RepeatedTest;
  */
 public abstract class EngineTest
 {
-	public StandardRuleConfig config;
 	public BlackjackEngine engine;
 	public ConsoleHandler handler;
 	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	public String logFilePath;
 	public String loggerName;
+	public BlackjackRuleset ruleset;
 	public static final int TEST_ITERATIONS = 200;
 
 	public final BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
@@ -86,9 +87,13 @@ public abstract class EngineTest
 
 	public final void initDependencies()
 	{
-		config = new StandardRuleConfig();
-		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
 		handler = new ConsoleHandler();
+
+		final var config = new BlackjackRulesetConfiguration();
+		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
+		//SET MORE PARAMETERS HERE
+
+		ruleset = new StandardBlackjackRuleset(config);
 	}
 
 	public final void initEngine(String logFilePath, String loggerName)
@@ -360,16 +365,16 @@ public abstract class EngineTest
 	throws Exception
 	{
 		final var BET_AMOUNT = maximumBetAmount
-			.subtract(engine.getConfig().getMinimumBetAmount())
+			.subtract(ruleset.getConfig().getMinimumBetAmount())
 			.multiply(BigDecimal.valueOf(Math.random()))
-			.add(engine.getConfig().getMinimumBetAmount());
+			.add(ruleset.getConfig().getMinimumBetAmount());
 		engine.placeHandBet(BET_AMOUNT);
 		return BET_AMOUNT;
 	}
 
 	private void start() throws InsufficientChipsException, IOException
 	{
-		engine = new BlackjackEngine(config, LISTENER, logFilePath, loggerName);
+		engine = new BlackjackEngine(LISTENER, logFilePath, loggerName, ruleset);
 		engine.start();
 	}
 }

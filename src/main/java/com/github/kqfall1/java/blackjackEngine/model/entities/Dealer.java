@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.entities;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.betting.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 

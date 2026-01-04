@@ -25,9 +25,9 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 	{
 		super.initCardsForSplitting(Rank.SIX);
 		super.initDependencies();
-		super.config.setSurrenderingAllowed(true);
-		super.config.setSurrenderingOnSplitHandsAllowed(true);
-		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.ruleset.getConfig().setSurrenderingAllowed(true);
+		super.ruleset.getConfig().setSurrenderingOnSplitHandsAllowed(true);
+		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
 	}
@@ -45,7 +45,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 			while (super.engine.getState() == EngineState.PLAYER_TURN)
 			{
 				for (int count = 0
-				 	; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				 	; count < super.ruleset.getConfig().getMaximumSplitCount() + 1
 				 	; count++)
 				{
 					super.engine.playerSurrender();

@@ -35,26 +35,26 @@ final class PredicateTest extends CustomDeckTest
 			super.engine.advanceAfterDeal();
 
 			Assertions.assertFalse(
-				super.engine.getConfig().isInsuranceBetPossible(
+				super.ruleset.isInsuranceBetPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState(),
 					super.engine.getPlayer(),
 					super.engine.getDealer().getHand()
 				)
-				&& super.engine.getConfig().isSplitPossible(
+				&& super.ruleset.isSplitPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState(),
 					super.engine.getActiveHandContextIndex(),
 					super.engine.getPlayer()
 				)
-				&& super.engine.getConfig().isSurrenderingPossible(
+				&& super.ruleset.isSurrenderingPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState()
 				)
 			);
 
 			Assertions.assertFalse(
-				super.engine.getConfig().isDealerTurnActive(
+				super.ruleset.isDealerTurnActive(
 					super.engine.getState(),
 					super.engine.getDealer()
 				)
@@ -87,7 +87,7 @@ final class PredicateTest extends CustomDeckTest
 		verifyPlayerActionsAreIllegal();
 
 		Assertions.assertFalse(
-			super.engine.getConfig().isDealerTurnActive(
+			super.ruleset.isDealerTurnActive(
 				super.engine.getState(),
 				super.engine.getDealer()
 			)
@@ -97,24 +97,24 @@ final class PredicateTest extends CustomDeckTest
 	private void verifyPlayerActionsAreIllegal()
 	{
 		Assertions.assertFalse(
-			super.engine.getConfig().isInsuranceBetPossible(
+			super.ruleset.isInsuranceBetPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getPlayer(),
 				super.engine.getDealer().getHand()
 			)
-			&& super.engine.getConfig().isDoubleDownPossible(
+			&& super.ruleset.isDoubleDownPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getPlayer()
 			)
-			&& super.engine.getConfig().isSplitPossible(
+			&& super.ruleset.isSplitPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getActiveHandContextIndex(),
 				super.engine.getPlayer()
 			)
-			&& super.engine.getConfig().isSurrenderingPossible(
+			&& super.ruleset.isSurrenderingPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState()
 			)

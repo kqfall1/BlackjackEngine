@@ -25,8 +25,8 @@ final class DealerStandsOnSoft17Test extends CustomDeckTest
 		dealer.hit();
 		dealer.getHand().addCards(dealer.hit());
 
-		Assertions.assertFalse(super.config.getDealerHitsOnSoft17());
-		Assertions.assertFalse(super.config.isDealerTurnActive(
+		Assertions.assertFalse(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
+		Assertions.assertFalse(super.ruleset.isDealerTurnActive(
 			EngineState.DEALER_TURN,
 			dealer
 		));

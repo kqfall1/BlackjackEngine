@@ -1,9 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
-import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
@@ -20,6 +21,8 @@ import java.util.Map;
  */
 public interface BlackjackRuleset
 {
+	BlackjackRulesetConfiguration getConfig();
+
 	default Rank[] getExcludedRanks(Rank... ranks)
 	{
 		return new Rank[0];
@@ -64,8 +67,7 @@ public interface BlackjackRuleset
 									  Player player, Hand dealerHand);
 	boolean isSplitPossible(HandContext activeHandContext, EngineState currentState,
 							   int activeHandContextIndex, Player player);
-	boolean isSurrenderingPossible(HandContext activeHandContext,
-									  EngineState currentState);
+	boolean isSurrenderingPossible(HandContext activeHandContext, EngineState currentState);
 
 	default boolean shouldDealerPeekForBlackjack()
 	{

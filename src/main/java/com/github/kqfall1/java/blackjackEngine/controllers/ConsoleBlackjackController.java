@@ -1,12 +1,14 @@
 package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardRuleConfig;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
+import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.managers.InputManager;
@@ -36,19 +38,19 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
-	ConsoleBlackjackController(StandardRuleConfig config, ConsoleHandler handler,
-									   String logFilePath, String loggerName)
+	ConsoleBlackjackController(ConsoleHandler handler, String logFilePath, String loggerName,
+							   BlackjackRuleset ruleset)
 	throws InsufficientChipsException, IOException
 	{
-		assert config != null : "config == null";
 		assert handler != null : "handler == null";
 		assert logFilePath != null && !logFilePath.isBlank()
 			: "logFilePath == null || logFilePath.isBlank()";
 		assert loggerName != null && !loggerName.isBlank()
 			: "loggerName == null || loggerName.isBlank()";
+		assert ruleset != null : "ruleset == null";
 		this.handler = handler;
 		inputManager = new InputManager(handler, handler, handler);
-		engine = new BlackjackEngine(config, this, logFilePath, loggerName);
+		engine = new BlackjackEngine(this, logFilePath, loggerName, ruleset);
 	}
 
 	BlackjackEngine getEngine()
@@ -69,14 +71,20 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	public static void main(String[] args)
 	throws InsufficientChipsException, IOException
 	{
-		final var config = new StandardRuleConfig();
+		final var config = new BlackjackRulesetConfiguration();
 		final var handler = new ConsoleHandler();
-		config.setDealerHitsOnSoft17(true);
+		config.setShouldDealerHitOnSoft17(true);
 		config.setDoublingDownOnSplitHandsAllowed(true);
 		config.setSurrenderingOnSplitHandsAllowed(true);
 		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
-		final var controller = new ConsoleBlackjackController(config, handler,
-			LOG_FILE_PATH, LOGGER_NAME);
+		//SET MORE PARAMETERS HERE
+		final var ruleset = new StandardBlackjackRuleset(config);
+		final var controller = new ConsoleBlackjackController(
+			handler,
+			LOG_FILE_PATH,
+			LOGGER_NAME,
+			ruleset
+		);
 		controller.getEngine().getLogger().setLevel(Level.FINE);
 		controller.getEngine().start();
 	}

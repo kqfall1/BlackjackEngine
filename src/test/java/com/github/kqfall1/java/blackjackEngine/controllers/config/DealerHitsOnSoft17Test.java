@@ -14,7 +14,7 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 	{
 		super.initCardsForDealerSoft17();
 		super.initDependencies();
-		super.config.setDealerHitsOnSoft17(true);
+		super.ruleset.getConfig().setShouldDealerHitOnSoft17(true);
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
@@ -26,8 +26,8 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 		dealer.hit();
 		dealer.getHand().addCards(dealer.hit());
 
-		Assertions.assertTrue(super.config.getDealerHitsOnSoft17());
-		Assertions.assertTrue(super.config.isDealerTurnActive(
+		Assertions.assertTrue(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
+		Assertions.assertTrue(super.ruleset.isDealerTurnActive(
 			EngineState.DEALER_TURN,
 			dealer
 		));

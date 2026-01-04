@@ -19,7 +19,7 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	{
 		super.initCardsForInsuranceAndSplitting(Rank.JACK);
 		super.initDependencies();
-		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
 	}
@@ -35,7 +35,7 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 			super.initSplitHands();
 
 			for (int count = 0
-				; count < super.engine.getConfig().getMaximumSplitCount() + 1
+				; count < super.ruleset.getConfig().getMaximumSplitCount() + 1
 				; count ++)
 			{
 				super.engine.playerStand();

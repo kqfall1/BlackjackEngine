@@ -22,7 +22,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 	{
 		super._initCardsForBust();
 		super.initDependencies();
-		super.config.setSurrenderingAllowed(true);
+		super.ruleset.getConfig().setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
 	}

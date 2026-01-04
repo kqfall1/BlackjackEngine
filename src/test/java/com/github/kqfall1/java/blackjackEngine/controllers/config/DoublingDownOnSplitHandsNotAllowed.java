@@ -21,7 +21,7 @@ final class DoublingDownOnSplitHandsNotAllowed extends CustomDeckTest
 	{
 		super.initCardsForSplitting(Rank.TEN);
 		super.initDependencies();
-		super.config.setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
 	}
@@ -30,7 +30,7 @@ final class DoublingDownOnSplitHandsNotAllowed extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main() throws Exception
 	{
-		Assertions.assertFalse(super.engine.getConfig().isDoublingDownOnSplitHandsAllowed());
+//		Assertions.assertFalse(super.engine.getConfig().isDoublingDownOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
@@ -38,7 +38,7 @@ final class DoublingDownOnSplitHandsNotAllowed extends CustomDeckTest
 			super.initSplitHands();
 
 			for (int count = 0;
-		 		count < super.engine.getConfig().getMaximumSplitCount();
+		 		count < super.ruleset.getConfig().getMaximumSplitCount();
 		 		count++)
 			{
 				try

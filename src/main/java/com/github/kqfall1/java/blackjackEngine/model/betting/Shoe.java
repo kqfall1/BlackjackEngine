@@ -1,5 +1,7 @@
-package com.github.kqfall1.java.blackjackEngine.model.cards;
+package com.github.kqfall1.java.blackjackEngine.model.betting;
 
+import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;

@@ -18,7 +18,7 @@ final class SurrenderTest extends EngineTest
 	public void init() throws InsufficientChipsException, IOException
 	{
 		super.initDependencies();
-		super.config.setSurrenderingAllowed(true);
+		super.ruleset.getConfig().setSurrenderingAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
 
