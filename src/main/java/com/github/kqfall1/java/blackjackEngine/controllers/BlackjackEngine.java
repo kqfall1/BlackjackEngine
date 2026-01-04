@@ -158,7 +158,8 @@ public class BlackjackEngine
 			setState(EngineState.INSURANCE_CHECK);
 		}
 		else if (RULESET.isHandBlackjack(getActiveHandContext().getHand())
-			|| RULESET.isHandBlackjack(getDealer().getHand()))
+			|| (RULESET.isHandBlackjack(getDealer().getHand())
+				&& RULESET.shouldDealerPeekForBlackjack()))
 		{
 			setState(EngineState.SHOWDOWN);
 			showdown();
@@ -448,13 +449,13 @@ public class BlackjackEngine
 		assert card != null : "card == null";
 		assert getState() == EngineState.DEALING || getState() == EngineState.DEALER_TURN
 			: "getState() != EngineState.DEALING && getState() != EngineState.DEALER_TURN";
-		final var isFaceUpCard = getDealer().getHand().getCards().size()
-			< BlackjackConstants.INITIAL_CARD_COUNT;
-		getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
-		getLogger().info(String.format(
-			"Added card %s to dealer's hand %s.",
-			card, getDealer().getHand()
-		));
+		final var isFaceUpCard = getDealer().getHand().getCards().size() != BlackjackConstants.INITIAL_CARD_COUNT
+			|| !RULESET.isDealerSecondCardFaceDown();
+			getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
+			getLogger().info(String.format(
+				"Added card %s to dealer's hand %s.",
+				card, getDealer().getHand()
+			));
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
