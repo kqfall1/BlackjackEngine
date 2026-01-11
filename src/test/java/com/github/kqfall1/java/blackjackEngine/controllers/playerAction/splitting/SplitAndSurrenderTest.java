@@ -40,19 +40,16 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
-			while (super.engine.getState() == EngineState.PLAYER_TURN)
+			for (int count = 0
+				 ; count < super.ruleset.getConfig().getMaximumSplitCount()
+				; count++)
 			{
-				for (int count = 0
-				 	; count < super.ruleset.getConfig().getMaximumSplitCount() + 1
-				 	; count++)
-				{
-					super.engine.playerSurrender();
-				}
-
-				super.engine.advanceAfterPlayerTurn();
+				super.initSplitHand();
+				super.engine.playerSurrender();
 			}
+
+			super.engine.playerSurrender();
+			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

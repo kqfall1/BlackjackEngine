@@ -35,12 +35,11 @@ final class DoublingDownOnSplitHandsAllowed extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
 			for (int count = 0;
 				 count < super.ruleset.getConfig().getMaximumSplitCount();
-			 	count++)
+			 	 count++)
 			{
+				super.initSplitHand();
 				super.engine.playerDoubleDown();
 			}
 

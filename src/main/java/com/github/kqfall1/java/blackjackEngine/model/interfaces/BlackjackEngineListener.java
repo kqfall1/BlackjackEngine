@@ -29,7 +29,7 @@ public interface BlackjackEngineListener
 	void onGameStarted();
 	void onInsuranceBetOpportunityDetected(Card dealerUpCard);
 	void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings);
-	void onPlayerSplit(HandContext previousHand, HandContext splitHand);
+	void onPlayerSplit(HandContext currentHand, HandContext splitHand);
 	void onReset();
 	void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon,
 							 BigDecimal playerWinnings);

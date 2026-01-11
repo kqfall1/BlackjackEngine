@@ -38,13 +38,13 @@ final class MaximumSplitCountTest extends CustomDeckTest
 		{
 			try
 			{
-				super.initSplitHands();
-
-				for (int count = 0; count < MAXIMUM_SPLIT_COUNT + 1; count++)
+				for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
 				{
+					super.initSplitHand();
 					super.engine.playerStand();
 				}
 
+				super.engine.playerStand();
 				super.engine.advanceAfterPlayerTurn();
 				super.advanceToEndOfRound();
 			}

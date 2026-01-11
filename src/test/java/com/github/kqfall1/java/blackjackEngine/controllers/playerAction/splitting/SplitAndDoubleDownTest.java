@@ -34,13 +34,15 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
-			while (!super.engine.getActiveHandContext().isAltered())
+			for (int count = 0
+				 ; count < super.ruleset.getConfig().getMaximumSplitCount()
+				 ; count++)
 			{
+				super.initSplitHand();
 				super.engine.playerDoubleDown();
 			}
 
+			super.engine.playerDoubleDown();
 			super.engine.advanceAfterPlayerTurn();
 		}
 

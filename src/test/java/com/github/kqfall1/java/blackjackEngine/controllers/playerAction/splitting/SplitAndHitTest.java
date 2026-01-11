@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.controllers.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -13,6 +12,17 @@ final class SplitAndHitTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndStandTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting.SplitAndStandTest.log";
+
+	private void hit(int activeHandContextIndex) throws InsufficientChipsException
+	{
+		while (!super.ruleset.isHandBusted(
+			super.engine.getActiveHandContext().getHand()
+		)
+		&& super.engine.getActiveHandContextIndex() == activeHandContextIndex)
+		{
+			super.engine.playerHit();
+		}
+	}
 
 	@BeforeEach
 	@Override
@@ -33,14 +43,15 @@ final class SplitAndHitTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
-			while (super.engine.getActiveHandContextIndex() != HandContextType.MAIN.ordinal()
-				&& !super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))
+			for (int count = 0
+			 	; count < super.ruleset.getConfig().getMaximumSplitCount()
+				; count++)
 			{
-				super.engine.playerHit();
+				super.initSplitHand();
+				hit(super.engine.getActiveHandContextIndex());
 			}
 
+			hit(super.engine.getActiveHandContextIndex());
 			super.engine.advanceAfterPlayerTurn();
 		}
 

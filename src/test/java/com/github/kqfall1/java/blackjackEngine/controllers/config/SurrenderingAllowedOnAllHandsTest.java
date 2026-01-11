@@ -5,7 +5,7 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -37,12 +37,11 @@ final class SurrenderingAllowedOnAllHandsTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
 			for (int count = 0;
 				 count < super.ruleset.getConfig().getMaximumSplitCount();
 				 count++)
 			{
+				super.initSplitHand();
 				super.engine.playerSurrender();
 			}
 

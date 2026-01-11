@@ -32,15 +32,15 @@ final class SplitAndStandTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
 			for (int count = 0
-			 	; count < super.ruleset.getConfig().getMaximumSplitCount() + 1
+			 	; count < super.ruleset.getConfig().getMaximumSplitCount()
 				; count++)
 			{
+				super.initSplitHand();
 				super.engine.playerStand();
 			}
 
+			super.engine.playerStand();
 			super.engine.advanceAfterPlayerTurn();
 		}
 

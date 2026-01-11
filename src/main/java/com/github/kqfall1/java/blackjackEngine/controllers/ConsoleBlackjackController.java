@@ -257,13 +257,13 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	}
 
 	@Override
-	public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
+	public void onPlayerSplit(HandContext currentHand, HandContext splitHand)
 	{
 		getHandler().getOut().printf(
 			String.format(
-				"Your current hand is now %s and your previous hand is now %s.\n",
-				splitHand.getHand().toStringPretty(),
-				previousHand.getHand().toStringPretty()
+				"Your current hand is now %s and your split hand is %s.\n",
+				currentHand.getHand().toStringPretty(),
+				splitHand.getHand().toStringPretty()
 			)
 		);
 	}

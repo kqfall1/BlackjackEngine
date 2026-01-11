@@ -32,12 +32,11 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
 			for (int count = 0
 				; count < super.ruleset.getConfig().getMaximumSplitCount() + 1
 				; count ++)
 			{
+				super.initSplitHand();
 				super.engine.playerStand();
 			}
 

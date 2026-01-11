@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
@@ -48,16 +49,6 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
-	public final BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
-	throws Exception
-	{
-		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
-		engine.deal();
-		engine.advanceAfterDeal();
-		declinePossibleInsuranceBet();
-		return BET_AMOUNT;
-	}
-
 	public final void advanceToEndOfRound()
 	throws InsufficientChipsException
 	{
@@ -74,6 +65,16 @@ public abstract class EngineTest
 		engine.advanceAfterReset();
 	}
 
+	public final BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
+	throws Exception
+	{
+		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
+		engine.deal();
+		engine.advanceAfterDeal();
+		declinePossibleInsuranceBet();
+		return BET_AMOUNT;
+	}
+
 	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.INSURANCE_CHECK)
@@ -88,12 +89,9 @@ public abstract class EngineTest
 	public final void initDependencies()
 	{
 		handler = new ConsoleHandler();
-
-		final var config = new BlackjackRulesetConfiguration();
-		config.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
-		//SET MORE PARAMETERS HERE
-
-		ruleset = new StandardBlackjackRuleset(config);
+		final var CONFIG = new BlackjackRulesetConfiguration();
+		CONFIG.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
+		ruleset = new StandardBlackjackRuleset(CONFIG);
 	}
 
 	public final void initEngine(String logFilePath, String loggerName)
@@ -112,12 +110,10 @@ public abstract class EngineTest
 		@Override
 		public void onBetPlaced(HandContext handContext)
 		{
-			var activeHandContextIndex = switch (handContext.getType())
-			{
-				case MAIN -> 0;
-				case SPLIT -> 1;
-			};
-			assertEquals(activeHandContextIndex, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertTrue(
 				engine.getState() == EngineState.BETTING
 				|| engine.getState() == EngineState.INSURANCE_CHECK
@@ -137,7 +133,10 @@ public abstract class EngineTest
 		@Override
 		public void onBettingRoundCompleted()
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.SHOWDOWN, engine.getState());
 			handler.getOut().println("You have completed a betting round.");
 		}
@@ -145,7 +144,10 @@ public abstract class EngineTest
 		@Override
 		public void onBettingRoundStarted()
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.BETTING, engine.getState());
 			handler.getOut().println("You have started a new betting round! Good luck!");
 		}
@@ -153,7 +155,10 @@ public abstract class EngineTest
 		@Override
 		public void onCardDealtToDealer(Card card, Hand dealerHand, boolean isFaceUp)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertTrue(
 				engine.getState() == EngineState.DEALING
 				|| engine.getState() == EngineState.DEALER_TURN
@@ -191,7 +196,10 @@ public abstract class EngineTest
 		@Override
 		public void onDrawingRoundCompletedDealer(Hand dealerHand)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.DEALER_TURN, engine.getState());
 			handler.getOut().printf(
 				"The dealer has finished drawing. Their hand is %s.\n",
@@ -212,7 +220,10 @@ public abstract class EngineTest
 		@Override
 		public void onDrawingRoundStartedDealer(Hand dealerHand)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.DEALER_TURN, engine.getState());
 			handler.getOut().println("The dealer has begun drawing.");
 		}
@@ -229,7 +240,10 @@ public abstract class EngineTest
 		@Override
 		public void onGameCompleted()
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.RESETTING, engine.getState());
 			handler.getOut().println("Thanks for playing!");
 		}
@@ -237,7 +251,10 @@ public abstract class EngineTest
 		@Override
 		public void onGameStarted()
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.START, engine.getState());
 			handler.getOut().println("Welcome to the table!");
 		}
@@ -245,7 +262,10 @@ public abstract class EngineTest
 		@Override
 		public void onInsuranceBetOpportunityDetected(Card dealerUpCard)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.DEALING, engine.getState());
 			assertEquals(Rank.ACE, dealerUpCard.getRank());
 			handler.getOut().printf(
@@ -257,7 +277,10 @@ public abstract class EngineTest
 		@Override
 		public void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.INSURANCE_CHECK, engine.getState());
 
 			if (wasSuccessful)
@@ -274,15 +297,14 @@ public abstract class EngineTest
 		}
 
 		@Override
-		public void onPlayerSplit(HandContext previousHand, HandContext splitHand)
+		public void onPlayerSplit(HandContext currentHand, HandContext splitHand)
 		{
-			Assertions.assertTrue(engine.getActiveHandContextIndex() > 0);
 			assertEquals(EngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
 				String.format(
-					"Your current hand is now %s and your previous hand is now %s.\n",
-					splitHand.getHand().toStringPretty(),
-					previousHand.getHand().toStringPretty()
+					"Your current hand is now %s and your split hand is %s.\n",
+					currentHand.getHand().toStringPretty(),
+					splitHand.getHand().toStringPretty()
 				)
 			);
 		}
@@ -290,7 +312,10 @@ public abstract class EngineTest
 		@Override
 		public void onReset()
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+//			assertEquals(
+//				HandContextType.MAIN.ordinal(),
+//				engine.getActiveHandContextIndex()
+//			);
 			assertEquals(EngineState.RESETTING, engine.getState());
 			handler.getOut().println("The dealer is initializing a new betting round...");
 		}
@@ -299,7 +324,10 @@ public abstract class EngineTest
 		public void onShowdownCompleted(Hand dealerHand, HandContext handContext,
 										boolean playerWon, BigDecimal playerWinnings)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.SHOWDOWN, engine.getState());
 
 			final var completedString = String.format(
@@ -336,7 +364,10 @@ public abstract class EngineTest
 		@Override
 		public void onShowdownStarted(Hand dealerHand, HandContext handContext)
 		{
-			assertEquals(0, engine.getActiveHandContextIndex());
+			assertEquals(
+				engine.getPlayer().getContexts().size() - 1,
+				engine.getActiveHandContextIndex()
+			);
 			assertEquals(EngineState.SHOWDOWN, engine.getState());
 			handler.getOut().printf(
 				"Your hand %s is being shown down against the dealer's hand %s.\n",

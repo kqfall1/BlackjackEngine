@@ -6,7 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import java.io.IOException;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -35,14 +35,13 @@ final class DoublingDownOnSplitHandsNotAllowed extends CustomDeckTest
 
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
-			super.initSplitHands();
-
 			for (int count = 0;
 		 		count < super.ruleset.getConfig().getMaximumSplitCount();
 		 		count++)
 			{
 				try
 				{
+					super.initSplitHand();
 					super.engine.playerDoubleDown();
 				}
 				catch (RuleViolationException e)

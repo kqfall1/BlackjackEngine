@@ -313,33 +313,25 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public final void initSplitHands() throws Exception
+	public final void initSplitHand() throws Exception
 	{
-		var previousChipAmount = super.engine.getPlayer().getChips();
+		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 
-		for (int count = 0;
-			 count < MAXIMUM_SPLIT_COUNT;
-			 count++)
-		{
-			Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-			Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
-			super.engine.playerSplit();
+		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
+		Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
+		super.engine.playerSplit();
 
-			Assertions.assertTrue(
-				nearlyEquals(
-					previousChipAmount.subtract(
-						super.engine.getActiveHandContext().getBet().getAmount()
-					),
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
-			Assertions.assertFalse(super.engine.getPlayer().getContexts().get(
-				super.engine.getActiveHandContextIndex() - 1).isAltered()
-			);
-
-			previousChipAmount = super.engine.getPlayer().getChips();
-		}
+		Assertions.assertTrue(
+			nearlyEquals(
+				PREVIOUS_CHIP_AMOUNT.subtract(
+					super.engine.getPlayer().getContexts().getLast().getBet().getAmount()
+				),
+				super.engine.getPlayer().getChips(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			)
+		);
+		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
+		Assertions.assertFalse(super.engine.getPlayer().getContexts().getLast().isAltered());
 	}
 
 	public final void initCardsForSplitting (Rank rank)
