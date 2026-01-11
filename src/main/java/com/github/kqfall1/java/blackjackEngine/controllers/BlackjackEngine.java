@@ -633,7 +633,7 @@ public class BlackjackEngine
 					"An attempt to split a non-pocket pair occurred."
 				), METHOD_NAME);
 			}
-			else if (getActiveHandContextIndex() >= RULESET.getConfig().getMaximumSplitCount())
+			else if (getActiveHandContextIndex() >= RULESET.getConfig().getMaximumSplitCount() + 1)
 			{
 				throwException(new IllegalHandOperationException(
 					getActiveHandContext(),
