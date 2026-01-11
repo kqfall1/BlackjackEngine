@@ -313,7 +313,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public final void initSplitHand() throws Exception
+	public final void initSplitHands() throws Exception
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 

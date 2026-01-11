@@ -43,7 +43,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 			{
 				try
 				{
-					super.initSplitHand();
+					super.initSplitHands();
 					super.engine.playerSurrender();
 				}
 				catch (RuleViolationException e)

@@ -38,11 +38,14 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 				 ; count < super.ruleset.getConfig().getMaximumSplitCount()
 				 ; count++)
 			{
-				super.initSplitHand();
+				if (count < super.ruleset.getConfig().getMaximumSplitCount() - 1)
+				{
+					super.initSplitHands();
+				}
+
 				super.engine.playerDoubleDown();
 			}
 
-			super.engine.playerDoubleDown();
 			super.engine.advanceAfterPlayerTurn();
 		}
 

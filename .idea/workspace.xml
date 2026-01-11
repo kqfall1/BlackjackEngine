@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Altered ConsoleBlackjackController.java to call into BlackjackEngine.java to advance the game. Minor bugs remain.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/ConsoleBlackjackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controllers/ConsoleBlackjackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackEngineListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackEngineListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logs/BlackjackEngine.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logs/BlackjackEngine.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/CustomDeckTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/EngineTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DoublingDownOnSplitHandsAllowed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DoublingDownOnSplitHandsAllowed.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DoublingDownOnSplitHandsNotAllowed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/DoublingDownOnSplitHandsNotAllowed.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/MaximumSplitCountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/controllers/config/MaximumSplitCountTest.java" afterDir="false" />
@@ -339,7 +335,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767560118768</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken.">
+      <option name="closed" value="true" />
+      <created>1768097034211</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1768097034211</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -361,7 +365,8 @@
     <MESSAGE value="Integrated the BlackjackRuleset.getHandContextsInShowdownOrder and BlackjackRuleset.getPayoutRatios methods with BlackjackEngine.java." />
     <MESSAGE value="Integrated the BlackjackRuleset.isDealerSecondCardFaceDown and BlackjackRuleset.shouldDealerPeekForBlackjack methods with BlackjackEngine.java." />
     <MESSAGE value="Altered ConsoleBlackjackController.java to call into BlackjackEngine.java to advance the game. Minor bugs remain." />
-    <option name="LAST_COMMIT_MESSAGE" value="Altered ConsoleBlackjackController.java to call into BlackjackEngine.java to advance the game. Minor bugs remain." />
+    <MESSAGE value="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken." />
+    <option name="LAST_COMMIT_MESSAGE" value="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

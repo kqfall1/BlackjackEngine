@@ -47,11 +47,14 @@ final class SplitAndHitTest extends CustomDeckTest
 			 	; count < super.ruleset.getConfig().getMaximumSplitCount()
 				; count++)
 			{
-				super.initSplitHand();
+				if (count < super.ruleset.getConfig().getMaximumSplitCount() - 1)
+				{
+					super.initSplitHands();
+				}
+
 				hit(super.engine.getActiveHandContextIndex());
 			}
 
-			hit(super.engine.getActiveHandContextIndex());
 			super.engine.advanceAfterPlayerTurn();
 		}
 

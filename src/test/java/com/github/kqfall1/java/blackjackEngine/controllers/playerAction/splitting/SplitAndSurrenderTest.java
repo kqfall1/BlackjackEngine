@@ -44,7 +44,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 				 ; count < super.ruleset.getConfig().getMaximumSplitCount()
 				; count++)
 			{
-				super.initSplitHand();
+				super.initSplitHands();
 				super.engine.playerSurrender();
 			}
 

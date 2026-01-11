@@ -41,7 +41,7 @@ final class DoublingDownOnSplitHandsNotAllowed extends CustomDeckTest
 			{
 				try
 				{
-					super.initSplitHand();
+					super.initSplitHands();
 					super.engine.playerDoubleDown();
 				}
 				catch (RuleViolationException e)
