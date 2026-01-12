@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayDeque;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -334,23 +337,49 @@ public abstract class CustomDeckTest extends EngineTest
 		Assertions.assertFalse(super.engine.getPlayer().getContexts().getLast().isAltered());
 	}
 
-	public final void initCardsForSplitting (Rank rank)
+	public final List<Card> _initCardsForSplitting(Rank splitRank)
 	{
-		Assertions.assertNotNull(rank);
-		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_2 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_3 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_4 = randomCards.removeCardOfRank(rank);
+		Assertions.assertNotNull(splitRank);
+
+		return List.of(
+			randomCards.removeCardOfRank(splitRank),
+			randomCards.removeCardOfRank(splitRank),
+			randomCards.removeCardOfRank(splitRank),
+			randomCards.removeCardOfRank(splitRank)
+		);
+	}
+
+	public final void initCardsForSplittingAndHittingOnce(Rank splitRank)
+	{
+		final var ITERATOR = _initCardsForSplitting(splitRank).iterator();
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			SPLIT_CARD_1,
+			ITERATOR.next(),
 			randomCards.draw(),
-			SPLIT_CARD_2,
+			ITERATOR.next(),
 			randomCards.draw(),
 			randomCards.draw(),
-			SPLIT_CARD_3,
+			ITERATOR.next(),
 			randomCards.draw(),
-			SPLIT_CARD_4
+			randomCards.draw(),
+			ITERATOR.next(),
+			randomCards.draw()
+		)));
+	}
+
+	public final void initCardsForSplittingWithoutHitting(Rank splitRank)
+	{
+		final var ITERATOR = _initCardsForSplitting(splitRank).iterator();
+
+		testDeck.setInitialCards(new ArrayDeque<>(List.of(
+			ITERATOR.next(),
+			randomCards.draw(),
+			ITERATOR.next(),
+			randomCards.draw(),
+			randomCards.draw(),
+			ITERATOR.next(),
+			randomCards.draw(),
+			ITERATOR.next()
 		)));
 	}
 

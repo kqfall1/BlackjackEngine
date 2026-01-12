@@ -23,7 +23,7 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.SIX);
+		super.initCardsForSplittingWithoutHitting(Rank.SIX);
 		super.initDependencies();
 		super.ruleset.getConfig().setSurrenderingAllowed(true);
 		super.ruleset.getConfig().setSurrenderingOnSplitHandsAllowed(true);

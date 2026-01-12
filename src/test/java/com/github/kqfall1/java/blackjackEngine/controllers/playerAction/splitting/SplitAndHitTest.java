@@ -5,6 +5,7 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -13,14 +14,14 @@ final class SplitAndHitTest extends CustomDeckTest
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndStandTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting.SplitAndStandTest.log";
 
-	private void hit(int activeHandContextIndex) throws InsufficientChipsException
+	private void hit() throws InsufficientChipsException
 	{
-		while (!super.ruleset.isHandBusted(
-			super.engine.getActiveHandContext().getHand()
-		)
-		&& super.engine.getActiveHandContextIndex() == activeHandContextIndex)
+		final int ACTIVE_HAND_CONTEXT_INDEX = super.engine.getActiveHandContextIndex();
+		super.engine.playerHit();
+
+		if (super.engine.getActiveHandContextIndex() == ACTIVE_HAND_CONTEXT_INDEX)
 		{
-			super.engine.playerHit();
+			super.engine.playerStand();
 		}
 	}
 
@@ -28,7 +29,7 @@ final class SplitAndHitTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.FOUR);
+		super.initCardsForSplittingAndHittingOnce(Rank.ACE);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -47,14 +48,11 @@ final class SplitAndHitTest extends CustomDeckTest
 			 	; count < super.ruleset.getConfig().getMaximumSplitCount()
 				; count++)
 			{
-				if (count < super.ruleset.getConfig().getMaximumSplitCount() - 1)
-				{
-					super.initSplitHands();
-				}
-
-				hit(super.engine.getActiveHandContextIndex());
+				super.initSplitHands();
+				hit();
 			}
 
+			hit();
 			super.engine.advanceAfterPlayerTurn();
 		}
 

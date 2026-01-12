@@ -19,7 +19,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.ACE);
+		super.initCardsForSplittingWithoutHitting(Rank.ACE);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(
 			ThreadLocalRandom.current().nextInt(MAXIMUM_SPLIT_COUNT + 1)

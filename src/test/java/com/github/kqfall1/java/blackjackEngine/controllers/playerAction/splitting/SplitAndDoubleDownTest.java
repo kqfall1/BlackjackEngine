@@ -5,7 +5,6 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import java.io.IOException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -18,7 +17,7 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.KING);
+		super.initCardsForSplittingAndHittingOnce(Rank.KING);
 		super.initDependencies();
 		super.ruleset.getConfig().setDoublingDownOnSplitHandsAllowed(true);
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
@@ -38,14 +37,11 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 				 ; count < super.ruleset.getConfig().getMaximumSplitCount()
 				 ; count++)
 			{
-				if (count < super.ruleset.getConfig().getMaximumSplitCount() - 1)
-				{
-					super.initSplitHands();
-				}
-
+				super.initSplitHands();
 				super.engine.playerDoubleDown();
 			}
 
+			super.engine.playerDoubleDown();
 			super.engine.advanceAfterPlayerTurn();
 		}
 

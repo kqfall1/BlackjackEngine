@@ -19,7 +19,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.JACK);
+		super.initCardsForSplittingWithoutHitting(Rank.JACK);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.ruleset.getConfig().setSurrenderingAllowed(true);

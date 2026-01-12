@@ -18,7 +18,7 @@ final class DoublingDownOnSplitHandsAllowed extends CustomDeckTest
 	@Override
 	public void init() throws InsufficientChipsException, IOException
 	{
-		super.initCardsForSplitting(Rank.TEN);
+		super.initCardsForSplittingAndHittingOnce(Rank.TEN);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.ruleset.getConfig().setDoublingDownOnSplitHandsAllowed(true);
