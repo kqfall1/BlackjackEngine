@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.controllers;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
@@ -35,7 +36,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private final BlackjackEngine engine;
 	private final ConsoleHandler handler;
 	private final InputManager inputManager;
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.BlackjackEngine";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine";
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 

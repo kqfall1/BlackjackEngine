@@ -1,10 +1,9 @@
-package com.github.kqfall1.java.blackjackEngine.controllers;
+package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.betting.*;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Deck;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.entities.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;

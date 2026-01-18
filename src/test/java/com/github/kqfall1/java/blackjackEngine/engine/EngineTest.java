@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
-import com.github.kqfall1.java.blackjackEngine.controllers.BlackjackEngine;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
