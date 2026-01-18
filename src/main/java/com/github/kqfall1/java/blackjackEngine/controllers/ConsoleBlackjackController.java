@@ -84,7 +84,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			LOGGER_NAME,
 			ruleset
 		);
-		controller.getEngine().getLogger().setLevel(Level.FINE);
+		controller.getEngine().getLogger().setLevel(Level.OFF);
 		controller.getEngine().start();
 	}
 
