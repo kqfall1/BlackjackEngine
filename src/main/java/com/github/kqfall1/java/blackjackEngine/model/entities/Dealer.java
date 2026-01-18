@@ -27,11 +27,9 @@ public final class Dealer
 		setHand(new Hand());
 	}
 
-	public Dealer(double cutoffPercentageNumerator, Rank[] includedRanks, int numberOfDecks)
+	public Dealer(Rank[] includedRanks, int numberOfDecks, double penetration)
 	{
-		assert cutoffPercentageNumerator >= Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR && cutoffPercentageNumerator <= Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
-			: "cutoffPercentageNumerator < Shoe.MINIMUM_CUTOFF_PERCENTAGE || cutoffPercentageNumerator > Shoe.MAXIMUM_CUTOFF_PERCENTAGE";
-		setCardSource(new Shoe(cutoffPercentageNumerator, includedRanks, numberOfDecks));
+		setCardSource(new Shoe(includedRanks, numberOfDecks, penetration));
 		setHand(new Hand());
 	}
 

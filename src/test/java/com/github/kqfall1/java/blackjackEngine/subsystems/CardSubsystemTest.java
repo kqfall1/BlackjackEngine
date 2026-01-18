@@ -19,11 +19,11 @@ public final class CardSubsystemTest
 {
 	private static final Card ACE_OF_CLUBS_1 = new Card(Rank.ACE, Suit.CLUB);
 	private static Card ACE_OF_CLUBS_2;
-	private static final double CUTOFF_PERCENTAGE_RANGE =
-		Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR - Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
+	private static final double PENETRATION_RANGE =
+		Shoe.MAXIMUM_PENETRATION - Shoe.MINIMUM_PENETRATION;
 	private static Deck deck1;
 	private static Set<Card> drawnCards;
-	private static double randomCutoffPercentageNumerator;
+	private static double randomPenetration;
 	private static Shoe shoe1;
 	private static Shoe shoe2;
 	private static final int SHOE_DECK_AMOUNT = 8;
@@ -37,19 +37,19 @@ public final class CardSubsystemTest
 		ACE_OF_CLUBS_2 = ACE_OF_CLUBS_1;
 		deck1 = new Deck();
 		drawnCards = new HashSet<>();
-		randomCutoffPercentageNumerator
-			= Math.random() * CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
+		randomPenetration
+			= Math.random() * PENETRATION_RANGE + Shoe.MINIMUM_PENETRATION;
 		final var CONFIG = new BlackjackRulesetConfiguration();
 		final var RULESET = new StandardBlackjackRuleset(CONFIG);
 		shoe1 = new Shoe(
-			randomCutoffPercentageNumerator,
 			RULESET.getIncludedRanks(),
-			SHOE_DECK_AMOUNT
+			SHOE_DECK_AMOUNT,
+				randomPenetration
 		);
 		shoe2 = new Shoe(
-			randomCutoffPercentageNumerator,
 			RULESET.getIncludedRanks(),
-			SHOE_DECK_AMOUNT
+			SHOE_DECK_AMOUNT,
+				randomPenetration
 		);
 		testDeck = new TestDeck();
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(ACE_OF_CLUBS_1, TWO_OF_DIAMONDS)));
@@ -99,17 +99,17 @@ public final class CardSubsystemTest
 	private void shoeTest()
 	{
 		assertEquals(
-			shoe1.getCutoffPercentageNumerator() / Shoe.ONE_HUNDRED,
-			shoe1.getCutoffPercentage()
+			shoe1.getPenetration() / Shoe.ONE_HUNDRED,
+			shoe1.getPenetrationPercentage()
 		);
 		assertEquals(
-			shoe2.getCutoffPercentageNumerator() / Shoe.ONE_HUNDRED,
-			shoe2.getCutoffPercentage()
+			shoe2.getPenetration() / Shoe.ONE_HUNDRED,
+			shoe2.getPenetrationPercentage()
 		);
-		assertEquals(randomCutoffPercentageNumerator, shoe1.getCutoffPercentageNumerator());
+		assertEquals(randomPenetration, shoe1.getPenetration());
 		assertEquals(
-			shoe1.getCutoffPercentageNumerator(),
-			shoe2.getCutoffPercentageNumerator()
+			shoe1.getPenetration(),
+			shoe2.getPenetration()
 		);
 		assertEquals(
 			BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT * SHOE_DECK_AMOUNT,

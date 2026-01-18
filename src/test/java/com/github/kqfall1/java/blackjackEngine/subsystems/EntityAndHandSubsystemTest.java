@@ -26,7 +26,6 @@ public final class EntityAndHandSubsystemTest
 {
 	private final Bet BET = new Bet(BET_AND_POT_INITIAL_AMOUNT);
 	private static final BigDecimal BET_AND_POT_INITIAL_AMOUNT = BigDecimal.valueOf(1000);
-	private Hand blackjack;
 	private Dealer dealer;
 	private Hand dealerHand;
 	private static final int DECK_RANGE = 20;
@@ -38,8 +37,8 @@ public final class EntityAndHandSubsystemTest
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	private Hand pocketPair = new Hand();
 	private Shoe shoe;
-	public static final double SHOE_CUTOFF_PERCENTAGE_RANGE =
-		Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR - Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
+	public static final double SHOE_PENETRATION_RANGE =
+		Shoe.MAXIMUM_PENETRATION - Shoe.MINIMUM_PENETRATION;
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 5000;
 
@@ -127,16 +126,15 @@ public final class EntityAndHandSubsystemTest
 	void init() throws InsufficientChipsException
 	{
 		final var CONFIG = new BlackjackRulesetConfiguration();
-		final var CUTOFF_PERCENTAGE_NUMERATOR
-			= Math.random() * SHOE_CUTOFF_PERCENTAGE_RANGE + Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR;
+		final var PENETRATION
+			= Math.random() * SHOE_PENETRATION_RANGE + Shoe.MINIMUM_PENETRATION;
 		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(MINIMUM_NUMBER_OF_DECKS, DECK_RANGE + MINIMUM_NUMBER_OF_DECKS);
 		final var RULESET = new StandardBlackjackRuleset(CONFIG);
 
-		blackjack = randomBlackjack();
 		dealer = new Dealer(
-			CUTOFF_PERCENTAGE_NUMERATOR,
 			RULESET.getIncludedRanks(),
-			NUMBER_OF_DECKS
+			NUMBER_OF_DECKS,
+			PENETRATION
 		);
 		dealerHand = new Hand();
 		mainContext = new HandContext(BET, HandContextType.MAIN);
@@ -145,9 +143,9 @@ public final class EntityAndHandSubsystemTest
 		mainHand = new Hand();
 		pocketPair = randomPocketPair();
 		shoe = new Shoe(
-			90,
 			RULESET.getIncludedRanks(),
-			8
+			8,
+			90
 		);
 		splitContext = new HandContext(BET, HandContextType.SPLIT);
 	}
@@ -184,24 +182,6 @@ public final class EntityAndHandSubsystemTest
 		catch (InsufficientChipsException ignored) {}
 	}
 
-	private Hand randomBlackjack()
-	{
-		final var ACE = new Card(Rank.ACE, randomSuit());
-		final var BLACKJACK_HAND = new Hand();
-		final int MAX_ORDINAL = Rank.values().length - 1;
-		final int MIN_ORDINAL = Rank.TEN.ordinal();
-		final int RANDOM_RANK_INDEX = (int) (Math.random() *
-			(MAX_ORDINAL - MIN_ORDINAL) + MIN_ORDINAL);
-
-		BLACKJACK_HAND.addCards(ACE);
-		BLACKJACK_HAND.addCards(new Card(
-			Rank.values()[RANDOM_RANK_INDEX],
-			randomSuit()
-		));
-
-		return BLACKJACK_HAND;
-	}
-
 	private Hand randomPocketPair()
 	{
 		final var POCKET_PAIR = new Hand();
@@ -217,10 +197,5 @@ public final class EntityAndHandSubsystemTest
 		));
 
 		return POCKET_PAIR;
-	}
-
-	private Suit randomSuit()
-	{
-		return Suit.values()[(int) (Math.random() * Suit.values().length)];
 	}
 }

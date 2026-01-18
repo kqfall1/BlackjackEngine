@@ -18,8 +18,8 @@ public final class BlackjackRulesetConfiguration
 	private int maximumSplitCount;
 	private BigDecimal minimumBetAmount;
 	private BigDecimal playerInitialChips;
-	private double shoeCutoffPercentageNumerator;
 	private int shoeDeckCount;
+	private double shoePenetration;
 	private boolean shouldDealerHitOnSoft17;
 	private boolean splittingAcesAllowed;
 	private boolean surrenderingAllowed;
@@ -29,7 +29,7 @@ public final class BlackjackRulesetConfiguration
 	{
 		setMaximumSplitCount(BlackjackConstants.DEFAULT_MAXIMUM_SPLIT_COUNT);
 		setMinimumBetAmount(BlackjackConstants.DEFAULT_MINIMUM_BET_AMOUNT);
-		setShoeCutoffPercentageNumerator(BlackjackConstants.DEFAULT_SHOE_CUTOFF_PERCENTAGE_NUMERATOR);
+		setShoePenetration(BlackjackConstants.DEFAULT_SHOE_PENETRATION);
 		setShoeDeckCount(BlackjackConstants.DEFAULT_SHOE_DECK_COUNT);
 	}
 
@@ -48,14 +48,14 @@ public final class BlackjackRulesetConfiguration
 		return playerInitialChips;
 	}
 
-	public double getShoeCutoffPercentageNumerator()
-	{
-		return shoeCutoffPercentageNumerator;
-	}
-
 	public int getShoeDeckCount()
 	{
 		return shoeDeckCount;
+	}
+
+	public double getShoePenetration()
+	{
+		return shoePenetration;
 	}
 
 	public boolean getShouldDealerHitOnSoft17()
@@ -123,18 +123,6 @@ public final class BlackjackRulesetConfiguration
 		this.playerInitialChips = playerInitialChips;
 	}
 
-	public void setShoeCutoffPercentageNumerator(double shoeCutoffPercentageNumerator)
-	{
-		InputManager.validateNumber(
-			shoeCutoffPercentageNumerator,
-			"shoeCutoffPercentageNumerator",
-			Shoe.MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR,
-			Shoe.MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
-		);
-
-		this.shoeCutoffPercentageNumerator = shoeCutoffPercentageNumerator;
-	}
-
 	public void setShoeDeckCount(int shoeDeckCount)
 	{
 		InputManager.validateNumber(
@@ -145,6 +133,18 @@ public final class BlackjackRulesetConfiguration
 		);
 
 		this.shoeDeckCount = shoeDeckCount;
+	}
+
+	public void setShoePenetration(double shoePenetration)
+	{
+		InputManager.validateNumber(
+				shoePenetration,
+				"shoePenetration",
+				Shoe.MINIMUM_PENETRATION,
+				Shoe.MAXIMUM_PENETRATION
+		);
+
+		this.shoePenetration = shoePenetration;
 	}
 
 	public void setShouldDealerHitOnSoft17(boolean value)
@@ -171,15 +171,15 @@ public final class BlackjackRulesetConfiguration
 	public String toString()
 	{
 		return String.format(
-			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeCutoffPercentageNumerator=%.2f,shoeDeckCount=%d,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
+			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
 			getClass().getName(),
 			isDoublingDownOnSplitHandsAllowed(),
 			isLoggingEnabled(),
 			getMaximumSplitCount(),
 			getMinimumBetAmount(),
 			getPlayerInitialChips(),
-			getShoeCutoffPercentageNumerator(),
 			getShoeDeckCount(),
+			getShoePenetration(),
 			getShouldDealerHitOnSoft17(),
 			isSplittingAcesAllowed(),
 			isSurrenderingAllowed(),

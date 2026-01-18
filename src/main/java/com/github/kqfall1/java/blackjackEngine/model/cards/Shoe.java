@@ -21,16 +21,17 @@ public final class Shoe implements Drawable
  	 */
 	private final int cutoffAmount;
 
-	/**
- 	 * Expresses the smallest percentage of {@code Card} objects in this {@code Shoe}
-	 * for {@code shufflingRequired} to remain {@code false}. It is a {@code double}
-	 * and must be between {@code 10} and {@code 90} inclusive.
- 	 */
-	private final double cutoffPercentageNumerator;
 	private final int numberOfDecks;
 	public static final double ONE_HUNDRED = 100.0;
-	public static final double MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR = 90.0;
-	public static final double MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR = 10.0;
+	public static final double MAXIMUM_PENETRATION = 90.0;
+	public static final double MINIMUM_PENETRATION = 10.0;
+
+	/**
+	 * Expresses the smallest percentage of {@code Card} objects in this {@code Shoe}
+	 * for {@code shufflingRequired} to remain {@code false}. It is a {@code double}
+	 * and must be between {@code 10} and {@code 90} inclusive.
+	 */
+	private final double penetration;
 
 	/**
  	 * Is used to determine whether the {@code Shoe} should be reused for another
@@ -39,13 +40,13 @@ public final class Shoe implements Drawable
 	private boolean shufflingRequired;
 
 	/**
- 	 * An amount added to the return value of {getCutoffPercentage} of this
+ 	 * An amount added to the return value of {getPenetration} of this
 	 * {@code Shoe} to add variance to the values of different {@code Shoe}
 	 * object's {@code cutoffAmount} values.
  	 */
 	private static final double VARIANCE = 0.05;
 
-	public Shoe(double cutoffPercentageNumerator, Rank[] includedRanks, int numberOfDecks)
+	public Shoe(Rank[] includedRanks, int numberOfDecks, double penetration)
 	{
 		final List<Card> cardsList = new ArrayList<>();
 
@@ -57,11 +58,11 @@ public final class Shoe implements Drawable
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);
 
-		assert cutoffPercentageNumerator >= MINIMUM_CUTOFF_PERCENTAGE_NUMERATOR && cutoffPercentageNumerator <= MAXIMUM_CUTOFF_PERCENTAGE_NUMERATOR
-			: "cutoffPercentageNumerator < MINIMUM_CUTOFF_PERCENTAGE || cutoffPercentageNumerator > MAXIMUM_CUTOFF_PERCENTAGE";
-		this.cutoffPercentageNumerator = cutoffPercentageNumerator;
+		assert penetration >= MINIMUM_PENETRATION && penetration <= MAXIMUM_PENETRATION
+			: "penetration < MINIMUM_PENETRATION || penetration > MAXIMUM_PENETRATION";
+		this.penetration = penetration;
 		cutoffAmount =
-			(int) (getCards().size() * (getCutoffPercentage() + Math.random() * VARIANCE));
+			(int) (getCards().size() * (getPenetrationPercentage() + Math.random() * VARIANCE));
 		assert cutoffAmount > 0 && cutoffAmount < cards.size()
 			: "cutCardIndex <= 0 || cutCardIndex >= cards.size()";
 
@@ -97,24 +98,24 @@ public final class Shoe implements Drawable
 		return cutoffAmount;
 	}
 
-	public double getCutoffPercentage()
+	public int getNumberOfDecks()
 	{
-		return cutoffPercentageNumerator / ONE_HUNDRED;
+		return numberOfDecks;
 	}
 
-	public double getCutoffPercentageNumerator()
+	public double getPenetration()
 	{
-		return cutoffPercentageNumerator;
+		return penetration;
+	}
+
+	public double getPenetrationPercentage()
+	{
+		return penetration / ONE_HUNDRED;
 	}
 
 	public boolean isShufflingRequired()
 	{
 		return shufflingRequired;
-	}
-
-	public int getNumberOfDecks()
-	{
-		return numberOfDecks;
 	}
 
 	private void setShufflingRequired(boolean value)
@@ -126,13 +127,13 @@ public final class Shoe implements Drawable
 	public String toString()
 	{
 		return String.format(
-			"%s[cards=%s,cutoffAmount=%s,cutoffPercentage=%s,cutoffPercentageNumerator=%s,numberOfDecks=%s,shufflingRequired=%s]",
+			"%s[cards=%s,cutoffAmount=%s,numberOfDecks=%s,penetration=%s,penetrationPercentage=%s,shufflingRequired=%s]",
 			getClass().getName(),
 			getCards(),
 			getCutoffAmount(),
-			getCutoffPercentage(),
-			getCutoffPercentageNumerator(),
 			getNumberOfDecks(),
+			getPenetration(),
+			getPenetrationPercentage(),
 			isShufflingRequired()
 		);
 	}

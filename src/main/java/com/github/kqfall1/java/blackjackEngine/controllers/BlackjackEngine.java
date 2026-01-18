@@ -64,9 +64,9 @@ public class BlackjackEngine
 		assert ruleset != null : "ruleset == null";
 		this.RULESET = ruleset;
 		DEALER = new Dealer(
-			ruleset.getConfig().getShoeCutoffPercentageNumerator(),
 			ruleset.getIncludedRanks(),
-			ruleset.getConfig().getShoeDeckCount()
+			ruleset.getConfig().getShoeDeckCount(),
+			ruleset.getConfig().getShoePenetration()
 		);
 		this.LISTENER = listener;
 		if (ruleset.getConfig().isLoggingEnabled())
@@ -726,9 +726,9 @@ public class BlackjackEngine
 		{
 			getDealer().setCardSource(
 				new Shoe(
-					RULESET.getConfig().getShoeCutoffPercentageNumerator(),
 					RULESET.getIncludedRanks(),
-					BlackjackConstants.DEFAULT_SHOE_DECK_COUNT
+					BlackjackConstants.DEFAULT_SHOE_DECK_COUNT,
+					RULESET.getConfig().getShoePenetration()
 				)
 			);
 		}
