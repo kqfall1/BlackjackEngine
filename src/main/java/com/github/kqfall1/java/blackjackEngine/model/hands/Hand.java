@@ -136,8 +136,7 @@ public final class Hand
 
 	public boolean isSoft()
 	{
-		return getAceCount() > 0
-		&& getLowScore() != getScore();
+		return getAceCount() > 0 && getLowScore() != getScore();
 	}
 
 	public void removeCard(int cardIndex)

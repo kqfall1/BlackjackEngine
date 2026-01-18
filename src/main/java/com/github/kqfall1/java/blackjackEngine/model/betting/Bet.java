@@ -7,7 +7,7 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * Immutable wagers placed by {@code Player} actors.
+ * Immutable wagers placed by {@code Player} actors at the beginning of a blackjack betting round.
  *
  * @author kqfall1
  * @since 13/12/2025

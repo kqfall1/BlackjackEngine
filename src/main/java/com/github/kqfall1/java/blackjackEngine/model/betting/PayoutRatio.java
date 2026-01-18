@@ -5,8 +5,7 @@ import java.math.MathContext;
 import java.util.Objects;
 
 /**
- * Represent the ratios used by {@code BlackjackEngine} logic to calculate
- * {@code Player} winnings.
+ * Represent the ratios used by {@code BlackjackEngine} logic to calculate {@code Player} winnings.
  *
  * @author kqfall1
  * @since 13/12/2025

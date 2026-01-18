@@ -11,9 +11,9 @@ import java.util.*;
  * @author kqfall1
  * @since 31/12/2025
  */
-public class Shoe implements Drawable
+public final class Shoe implements Drawable
 {
-	final Queue<Card> cards;
+	private final Queue<Card> cards;
 
 	/**
  	 * The amount of {@code Card} objects needed to be left in this {@code Shoe}
@@ -48,10 +48,12 @@ public class Shoe implements Drawable
 	public Shoe(double cutoffPercentageNumerator, Rank[] includedRanks, int numberOfDecks)
 	{
 		final List<Card> cardsList = new ArrayList<>();
+
 		for (int count = 0; count < numberOfDecks; count++)
 		{
 			cardsList.addAll(new Deck(includedRanks).getCards());
 		}
+
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);
 

@@ -12,7 +12,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
  * <p>
  * The encapsulated {@code Hand} is played in a mechanical manner after all
  * {@code Player} {@code HandContext} objects are finalized, according to rules
- * defined in {@code RuleConfig}.
+ * defined in a {@code BlackjackRuleset}.
  * </p>
  */
 public final class Dealer

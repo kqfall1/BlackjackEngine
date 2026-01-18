@@ -9,7 +9,6 @@ import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,14 +34,12 @@ public interface BlackjackRuleset
 
 	default Map<String, PayoutRatio> getPayoutRatios()
 	{
-		Map<String, PayoutRatio> payoutRatios = new HashMap<>();
-
-		payoutRatios.put(BlackjackConstants.BLACKJACK_RATIO_KEY, BlackjackConstants.BLACKJACK_RATIO);
-		payoutRatios.put(BlackjackConstants.INSURANCE_RATIO_KEY, BlackjackConstants.INSURANCE_RATIO);
-		payoutRatios.put(BlackjackConstants.PUSH_RATIO_KEY, BlackjackConstants.PUSH_RATIO);
-		payoutRatios.put(BlackjackConstants.SURRENDER_RATIO_KEY, BlackjackConstants.SURRENDER_RATIO);
-
-		return payoutRatios;
+		return Map.of(
+			BlackjackConstants.BLACKJACK_RATIO_KEY, BlackjackConstants.BLACKJACK_RATIO,
+			BlackjackConstants.INSURANCE_RATIO_KEY, BlackjackConstants.INSURANCE_RATIO,
+			BlackjackConstants.PUSH_RATIO_KEY, BlackjackConstants.PUSH_RATIO,
+			BlackjackConstants.SURRENDER_RATIO_KEY, BlackjackConstants.SURRENDER_RATIO
+		);
 	}
 
 	default boolean isDealerSecondCardFaceDown()

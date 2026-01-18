@@ -4,7 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
 /**
  * Encapsulates data about failures resulting from drawing a {@code Card} from
- * a {@code Deck} or {@code Shoe} with no available {@code Card} objects.
+ * a {@code Drawable} with no available {@code Card} objects.
  *
  * @author kqfall1
  * @since 14/12/2025

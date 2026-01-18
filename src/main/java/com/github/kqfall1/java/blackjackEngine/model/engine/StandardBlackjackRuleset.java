@@ -75,7 +75,9 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 		return currentState == EngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
 			&& activeHandContext.getHand().isPocketPair()
-			&& activeHandContextIndex < config.getMaximumSplitCount()
+			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE
+				|| getConfig().isSplittingAcesAllowed())
+		    && activeHandContextIndex < config.getMaximumSplitCount()
 			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
 	}
 
