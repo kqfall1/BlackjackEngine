@@ -4,7 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import java.math.BigDecimal;
 
 /**
- * A static class that holds values corresponding to standard, universal blackjack truths.
+ * A static class that holds constant values corresponding to standard, universal blackjack truths.
  *
  * @author kqfall1
  * @since 03/01/2026

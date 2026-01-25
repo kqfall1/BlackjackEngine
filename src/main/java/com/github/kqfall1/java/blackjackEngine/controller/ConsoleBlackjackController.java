@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.controllers;
+package com.github.kqfall1.java.blackjackEngine.controller;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
