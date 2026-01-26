@@ -19,7 +19,7 @@ public final class UiConstants
     public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
     public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
     public static final ImageIcon MAIN_MENU_BACKGROUND
-            = new ImageIcon(UiConstants.class.getResource("/images/MainMenuBackground.jpg"));
+            = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
 
     private UiConstants() {}
 }

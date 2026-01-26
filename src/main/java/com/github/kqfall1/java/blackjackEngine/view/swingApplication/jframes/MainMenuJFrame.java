@@ -1,10 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
 import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants.*;
-
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.ApplicationJMenuBar;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuBackground;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.ApplicationBackground;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
 import javax.swing.*;
@@ -43,7 +42,7 @@ public final class MainMenuJFrame extends JFrame
         final var UI_ACTIONS = new UiActions();
         setJMenuBar(new ApplicationJMenuBar(UI_ACTIONS));
 
-        final var BACKGROUND = new MainMenuBackground();
+        final var BACKGROUND = new ApplicationBackground();
         BACKGROUND.setLayout(new BorderLayout());
         setContentPane(BACKGROUND);
 
