@@ -1,6 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
-import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingApplicationConstants.*;
+import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants.*;
+
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.ApplicationJMenuBar;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuBackground;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
@@ -23,26 +25,31 @@ public final class MainMenuJFrame extends JFrame
 
     public MainMenuJFrame()
     {
+        final var ICON_IMAGE_HEIGHT = 32;
+        final var ICON_IMAGE_WIDTH = 32;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        setIconImage(
+            JFRAME_LOGO.getImage().getScaledInstance(
+                ICON_IMAGE_WIDTH,
+                ICON_IMAGE_HEIGHT,
+                Image.SCALE_SMOOTH
+            )
+        );
         setSize(JFRAME_DIMENSION);
         setResizable(false);
         setTitle(JFRAME_TITLE);
-        setJMenuBar(new ApplicationJMenuBar());
+
+        final var UI_ACTIONS = new UiActions();
+        setJMenuBar(new ApplicationJMenuBar(UI_ACTIONS));
 
         final var BACKGROUND = new MainMenuBackground();
-        BACKGROUND.setBounds(0, 0, JFRAME_DIMENSION.width, JFRAME_DIMENSION.height);
-        add(BACKGROUND);
+        BACKGROUND.setLayout(new BorderLayout());
+        setContentPane(BACKGROUND);
 
-        final var BUTTON_PANEL = new MainMenuButtonJPanel();
-        final var BUTTON_PANEL_SIZE = BUTTON_PANEL.getPreferredSize();
-        final var COORDINATE_DIVISOR = 4;
-        BUTTON_PANEL.setBounds(
-             JFRAME_DIMENSION.width / COORDINATE_DIVISOR,
-             JFRAME_DIMENSION.height / COORDINATE_DIVISOR,
-             BUTTON_PANEL_SIZE.width,
-             BUTTON_PANEL_SIZE.height
-       );
-        add(BUTTON_PANEL);
+        final var PANEL_WRAPPER = new JPanel(new GridBagLayout());
+        PANEL_WRAPPER.add(new MainMenuButtonJPanel(UI_ACTIONS));
+        PANEL_WRAPPER.setOpaque(false);
+        add(PANEL_WRAPPER, BorderLayout.CENTER);
     }
 }

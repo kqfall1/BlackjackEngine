@@ -1,40 +1,22 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingApplicationConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 
+/**
+ * A {@code JMenuBar} to be used for all {@code JFrame} objects for the Swing user interface.
+ *
+ * @author kqfall1
+ * @since 25/01/2026
+ */
 public class ApplicationJMenuBar extends JMenuBar
 {
-    public ApplicationJMenuBar()
+    public ApplicationJMenuBar(UiActions uiActions)
     {
-        final var FILE_MENU = new JMenu(SwingApplicationConstants.JMENU_FILE_LABEL);
-
-        final var EXIT_ACTION = new AbstractAction()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                System.exit(0);
-            }
-        };
-        EXIT_ACTION.putValue(Action.NAME, SwingApplicationConstants.JMENU_ITEM_EXIT_LABEL);
-        EXIT_ACTION.putValue(Action.SHORT_DESCRIPTION, SwingApplicationConstants.JMENU_ITEM_EXIT_LABEL);
-        FILE_MENU.add(EXIT_ACTION);
-
-        final var NEW_GAME_ACTION = new AbstractAction()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-
-            }
-        };
-        NEW_GAME_ACTION.putValue(Action.NAME, SwingApplicationConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        NEW_GAME_ACTION.putValue(Action.SHORT_DESCRIPTION, SwingApplicationConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        FILE_MENU.add(NEW_GAME_ACTION);
-
+        final var FILE_MENU = new JMenu(UiConstants.JMENU_FILE_LABEL);
+        FILE_MENU.add(uiActions.getExit());
+        FILE_MENU.add(uiActions.getNewGame());
         add(FILE_MENU);
     }
 }

@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Began a foundation for the Swing GUI application.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Added a simple JMenuBar to the Swing application.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/SwingApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/SwingApplicationConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJpanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/SwingApplicationConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/ApplicationJMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/ApplicationJMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuBackground.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -396,11 +398,18 @@
       <option name="project" value="LOCAL" />
       <updated>1769308774251</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added a simple JMenuBar to the Swing application.">
+      <option name="closed" value="true" />
+      <created>1769377867000</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1769377867000</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tightened the access modifiers of Hand.java and added an isSoft abstraction. Also patched a logic bug in StandardRuleConfig.isDealerTurnActive." />
     <MESSAGE value="Created a Shoe abstraction; also introduced the Drawable interface for polymorphic card drawing." />
     <MESSAGE value="Tweaked EmptyDeckException.java to become NoMoreCardsException.java. Also put final touches on Shoe.java." />
     <MESSAGE value="Finalized the Shoe.java abstraction and integrated it into CardSubsystemTest.java." />
@@ -425,7 +434,8 @@
     <MESSAGE value="Renamed cutoffPercentageNumerator of Shoe.java to penetration. Applied final touches before the Swing GUI construction." />
     <MESSAGE value="Moved BlackjackEngine.java to model/engine." />
     <MESSAGE value="Began a foundation for the Swing GUI application." />
-    <option name="LAST_COMMIT_MESSAGE" value="Began a foundation for the Swing GUI application." />
+    <MESSAGE value="Added a simple JMenuBar to the Swing application." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a simple JMenuBar to the Swing application." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
