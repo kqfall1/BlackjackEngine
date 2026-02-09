@@ -10,7 +10,7 @@ import javax.swing.*;
 
 /**
  * Allows players to choose a high-level operation of the application to be executed (ie, starting a new blackjack game,
- * exiting the application, configuring settings, etc.).
+ * exiting the application, etc.).
  *
  * @author kqfall1
  * @since 24/01/2026
@@ -19,13 +19,14 @@ public final class MainMenuJFrame extends JFrame
 {
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(() -> new MainMenuJFrame().setVisible(true));
+        EventQueue.invokeLater(MainMenuJFrame::new);
     }
 
     public MainMenuJFrame()
     {
         final var ICON_IMAGE_HEIGHT = 32;
         final var ICON_IMAGE_WIDTH = 32;
+        final var UI_ACTIONS = UiActions.getInstance();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(
@@ -35,11 +36,11 @@ public final class MainMenuJFrame extends JFrame
                 Image.SCALE_SMOOTH
             )
         );
+        UI_ACTIONS.setKeystrokes(this);
         setSize(JFRAME_DIMENSION);
         setResizable(false);
         setTitle(JFRAME_TITLE);
 
-        final var UI_ACTIONS = new UiActions();
         setJMenuBar(new ApplicationJMenuBar(UI_ACTIONS));
 
         final var BACKGROUND = new ApplicationBackground();
@@ -50,5 +51,7 @@ public final class MainMenuJFrame extends JFrame
         PANEL_WRAPPER.add(new MainMenuButtonJPanel(UI_ACTIONS));
         PANEL_WRAPPER.setOpaque(false);
         add(PANEL_WRAPPER, BorderLayout.CENTER);
+
+        setVisible(true);
     }
 }

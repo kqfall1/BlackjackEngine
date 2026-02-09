@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import java.awt.*;
 import javax.swing.*;
 
@@ -19,7 +20,7 @@ public final class MainMenuButtonJPanel extends JPanel
 
     public MainMenuButtonJPanel(UiActions uiActions)
     {
-        setBackground(Color.LIGHT_GRAY);
+        setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         add(Box.createVerticalStrut(MARGIN_Y));
@@ -35,6 +36,21 @@ public final class MainMenuButtonJPanel extends JPanel
         add(Box.createVerticalStrut(MARGIN_Y));
     }
 
+    private int getJButtonCount()
+    {
+        var jbuttonCount = 0;
+
+        for (Component component : getComponents())
+        {
+            if (component instanceof JButton)
+            {
+                jbuttonCount++;
+            }
+        }
+
+        return jbuttonCount;
+    }
+
     @Override
     public Dimension getMaximumSize()
     {
@@ -44,15 +60,16 @@ public final class MainMenuButtonJPanel extends JPanel
     @Override
     public Dimension getPreferredSize()
     {
-        int spaceBetweenButtons = MARGIN_Y * 2;
+        final var JBUTTON_COUNT = getJButtonCount();
+        var spaceBetweenButtons = MARGIN_Y * 2;
 
-        for (int count = 0; count < getComponentCount(); count++)
+        for (var count = 0; count < JBUTTON_COUNT; count++)
         {
             spaceBetweenButtons += MARGIN_Y;
         }
 
-        final int HEIGHT = getComponentCount() * JBUTTON_HEIGHT + spaceBetweenButtons;
-        final int WIDTH = MARGIN_X * 2 + JBUTTON_WIDTH;
+        final var HEIGHT = JBUTTON_COUNT * JBUTTON_HEIGHT + spaceBetweenButtons;
+        final var WIDTH = MARGIN_X * 2 + JBUTTON_WIDTH;
         return new Dimension(WIDTH, HEIGHT);
     }
 
@@ -61,7 +78,8 @@ public final class MainMenuButtonJPanel extends JPanel
         private MainMenuJPanelJButton(Action action)
         {
             super(action);
-            setBackground(Color.GREEN);
+            setBackground(UiConstants.JBUTTON_BACKGROUND_COLOR);
+            setFont(UiConstants.JBUTTON_FONT);
             setForeground(Color.BLACK);
         }
 

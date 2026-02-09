@@ -11,6 +11,8 @@ import javax.swing.*;
  */
 public final class UiConstants
 {
+    public static final Color JBUTTON_BACKGROUND_COLOR = new Color(238, 220, 130);
+    public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18) ;
     public static final Dimension JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon JFRAME_LOGO
             = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
