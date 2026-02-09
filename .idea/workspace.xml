@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Updated sourced.md and renamed files for semantic clarity.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/NewGameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/NewGameJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -421,11 +421,18 @@
       <option name="project" value="LOCAL" />
       <updated>1769393740574</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method.">
+      <option name="closed" value="true" />
+      <created>1770597008220</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1770597008220</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Finalized the Shoe.java abstraction and integrated it into CardSubsystemTest.java." />
     <MESSAGE value="Patched a subtle error in ResetTest.java." />
     <MESSAGE value="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java." />
     <MESSAGE value="Integrated the Shoe abstraction into BlackjackEngine.java and StandardRuleConfig.java." />
@@ -450,7 +457,8 @@
     <MESSAGE value="Added a simple JMenuBar to the Swing application." />
     <MESSAGE value="Configured a basic UI and exiting functionality for the main menu. Created scaffolding for future features." />
     <MESSAGE value="Updated sourced.md and renamed files for semantic clarity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated sourced.md and renamed files for semantic clarity." />
+    <MESSAGE value="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method." />
+    <option name="LAST_COMMIT_MESSAGE" value="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

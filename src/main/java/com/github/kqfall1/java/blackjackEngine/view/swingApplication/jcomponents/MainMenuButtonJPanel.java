@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * A {@code JPanel to contain all {@code JButton} objects required by a {@code MainMenuJFrame} object.
+ * Contains all {@code JButton} objects required by a {@code MainMenuJFrame} object.
  *
  * @author kqfall1
  * @since 24/01/2026
@@ -20,8 +20,8 @@ public final class MainMenuButtonJPanel extends JPanel
 
     public MainMenuButtonJPanel(UiActions uiActions)
     {
-        setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setOpaque(false);
 
         add(Box.createVerticalStrut(MARGIN_Y));
         final var NEW_GAME_BUTTON = new MainMenuJPanelJButton(uiActions.getNewGame());

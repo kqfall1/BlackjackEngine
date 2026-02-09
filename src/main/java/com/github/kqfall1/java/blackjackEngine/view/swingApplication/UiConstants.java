@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * A static class that holds simple. constant values required for the Swing user interface.
+ * A static class that holds simple, constant values required for the Swing user interface.
  *
  * @author kqfall1
  * @since 24/01/2026
