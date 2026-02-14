@@ -1,6 +1,4 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
-
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import com.github.kqfall1.java.interfaces.ErrorPresenter;
 
 import javax.swing.*;

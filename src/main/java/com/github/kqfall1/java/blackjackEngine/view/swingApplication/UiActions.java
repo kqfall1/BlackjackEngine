@@ -39,8 +39,10 @@ public final class UiActions
             {
                 final var ROOT = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
                 final var CONFIG_DIALOG = new JDialog(ROOT, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
+                final var CONFIG_DIALOG_DIMENSION = UiConstants.getGameConfigJDialogDimension();
                 CONFIG_DIALOG.setContentPane(new GameConfigJPanel());
-                CONFIG_DIALOG.setSize(UiConstants.getGameConfigJDialogDimension());
+                CONFIG_DIALOG.setSize(CONFIG_DIALOG_DIMENSION);
+                CONFIG_DIALOG.setLocationRelativeTo(ROOT);
                 CONFIG_DIALOG.setVisible(true);
             }
         };
