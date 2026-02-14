@@ -5,8 +5,7 @@ import com.github.kqfall1.java.managers.InputManager;
 import java.math.BigDecimal;
 
 /**
- * A configuration object to be encapsulated by a {@code BlackjackRuleset} to determine valid
- * game actions.
+ * A configuration object to be encapsulated by a {@code BlackjackRuleset} to determine valid game actions.
  *
  * @author kqfall1
  * @since 14/12/2025

@@ -27,7 +27,7 @@ public abstract class BlackjackJFrame extends JFrame
         setContentPane(BACKGROUND);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(
-            JFRAME_LOGO.getImage().getScaledInstance(
+            BLACKJACK_JFRAME_LOGO.getImage().getScaledInstance(
                 ICON_IMAGE_WIDTH,
                 ICON_IMAGE_HEIGHT,
                 Image.SCALE_SMOOTH
@@ -36,7 +36,7 @@ public abstract class BlackjackJFrame extends JFrame
         setJMenuBar(new ApplicationJMenuBar(UI_ACTIONS));
         UI_ACTIONS.setKeystrokes(this);
         setResizable(false);
-        setSize(JFRAME_DIMENSION);
-        setTitle(JFRAME_TITLE);
+        setSize(BLACKJACK_JFRAME_DIMENSION);
+        setTitle(BLACKJACK_JFRAME_TITLE);
     }
 }
