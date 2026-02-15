@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Created a skeleton for GameConfigJPanel.java and improved UiConstants.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Am fully prepared to implement GameConfigJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/MainMenuButtonJPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -444,11 +445,18 @@
       <option name="project" value="LOCAL" />
       <updated>1771093768652</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Am fully prepared to implement GameConfigJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1771095643020</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1771095643020</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Integrated the Shoe abstraction into BlackjackEngine.java and StandardRuleConfig.java." />
     <MESSAGE value="Patched a bug in PredicateTest.java and created IntegrationTest.java to ensure Shoe functionalities." />
     <MESSAGE value="Patched minor issues in various classes before a major refactor." />
     <MESSAGE value="Decoupled domain constants/truths from StandardRuleConfig.java." />
@@ -473,7 +481,8 @@
     <MESSAGE value="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method." />
     <MESSAGE value="Created BlackjackFrame.java to abstract JFrame configuration; began the NewGameJFrame.java code." />
     <MESSAGE value="Created a skeleton for GameConfigJPanel.java and improved UiConstants.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created a skeleton for GameConfigJPanel.java and improved UiConstants.java." />
+    <MESSAGE value="Am fully prepared to implement GameConfigJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Am fully prepared to implement GameConfigJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
