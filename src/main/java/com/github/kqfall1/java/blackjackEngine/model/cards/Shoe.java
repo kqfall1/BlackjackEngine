@@ -23,7 +23,9 @@ public final class Shoe implements Drawable
 
 	private final int numberOfDecks;
 	public static final double ONE_HUNDRED = 100.0;
+	public static final int MAXIMUM_NUMBER_OF_DECKS = 20;
 	public static final double MAXIMUM_PENETRATION = 90.0;
+	public static final int MINIMUM_NUMBER_OF_DECKS = 1;
 	public static final double MINIMUM_PENETRATION = 10.0;
 
 	/**
@@ -66,7 +68,8 @@ public final class Shoe implements Drawable
 		assert cutoffAmount > 0 && cutoffAmount < cards.size()
 			: "cutCardIndex <= 0 || cutCardIndex >= cards.size()";
 
-		assert numberOfDecks > 1 : "numberOfDecks <= 1";
+		assert numberOfDecks >= MINIMUM_NUMBER_OF_DECKS && numberOfDecks <= MAXIMUM_NUMBER_OF_DECKS
+				: "numberOfDecks < MINIMUM_NUMBER_OF_DECKS || numberOfDecks > MAXIMUM_NUMBER_OF_DECKS";
 		this.numberOfDecks = numberOfDecks;
 	}
 

@@ -28,8 +28,8 @@ public final class BlackjackRulesetConfiguration
 	{
 		setMaximumSplitCount(BlackjackConstants.DEFAULT_MAXIMUM_SPLIT_COUNT);
 		setMinimumBetAmount(BlackjackConstants.DEFAULT_MINIMUM_BET_AMOUNT);
-		setShoePenetration(BlackjackConstants.DEFAULT_SHOE_PENETRATION);
 		setShoeDeckCount(BlackjackConstants.DEFAULT_SHOE_DECK_COUNT);
+		setShoePenetration(BlackjackConstants.DEFAULT_SHOE_PENETRATION);
 	}
 
 	public int getMaximumSplitCount()
@@ -127,8 +127,8 @@ public final class BlackjackRulesetConfiguration
 		InputManager.validateNumber(
 			shoeDeckCount,
 			"shoeDeckCount",
-			1,
-			Float.MAX_VALUE
+			Shoe.MINIMUM_NUMBER_OF_DECKS,
+			Shoe.MAXIMUM_NUMBER_OF_DECKS
 		);
 
 		this.shoeDeckCount = shoeDeckCount;
@@ -137,10 +137,10 @@ public final class BlackjackRulesetConfiguration
 	public void setShoePenetration(double shoePenetration)
 	{
 		InputManager.validateNumber(
-				shoePenetration,
-				"shoePenetration",
-				Shoe.MINIMUM_PENETRATION,
-				Shoe.MAXIMUM_PENETRATION
+			shoePenetration,
+			"shoePenetration",
+			Shoe.MINIMUM_PENETRATION,
+			Shoe.MAXIMUM_PENETRATION
 		);
 
 		this.shoePenetration = shoePenetration;
