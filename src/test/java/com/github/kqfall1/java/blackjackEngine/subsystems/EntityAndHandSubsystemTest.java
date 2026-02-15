@@ -28,10 +28,8 @@ public final class EntityAndHandSubsystemTest
 	private static final BigDecimal BET_AND_POT_INITIAL_AMOUNT = BigDecimal.valueOf(1000);
 	private Dealer dealer;
 	private Hand dealerHand;
-	private static final int DECK_RANGE = 20;
 	private HandContext mainContext;
 	private Hand mainHand;
-	private static final int MINIMUM_NUMBER_OF_DECKS = 2;
 	private Player player1;
 	private Player player2;
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
@@ -128,7 +126,7 @@ public final class EntityAndHandSubsystemTest
 		final var CONFIG = new BlackjackRulesetConfiguration();
 		final var PENETRATION
 			= Math.random() * SHOE_PENETRATION_RANGE + Shoe.MINIMUM_PENETRATION;
-		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(MINIMUM_NUMBER_OF_DECKS, DECK_RANGE + MINIMUM_NUMBER_OF_DECKS);
+		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(Shoe.MINIMUM_NUMBER_OF_DECKS, Shoe.MAXIMUM_NUMBER_OF_DECKS + 1);
 		final var RULESET = new StandardBlackjackRuleset(CONFIG);
 
 		dealer = new Dealer(

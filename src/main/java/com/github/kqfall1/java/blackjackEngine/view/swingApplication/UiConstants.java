@@ -21,7 +21,7 @@ public final class UiConstants
     public static final String DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
     public static final double GAME_CONFIG_JDIALOG_HEIGHT_FACTOR = 0.4;
     public static final String GAME_CONFIG_JDIALOG_TITLE = "Game Configuration";
-    public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.3;
+    public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.5;
     public static final Color JBUTTON_BACKGROUND_COLOR = new Color(238, 220, 130);
     public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final String JMENU_FILE_LABEL = "File";
