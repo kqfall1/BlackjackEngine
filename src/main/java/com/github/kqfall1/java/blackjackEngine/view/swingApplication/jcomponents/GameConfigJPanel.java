@@ -200,8 +200,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         }
         catch (CompletionException ex)
         {
-            presentFailureMessage(UiConstants.GAME_CONFIG_JDIALOG_FAILURE_LABEL);
-            updateGuiAfterFailure(getErrorRelatedComponents());
+            presentFailure(UiConstants.GAME_CONFIG_JDIALOG_FAILURE_LABEL, getErrorRelatedComponents());
             return;
         }
 
@@ -226,16 +225,10 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         }
     }
 
-    @Override
-    public void presentFailureMessage(String message)
-    {
-        errorJLabel.setText(message);
-    }
-
-    @Override
-    public void updateGuiAfterFailure(Component... components)
+    public void presentFailure(String message, Component... components)
     {
         final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
+        errorJLabel.setText(message);
 
         for (Component component : components)
         {

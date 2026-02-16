@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.github.kqfall1</groupId>
             <artifactId>kqfall1JavaUtils</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.3</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

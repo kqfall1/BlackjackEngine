@@ -103,7 +103,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (InsufficientChipsException e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 		}
 	}
 
@@ -148,7 +148,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			}
 			catch (InsufficientChipsException e)
 			{
-				getHandler().presentFailureMessage(e.getMessage());
+				getHandler().presentFailure(e.getMessage());
 			}
 		}
 	}
@@ -177,7 +177,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (InsufficientChipsException e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 		}
 	}
 
@@ -197,7 +197,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			}
 			catch (InsufficientChipsException e)
 			{
-				getHandler().presentFailureMessage(e.getMessage());
+				getHandler().presentFailure(e.getMessage());
 			}
 		}
 	}
@@ -253,7 +253,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (InsufficientChipsException e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 		}
 	}
 
@@ -358,7 +358,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (Exception e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 
 			if (getEngine().getState() != EngineState.END)
 			{
@@ -384,7 +384,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (Exception e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 
 			if (getEngine().getState() != EngineState.END)
 			{
@@ -417,7 +417,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		}
 		catch (Exception e)
 		{
-			getHandler().presentFailureMessage(e.getMessage());
+			getHandler().presentFailure(e.getMessage());
 
 			if (getEngine().getState() != EngineState.END)
 			{
