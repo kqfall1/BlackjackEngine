@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -37,9 +38,9 @@ public final class UiActions
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final var ROOT = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
+                final var ROOT = (MainMenuJFrame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
                 final var CONFIG_DIALOG = new JDialog(ROOT, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
-                CONFIG_DIALOG.setContentPane(new GameConfigJPanel());
+                CONFIG_DIALOG.setContentPane(new GameConfigJPanel(ROOT));
                 CONFIG_DIALOG.setSize(UiConstants.getGameConfigJDialogDimension());
                 CONFIG_DIALOG.setLocationRelativeTo(ROOT);
                 CONFIG_DIALOG.setVisible(true);

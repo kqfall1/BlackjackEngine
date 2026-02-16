@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
@@ -14,10 +15,7 @@ import javax.swing.*;
  */
 public final class MainMenuJFrame extends BlackjackJFrame
 {
-    public static void main(String[] args)
-    {
-        EventQueue.invokeLater(MainMenuJFrame::new);
-    }
+    private BlackjackRulesetConfiguration config;
 
     public MainMenuJFrame()
     {
@@ -26,5 +24,20 @@ public final class MainMenuJFrame extends BlackjackJFrame
         PANEL_WRAPPER.setOpaque(false);
         add(PANEL_WRAPPER, BorderLayout.CENTER);
         setVisible(true);
+    }
+
+    public BlackjackRulesetConfiguration getConfig()
+    {
+        return config;
+    }
+
+    public static void main(String[] args)
+    {
+        EventQueue.invokeLater(MainMenuJFrame::new);
+    }
+
+    public void setConfig(BlackjackRulesetConfiguration config)
+    {
+        this.config = config;
     }
 }

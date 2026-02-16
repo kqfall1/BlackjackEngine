@@ -1,15 +1,18 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import com.github.kqfall1.java.interfaces.FailurePresenter;
 import com.github.kqfall1.java.interfaces.inputters.NumberInputter;
 import com.github.kqfall1.java.javax.swing.AwtUtils;
 import com.github.kqfall1.java.javax.swing.NumberJTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.HashSet;
+import java.math.BigDecimal;
 import java.util.concurrent.CompletionException;
+import java.util.HashSet;
 import javax.swing.*;
 
 /**
@@ -25,12 +28,20 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JCheckBox doublingDownOnSplitHandsAllowed;
     private final JLabel errorJLabel;
     private static final int JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE = 5;
-    private static final Insets JTEXT_FIELD_PANEL_COMPONENT_INSETS = new Insets(JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE, JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE, JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE, JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE);
+    private static final Insets JTEXT_FIELD_PANEL_COMPONENT_INSETS = new Insets(
+        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
+        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
+        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
+        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE
+    );
+    private final JSpinner maximumSplitCountInput;
+    private final JLabel maximumSplitCountJLabel;
     private final NumberInputter minimumBetAmountInput;
     private final JLabel minimumBetAmountJLabel;
     private final JButton playButton;
     private final NumberInputter playerInitialChipsInput;
     private final JLabel playerInitialChipsJLabel;
+    private final MainMenuJFrame rootJFrame;
     private final JSpinner shoeDeckCountInput;
     private final JLabel shoeDeckCountJLabel;
     private final NumberInputter shoePenetrationInput;
@@ -40,7 +51,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JCheckBox surrenderingAllowed;
     private final JCheckBox surrenderingOnSplitHandsAllowed;
 
-    public GameConfigJPanel()
+    public GameConfigJPanel(MainMenuJFrame rootJFrame)
     {
         final var MAIN_PANEL_DIMENSION = UiConstants.getGameConfigJDialogDimension();
 
@@ -50,12 +61,20 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             MAIN_PANEL_DIMENSION.width,
             errorJLabel.getHeight()
         ));
+        maximumSplitCountInput = new JSpinner(new SpinnerNumberModel(
+            1,
+            0,
+            Integer.MAX_VALUE,
+            1
+        ));
+        maximumSplitCountJLabel = new JLabel(UiConstants.MAXIMUM_SPLIT_COUNT_LABEL);
         minimumBetAmountInput = new NumberJTextField();
         minimumBetAmountJLabel = new JLabel(UiConstants.MINIMUM_BET_AMOUNT_LABEL);
         playButton = new JButton(UiConstants.PLAY_BUTTON_LABEL);
         playButton.addActionListener(this::readConfigValues);
         playerInitialChipsInput = new NumberJTextField();
         playerInitialChipsJLabel = new JLabel(UiConstants.PLAYER_INITIAL_CHIPS_LABEL);
+        this.rootJFrame = rootJFrame;
         shoeDeckCountInput = new JSpinner(new SpinnerNumberModel(
             Shoe.MINIMUM_NUMBER_OF_DECKS,
             Shoe.MINIMUM_NUMBER_OF_DECKS,
@@ -70,16 +89,18 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         surrenderingAllowed = new JCheckBox(UiConstants.SURRENDERING_ALLOWED_LABEL);
         surrenderingOnSplitHandsAllowed = new JCheckBox(UiConstants.SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL);
 
-        final var JCHECKBOX_PANEL_WRAPPER = new JPanel();
-        JCHECKBOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECKBOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));
-        JCHECKBOX_PANEL_WRAPPER.add(doublingDownOnSplitHandsAllowed);
-        JCHECKBOX_PANEL_WRAPPER.add(shouldDealerHitOnSoft17);
-        JCHECKBOX_PANEL_WRAPPER.add(splittingAcesAllowed);
-        JCHECKBOX_PANEL_WRAPPER.add(surrenderingAllowed);
-        JCHECKBOX_PANEL_WRAPPER.add(surrenderingOnSplitHandsAllowed);
-        JCHECKBOX_PANEL_WRAPPER.setMaximumSize(JCHECKBOX_PANEL_WRAPPER.getPreferredSize());
+        final var JCHECK_BOX_PANEL_WRAPPER = new JPanel();
+        JCHECK_BOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECK_BOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));
+        JCHECK_BOX_PANEL_WRAPPER.add(doublingDownOnSplitHandsAllowed);
+        JCHECK_BOX_PANEL_WRAPPER.add(shouldDealerHitOnSoft17);
+        JCHECK_BOX_PANEL_WRAPPER.add(splittingAcesAllowed);
+        JCHECK_BOX_PANEL_WRAPPER.add(surrenderingAllowed);
+        JCHECK_BOX_PANEL_WRAPPER.add(surrenderingOnSplitHandsAllowed);
+        JCHECK_BOX_PANEL_WRAPPER.setMaximumSize(JCHECK_BOX_PANEL_WRAPPER.getPreferredSize());
 
         final var JTEXT_FIELD_PANEL_WRAPPER = new JPanel(new GridBagLayout());
+        JTEXT_FIELD_PANEL_WRAPPER.add(maximumSplitCountJLabel, getJLabelConstraints());
+        JTEXT_FIELD_PANEL_WRAPPER.add(maximumSplitCountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(minimumBetAmountJLabel, getJLabelConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add((NumberJTextField) minimumBetAmountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(playerInitialChipsJLabel, getJLabelConstraints());
@@ -93,18 +114,22 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             JTEXT_FIELD_PANEL_WRAPPER.getPreferredSize().height
         ));
 
-        final var ERROR_LABEL_PANEL_WRAPPER = new JPanel(new GridBagLayout());
-        ERROR_LABEL_PANEL_WRAPPER.add(errorJLabel);
+        final var ERROR_JLABEL_PANEL_WRAPPER = new JPanel(new GridBagLayout());
+        ERROR_JLABEL_PANEL_WRAPPER.add(errorJLabel);
+        ERROR_JLABEL_PANEL_WRAPPER.setMaximumSize(new Dimension(
+            Integer.MAX_VALUE,
+            ERROR_JLABEL_PANEL_WRAPPER.getPreferredSize().height
+        ));
 
         final var PLAY_BUTTON_PANEL_WRAPPER = new JPanel(new GridBagLayout());
         PLAY_BUTTON_PANEL_WRAPPER.add(playButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
-        add(JCHECKBOX_PANEL_WRAPPER);
+        add(JCHECK_BOX_PANEL_WRAPPER);
         add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
         add(JTEXT_FIELD_PANEL_WRAPPER);
-        add(ERROR_LABEL_PANEL_WRAPPER);
+        add(ERROR_JLABEL_PANEL_WRAPPER);
         add(PLAY_BUTTON_PANEL_WRAPPER);
     }
 
@@ -121,7 +146,6 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             }
         }
 
-        ERROR_RELATED_COMPONENTS.add(playButton);
         return ERROR_RELATED_COMPONENTS.toArray(new Component[0]);
     }
 
@@ -160,38 +184,76 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
     private void readConfigValues(ActionEvent e)
     {
+        int maximumSplitCount;
+        BigDecimal minimumBetAmount;
+        BigDecimal playerInitialChips;
+        int shoeDeckCount;
+        double shoePenetration;
+
         try
         {
-            final var MINIMUM_BET_AMOUNT = minimumBetAmountInput.getNumber(null, 1, Float.MAX_VALUE).join();
-            final var PLAYER_INITIAL_CHIPS = playerInitialChipsInput.getNumber(null, 1, Float.MAX_VALUE).join();
-            final var SHOE_DECK_COUNT = (int) shoeDeckCountInput.getValue();
-            final var SHOE_PENETRATION = shoePenetrationInput.getNumber(null, Shoe.MINIMUM_PENETRATION, Shoe.MAXIMUM_PENETRATION).join();
+            maximumSplitCount = (int) maximumSplitCountInput.getValue();
+            minimumBetAmount = BigDecimal.valueOf(minimumBetAmountInput.getNumber(null, 1, Float.MAX_VALUE).join());
+            playerInitialChips = BigDecimal.valueOf(playerInitialChipsInput.getNumber(null, 1, Float.MAX_VALUE).join());
+            shoeDeckCount = (int) shoeDeckCountInput.getValue();
+            shoePenetration = shoePenetrationInput.getNumber(null, Shoe.MINIMUM_PENETRATION, Shoe.MAXIMUM_PENETRATION).join();
         }
         catch (CompletionException ex)
         {
-            presentMessage(ex.getMessage());
-            updateGui(getErrorRelatedComponents());
+            presentFailureMessage(UiConstants.GAME_CONFIG_JDIALOG_FAILURE_LABEL);
+            updateGuiAfterFailure(getErrorRelatedComponents());
             return;
         }
 
-        //Construct config/engine/main game JFrame and start game
+        final var CONFIG = new BlackjackRulesetConfiguration();
+        CONFIG.setMaximumSplitCount(maximumSplitCount);
+        CONFIG.setMinimumBetAmount(minimumBetAmount);
+        CONFIG.setPlayerInitialChips(playerInitialChips);
+        CONFIG.setShoeDeckCount(shoeDeckCount);
+        CONFIG.setShoePenetration(shoePenetration);
+        CONFIG.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
+        CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
+        CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
+        CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
+        CONFIG.setSurrenderingOnSplitHandsAllowed(surrenderingOnSplitHandsAllowed.isSelected());
+        rootJFrame.setConfig(CONFIG);
+
+        final var WINDOW = SwingUtilities.getWindowAncestor(this);
+
+        if (WINDOW != null)
+        {
+            WINDOW.dispose();
+        }
     }
 
     @Override
-    public void presentMessage(String message)
+    public void presentFailureMessage(String message)
     {
         errorJLabel.setText(message);
     }
 
     @Override
-    public void updateGui(Component... components)
+    public void updateGuiAfterFailure(Component... components)
     {
-        final var RED_BORDER = BorderFactory.createLineBorder(Color.RED);
+        final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
 
         for (Component component : components)
         {
             final var JCOMPONENT = (JComponent) component;
-            JCOMPONENT.setBorder(RED_BORDER);
+            JCOMPONENT.setBorder(UiConstants.BORDER_RED);
         }
+
+        EventQueue.invokeLater(() -> {
+            new Timer(UiConstants.SLEEP_INTERVAL_LONG, event -> {
+                for (Component component : components)
+                {
+                    final var JCOMPONENT = (JComponent) component;
+                    JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+                }
+
+                errorJLabel.setText("");
+                ((Timer) event.getSource()).stop();
+            }).start();
+        });
     }
 }
