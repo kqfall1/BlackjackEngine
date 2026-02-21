@@ -25,7 +25,8 @@ import java.util.logging.Level;
  *
  * <p>
  * Also implements {@code BlackjackEngineListener} to define app-related logic to execute
- * when internal {@code BlackjackEngine} events occur.
+ * when internal {@code BlackjackEngine} events occur. This class is used for manual
+ * integration testing.
  * </p>
  *
  * @author kqfall1
@@ -37,7 +38,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private final ConsoleHandler handler;
 	private final InputManager inputManager;
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine";
-	private static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
+	private static final String LOG_FILE_PATH = "src/main/resources/logs/ConsoleBlackjackControllerEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
 	ConsoleBlackjackController(ConsoleHandler handler, String logFilePath, String loggerName,

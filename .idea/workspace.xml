@@ -4,11 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Have finalized a sufficient, functional GameConfigJPanel.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Optimized GameConfigJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controller/ConsoleBlackjackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controller/ConsoleBlackjackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackEngineListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackEngineListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/BlackjackJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/BlackjackJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logs/BlackjackEngine.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/logs/BlackjackEngine.log.1" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -484,11 +489,18 @@
       <option name="project" value="LOCAL" />
       <updated>1771208554067</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Optimized GameConfigJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1771266158243</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1771266158244</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Finalized the BlackjackRuleset.java interface and refined the project's folder structure." />
     <MESSAGE value="Created StandardBlackjackRuleset.java and began refactoring the engine around it." />
     <MESSAGE value="Finalized decoupling the rules from configuration." />
     <MESSAGE value="Integrated the BlackjackRuleset.getIncludedRanks method with the Card subsystem." />
@@ -513,7 +525,8 @@
     <MESSAGE value="Created a decent UI for GameConfigJPanel.java." />
     <MESSAGE value="Improved the UX for GameConfigJPanel.java." />
     <MESSAGE value="Have finalized a sufficient, functional GameConfigJPanel.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Have finalized a sufficient, functional GameConfigJPanel.java." />
+    <MESSAGE value="Optimized GameConfigJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized GameConfigJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

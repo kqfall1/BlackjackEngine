@@ -1,9 +1,15 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
+import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
+import java.io.IOException;
+import java.math.BigDecimal;
 import javax.swing.*;
 
 /**
@@ -15,29 +21,41 @@ import javax.swing.*;
  */
 public final class MainMenuJFrame extends BlackjackJFrame
 {
-    private BlackjackRulesetConfiguration config;
-
     public MainMenuJFrame()
     {
         final var PANEL_WRAPPER = new JPanel(new GridBagLayout());
         PANEL_WRAPPER.add(new MainMenuButtonJPanel(UiActions.getInstance()));
         PANEL_WRAPPER.setOpaque(false);
         add(PANEL_WRAPPER, BorderLayout.CENTER);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-    }
-
-    public BlackjackRulesetConfiguration getConfig()
-    {
-        return config;
     }
 
     public static void main(String[] args)
     {
-        EventQueue.invokeLater(MainMenuJFrame::new);
+        //EventQueue.invokeLater(MainMenuJFrame::new);
+        EventQueue.invokeLater(() -> {
+            final var CONFIG = new BlackjackRulesetConfiguration();
+            CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
+            final var MAIN_MENU_JFRAME = new MainMenuJFrame();
+            MAIN_MENU_JFRAME.newGame(CONFIG);
+        });
     }
 
-    public void setConfig(BlackjackRulesetConfiguration config)
+    public void newGame(BlackjackRulesetConfiguration config)
     {
-        this.config = config;
+        try
+        {
+            final var GAME_JFRAME = new GameJFrame(config, this);
+            final var BLACKJACK_ENGINE = new BlackjackEngine(
+                GAME_JFRAME,
+                UiConstants.LOG_FILE_PATH,
+                UiConstants.LOGGER_NAME,
+                new StandardBlackjackRuleset(config)
+            );
+            GAME_JFRAME.setBlackjackEngine(BLACKJACK_ENGINE);
+            setVisible(false);
+        }
+        catch (InsufficientChipsException | IOException ignored) {}
     }
 }

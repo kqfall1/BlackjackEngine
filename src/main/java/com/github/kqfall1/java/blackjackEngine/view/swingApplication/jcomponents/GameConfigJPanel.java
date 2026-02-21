@@ -215,14 +215,10 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
         CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
         CONFIG.setSurrenderingOnSplitHandsAllowed(surrenderingOnSplitHandsAllowed.isSelected());
-        rootJFrame.setConfig(CONFIG);
 
         final var WINDOW = SwingUtilities.getWindowAncestor(this);
-
-        if (WINDOW != null)
-        {
-            WINDOW.dispose();
-        }
+        WINDOW.dispose();
+        rootJFrame.newGame(CONFIG);
     }
 
     public void presentFailure(String message, Component... components)

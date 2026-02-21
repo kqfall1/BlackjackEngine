@@ -30,6 +30,8 @@ public final class UiConstants
     public static final String JMENU_FILE_LABEL = "File";
     public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
     public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
+    public static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
+    public static final String LOGGER_NAME = "BlackjackEngine";
     public static final ImageIcon MAIN_MENU_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final String MAXIMUM_SPLIT_COUNT_LABEL = "Maximum split count:";
     public static final String MINIMUM_BET_AMOUNT_LABEL = "Minimum bet amount:";
