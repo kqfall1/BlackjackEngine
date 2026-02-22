@@ -45,8 +45,6 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 				)
 			);
 			Assertions.assertTrue(super.engine.getActiveHandContext().hasSurrendered());
-
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.engine.advanceAfterShowdown();

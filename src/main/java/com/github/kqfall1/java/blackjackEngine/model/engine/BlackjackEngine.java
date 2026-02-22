@@ -24,10 +24,12 @@ import java.util.logging.Logger;
  * Orchestrates the entire blackjack library by continuously processing input and
  * executing the main game loop.
  *
- * <p>
- * Centralizes all core logic that influences gameplay as a public API, emits all internal
- * events through {@code BlackjackEngineListener} hooks, and logs pertinent information.
- * </p>
+ * <p>Centralizes all core logic that influences gameplay as a public API, emits all internal
+ * events through {@code BlackjackEngineListener} hooks, and logs pertinent information.</p>
+ *
+ * <p>Auto-advances past {@code EngineState.BETTING} and {@code EngineState.PLAYER_TURN} when
+ * appropriate; one should call the advance instance methods of this {@code BlackjackEngine} to
+ * advance past all other {@code EngineState} states.</p>
  *
  * @author kqfall1
  * @since 15/12/2025

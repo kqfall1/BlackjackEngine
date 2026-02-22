@@ -27,8 +27,11 @@ final class IntegrationTest extends EngineTest
 			if (super.engine.getState() == EngineState.PLAYER_TURN)
 			{
 				super.engine.playerHit();
-				super.engine.playerStand();
-				super.engine.advanceAfterPlayerTurn();
+
+				if (super.engine.getState() == EngineState.PLAYER_TURN)
+				{
+					super.engine.playerStand();
+				}
 			}
 
 			super.advanceToEndOfRound();

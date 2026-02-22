@@ -34,7 +34,7 @@ final class ShowdownPlayerBustTest extends CustomDeckTest
 		Assertions.assertTrue(
 			super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand())
 		);
-		super.engine.advanceAfterPlayerTurn();
+		super.engine.showdown();
 		super.engine.advanceAfterShowdown();
 
 		Assertions.assertTrue(
