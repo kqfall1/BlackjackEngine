@@ -52,16 +52,17 @@ public abstract class EngineTest
 	{
 		if (engine.getState() == EngineState.DEALER_TURN)
 		{
+			engine.dealerTurn();
 			engine.advanceAfterDealerTurn();
-			engine.showdown();
 		}
 
 		if (engine.getState() == EngineState.SHOWDOWN)
 		{
+			engine.showdown();
 			engine.advanceAfterShowdown();
-			engine.reset();
 		}
 
+		engine.reset();
 		engine.advanceAfterReset();
 	}
 
@@ -113,10 +114,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertTrue(
-				engine.getState() == EngineState.BETTING
-				|| engine.getState() == EngineState.INSURANCE_CHECK
-				|| engine.getState() == EngineState.PLAYER_TURN);
+			assertTrue(engine.getState() == EngineState.BETTING);
 			assertTrue(nearlyEquals(
 				handContext.getBet().getAmount()
 					.multiply(BigDecimal.TWO),

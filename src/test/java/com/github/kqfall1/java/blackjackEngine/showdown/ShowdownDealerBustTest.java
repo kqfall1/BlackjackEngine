@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,13 +29,14 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		BigDecimal potAmount;
 
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+		super.engine.dealerTurn();
 		chipAmountAfterBetting = super.engine.getPlayer().getChips();
 		potAmount = super.engine.getActiveHandContext().getPot().getAmount();
 		Assertions.assertTrue(
 			super.ruleset.isHandBusted(super.engine.getDealer().getHand())
 		);
 		super.engine.advanceAfterDealerTurn();
-		super.engine.advanceAfterShowdown();
+		super.engine.showdown();
 
 		Assertions.assertTrue(
 			nearlyEquals(
@@ -48,6 +48,6 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 			)
 		);
 
-		super.engine.advanceAfterReset();
+		super.advanceToEndOfRound();
 	}
 }

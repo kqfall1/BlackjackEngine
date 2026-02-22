@@ -28,9 +28,11 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 	public void main()
 	{
 		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceToPlayerTurn(INITIAL_CHIP_AMOUNT);
+		super.advanceToDealerTurn(INITIAL_CHIP_AMOUNT);
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
+
+		super.engine.showdown();
 
 		if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT)
 		{
@@ -65,7 +67,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				nearlyEquals(
 					CHIP_AMOUNT_AFTER_BETTING.add(
 						POT_AMOUNT.multiply(
-							BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()
+							BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
 						)
 					),
 					super.engine.getPlayer().getChips(),
@@ -90,7 +92,6 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 			);
 		}
 
-		super.engine.advanceAfterShowdown();
-		super.engine.advanceAfterReset();
+		super.advanceToEndOfRound();
 	}
 }

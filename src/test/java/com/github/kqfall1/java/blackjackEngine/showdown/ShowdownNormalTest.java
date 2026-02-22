@@ -14,7 +14,8 @@ final class ShowdownNormalTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		showdownMethodIndex = super._initCardsForNormalShowdown();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -30,7 +31,9 @@ final class ShowdownNormalTest extends CustomDeckTest
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
 
+		super.engine.dealerTurn();
 		super.engine.advanceAfterDealerTurn();
+		super.engine.showdown();
 
 		if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT)
 		{
@@ -45,8 +48,6 @@ final class ShowdownNormalTest extends CustomDeckTest
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
-
-			super.engine.advanceAfterShowdown();
 
 			Assertions.assertEquals(
 				CHIP_AMOUNT_AFTER_BETTING,
@@ -86,10 +87,8 @@ final class ShowdownNormalTest extends CustomDeckTest
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
-
-			super.engine.advanceAfterShowdown();
 		}
 
-		super.engine.advanceAfterReset();
+		super.advanceToEndOfRound();
 	}
 }

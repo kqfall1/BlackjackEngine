@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Have restabilized BlackjackEngine.java, ConsoleBlackjackController.java, and most of the test suite; 7 tests are failing still.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Fixed more tests; 5 tests are still failing due to payout inaccuracies.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/IntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/IntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/CustomDeckTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/CustomDeckTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/EngineTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/PredicateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/PredicateTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownPlayerBustTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownPlayerBustTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownBlackjackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownBlackjackTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownDealerBustTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownDealerBustTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownNormalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownNormalTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownSurrenderTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -518,11 +520,18 @@
       <option name="project" value="LOCAL" />
       <updated>1771772357624</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Fixed more tests; 5 tests are still failing due to payout inaccuracies.">
+      <option name="closed" value="true" />
+      <created>1771773301984</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1771773301984</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Integrated the BlackjackRuleset.getHandContextsInShowdownOrder and BlackjackRuleset.getPayoutRatios methods with BlackjackEngine.java." />
     <MESSAGE value="Integrated the BlackjackRuleset.isDealerSecondCardFaceDown and BlackjackRuleset.shouldDealerPeekForBlackjack methods with BlackjackEngine.java." />
     <MESSAGE value="Altered ConsoleBlackjackController.java to call into BlackjackEngine.java to advance the game. Minor bugs remain." />
     <MESSAGE value="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken." />
@@ -547,12 +556,14 @@
     <MESSAGE value="Refactored the exception model of the system - ConsoleBlackjackController.java has broken slightly." />
     <MESSAGE value="Have prepared to refactor BlackjackEngine.java to not automatically advance to showdown." />
     <MESSAGE value="Have restabilized BlackjackEngine.java, ConsoleBlackjackController.java, and most of the test suite; 7 tests are failing still." />
-    <option name="LAST_COMMIT_MESSAGE" value="Have restabilized BlackjackEngine.java, ConsoleBlackjackController.java, and most of the test suite; 7 tests are failing still." />
+    <MESSAGE value="Fixed more tests; 5 tests are still failing due to payout inaccuracies." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed more tests; 5 tests are still failing due to payout inaccuracies." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="this" />
+        <watch expression="handContext.pot.amount" />
       </configuration>
     </watches-manager>
   </component>

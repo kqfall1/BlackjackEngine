@@ -3,7 +3,6 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.Assertions;
@@ -47,7 +46,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 			Assertions.assertTrue(super.engine.getActiveHandContext().hasSurrendered());
 		}
 
-		super.engine.advanceAfterShowdown();
+		super.engine.showdown();
 
 		Assertions.assertTrue(
 			nearlyEquals(
@@ -59,6 +58,6 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 			)
 		);
 
-		super.engine.advanceAfterReset();
+		super.advanceToEndOfRound();
 	}
 }
