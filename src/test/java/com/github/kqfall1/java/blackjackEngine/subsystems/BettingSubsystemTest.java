@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.subsystems;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
-import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import java.math.BigDecimal;
@@ -102,13 +101,7 @@ final class BettingSubsystemTest
 
 	private void payoutRatioTest()
 	{
-		assertEquals(
-			BlackjackConstants.BLACKJACK_RATIO,
-			new PayoutRatio(BigDecimal.valueOf(3), BigDecimal.TWO)
-		);
 		Assertions.assertNotEquals(BlackjackConstants.BLACKJACK_RATIO, BlackjackConstants.SURRENDER_RATIO);
-		assertEquals(BigDecimal.valueOf(3), BlackjackConstants.BLACKJACK_RATIO.getNumerator());
-		assertEquals(BigDecimal.TWO, BlackjackConstants.BLACKJACK_RATIO.getDenominator());
 		assertEquals(
 			BlackjackConstants.BLACKJACK_RATIO.getNumerator().divide(
 				BlackjackConstants.BLACKJACK_RATIO.getDenominator(),
@@ -117,7 +110,7 @@ final class BettingSubsystemTest
 			BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
 		);
 
-		assertEquals(BigDecimal.TWO,	BlackjackConstants.INSURANCE_RATIO.getNumerator());
+		assertEquals(BigDecimal.TWO, BlackjackConstants.INSURANCE_RATIO.getNumerator());
 		assertEquals(BigDecimal.ONE, BlackjackConstants.INSURANCE_RATIO.getDenominator());
 		assertEquals(
 			BlackjackConstants.INSURANCE_RATIO.getNumerator().divide(

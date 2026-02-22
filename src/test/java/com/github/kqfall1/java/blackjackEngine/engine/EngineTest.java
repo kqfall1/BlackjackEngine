@@ -13,11 +13,12 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineL
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import java.math.BigDecimal;
 import java.util.logging.Level;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Provides abstraction for creating {@code BlackjackEngine}-related tests.
@@ -114,7 +115,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertTrue(engine.getState() == EngineState.BETTING);
+            assertSame(EngineState.BETTING, engine.getState());
 			assertTrue(nearlyEquals(
 				handContext.getBet().getAmount()
 					.multiply(BigDecimal.TWO),

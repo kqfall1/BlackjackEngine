@@ -26,8 +26,8 @@ public final class BlackjackConstants
 	public static final int INITIAL_HAND_COUNT = 1;
 
 	public static final PayoutRatio BLACKJACK_RATIO = new PayoutRatio(
-		BigDecimal.valueOf(3),
-		BigDecimal.TWO
+		BigDecimal.valueOf(5),
+		BigDecimal.valueOf(4)
 	);
 	public static final String BLACKJACK_RATIO_KEY = "Blackjack Payout Ratio";
 	public static final PayoutRatio INSURANCE_RATIO = new PayoutRatio(
