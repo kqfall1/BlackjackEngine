@@ -50,8 +50,6 @@ final class DoubleDownTest extends EngineTest
 					== BlackjackConstants.INITIAL_CARD_COUNT + 1
 				&& super.engine.getActiveHandContext().isAltered()
 			);
-
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

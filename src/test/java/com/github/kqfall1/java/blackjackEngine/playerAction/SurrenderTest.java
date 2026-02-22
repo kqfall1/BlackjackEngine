@@ -33,7 +33,6 @@ final class SurrenderTest extends EngineTest
 				super.engine.getActiveHandContext().hasSurrendered()
 				&& super.engine.getActiveHandContext().isAltered()
 			);
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

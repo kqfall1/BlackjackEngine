@@ -29,7 +29,6 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerSurrender();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

@@ -37,7 +37,6 @@ final class SurrenderingNotAllowedTest extends EngineTest
 				super.engine.playerStand();
 			}
 
-			super.engine.advanceAfterPlayerTurn();
 			super.advanceToEndOfRound();
 		}
 	}

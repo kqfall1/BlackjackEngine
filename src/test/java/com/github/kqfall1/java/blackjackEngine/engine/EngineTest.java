@@ -42,7 +42,7 @@ public abstract class EngineTest
 		if (engine.getState() == EngineState.PLAYER_TURN)
 		{
 			engine.playerStand();
-			engine.advanceAfterPlayerTurn();
+			engine.dealerTurn();
 		}
 
 		return BET_AMOUNT;
@@ -53,11 +53,13 @@ public abstract class EngineTest
 		if (engine.getState() == EngineState.DEALER_TURN)
 		{
 			engine.advanceAfterDealerTurn();
+			engine.showdown();
 		}
 
 		if (engine.getState() == EngineState.SHOWDOWN)
 		{
 			engine.advanceAfterShowdown();
+			engine.reset();
 		}
 
 		engine.advanceAfterReset();

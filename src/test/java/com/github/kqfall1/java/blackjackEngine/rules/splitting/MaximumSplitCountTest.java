@@ -44,7 +44,6 @@ final class MaximumSplitCountTest extends CustomDeckTest
 				}
 
 				super.engine.playerStand();
-				super.engine.advanceAfterPlayerTurn();
 				super.advanceToEndOfRound();
 			}
 			catch (IllegalHandOperationException e)

@@ -216,7 +216,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	@Override
 	public void onReset()
 	{
-		getHandler().getOut().println("The dealer is setting up a new betting round.");
+		getHandler().getOut().println("The dealer is creating a new betting round.");
 	}
 
 	@Override
@@ -269,8 +269,28 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		switch (getEngine().getState())
 		{
 			case BETTING -> placeHandBet();
+			case DEALING ->
+			{
+				getEngine().deal();
+				getEngine().advanceAfterDeal();
+			}
 			case INSURANCE_CHECK -> placeInsuranceBet();
 			case PLAYER_TURN -> performAction();
+			case DEALER_TURN ->
+			{
+				getEngine().dealerTurn();
+				getEngine().advanceAfterDealerTurn();
+			}
+			case SHOWDOWN ->
+			{
+				getEngine().showdown();
+				getEngine().advanceAfterShowdown();
+			}
+			case RESETTING ->
+			{
+				getEngine().reset();
+				getEngine().advanceAfterReset();
+			}
 			case END -> { System.exit(0); }
 		}
 	}
@@ -321,8 +341,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		try
 		{
 			getEngine().placeHandBet(BigDecimal.valueOf(amount));
-			getEngine().deal();
-			getEngine().advanceAfterDeal();
 		}
 		catch (Exception e)
 		{
@@ -342,24 +360,21 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			return;
 		}
 
-		final var answer = getInputManager().getYesNoInputter().getYesNo(
-			"Do you wish to place an insurance bet?"
-		).join();
+		final var ANSWER = getInputManager().getYesNoInputter().getYesNo("Do you wish to place an insurance bet?").join();
 
 		try
 		{
 			var playerWinnings = BigDecimal.ZERO;
 
-			if (answer == YesNoInput.YES)
+			if (ANSWER == YesNoInput.YES)
 			{
 				playerWinnings = getEngine().acceptInsuranceBet();
+				getEngine().advanceAfterInsuranceBet(playerWinnings);
 			}
 			else
 			{
 				getEngine().declineInsuranceBet();
 			}
-
-			getEngine().advanceAfterInsuranceBet(playerWinnings);
 		}
 		catch (Exception e)
 		{

@@ -36,8 +36,6 @@ final class HitAndBustTest extends EngineTest
 					&& super.engine.getActiveHandContext().isAltered()
 				);
 			}
-
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

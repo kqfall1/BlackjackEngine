@@ -50,7 +50,6 @@ final class SplitAndHitTest extends CustomDeckTest
 			}
 
 			hit();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

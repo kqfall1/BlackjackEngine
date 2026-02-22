@@ -166,12 +166,10 @@ public class BlackjackEngine
 				&& RULESET.shouldDealerPeekForBlackjack()))
 		{
 			setState(EngineState.SHOWDOWN);
-			showdown();
 		}
 		else
 		{
 			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -183,7 +181,6 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == getPlayer().getContexts().size() - 1 : "getActiveHandContextIndex() != getPlayer().getContexts().size() - 1";
 		assert getState() == EngineState.DEALER_TURN : "getState() != EngineState.DEALER_TURN";
 		setState(EngineState.SHOWDOWN);
-		showdown();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -198,13 +195,11 @@ public class BlackjackEngine
 
 			getListener().onInsuranceBetResolved(true, winnings);
 			setState(EngineState.SHOWDOWN);
-			showdown();
 		}
 		else
 		{
 			getListener().onInsuranceBetResolved(false, winnings);
 			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -223,7 +218,6 @@ public class BlackjackEngine
 				getActiveHandContext().getHand()
 			));
 			setState(EngineState.SHOWDOWN);
-			showdown();
 		}
 		else if (getActiveHandContext().hasSurrendered())
 		{
@@ -232,12 +226,10 @@ public class BlackjackEngine
 				getActiveHandContext().getHand()
 			));
 			setState(EngineState.SHOWDOWN);
-			showdown();
 		}
 		else
 		{
 			setState(EngineState.DEALER_TURN);
-			dealerTurn();
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -246,7 +238,7 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "advanceAfterReset";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
-		assert getState() == EngineState.RESETTING : "getState().EngineState.RESETTING";
+		assert getState() == EngineState.RESETTING : "getState() != EngineState.RESETTING";
 		if (getPlayer().getChips().compareTo(RULESET.getConfig().getMinimumBetAmount()) >= 0)
 		{
 			setState(EngineState.BETTING);
@@ -266,7 +258,6 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == getPlayer().getContexts().size() - 1 : "getActiveHandContextIndex() != getPlayer().getContexts().size() - 1";
 		assert getState() == EngineState.SHOWDOWN : "getState() != EngineState.SHOWDOWN";
 		setState(EngineState.RESETTING);
-		reset();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -294,6 +285,7 @@ public class BlackjackEngine
 			getActiveHandContext(),
 			dealerHand.getCards().get(BlackjackConstants.INITIAL_CARD_COUNT - 1)
 		));
+		//advanceAfterDeal();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -337,7 +329,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, card);
 	}
 
-	void dealerTurn()
+	public void dealerTurn()
 	{
 		final var METHOD_NAME = "dealer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -363,12 +355,10 @@ public class BlackjackEngine
 			|| RULESET.isHandBlackjack(getActiveHandContext().getHand()))
 		{
 			setState(EngineState.SHOWDOWN);
-			showdown();
 		}
 		else
 		{
 			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
@@ -503,14 +493,17 @@ public class BlackjackEngine
 		final var METHOD_NAME = "onDrawingRoundCompletedPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
+		getListener().onDrawingRoundCompletedPlayer(getActiveHandContext());
+		getLogger().info("The player's drawing round was completed.");
 		if (getActiveHandContextIndex() < getPlayer().getContexts().size() - 1)
 		{
 			setActiveHandContextIndex(getActiveHandContextIndex() + 1);
 			onDrawingRoundStartedPlayer();
-			setState(EngineState.PLAYER_TURN);
 		}
-		getListener().onDrawingRoundCompletedPlayer(getActiveHandContext());
-		getLogger().info("The player's drawing round was completed.");
+		else
+		{
+			advanceAfterPlayerTurn();
+		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -534,6 +527,7 @@ public class BlackjackEngine
 			"The player's drawing round was started on hand %s.",
 			getActiveHandContext()
 		));
+		setState(EngineState.PLAYER_TURN);
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -608,7 +602,11 @@ public class BlackjackEngine
 			"Player has doubled down on hand %s.",
 			context.getHand()
 		));
-		onDrawingRoundCompletedPlayer();
+		if (getState() == EngineState.PLAYER_TURN
+			&& !RULESET.isHandBusted(context.getHand()))
+		{
+			onDrawingRoundCompletedPlayer();
+		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -682,7 +680,7 @@ public class BlackjackEngine
 			playerSplitHand
 		));
 		getListener().onPlayerSplit(getActiveHandContext(), playerSplitHand);
-		setState(EngineState.PLAYER_TURN);
+		onDrawingRoundStartedPlayer();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -723,7 +721,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	private void reset()
+	public void reset()
 	{
 		final var METHOD_NAME = "reset";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -742,6 +740,7 @@ public class BlackjackEngine
 			);
 		}
 		getDealer().setHand(new Hand());
+		setActiveHandContextIndex(0);
 		getPlayer().clearContexts();
 		getListener().onReset();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -751,7 +750,8 @@ public class BlackjackEngine
 	{
 		final var METHOD_NAME = "setActiveHandContextIndex";
 		getLogger().entering(CLASS_NAME, METHOD_NAME, contextIndex);
-		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
+		assert getState() == EngineState.PLAYER_TURN || getState() == EngineState.RESETTING
+			: "getState() != EngineState.PLAYER_TURN && getState() != EngineState.RESETTING";
 		assert contextIndex >= 0 && contextIndex < getPlayer().getContexts().size() : "handIndex < 0 && handIndex >= getPlayer().getHands().size()";
 		activeHandContextIndex = contextIndex;
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
@@ -768,7 +768,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	private void showdown()
+	public void showdown()
 	{
 		final var METHOD_NAME = "showdown";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);

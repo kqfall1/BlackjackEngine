@@ -31,7 +31,6 @@ public final class PlaceBetTest extends EngineTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
-			super.engine.advanceAfterPlayerTurn();
 
 			Assertions.assertTrue(
 				INITIAL_CHIP_AMOUNT.compareTo(

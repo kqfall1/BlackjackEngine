@@ -39,7 +39,6 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 			}
 
 			super.engine.playerDoubleDown();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

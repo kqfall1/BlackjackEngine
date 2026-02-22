@@ -39,8 +39,6 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 			{
 				super.engine.playerHit();
 			}
-
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

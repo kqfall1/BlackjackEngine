@@ -46,7 +46,6 @@ final class SplitAndSurrenderTest extends CustomDeckTest
 			}
 
 			super.engine.playerSurrender();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

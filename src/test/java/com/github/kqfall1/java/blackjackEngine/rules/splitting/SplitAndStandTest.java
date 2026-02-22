@@ -39,7 +39,6 @@ final class SplitAndStandTest extends CustomDeckTest
 			}
 
 			super.engine.playerStand();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

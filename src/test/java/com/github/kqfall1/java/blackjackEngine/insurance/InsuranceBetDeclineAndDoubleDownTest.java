@@ -36,7 +36,6 @@ final class InsuranceBetDeclineAndDoubleDownTest extends CustomDeckTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerDoubleDown();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

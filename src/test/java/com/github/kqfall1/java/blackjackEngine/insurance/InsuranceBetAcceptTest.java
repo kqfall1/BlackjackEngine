@@ -74,7 +74,6 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

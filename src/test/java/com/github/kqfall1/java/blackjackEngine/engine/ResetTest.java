@@ -31,6 +31,7 @@ final class ResetTest extends EngineTest
 		}
 
 		super.engine.advanceAfterShowdown();
+		super.engine.reset();
 
 		Assertions.assertEquals(
 			new Hand(),

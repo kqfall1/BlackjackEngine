@@ -3,7 +3,6 @@ package com.github.kqfall1.java.blackjackEngine.dealer;
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -46,7 +45,6 @@ final class DealTest extends EngineTest
 		if (super.engine.getState() == EngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();

@@ -38,7 +38,6 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 			}
 
 			super.engine.playerStand();
-			super.engine.advanceAfterPlayerTurn();
 		}
 
 		super.advanceToEndOfRound();
