@@ -1,11 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-
-import java.io.IOException;
 
 final class IntegrationTest extends EngineTest
 {
@@ -14,15 +11,14 @@ final class IntegrationTest extends EngineTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		while (super.engine.getState() != EngineState.END)
 		{

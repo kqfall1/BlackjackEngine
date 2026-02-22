@@ -121,7 +121,7 @@ public final class EntityAndHandSubsystemTest
 	}
 
 	@BeforeEach
-	void init() throws InsufficientChipsException
+	void init()
 	{
 		final var CONFIG = new BlackjackRulesetConfiguration();
 		final var PENETRATION
@@ -149,7 +149,7 @@ public final class EntityAndHandSubsystemTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	void main() throws InsufficientChipsException
+	void main()
 	{
 		handTest();
 		dealerTest();
@@ -157,7 +157,7 @@ public final class EntityAndHandSubsystemTest
 		playerTest();
 	}
 
-	private void playerTest() throws InsufficientChipsException
+	private void playerTest()
 	{
 		assertEquals(player1.getChips(), player2.getChips());
 		assertEquals(player1.toString(), player1.toString());

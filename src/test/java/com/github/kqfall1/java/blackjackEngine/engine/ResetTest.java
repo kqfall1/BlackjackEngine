@@ -1,10 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
-import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -16,15 +14,14 @@ final class ResetTest extends EngineTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 

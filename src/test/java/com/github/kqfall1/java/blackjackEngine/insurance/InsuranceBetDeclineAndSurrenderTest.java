@@ -2,8 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -14,8 +12,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initCardsForInsurance();
 		super.initDependencies();
 		super.ruleset.getConfig().setSurrenderingAllowed(true);
@@ -25,7 +22,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		super.advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT);
 

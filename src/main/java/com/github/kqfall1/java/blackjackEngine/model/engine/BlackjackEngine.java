@@ -17,6 +17,7 @@ import com.github.kqfall1.java.utils.StringUtils;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -47,15 +48,13 @@ public class BlackjackEngine
 	public static final String CLASS_NAME = "BlackjackEngine";
 	private final Dealer DEALER;
 	private final BlackjackEngineListener LISTENER;
-	private final Logger LOGGER;
+	private Logger logger;
 	private final Player PLAYER;
 	private final BlackjackRuleset RULESET;
 	private static final String RULE_VIOLATION_MESSAGE = "A blackjack rule was violated.";
 	private EngineState state;
 
-	public BlackjackEngine(BlackjackEngineListener listener, String loggerFilePath,
-						   String loggerName, BlackjackRuleset ruleset)
-	throws InsufficientChipsException, IOException
+	public BlackjackEngine(BlackjackEngineListener listener, String loggerFilePath, String loggerName, BlackjackRuleset ruleset)
 	{
 		assert listener != null : "listener == null";
 		assert loggerFilePath != null : "loggerFilePath == null";
@@ -70,19 +69,26 @@ public class BlackjackEngine
 		this.LISTENER = listener;
 		if (ruleset.getConfig().isLoggingEnabled())
 		{
-			LOGGER = LoggerUtils.newFileLogger(loggerFilePath, loggerName,
-				true);
+			try
+			{
+				logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName, true);
+			}
+			catch (IOException e)
+			{
+				logger = Logger.getLogger(loggerName);
+			}
 		}
 		else
 		{
-			LOGGER = Logger.getLogger(loggerName);
+			logger = Logger.getLogger(loggerName);
+			logger.setLevel(Level.OFF);
 		}
 		PLAYER = new Player();
 		getPlayer().setChips(ruleset.getConfig().getPlayerInitialChips());
 		state = EngineState.START;
 	}
 
-	public void acceptInsuranceBet() throws Exception
+	public void acceptInsuranceBet() throws RuntimeException
 	{
 		final var METHOD_NAME = "acceptInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -144,7 +150,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void advanceAfterDeal() throws InsufficientChipsException
+	public void advanceAfterDeal()
 	{
 		final var METHOD_NAME = "advanceAfterDeal";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -171,7 +177,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void advanceAfterDealerTurn() throws InsufficientChipsException
+	public void advanceAfterDealerTurn()
 	{
 		final var METHOD_NAME = "advanceAfterDealerTurn";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -182,7 +188,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void advanceAfterInsuranceBet(BigDecimal winnings) throws InsufficientChipsException
+	public void advanceAfterInsuranceBet(BigDecimal winnings)
 	{
 		final var METHOD_NAME = "advanceAfterInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -204,7 +210,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void advanceAfterPlayerTurn() throws InsufficientChipsException
+	public void advanceAfterPlayerTurn()
 	{
 		final var METHOD_NAME = "advanceAfterPlayerTurn";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -265,7 +271,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void deal() throws InsufficientChipsException
+	public void deal()
 	{
 		final var METHOD_NAME = "deal";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -347,7 +353,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void declineInsuranceBet() throws InsufficientChipsException
+	public void declineInsuranceBet()
 	{
 		final var METHOD_NAME = "declineInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -368,7 +374,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	private void drawCardForPlayerAction() throws InsufficientChipsException
+	private void drawCardForPlayerAction()
 	{
 		final var METHOD_NAME = "playerDrawCard";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -411,7 +417,7 @@ public class BlackjackEngine
 
 	public Logger getLogger()
 	{
-		return LOGGER;
+		return logger;
 	}
 
 	public Player getPlayer()
@@ -488,7 +494,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	private void onDrawingRoundCompletedPlayer() throws InsufficientChipsException
+	private void onDrawingRoundCompletedPlayer()
 	{
 		final var METHOD_NAME = "onDrawingRoundCompletedPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -527,7 +533,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void placeHandBet(BigDecimal amount) throws Exception
+	public void placeHandBet(BigDecimal amount) throws RuntimeException
 	{
 		final var METHOD_NAME = "placeBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME, amount);
@@ -562,7 +568,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, playerMainHand);
 	}
 
-	public void playerDoubleDown() throws Exception
+	public void playerDoubleDown() throws RuntimeException
 	{
 		final var METHOD_NAME = "playerDoubleDown";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -602,7 +608,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void playerHit() throws InsufficientChipsException
+	public void playerHit()
 	{
 		final var METHOD_NAME = "playerHit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -616,7 +622,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 	
-	public void playerSplit() throws Exception
+	public void playerSplit() throws RuntimeException
 	{
 		final var METHOD_NAME = "playerSplit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -676,7 +682,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void playerStand() throws InsufficientChipsException
+	public void playerStand()
 	{
 		final var METHOD_NAME = "playerStand";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -686,7 +692,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void playerSurrender() throws Exception
+	public void playerSurrender() throws RuntimeException
 	{
 		final var METHOD_NAME = "playerSurrender";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -758,7 +764,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	private void showdown() throws InsufficientChipsException
+	private void showdown()
 	{
 		final var METHOD_NAME = "showdown";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -837,7 +843,7 @@ public class BlackjackEngine
 		setState(EngineState.BETTING);
 	}
 
-	private void throwException(Exception e, String sourceMethod) throws Exception
+	private void throwException(RuntimeException e, String sourceMethod) throws RuntimeException
 	{
 		assert e != null : "e == null";
 		assert sourceMethod != null && !sourceMethod.isBlank()

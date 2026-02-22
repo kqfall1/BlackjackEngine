@@ -6,13 +6,11 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.*;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,7 +36,6 @@ public abstract class EngineTest
 	public static final int TEST_ITERATIONS = 200;
 
 	public final BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
-	throws Exception
 	{
 		final var BET_AMOUNT = advanceToPlayerTurn(maximumBetAmount);
 
@@ -52,7 +49,6 @@ public abstract class EngineTest
 	}
 
 	public final void advanceToEndOfRound()
-	throws InsufficientChipsException
 	{
 		if (engine.getState() == EngineState.DEALER_TURN)
 		{
@@ -68,7 +64,6 @@ public abstract class EngineTest
 	}
 
 	public final BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
-	throws Exception
 	{
 		final var BET_AMOUNT = placeRandomHandBet(maximumBetAmount);
 		engine.deal();
@@ -77,7 +72,7 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
-	public final void declinePossibleInsuranceBet() throws InsufficientChipsException
+	public final void declinePossibleInsuranceBet()
 	{
 		if (engine.getState() == EngineState.INSURANCE_CHECK)
 		{
@@ -86,7 +81,7 @@ public abstract class EngineTest
 	}
 
 	@BeforeEach
-	public abstract void init() throws InsufficientChipsException, IOException;
+	public abstract void init();
 
 	public final void initDependencies()
 	{
@@ -97,7 +92,6 @@ public abstract class EngineTest
 	}
 
 	public final void initEngine(String logFilePath, String loggerName)
-	throws InsufficientChipsException, IOException
 	{
 		this.logFilePath = logFilePath;
 		this.loggerName = loggerName;
@@ -106,7 +100,7 @@ public abstract class EngineTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public abstract void main() throws Exception;
+	public abstract void main();
 
 	final BlackjackEngineListener LISTENER = new BlackjackEngineListener()
 	{
@@ -211,8 +205,7 @@ public abstract class EngineTest
 		}
 
 		@Override
-		public void onDrawingRoundCompletedPlayer(HandContext handContext)
-		{
+		public void onDrawingRoundCompletedPlayer(HandContext handContext) {
 			assertEquals(EngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
 				"You have completed a drawing round on hand %s.\n",
@@ -396,7 +389,6 @@ public abstract class EngineTest
 	}
 
 	public final BigDecimal placeRandomHandBet(BigDecimal maximumBetAmount)
-	throws Exception
 	{
 		final var BET_AMOUNT = maximumBetAmount
 			.subtract(ruleset.getConfig().getMinimumBetAmount())
@@ -406,7 +398,7 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
-	private void start() throws InsufficientChipsException, IOException
+	private void start()
 	{
 		engine = new BlackjackEngine(LISTENER, logFilePath, loggerName, ruleset);
 		engine.start();

@@ -7,7 +7,7 @@ package com.github.kqfall1.java.blackjackEngine.model.exceptions;
  * @author kqfall1
  * @since 15/12/2025
  */
-public class RuleViolationException extends Exception
+public class RuleViolationException extends RuntimeException
 {
 	public RuleViolationException(String message)
 	{

@@ -2,8 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +16,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		blackjackMethodIndex = super._initCardsForBlackjack();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -27,7 +25,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 		super.advanceToPlayerTurn(INITIAL_CHIP_AMOUNT);

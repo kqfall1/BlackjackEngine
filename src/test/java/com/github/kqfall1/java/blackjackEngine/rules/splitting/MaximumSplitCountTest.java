@@ -4,8 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import java.io.IOException;
+
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -17,8 +16,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initCardsForSplittingWithoutHitting(Rank.ACE);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(
@@ -31,7 +29,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 

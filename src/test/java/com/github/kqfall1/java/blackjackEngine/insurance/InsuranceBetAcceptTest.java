@@ -3,8 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.insurance;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.Assertions;
@@ -18,8 +17,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initCardsForInsurance();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -28,7 +26,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(
 			BigDecimal.TWO,

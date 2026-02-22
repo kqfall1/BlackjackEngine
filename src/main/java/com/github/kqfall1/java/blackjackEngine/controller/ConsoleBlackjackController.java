@@ -14,7 +14,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.managers.InputManager;
-import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.util.logging.Level;
 
@@ -41,9 +41,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/ConsoleBlackjackControllerEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
-	ConsoleBlackjackController(ConsoleHandler handler, String logFilePath, String loggerName,
-							   BlackjackRuleset ruleset)
-	throws InsufficientChipsException, IOException
+	ConsoleBlackjackController(ConsoleHandler handler, String logFilePath, String loggerName, BlackjackRuleset ruleset)
 	{
 		assert handler != null : "handler == null";
 		assert logFilePath != null && !logFilePath.isBlank()
@@ -72,7 +70,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	}
 
 	public static void main(String[] args)
-	throws InsufficientChipsException, IOException
 	{
 		final var config = new BlackjackRulesetConfiguration();
 		final var handler = new ConsoleHandler();
@@ -183,8 +180,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	}
 
 	@Override
-	public void onDrawingRoundCompletedPlayer(HandContext handContext)
-	{
+	public void onDrawingRoundCompletedPlayer(HandContext handContext) {
 		getHandler().getOut().printf(
 			"You have completed a drawing round on hand %s.\n",
 			handContext.getHand().toStringPretty()

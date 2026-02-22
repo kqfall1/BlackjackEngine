@@ -3,9 +3,8 @@ package com.github.kqfall1.java.blackjackEngine.engine;
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayDeque;
@@ -52,7 +51,7 @@ public abstract class CustomDeckTest extends EngineTest
 	}
 
 	@BeforeEach
-	public abstract void init() throws InsufficientChipsException, IOException;
+	public abstract void init();
 
 	public final int _initCardsForBlackjack()
 	{
@@ -313,7 +312,7 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public final void initSplitHands() throws Exception
+	public final void initSplitHands()
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 
@@ -381,5 +380,5 @@ public abstract class CustomDeckTest extends EngineTest
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
-	public abstract void main() throws Exception;
+	public abstract void main();
 }

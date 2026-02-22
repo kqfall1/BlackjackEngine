@@ -10,8 +10,7 @@ import org.junit.jupiter.api.RepeatedTest;
 final class DealerHitsOnSoft17Test extends CustomDeckTest
 {
 	@BeforeEach
-	public void init()
-	{
+	public void init() {
 		super.initCardsForDealerSoft17();
 		super.initDependencies();
 		super.ruleset.getConfig().setShouldDealerHitOnSoft17(true);

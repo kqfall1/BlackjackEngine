@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author kqfall1
  * @since 14/12/2025
  */
-public final class InsufficientChipsException extends Exception
+public final class InsufficientChipsException extends RuntimeException
 {
 	public InsufficientChipsException(Player player, BigDecimal requiredChips)
 	{

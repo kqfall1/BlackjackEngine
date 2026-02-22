@@ -20,7 +20,7 @@ public final class Player
 	private BigDecimal chips;
 	private final List<HandContext> contexts;
 
-	public Player() throws InsufficientChipsException
+	public Player()
 	{
 		setChips(BigDecimal.ZERO);
 		contexts = new ArrayList<>();
@@ -54,7 +54,7 @@ public final class Player
 		contexts.remove(contextIndex);
 	}
 
-	public void setChips(BigDecimal chips) throws InsufficientChipsException
+	public void setChips(BigDecimal chips)
 	{
 		assert chips != null : "chips == null";
 

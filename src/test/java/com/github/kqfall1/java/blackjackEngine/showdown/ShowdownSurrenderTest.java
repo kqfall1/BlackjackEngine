@@ -3,8 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import java.io.IOException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.Assertions;
@@ -18,8 +17,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super._initCardsForBust();
 		super.initDependencies();
 		super.ruleset.getConfig().setSurrenderingAllowed(true);
@@ -29,7 +27,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 		final var BET_AMOUNT = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);

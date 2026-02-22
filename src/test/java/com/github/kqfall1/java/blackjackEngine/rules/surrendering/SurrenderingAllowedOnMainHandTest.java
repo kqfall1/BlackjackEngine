@@ -3,9 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.rules.surrendering;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
-import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -17,8 +15,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() throws InsufficientChipsException, IOException
-	{
+	public void init() {
 		super.initCardsForSplittingWithoutHitting(Rank.JACK);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
@@ -29,7 +26,7 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
-	public void main() throws Exception
+	public void main()
 	{
 //		Assertions.assertTrue(super.config.isSurrenderingAllowed());
 //		Assertions.assertFalse(super.engine.getConfig().isSurrenderingOnSplitHandsAllowed());

@@ -17,7 +17,7 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
  * @author kqfall1
  * @since 15/12/2025
  */
-public final class IllegalHandOperationException extends Exception
+public final class IllegalHandOperationException extends RuntimeException
 {
 	public IllegalHandOperationException(HandContext handContext, String message)
 	{
