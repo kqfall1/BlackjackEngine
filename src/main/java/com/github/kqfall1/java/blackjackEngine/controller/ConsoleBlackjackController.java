@@ -6,7 +6,6 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
@@ -14,7 +13,6 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset
 import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.handlers.input.ConsoleHandler;
 import com.github.kqfall1.java.managers.InputManager;
-
 import java.math.BigDecimal;
 import java.util.logging.Level;
 
@@ -71,20 +69,20 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 	public static void main(String[] args)
 	{
-		final var config = new BlackjackRulesetConfiguration();
-		final var handler = new ConsoleHandler();
-		config.setLoggingEnabled(true);
-		config.setSurrenderingAllowed(true);
-		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
-		final var ruleset = new StandardBlackjackRuleset(config);
-		final var controller = new ConsoleBlackjackController(
-			handler,
+		final var CONFIG = new BlackjackRulesetConfiguration();
+		final var HANDLER = new ConsoleHandler();
+		CONFIG.setLoggingEnabled(true);
+		CONFIG.setSurrenderingAllowed(true);
+		CONFIG.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
+		final var RULESET = new StandardBlackjackRuleset(CONFIG);
+		final var CONTROLLER = new ConsoleBlackjackController(
+			HANDLER,
 			LOG_FILE_PATH,
 			LOGGER_NAME,
-			ruleset
+			RULESET
 		);
-		controller.getEngine().getLogger().setLevel(Level.OFF);
-		controller.getEngine().start();
+		CONTROLLER.getEngine().getLogger().setLevel(Level.OFF);
+		CONTROLLER.getEngine().start();
 	}
 
 	@Override
@@ -94,15 +92,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"You placed a bet of $%.2f.\n",
 			handContext.getBet().getAmount()
 		);
-
-		try
-		{
-			getEngine().deal();
-		}
-		catch (InsufficientChipsException e)
-		{
-			getHandler().presentFailure(e.getMessage());
-		}
 	}
 
 	@Override
@@ -137,18 +126,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				);
 			}
 		}
-
-		if (dealerHand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT)
-		{
-			try
-			{
-				getEngine().advanceAfterDeal();
-			}
-			catch (InsufficientChipsException e)
-			{
-				getHandler().presentFailure(e.getMessage());
-			}
-		}
 	}
 
 	@Override
@@ -168,15 +145,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"The dealer has finished drawing. Their hand is %s.\n",
 			dealerHand.toStringPretty()
 		);
-
-		try
-		{
-			getEngine().advanceAfterDealerTurn();
-		}
-		catch (InsufficientChipsException e)
-		{
-			getHandler().presentFailure(e.getMessage());
-		}
 	}
 
 	@Override
@@ -185,18 +153,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"You have completed a drawing round on hand %s.\n",
 			handContext.getHand().toStringPretty()
 		);
-
-		if (getEngine().getActiveHandContext().equals(handContext))
-		{
-			try
-			{
-				getEngine().advanceAfterPlayerTurn();
-			}
-			catch (InsufficientChipsException e)
-			{
-				getHandler().presentFailure(e.getMessage());
-			}
-		}
 	}
 
 	@Override
@@ -243,15 +199,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			getHandler().getOut().println("You have lost your insurance bet.");
 		}
-
-		try
-		{
-			getEngine().advanceAfterInsuranceBet(playerWinnings);
-		}
-		catch (InsufficientChipsException e)
-		{
-			getHandler().presentFailure(e.getMessage());
-		}
 	}
 
 	@Override
@@ -270,12 +217,10 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	public void onReset()
 	{
 		getHandler().getOut().println("The dealer is setting up a new betting round.");
-		getEngine().advanceAfterReset();
 	}
 
 	@Override
-	public void onShowdownCompleted(Hand dealerHand, HandContext handContext,
-									boolean playerWon, BigDecimal playerWinnings)
+	public void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings)
 	{
 		final var completedString = String.format(
 			"Your score is %d and the dealer's score is %d.",
@@ -306,8 +251,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				completedString
 			);
 		}
-
-		getEngine().advanceAfterShowdown();
 	}
 
 	@Override
@@ -326,9 +269,9 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		switch (getEngine().getState())
 		{
 			case BETTING -> placeHandBet();
-			case END -> { System.exit(0); }
 			case INSURANCE_CHECK -> placeInsuranceBet();
 			case PLAYER_TURN -> performAction();
+			case END -> { System.exit(0); }
 		}
 	}
 
@@ -353,7 +296,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				case "su" -> getEngine().playerSurrender();
 			}
 		}
-		catch (Exception e)
+		catch (RuntimeException e)
 		{
 			getHandler().presentFailure(e.getMessage());
 
@@ -378,6 +321,8 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		try
 		{
 			getEngine().placeHandBet(BigDecimal.valueOf(amount));
+			getEngine().deal();
+			getEngine().advanceAfterDeal();
 		}
 		catch (Exception e)
 		{
@@ -403,14 +348,18 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 		try
 		{
+			var playerWinnings = BigDecimal.ZERO;
+
 			if (answer == YesNoInput.YES)
 			{
-				getEngine().acceptInsuranceBet();
+				playerWinnings = getEngine().acceptInsuranceBet();
 			}
 			else
 			{
 				getEngine().declineInsuranceBet();
 			}
+
+			getEngine().advanceAfterInsuranceBet(playerWinnings);
 		}
 		catch (Exception e)
 		{

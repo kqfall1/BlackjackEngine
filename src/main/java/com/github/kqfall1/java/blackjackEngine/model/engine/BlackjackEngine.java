@@ -88,7 +88,7 @@ public class BlackjackEngine
 		state = EngineState.START;
 	}
 
-	public void acceptInsuranceBet() throws RuntimeException
+	public BigDecimal acceptInsuranceBet() throws RuntimeException
 	{
 		final var METHOD_NAME = "acceptInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -134,6 +134,7 @@ public class BlackjackEngine
 			}
 		}
 		final var AMOUNT = getActiveHandContext().getBet().getHalf();
+		var playerWinnings = BigDecimal.ZERO;
 		getPlayer().setChips(getPlayer().getChips().subtract(AMOUNT));
 		final var INSURANCE_POT = new Pot(AMOUNT);
 		final var INSURANCE_RATIO = RULESET
@@ -141,13 +142,11 @@ public class BlackjackEngine
 			.get(BlackjackConstants.INSURANCE_RATIO_KEY);
 		if (RULESET.isHandBlackjack(getDealer().getHand()))
 		{
-			getPlayer().setChips(getPlayer().getChips().add(
-				INSURANCE_POT.scoop().multiply(
-					INSURANCE_RATIO.getPayoutMultiplier()
-				)
-			));
+			playerWinnings = INSURANCE_POT.scoop().multiply(INSURANCE_RATIO.getPayoutMultiplier());
+			getPlayer().setChips(getPlayer().getChips().add(playerWinnings));
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
+		return playerWinnings;
 	}
 
 	public void advanceAfterDeal()
@@ -425,6 +424,11 @@ public class BlackjackEngine
 		return PLAYER;
 	}
 
+	public BlackjackRuleset getRuleset()
+	{
+		return RULESET;
+	}
+
 	public EngineState getState()
 	{
 		return state;
@@ -499,13 +503,13 @@ public class BlackjackEngine
 		final var METHOD_NAME = "onDrawingRoundCompletedPlayer";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == EngineState.PLAYER_TURN : "getState() != EngineState.PLAYER_TURN";
-		getListener().onDrawingRoundCompletedPlayer(getActiveHandContext());
 		if (getActiveHandContextIndex() < getPlayer().getContexts().size() - 1)
 		{
 			setActiveHandContextIndex(getActiveHandContextIndex() + 1);
 			onDrawingRoundStartedPlayer();
 			setState(EngineState.PLAYER_TURN);
 		}
+		getListener().onDrawingRoundCompletedPlayer(getActiveHandContext());
 		getLogger().info("The player's drawing round was completed.");
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
