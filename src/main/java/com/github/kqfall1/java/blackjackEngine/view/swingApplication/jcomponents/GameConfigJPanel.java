@@ -233,7 +233,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         }
 
         EventQueue.invokeLater(() -> {
-            new Timer(UiConstants.SLEEP_INTERVAL_LONG, event -> {
+            new Timer(UiConstants.SLEEP_INTERVAL, event -> {
                 for (Component component : components)
                 {
                     final var JCOMPONENT = (JComponent) component;

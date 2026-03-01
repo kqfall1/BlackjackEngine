@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -25,6 +24,7 @@ public final class UiConstants
     public static final double GAME_CONFIG_JDIALOG_HEIGHT_FACTOR = 0.4;
     public static final String GAME_CONFIG_JDIALOG_TITLE = "Game Configuration";
     public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.5;
+    public static final String GAME_DEALER_HAND_SCORE_LABEL = "Dealer's score:";
     public static final Color JBUTTON_BACKGROUND_COLOR = new Color(238, 220, 130);
     public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final String JMENU_FILE_LABEL = "File";
@@ -44,7 +44,7 @@ public final class UiConstants
         Shoe.MAXIMUM_PENETRATION
     );
     public static final String SHOULD_DEALER_HIT_ON_SOFT_17_LABEL = "Should dealer hit on soft 17?";
-    public static final int SLEEP_INTERVAL_LONG = 1000;
+    public static final int SLEEP_INTERVAL = 1000;
     public static final String SPLITTING_ACES_ALLOWED_LABEL = "Is splitting aces allowed?";
     public static final String SURRENDERING_ALLOWED_LABEL = "Is surrendering allowed?";
     public static final String SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is surrendering on split hands allowed?";
