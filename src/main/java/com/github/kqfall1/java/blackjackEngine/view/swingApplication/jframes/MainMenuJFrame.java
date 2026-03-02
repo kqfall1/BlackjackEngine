@@ -44,10 +44,10 @@ public final class MainMenuJFrame extends BlackjackJFrame
     {
         final var GAME_JFRAME = new GameJFrame(config, this);
         final var BLACKJACK_ENGINE = new BlackjackEngine(
-                GAME_JFRAME,
-                UiConstants.LOG_FILE_PATH,
-                UiConstants.LOGGER_NAME,
-                new StandardBlackjackRuleset(config)
+            GAME_JFRAME,
+            UiConstants.LOG_FILE_PATH,
+            UiConstants.LOGGER_NAME,
+            new StandardBlackjackRuleset(config)
         );
         GAME_JFRAME.setBlackjackEngine(BLACKJACK_ENGINE);
         setVisible(false);

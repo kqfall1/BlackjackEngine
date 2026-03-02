@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Patched a bug with a PayoutRatio.java constant for blackjack-payout calculations.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Have began the UI layout for GameJFrame.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/ConfigurationJPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameLeftJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameLeftJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -541,11 +540,18 @@
       <option name="project" value="LOCAL" />
       <updated>1771777870073</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Have began the UI layout for GameJFrame.java.">
+      <option name="closed" value="true" />
+      <created>1772397957033</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1772397957033</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Began refactoring the split hand traversal mechanic to mimic real casino mechanics. Some tests are mysteriously broken." />
     <MESSAGE value="Split hand traversal refactor completed." />
     <MESSAGE value="Re-organized the test suite. Also fixed bugs in DoublingDownOnSplitHandsNotAllowed.java." />
     <MESSAGE value="Updated StandardBlackjackRuleset.java to account for splitting aces and altered the necessary tests. Made minor tweaks to model classes." />
@@ -570,7 +576,8 @@
     <MESSAGE value="Fixed more tests; 5 tests are still failing due to payout inaccuracies." />
     <MESSAGE value="Stabilized BlackjackEngine.java, ConsoleBlackjackController.java, and the test suite. All tests are passing." />
     <MESSAGE value="Patched a bug with a PayoutRatio.java constant for blackjack-payout calculations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Patched a bug with a PayoutRatio.java constant for blackjack-payout calculations." />
+    <MESSAGE value="Have began the UI layout for GameJFrame.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Have began the UI layout for GameJFrame.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
