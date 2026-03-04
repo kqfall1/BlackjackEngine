@@ -2,8 +2,8 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponent
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import com.github.kqfall1.java.javax.swing.AwtUtils;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Contains all {@code JComponent} objects required to provide general information about the blackjack game.
@@ -44,29 +44,33 @@ public final class GameLeftJPanel extends JPanel
         engineMessageJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
         playerInputJButton = new JButton(UiConstants.GAME_PLAYER_INPUT_JBUTTON_LABEL);
+        playerInputJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJLabel = new JLabel();
+        playerInputJLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField = new JTextField(PLAYER_INPUT_JTEXTFIELD_WIDTH);
+        playerInputJTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField.setHorizontalAlignment(JTextField.CENTER);
 
-        final var TEXT_FIELD_WRAPPER = new JPanel();
-        TEXT_FIELD_WRAPPER.setLayout(new FlowLayout(FlowLayout.CENTER));
-        TEXT_FIELD_WRAPPER.add(playerInputJTextField);
+        final var GAME_INFO_WRAPPER = new JPanel();
+        GAME_INFO_WRAPPER.setLayout(new BoxLayout(GAME_INFO_WRAPPER, BoxLayout.Y_AXIS));
+        GAME_INFO_WRAPPER.add(dealerHandScoreJLabel);
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
+        GAME_INFO_WRAPPER.add(playerChipAmountJLabel);
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        GAME_INFO_WRAPPER.add(activeHandContextHandScoreJLabel);
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
 
-        final var PLAYER_INPUT_WRAPPER = new JPanel();
-        PLAYER_INPUT_WRAPPER.setLayout(new BoxLayout(PLAYER_INPUT_WRAPPER, BoxLayout.Y_AXIS));
-        PLAYER_INPUT_WRAPPER.add(playerInputJLabel);
-        PLAYER_INPUT_WRAPPER.add(TEXT_FIELD_WRAPPER);
-        PLAYER_INPUT_WRAPPER.add(playerInputJButton);
+        final var GAME_INPUT_WRAPPER = new JPanel();
+        GAME_INPUT_WRAPPER.setLayout(new BoxLayout(GAME_INPUT_WRAPPER, BoxLayout.Y_AXIS));
+        GAME_INPUT_WRAPPER.add(playerInputJLabel);
+        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        GAME_INPUT_WRAPPER.add(playerInputJTextField);
+        GAME_INPUT_WRAPPER.add(playerInputJButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
-        add(dealerHandScoreJLabel);
-        add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
-        add(playerChipAmountJLabel);
-        add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
-        add(activeHandContextHandScoreJLabel);
-        add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
-        add(PLAYER_INPUT_WRAPPER);
+        add(GAME_INFO_WRAPPER);
+        add(GAME_INPUT_WRAPPER);
         add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
         add(advanceEngineJButton);
         add(engineMessageJScrollPane);
