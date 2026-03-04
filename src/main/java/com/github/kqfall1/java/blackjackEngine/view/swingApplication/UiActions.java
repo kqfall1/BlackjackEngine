@@ -14,13 +14,13 @@ import javax.swing.*;
  */
 public final class UiActions
 {
-    private final Action EXIT;
+    private final Action exit;
     private static UiActions instance;
-    private final Action NEW_GAME;
+    private final Action newGame;
 
     private UiActions()
     {
-        EXIT = new AbstractAction()
+        exit = new AbstractAction()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -29,11 +29,11 @@ public final class UiActions
             }
         };
 
-        EXIT.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
-        EXIT.putValue(Action.NAME, UiConstants.JMENU_ITEM_EXIT_LABEL);
-        EXIT.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
+        exit.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
+        exit.putValue(Action.NAME, UiConstants.JMENU_ITEM_EXIT_LABEL);
+        exit.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
 
-        NEW_GAME = new AbstractAction()
+        newGame = new AbstractAction()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -47,14 +47,14 @@ public final class UiActions
             }
         };
 
-        NEW_GAME.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        NEW_GAME.putValue(Action.NAME, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        NEW_GAME.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        newGame.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        newGame.putValue(Action.NAME, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        newGame.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
     }
 
     public Action getExit()
     {
-        return EXIT;
+        return exit;
     }
 
     public static UiActions getInstance()
@@ -69,7 +69,7 @@ public final class UiActions
 
     public Action getNewGame()
     {
-        return NEW_GAME;
+        return newGame;
     }
 
     public void setKeystrokes(JFrame jframe)

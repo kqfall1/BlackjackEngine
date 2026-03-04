@@ -30,6 +30,11 @@ public final class UiConstants
     public static final int GAME_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_ENGINE_JSCROLL_PANEL_WIDTH = 100;
     public static final int GAME_ENTITY_JLABEL_SECTION_MARGIN = 100;
+    public static final String GAME_JBUTTON_DOUBLE_DOWN_LABEL = "Double down";
+    public static final String GAME_JBUTTON_HIT_LABEL = "Hit";
+    public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
+    public static final String GAME_JBUTTON_STAND_LABEL = "Stand";
+    public static final String GAME_JBUTTON_SURRENDER_LABEL = "Surrender";
     public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips:";
     public static final String GAME_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
     public static final Color JBUTTON_BACKGROUND_COLOR = new Color(238, 220, 130);

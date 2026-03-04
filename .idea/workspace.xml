@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Created a rough GameLeftJPanel.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Completed a rough GameLeftJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameLeftJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameLeftJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -554,11 +555,18 @@
       <option name="project" value="LOCAL" />
       <updated>1772433840068</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Completed a rough GameLeftJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1772596199523</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1772596199523</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Re-organized the test suite. Also fixed bugs in DoublingDownOnSplitHandsNotAllowed.java." />
     <MESSAGE value="Updated StandardBlackjackRuleset.java to account for splitting aces and altered the necessary tests. Made minor tweaks to model classes." />
     <MESSAGE value="Renamed cutoffPercentageNumerator of Shoe.java to penetration. Applied final touches before the Swing GUI construction." />
     <MESSAGE value="Moved BlackjackEngine.java to model/engine." />
@@ -583,7 +591,8 @@
     <MESSAGE value="Patched a bug with a PayoutRatio.java constant for blackjack-payout calculations." />
     <MESSAGE value="Have began the UI layout for GameJFrame.java." />
     <MESSAGE value="Created a rough GameLeftJPanel.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created a rough GameLeftJPanel.java." />
+    <MESSAGE value="Completed a rough GameLeftJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed a rough GameLeftJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
