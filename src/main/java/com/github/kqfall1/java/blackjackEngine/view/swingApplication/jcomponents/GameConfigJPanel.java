@@ -125,9 +125,9 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         PLAY_BUTTON_PANEL_WRAPPER.add(playButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(JCHECK_BOX_PANEL_WRAPPER);
-        add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(JTEXT_FIELD_PANEL_WRAPPER);
         add(ERROR_JLABEL_PANEL_WRAPPER);
         add(PLAY_BUTTON_PANEL_WRAPPER);

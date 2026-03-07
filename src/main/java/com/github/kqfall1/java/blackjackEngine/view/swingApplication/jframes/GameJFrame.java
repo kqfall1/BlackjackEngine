@@ -8,6 +8,8 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameLeftJPanel;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameRightJPanel;
+
 import java.awt.*;
 import java.math.BigDecimal;
 
@@ -28,6 +30,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         this.config = config;
         this.mainMenuJFrame = mainMenuJFrame;
 
+        add(new GameRightJPanel(), BorderLayout.EAST);
         add(new GameLeftJPanel(), BorderLayout.WEST);
         setVisible(true);
     }

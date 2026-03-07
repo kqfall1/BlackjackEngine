@@ -54,24 +54,24 @@ public final class GameLeftJPanel extends JPanel
         final var GAME_INFO_WRAPPER = new JPanel();
         GAME_INFO_WRAPPER.setLayout(new BoxLayout(GAME_INFO_WRAPPER, BoxLayout.Y_AXIS));
         GAME_INFO_WRAPPER.add(dealerHandScoreJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
         GAME_INFO_WRAPPER.add(playerChipAmountJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         GAME_INFO_WRAPPER.add(activeHandContextHandScoreJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.GAME_ENTITY_JLABEL_SECTION_MARGIN));
+        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
 
         final var GAME_INPUT_WRAPPER = new JPanel();
         GAME_INPUT_WRAPPER.setLayout(new BoxLayout(GAME_INPUT_WRAPPER, BoxLayout.Y_AXIS));
         GAME_INPUT_WRAPPER.add(playerInputJLabel);
-        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         GAME_INPUT_WRAPPER.add(playerInputJTextField);
         GAME_INPUT_WRAPPER.add(playerInputJButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(GAME_INFO_WRAPPER);
         add(GAME_INPUT_WRAPPER);
-        add(Box.createVerticalStrut(UiConstants.DEFAULT_MARGIN_VALUE));
+        add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(advanceEngineJButton);
         add(engineMessageJScrollPane);
 

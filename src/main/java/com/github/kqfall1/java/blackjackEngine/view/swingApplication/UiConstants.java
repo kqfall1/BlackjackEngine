@@ -18,7 +18,6 @@ public final class UiConstants
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
     public static final Border BORDER_RED = BorderFactory.createLineBorder(Color.RED);
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
-    public static final int DEFAULT_MARGIN_VALUE = 25;
     public static final String DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
     public static final String GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score:";
     public static final String GAME_ADVANCE_HAND_JBUTTON_LABEL = "Advance";
@@ -29,7 +28,6 @@ public final class UiConstants
     public static final String GAME_DEALER_HAND_SCORE_LABEL = "Dealer's score:";
     public static final int GAME_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_ENGINE_JSCROLL_PANEL_WIDTH = 100;
-    public static final int GAME_ENTITY_JLABEL_SECTION_MARGIN = 100;
     public static final String GAME_JBUTTON_DOUBLE_DOWN_LABEL = "Double down";
     public static final String GAME_JBUTTON_HIT_LABEL = "Hit";
     public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
@@ -46,6 +44,10 @@ public final class UiConstants
     public static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
     public static final String LOGGER_NAME = "BlackjackEngine";
     public static final ImageIcon MAIN_MENU_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
+    public static final int MARGIN_LARGE = 350;
+    public static final int MARGIN_MEDIUM = 100;
+    public static final int MARGIN_SMALL = 25;
+    public static final int MARGIN_EXTRA_SMALL = 10;
     public static final String MAXIMUM_SPLIT_COUNT_LABEL = "Maximum split count:";
     public static final String MINIMUM_BET_AMOUNT_LABEL = "Minimum bet amount:";
     public static final String PLAY_BUTTON_LABEL = "Play!";

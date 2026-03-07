@@ -1,6 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Contains all {@code JComponent} objects required to perform core blackjack actions.
@@ -18,6 +20,27 @@ public class GameRightJPanel extends JPanel
 
     public GameRightJPanel()
     {
-        doubleDownJButton = new JButton();
+        doubleDownJButton = new JButton(UiConstants.GAME_JBUTTON_DOUBLE_DOWN_LABEL);
+        doubleDownJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        hitJButton = new JButton(UiConstants.GAME_JBUTTON_HIT_LABEL);
+        hitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        splitJButton = new JButton(UiConstants.GAME_JBUTTON_SPLIT_LABEL);
+        splitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        standJButton = new JButton(UiConstants.GAME_JBUTTON_STAND_LABEL);
+        standJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        surrenderJButton = new JButton(UiConstants.GAME_JBUTTON_SURRENDER_LABEL);
+        surrenderJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(Box.createVerticalStrut(UiConstants.MARGIN_LARGE));
+        add(doubleDownJButton);
+        add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        add(hitJButton);
+        add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        add(splitJButton);
+        add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        add(standJButton);
+        add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        add(surrenderJButton);
     }
 }
