@@ -35,7 +35,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private final BlackjackEngine engine;
 	private final ConsoleHandler handler;
 	private final InputManager inputManager;
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.ConsoleBlackjackControllerEngine";
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/ConsoleBlackjackControllerEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
@@ -291,7 +291,10 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				getEngine().reset();
 				getEngine().advanceAfterReset();
 			}
-			case END -> { System.exit(0); }
+			case END ->
+			{
+				System.exit(0);
+			}
 		}
 	}
 

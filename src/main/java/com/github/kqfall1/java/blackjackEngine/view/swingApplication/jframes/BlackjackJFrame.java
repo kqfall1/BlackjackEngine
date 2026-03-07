@@ -23,7 +23,6 @@ public abstract class BlackjackJFrame extends JFrame
 
         final var BACKGROUND = new ApplicationBackground();
         BACKGROUND.setLayout(new BorderLayout());
-
         setContentPane(BACKGROUND);
         setIconImage(
             BLACKJACK_JFRAME_LOGO.getImage().getScaledInstance(

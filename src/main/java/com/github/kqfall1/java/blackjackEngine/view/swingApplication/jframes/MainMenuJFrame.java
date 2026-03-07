@@ -1,10 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
 import java.math.BigDecimal;
@@ -31,8 +28,9 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
     public static void main(String[] args)
     {
-        //EventQueue.invokeLater(MainMenuJFrame::new);
-        EventQueue.invokeLater(() -> {
+        //SwingUtilities.invokeLater(MainMenuJFrame::new);
+        SwingUtilities.invokeLater(() ->
+        {
             final var CONFIG = new BlackjackRulesetConfiguration();
             CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
             final var MAIN_MENU_JFRAME = new MainMenuJFrame();
@@ -42,14 +40,7 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
     public void newGame(BlackjackRulesetConfiguration config)
     {
-        final var GAME_JFRAME = new GameJFrame(config, this);
-        final var BLACKJACK_ENGINE = new BlackjackEngine(
-            GAME_JFRAME,
-            UiConstants.LOG_FILE_PATH,
-            UiConstants.LOGGER_NAME,
-            new StandardBlackjackRuleset(config)
-        );
-        GAME_JFRAME.setBlackjackEngine(BLACKJACK_ENGINE);
+        new GameJFrame(config, this);
         setVisible(false);
     }
 }

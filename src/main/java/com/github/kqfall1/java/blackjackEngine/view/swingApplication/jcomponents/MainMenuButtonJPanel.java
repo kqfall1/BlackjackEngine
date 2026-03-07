@@ -39,7 +39,6 @@ public final class MainMenuButtonJPanel extends JPanel
         private MainMenuJPanelJButton(Action action)
         {
             super(action);
-            setBackground(UiConstants.JBUTTON_BACKGROUND_COLOR);
             setFont(UiConstants.JBUTTON_FONT);
             setForeground(Color.BLACK);
         }

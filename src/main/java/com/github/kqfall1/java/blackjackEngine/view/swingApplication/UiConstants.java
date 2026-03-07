@@ -35,14 +35,13 @@ public final class UiConstants
     public static final String GAME_JBUTTON_SURRENDER_LABEL = "Surrender";
     public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips:";
     public static final String GAME_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
-    public static final Color JBUTTON_BACKGROUND_COLOR = new Color(238, 220, 130);
     public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final Font JLABEL_FONT = new Font("Georgia", Font.PLAIN, 16);
     public static final String JMENU_FILE_LABEL = "File";
     public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
     public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
-    public static final String LOG_FILE_PATH = "src/main/resources/logs/BlackjackEngine.log";
-    public static final String LOGGER_NAME = "BlackjackEngine";
+    public static final String LOG_FILE_PATH = "src/main/resources/logs/SwingUiEngine.log";
+    public static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingUiEngine";
     public static final ImageIcon MAIN_MENU_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final int MARGIN_LARGE = 350;
     public static final int MARGIN_MEDIUM = 100;

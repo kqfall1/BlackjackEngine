@@ -232,8 +232,10 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             JCOMPONENT.setBorder(UiConstants.BORDER_RED);
         }
 
-        EventQueue.invokeLater(() -> {
-            new Timer(UiConstants.SLEEP_INTERVAL, event -> {
+        SwingUtilities.invokeLater(() ->
+        {
+            new Timer(UiConstants.SLEEP_INTERVAL, event ->
+            {
                 for (Component component : components)
                 {
                     final var JCOMPONENT = (JComponent) component;

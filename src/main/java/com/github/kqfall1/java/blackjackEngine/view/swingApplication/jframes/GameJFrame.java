@@ -3,15 +3,18 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
+import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameCardsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameLeftJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameRightJPanel;
-
 import java.awt.*;
 import java.math.BigDecimal;
+import javax.swing.*;
 
 /**
  * Allows players to use and control a {@code BlackjackEngine} to play a game of blackjack.
@@ -21,17 +24,29 @@ import java.math.BigDecimal;
  */
 public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListener
 {
-    private BlackjackEngine blackjackEngine;
-    private BlackjackRulesetConfiguration config;
-    private MainMenuJFrame mainMenuJFrame;
+    private final BlackjackEngine blackjackEngine;
+    private final JPanel gameCardsJPanel;
+    private final GameLeftJPanel gameLeftJPanel;
+    private final GameRightJPanel gameRightJPanel;
+    private final MainMenuJFrame mainMenuJFrame;
 
     public GameJFrame(BlackjackRulesetConfiguration config, MainMenuJFrame mainMenuJFrame)
     {
-        this.config = config;
+        blackjackEngine = new BlackjackEngine(
+            this,
+            UiConstants.LOG_FILE_PATH,
+            UiConstants.LOGGER_NAME,
+            new StandardBlackjackRuleset(config)
+        );
+        gameCardsJPanel = new GameCardsJPanel();
+        gameLeftJPanel = new GameLeftJPanel();
+        gameRightJPanel = new GameRightJPanel();
         this.mainMenuJFrame = mainMenuJFrame;
 
-        add(new GameRightJPanel(), BorderLayout.EAST);
-        add(new GameLeftJPanel(), BorderLayout.WEST);
+        add(gameLeftJPanel, BorderLayout.WEST);
+        add(gameRightJPanel, BorderLayout.EAST);
+        add(gameCardsJPanel, BorderLayout.CENTER);
+        //blackjackEngine.start(); can't do this synchronously!!
         setVisible(true);
     }
 
@@ -88,9 +103,4 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
     @Override
     public void onStateChanged(EngineState oldState) {}
-
-    public void setBlackjackEngine(BlackjackEngine blackjackEngine)
-    {
-        this.blackjackEngine = blackjackEngine;
-    }
 }
