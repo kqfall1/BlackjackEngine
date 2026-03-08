@@ -28,11 +28,13 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
     public static void main(String[] args)
     {
-        //SwingUtilities.invokeLater(MainMenuJFrame::new);
+//        SwingUtilities.invokeLater(MainMenuJFrame::new);
+
+        final var CONFIG = new BlackjackRulesetConfiguration();
+        CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
+
         SwingUtilities.invokeLater(() ->
         {
-            final var CONFIG = new BlackjackRulesetConfiguration();
-            CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
             final var MAIN_MENU_JFRAME = new MainMenuJFrame();
             MAIN_MENU_JFRAME.newGame(CONFIG);
         });

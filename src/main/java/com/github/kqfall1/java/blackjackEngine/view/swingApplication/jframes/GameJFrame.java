@@ -5,6 +5,8 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
@@ -12,8 +14,10 @@ import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameCardsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameInfoJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameActionJPanel;
+import com.github.kqfall1.java.enums.YesNoInput;
 import java.awt.*;
 import java.math.BigDecimal;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.*;
@@ -44,8 +48,90 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         executorService = Executors.newSingleThreadExecutor();
         gameActionJPanel = new GameActionJPanel();
         gameCardsJPanel = new GameCardsJPanel();
-        gameInfoJPanel = new GameInfoJPanel(blackjackEngine, executorService);
+        gameInfoJPanel = new GameInfoJPanel();
         this.mainMenuJFrame = mainMenuJFrame;
+
+        gameInfoJPanel.getAdvanceEngineJButton().addActionListener(e ->
+        {
+            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
+
+            if (blackjackEngine.getState() == EngineState.START)
+            {
+                executorService.submit(blackjackEngine::start);
+            }
+            else if (blackjackEngine.getState() == EngineState.PLAYER_TURN)
+            {
+
+            }
+            else
+            {
+                gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
+            }
+            //will continue and add more states
+        });
+        gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
+        {
+            gameInfoJPanel.getPlayerInputJButton().setEnabled(false);
+
+            if (blackjackEngine.getState() == EngineState.BETTING)
+            {
+                final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getNumber(null, 0, Double.MAX_VALUE);
+                FUTURE_INPUT.whenComplete((result, throwable) ->
+                {
+                    if (throwable == null)
+                    {
+                        gameInfoJPanel.getPlayerInputJTextField().setText("");
+                        CompletableFuture.completedFuture(result)
+                            .thenApplyAsync(BigDecimal::valueOf)
+                            .thenAccept(blackjackEngine::placeBet)
+                            .thenRun(blackjackEngine::deal)
+                            .thenRun(blackjackEngine::advanceAfterDeal);
+                    }
+                    else
+                    {
+                        gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+
+                        if (throwable instanceof InsufficientChipsException)
+                        {
+                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerChipAmountJLabel());
+                        }
+                        else if (throwable instanceof RuleViolationException)
+                        {
+                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJButton());
+                        }
+                        else
+                        {
+                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
+                        }
+                    }
+                });
+            }
+            else if (blackjackEngine.getState() == EngineState.INSURANCE_CHECK)
+            {
+                final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getYesNo(null);
+                FUTURE_INPUT.whenComplete((result, throwable) ->
+                {
+                    if (throwable == null)
+                    {
+                        if (result == YesNoInput.YES)
+                        {
+                            CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService)
+                                .thenAccept(blackjackEngine::advanceAfterInsuranceBet);
+                        }
+                        else
+                        {
+                            executorService.submit(blackjackEngine::declineInsuranceBet);
+                        }
+                    }
+                    else
+                    {
+                        gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
+                    }
+                });
+                gameInfoJPanel.getPlayerInputJButton().setEnabled(false);
+                gameInfoJPanel.getPlayerInputJTextField().setText("");
+            }
+        });
 
         add(gameActionJPanel, BorderLayout.EAST);
         add(gameInfoJPanel, BorderLayout.WEST);
@@ -107,14 +193,30 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onStateChanged(EngineState oldState)
     {
-        switch (blackjackEngine.getState())
+        SwingUtilities.invokeLater(() ->
         {
-            case BETTING ->
+            gameInfoJPanel.getPlayerChipAmountJLabel().setText(String.format(
+                "%s%.2f",
+                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX,
+                blackjackEngine.getPlayer().getChips()
+            ));
+
+            switch (blackjackEngine.getState())
             {
-                gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
-                gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+                case BETTING, INSURANCE_CHECK ->
+                {
+                    gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+                }
+                case PLAYER_TURN ->
+                {
+                    gameActionJPanel.getDoubleDownJButton().setEnabled(true);
+                    gameActionJPanel.getHitJButton().setEnabled(true);
+                    gameActionJPanel.getSplitJButton().setEnabled(true);
+                    gameActionJPanel.getStandJButton().setEnabled(true);
+                    gameActionJPanel.getSurrenderJButton().setEnabled(true);
+                }
+                //will continue and add more states
             }
-            //will continue and add more states
-        }
+        });
     }
 }

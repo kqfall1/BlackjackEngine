@@ -48,4 +48,29 @@ public class GameActionJPanel extends JPanel
         add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
         add(surrenderJButton);
     }
+
+    public JButton getDoubleDownJButton()
+    {
+        return doubleDownJButton;
+    }
+
+    public JButton getHitJButton()
+    {
+        return hitJButton;
+    }
+
+    public JButton getSplitJButton()
+    {
+        return splitJButton;
+    }
+
+    public JButton getStandJButton()
+    {
+        return standJButton;
+    }
+
+    public JButton getSurrenderJButton()
+    {
+        return surrenderJButton;
+    }
 }

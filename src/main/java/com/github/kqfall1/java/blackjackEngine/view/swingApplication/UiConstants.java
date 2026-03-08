@@ -33,7 +33,7 @@ public final class UiConstants
     public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
     public static final String GAME_JBUTTON_STAND_LABEL = "Stand";
     public static final String GAME_JBUTTON_SURRENDER_LABEL = "Surrender";
-    public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips:";
+    public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX = "Player's chips: ";
     public static final String GAME_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
     public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final Font JLABEL_FONT = new Font("Georgia", Font.PLAIN, 16);

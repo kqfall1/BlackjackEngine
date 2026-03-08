@@ -1,17 +1,10 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
-import com.github.kqfall1.java.enums.YesNoInput;
 import com.github.kqfall1.java.interfaces.FailurePresenter;
 import com.github.kqfall1.java.javax.swing.AwtUtils;
+import com.github.kqfall1.java.javax.swing.ValidatedJTextField;
 import java.awt.*;
-import java.math.BigDecimal;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 import javax.swing.*;
 
 /**
@@ -27,22 +20,18 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
 {
     private final JLabel activeHandContextHandScoreJLabel;
     private final JButton advanceEngineJButton;
-    private final BlackjackEngine blackjackEngine;
     private final JLabel dealerHandScoreJLabel;
     private final JTextArea engineMessageJTextArea;
     private final JScrollPane engineMessageJScrollPane;
-    private final ExecutorService executorService;
     private final JLabel playerChipAmountJLabel;
     private final JButton playerInputJButton;
     private final JLabel playerInputJLabel;
-    private final JTextField playerInputJTextField;
-    private static final int PLAYER_INPUT_JTEXTFIELD_WIDTH = 10;
+    private final ValidatedJTextField playerInputJTextField;
 
-    public GameInfoJPanel(BlackjackEngine blackjackEngine, ExecutorService executorService)
+    public GameInfoJPanel()
     {
         activeHandContextHandScoreJLabel = new JLabel(UiConstants.GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
         advanceEngineJButton = new JButton(UiConstants.GAME_ADVANCE_HAND_JBUTTON_LABEL);
-        this.blackjackEngine = blackjackEngine;
         dealerHandScoreJLabel = new JLabel(UiConstants.GAME_DEALER_HAND_SCORE_LABEL);
         dealerHandScoreJLabel.setFont(UiConstants.JBUTTON_FONT);
         engineMessageJTextArea = new JTextArea();
@@ -54,82 +43,15 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
             UiConstants.GAME_ENGINE_JSCROLL_PANEL_HEIGHT
         ));
         engineMessageJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        this.executorService = executorService;
-        playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
+        playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX);
         playerInputJButton = new JButton(UiConstants.GAME_PLAYER_INPUT_JBUTTON_LABEL);
         playerInputJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJButton.setEnabled(false);
         playerInputJLabel = new JLabel();
         playerInputJLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playerInputJTextField = new JTextField(PLAYER_INPUT_JTEXTFIELD_WIDTH);
+        playerInputJTextField = new ValidatedJTextField();
         playerInputJTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField.setHorizontalAlignment(JTextField.CENTER);
-
-        advanceEngineJButton.addActionListener(e ->
-        {
-            if (blackjackEngine.getState() == EngineState.START)
-            {
-                executorService.submit(blackjackEngine::start);
-            }
-            //will continue and add more states
-        });
-        playerInputJButton.addActionListener(e ->
-        {
-            if (blackjackEngine.getState() == EngineState.BETTING)
-            {
-                final var INPUT = playerInputJTextField.getText().trim();
-
-                try
-                {
-                    final var PARSED_INPUT = Double.parseDouble(INPUT);
-
-                    CompletableFuture.runAsync(() ->
-                    {
-                        try
-                        {
-                            blackjackEngine.placeBet(BigDecimal.valueOf(PARSED_INPUT));
-                            blackjackEngine.deal();
-                            blackjackEngine.advanceAfterDeal();
-                        }
-                        catch (InsufficientChipsException ex)
-                        {
-                            presentFailure(ex.getMessage(), playerChipAmountJLabel);
-                        }
-                        catch (RuleViolationException ex)
-                        {
-                            presentFailure(ex.getMessage(), playerInputJButton);
-                        }
-                    }, executorService);
-                }
-                catch (IllegalArgumentException | NullPointerException ex)
-                {
-                    presentFailure(INPUT, playerInputJTextField);
-                }
-            }
-            else if (blackjackEngine.getState() == EngineState.INSURANCE_CHECK)
-            {
-                final var INPUT = playerInputJTextField.getText().trim();
-
-                try
-                {
-                    final var PARSED_INPUT = YesNoInput.valueOf(INPUT);
-
-                    if (PARSED_INPUT == YesNoInput.YES)
-                    {
-                        CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService)
-                            .thenAccept(blackjackEngine::advanceAfterInsuranceBet);
-                    }
-                    else
-                    {
-                        executorService.submit(blackjackEngine::declineInsuranceBet);
-                    }
-                }
-                catch (IllegalArgumentException ex)
-                {
-                    presentFailure(INPUT, playerInputJTextField);
-                }
-            }
-        });
 
         final var GAME_INFO_WRAPPER = new JPanel();
         GAME_INFO_WRAPPER.setLayout(new BoxLayout(GAME_INFO_WRAPPER, BoxLayout.Y_AXIS));
@@ -166,14 +88,44 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         }
     }
 
+    public JLabel getActiveHandContextHandScoreJLabel()
+    {
+        return activeHandContextHandScoreJLabel;
+    }
+
     public JButton getAdvanceEngineJButton()
     {
         return advanceEngineJButton;
     }
 
+    public JLabel getDealerHandScoreJLabel()
+    {
+        return dealerHandScoreJLabel;
+    }
+
+    public JTextArea getEngineMessageJTextArea()
+    {
+        return engineMessageJTextArea;
+    }
+
+    public JLabel getPlayerChipAmountJLabel()
+    {
+        return playerChipAmountJLabel;
+    }
+
     public JButton getPlayerInputJButton()
     {
         return playerInputJButton;
+    }
+
+    public JLabel getPlayerInputJLabel()
+    {
+        return playerInputJLabel;
+    }
+
+    public ValidatedJTextField getPlayerInputJTextField()
+    {
+        return playerInputJTextField;
     }
 
     @Override
@@ -182,7 +134,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         SwingUtilities.invokeLater(() ->
         {
             final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
-            engineMessageJTextArea.append(String.format("%s\n", message));
+            engineMessageJTextArea.append(String.format("%s\n\n", message));
 
             for (Component component : components)
             {

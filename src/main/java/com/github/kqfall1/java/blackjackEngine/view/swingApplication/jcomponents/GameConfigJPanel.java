@@ -7,7 +7,7 @@ import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.Mai
 import com.github.kqfall1.java.interfaces.FailurePresenter;
 import com.github.kqfall1.java.interfaces.inputters.NumberInputter;
 import com.github.kqfall1.java.javax.swing.AwtUtils;
-import com.github.kqfall1.java.javax.swing.NumberJTextField;
+import com.github.kqfall1.java.javax.swing.ValidatedJTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
@@ -68,11 +68,11 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             1
         ));
         maximumSplitCountJLabel = new JLabel(UiConstants.MAXIMUM_SPLIT_COUNT_LABEL);
-        minimumBetAmountInput = new NumberJTextField();
+        minimumBetAmountInput = new ValidatedJTextField();
         minimumBetAmountJLabel = new JLabel(UiConstants.MINIMUM_BET_AMOUNT_LABEL);
         playButton = new JButton(UiConstants.PLAY_BUTTON_LABEL);
         playButton.addActionListener(this::readConfigValues);
-        playerInitialChipsInput = new NumberJTextField();
+        playerInitialChipsInput = new ValidatedJTextField();
         playerInitialChipsJLabel = new JLabel(UiConstants.PLAYER_INITIAL_CHIPS_LABEL);
         this.rootJFrame = rootJFrame;
         shoeDeckCountInput = new JSpinner(new SpinnerNumberModel(
@@ -82,7 +82,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             1
         ));
         shoeDeckCountJLabel = new JLabel(UiConstants.SHOE_DECK_COUNT_LABEL);
-        shoePenetrationInput = new NumberJTextField();
+        shoePenetrationInput = new ValidatedJTextField();
         shoePenetrationJLabel = new JLabel(UiConstants.SHOE_PENETRATION_LABEL);
         shouldDealerHitOnSoft17 = new JCheckBox(UiConstants.SHOULD_DEALER_HIT_ON_SOFT_17_LABEL);
         splittingAcesAllowed = new JCheckBox(UiConstants.SPLITTING_ACES_ALLOWED_LABEL);
@@ -102,13 +102,13 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         JTEXT_FIELD_PANEL_WRAPPER.add(maximumSplitCountJLabel, getJLabelConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(maximumSplitCountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(minimumBetAmountJLabel, getJLabelConstraints());
-        JTEXT_FIELD_PANEL_WRAPPER.add((NumberJTextField) minimumBetAmountInput, getSecondaryJComponentConstraints());
+        JTEXT_FIELD_PANEL_WRAPPER.add((ValidatedJTextField) minimumBetAmountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(playerInitialChipsJLabel, getJLabelConstraints());
-        JTEXT_FIELD_PANEL_WRAPPER.add((NumberJTextField) playerInitialChipsInput, getSecondaryJComponentConstraints());
+        JTEXT_FIELD_PANEL_WRAPPER.add((ValidatedJTextField) playerInitialChipsInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(shoeDeckCountJLabel, getJLabelConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(shoeDeckCountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(shoePenetrationJLabel, getJLabelConstraints());
-        JTEXT_FIELD_PANEL_WRAPPER.add((NumberJTextField) shoePenetrationInput, getSecondaryJComponentConstraints());
+        JTEXT_FIELD_PANEL_WRAPPER.add((ValidatedJTextField) shoePenetrationInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.setMaximumSize(new Dimension(
             Integer.MAX_VALUE,
             JTEXT_FIELD_PANEL_WRAPPER.getPreferredSize().height
