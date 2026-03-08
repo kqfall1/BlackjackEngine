@@ -65,6 +65,11 @@ public final class UiConstants
 
     private UiConstants() {}
 
+    public static String getInputErrorMessage(String input)
+    {
+        return String.format("Your input of \"%s\" is invalid.", input);
+    }
+
     public static Dimension getGameConfigJDialogDimension()
     {
         return new Dimension(

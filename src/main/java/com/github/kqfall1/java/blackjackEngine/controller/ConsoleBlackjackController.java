@@ -343,7 +343,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 		try
 		{
-			getEngine().placeHandBet(BigDecimal.valueOf(amount));
+			getEngine().placeBet(BigDecimal.valueOf(amount));
 		}
 		catch (Exception e)
 		{

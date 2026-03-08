@@ -221,6 +221,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         rootJFrame.newGame(CONFIG);
     }
 
+    @Override
     public void presentFailure(String message, Component... components)
     {
         final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();

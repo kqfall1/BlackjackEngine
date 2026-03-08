@@ -90,7 +90,7 @@ public class BlackjackEngine
 		state = EngineState.START;
 	}
 
-	public BigDecimal acceptInsuranceBet() throws RuntimeException
+	public BigDecimal acceptInsuranceBet()
 	{
 		final var METHOD_NAME = "acceptInsuranceBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -287,7 +287,6 @@ public class BlackjackEngine
 			getActiveHandContext(),
 			dealerHand.getCards().get(BlackjackConstants.INITIAL_CARD_COUNT - 1)
 		));
-		//advanceAfterDeal();
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
@@ -533,7 +532,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void placeHandBet(BigDecimal amount) throws RuntimeException
+	public void placeBet(BigDecimal amount)
 	{
 		final var METHOD_NAME = "placeBet";
 		getLogger().entering(CLASS_NAME, METHOD_NAME, amount);
@@ -568,7 +567,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME, playerMainHand);
 	}
 
-	public void playerDoubleDown() throws RuntimeException
+	public void playerDoubleDown()
 	{
 		final var METHOD_NAME = "playerDoubleDown";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -626,7 +625,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 	
-	public void playerSplit() throws RuntimeException
+	public void playerSplit()
 	{
 		final var METHOD_NAME = "playerSplit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -696,7 +695,7 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
-	public void playerSurrender() throws RuntimeException
+	public void playerSurrender()
 	{
 		final var METHOD_NAME = "playerSurrender";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
@@ -849,7 +848,7 @@ public class BlackjackEngine
 		setState(EngineState.BETTING);
 	}
 
-	private void throwException(RuntimeException e, String sourceMethod) throws RuntimeException
+	private void throwException(RuntimeException e, String sourceMethod)
 	{
 		assert e != null : "e == null";
 		assert sourceMethod != null && !sourceMethod.isBlank()

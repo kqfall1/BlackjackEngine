@@ -395,7 +395,7 @@ public abstract class EngineTest
 			.subtract(ruleset.getConfig().getMinimumBetAmount())
 			.multiply(BigDecimal.valueOf(Math.random()))
 			.add(ruleset.getConfig().getMinimumBetAmount());
-		engine.placeHandBet(BET_AMOUNT);
+		engine.placeBet(BET_AMOUNT);
 		return BET_AMOUNT;
 	}
 
