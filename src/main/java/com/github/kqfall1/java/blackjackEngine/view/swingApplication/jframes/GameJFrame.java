@@ -6,7 +6,6 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConf
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
@@ -72,37 +71,51 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
         {
             gameInfoJPanel.getPlayerInputJButton().setEnabled(false);
+            gameInfoJPanel.getPlayerInputJTextField().setEnabled(false);
 
             if (blackjackEngine.getState() == EngineState.BETTING)
             {
-                final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getNumber(null, 0, Double.MAX_VALUE);
+                final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getNumber(null, 0, Float.MAX_VALUE);
                 FUTURE_INPUT.whenComplete((result, throwable) ->
                 {
                     if (throwable == null)
                     {
-                        gameInfoJPanel.getPlayerInputJTextField().setText("");
                         CompletableFuture.completedFuture(result)
                             .thenApplyAsync(BigDecimal::valueOf)
                             .thenAccept(blackjackEngine::placeBet)
-                            .thenRun(blackjackEngine::deal)
-                            .thenRun(blackjackEngine::advanceAfterDeal);
+                            .whenComplete((betResult, betThrowable) ->
+                            {
+                                if (betThrowable == null)
+                                {
+                                    gameInfoJPanel.getPlayerInputJTextField().setText("");
+                                    blackjackEngine.advanceAfterDeal();
+                                }
+                                else
+                                {
+                                    gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+                                    gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                                    final var BET_THROWABLE_CAUSE = betThrowable.getCause();
+
+                                    if (BET_THROWABLE_CAUSE instanceof InsufficientChipsException)
+                                    {
+                                        gameInfoJPanel.presentFailure(betThrowable.getMessage(), gameInfoJPanel.getPlayerChipAmountJLabel());
+                                    }
+                                    else
+                                    {
+                                        gameInfoJPanel.presentFailure(
+                                            betThrowable.getMessage(),
+                                            gameInfoJPanel.getAdvanceEngineJButton(),
+                                            gameInfoJPanel.getEngineMessageJTextArea()
+                                        );
+                                    }
+                                }
+                            });
                     }
                     else
                     {
                         gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
-
-                        if (throwable instanceof InsufficientChipsException)
-                        {
-                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerChipAmountJLabel());
-                        }
-                        else if (throwable instanceof RuleViolationException)
-                        {
-                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJButton());
-                        }
-                        else
-                        {
-                            gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
-                        }
+                        gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                        gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
                     }
                 });
             }
@@ -113,6 +126,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 {
                     if (throwable == null)
                     {
+                        gameInfoJPanel.getPlayerInputJTextField().setText("");
+
                         if (result == YesNoInput.YES)
                         {
                             CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService)
@@ -125,11 +140,11 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                     else
                     {
+                        gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+                        gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
                         gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
                     }
                 });
-                gameInfoJPanel.getPlayerInputJButton().setEnabled(false);
-                gameInfoJPanel.getPlayerInputJTextField().setText("");
             }
         });
 
@@ -206,6 +221,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 case BETTING, INSURANCE_CHECK ->
                 {
                     gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
+                    gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
                 }
                 case PLAYER_TURN ->
                 {

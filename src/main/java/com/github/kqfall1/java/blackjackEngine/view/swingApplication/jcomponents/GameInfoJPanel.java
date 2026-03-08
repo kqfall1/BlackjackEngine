@@ -147,7 +147,15 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
                 for (Component component : components)
                 {
                     final var JCOMPONENT = (JComponent) component;
-                    JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+
+                    if (JCOMPONENT instanceof JTextField)
+                    {
+                        JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+                    }
+                    else
+                    {
+                        JCOMPONENT.setBorder(null);
+                    }
                 }
 
                 ((Timer) event.getSource()).stop();
