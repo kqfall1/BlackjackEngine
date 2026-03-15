@@ -101,7 +101,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                             {
                                 if (betThrowable == null)
                                 {
-                                    updatePlayerChipAmountJLabelText();
                                     blackjackEngine.deal();
                                     blackjackEngine.advanceAfterDeal();
                                 }
@@ -139,8 +138,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 {
                     if (throwable == null)
                     {
-                        updatePlayerChipAmountJLabelText();
-
                         if (result == YesNoInput.YES)
                         {
                             CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService)
@@ -167,7 +164,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     }
 
     @Override
-    public void onBetPlaced(HandContext handContext) {}
+    public void onBetPlaced(HandContext handContext)
+    {
+        updateUiAfterPlayerChipAmountChanges();
+    }
 
     @Override
     public void onBettingRoundCompleted() {}
@@ -201,19 +201,37 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onDrawingRoundStartedPlayer(HandContext handContext) {}
 
     @Override
-    public void onGameCompleted() {}
+    public void onGameCompleted()
+    {
+        gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX);
+    }
 
     @Override
     public void onGameStarted()
     {
-        updatePlayerChipAmountJLabelText();
+        updateUiAfterPlayerChipAmountChanges();
     }
 
     @Override
     public void onInsuranceBetOpportunityDetected(Card dealerUpCard) {}
 
     @Override
-    public void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings) {}
+    public void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings)
+    {
+        if (playerWinnings.equals(BigDecimal.ZERO))
+        {
+            gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_INSURANCE_BET_LOST));
+        }
+        else
+        {
+            gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
+                "%s%.2f.\n\n",
+                UiConstants.GAME_INSURANCE_BET_WON_PREFIX,
+                playerWinnings
+            ));
+            updateUiAfterPlayerChipAmountChanges();
+        }
+    }
 
     @Override
     public void onPlayerSplit(HandContext currentHand, HandContext splitHand) {}
@@ -236,8 +254,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             {
                 case BETTING, INSURANCE_CHECK ->
                 {
-                    gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
-                    gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                    togglePlayerInputComponents(true);
                 }
                 case PLAYER_TURN ->
                 {
@@ -269,7 +286,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
     }
 
-    private void updatePlayerChipAmountJLabelText()
+    private void updateUiAfterPlayerChipAmountChanges()
     {
         SwingUtilities.invokeLater(() ->
         {

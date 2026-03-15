@@ -188,6 +188,9 @@ public class BlackjackEngine
 
 	public void advanceAfterDrawingRoundCompletedPlayer()
 	{
+		final var METHOD_NAME = "advanceAfterDrawingRoundCompletedPlayer";
+		getLogger().entering(CLASS_NAME, METHOD_NAME);
+		assert getState() == BlackjackEngineState.PLAYER_TURN;
 		if (getActiveHandContextIndex() < getPlayer().getContexts().size() - 1)
 		{
 			setActiveHandContextIndex(getActiveHandContextIndex() + 1);
@@ -197,6 +200,7 @@ public class BlackjackEngine
 		{
 			advanceAfterPlayerTurn();
 		}
+		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}
 
 	public void advanceAfterInsuranceBet(BigDecimal winnings)

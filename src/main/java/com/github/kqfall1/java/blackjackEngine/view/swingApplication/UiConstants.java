@@ -28,6 +28,8 @@ public final class UiConstants
     public static final String GAME_DEALER_HAND_SCORE_LABEL = "Dealer's score:";
     public static final int GAME_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_ENGINE_JSCROLL_PANEL_WIDTH = 100;
+    public static final String GAME_INSURANCE_BET_LOST = "You have lost your insurance bet.";
+    public static final String GAME_INSURANCE_BET_WON_PREFIX = "You have lost your insurance bet and collect ";
     public static final String GAME_JBUTTON_DOUBLE_DOWN_LABEL = "Double down";
     public static final String GAME_JBUTTON_HIT_LABEL = "Hit";
     public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
