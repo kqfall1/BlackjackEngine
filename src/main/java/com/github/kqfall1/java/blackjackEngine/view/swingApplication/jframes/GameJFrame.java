@@ -41,8 +41,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         blackjackEngine = new BlackjackEngine(
             this,
-            UiConstants.LOG_FILE_PATH,
-            UiConstants.LOGGER_NAME,
+            UiConstants.BLACKJACK_ENGINE_LOG_FILE_PATH,
+            UiConstants.BLACKJACK_ENGINE_LOGGER_NAME,
             new StandardBlackjackRuleset(config)
         );
         executorService = Executors.newSingleThreadExecutor();
@@ -196,7 +196,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             gameCardsJPanel.getActivePlayerHandJPanel().revalidate();
             gameCardsJPanel.getActivePlayerHandJPanel().repaint();
             gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(String.format(
-                "%s %s", UiConstants.GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL, handContext.getHand().getScore()
+                "%s %s", UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL, handContext.getHand().getScore()
             ));
         });
     }
@@ -211,6 +211,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         {
             gameActionJPanel.getHitJButton().setEnabled(false);
             gameActionJPanel.getStandJButton().setEnabled(false);
+            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
         });
     }
 
@@ -223,7 +224,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onGameCompleted()
     {
-        gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
+        gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL);
     }
 
     @Override
@@ -240,13 +241,13 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         if (playerWinnings.equals(BigDecimal.ZERO))
         {
-            gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_INSURANCE_BET_LOST));
+            gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_LOST));
         }
         else
         {
             gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
                 "%s%.2f.\n\n",
-                UiConstants.GAME_INSURANCE_BET_WON_PREFIX,
+                UiConstants.GAME_MESSAGE_INSURANCE_BET_WON_PREFIX,
                 playerWinnings
             ));
             updateUiAfterPlayerChipAmountChanges();
@@ -309,7 +310,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         {
             gameInfoJPanel.getPlayerChipAmountJLabel().setText(String.format(
                 "%s $%,.2f",
-                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL,
+                UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL,
                 blackjackEngine.getPlayer().getChips()
             ));
             gameInfoJPanel.getPlayerInputJTextField().setText("");

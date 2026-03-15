@@ -46,11 +46,11 @@ public final class CardJLabel extends JLabel
         }
         else
         {
-            resourceLookupString = String.format("%s%s", RESOURCE_LOOKUP_STRING_PREFIX, UiConstants.GAME_CARD_BACK_IMAGE_FILE_NAME);
+            resourceLookupString = String.format("%s%s", RESOURCE_LOOKUP_STRING_PREFIX, UiConstants.BACK_OF_CARD_IMAGE_FILE_NAME);
         }
 
         final var CARD_IMAGE = new ImageIcon(CardJLabel.class.getResource(resourceLookupString)).getImage().getScaledInstance(
-            UiConstants.GAME_CARD_WIDTH, UiConstants.GAME_CARD_HEIGHT, Image.SCALE_SMOOTH
+            UiConstants.CARD_IMAGE_WIDTH, UiConstants.CARD_IMAGE_HEIGHT, Image.SCALE_SMOOTH
         );
         setIcon(new ImageIcon(CARD_IMAGE));
     }

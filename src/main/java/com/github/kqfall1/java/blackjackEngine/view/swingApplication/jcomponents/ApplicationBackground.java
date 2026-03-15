@@ -17,7 +17,7 @@ public final class ApplicationBackground extends JPanel
     {
         super.paintComponent(g);
         g.drawImage(
-            UiConstants.MAIN_MENU_BACKGROUND.getImage(),
+            UiConstants.JFRAME_BACKGROUND.getImage(),
             0,
             0,
             null

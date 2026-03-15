@@ -20,19 +20,19 @@ public class GameActionJPanel extends JPanel
 
     public GameActionJPanel()
     {
-        doubleDownJButton = new JButton(UiConstants.GAME_JBUTTON_DOUBLE_DOWN_LABEL);
+        doubleDownJButton = new JButton(UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL);
         doubleDownJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         doubleDownJButton.setEnabled(false);
-        hitJButton = new JButton(UiConstants.GAME_JBUTTON_HIT_LABEL);
+        hitJButton = new JButton(UiConstants.GAME_ACTION_HIT_LABEL);
         hitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         hitJButton.setEnabled(false);
-        splitJButton = new JButton(UiConstants.GAME_JBUTTON_SPLIT_LABEL);
+        splitJButton = new JButton(UiConstants.GAME_ACTION_SPLIT_LABEL);
         splitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         splitJButton.setEnabled(false);
-        standJButton = new JButton(UiConstants.GAME_JBUTTON_STAND_LABEL);
+        standJButton = new JButton(UiConstants.GAME_ACTION_STAND_LABEL);
         standJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         standJButton.setEnabled(false);
-        surrenderJButton = new JButton(UiConstants.GAME_JBUTTON_SURRENDER_LABEL);
+        surrenderJButton = new JButton(UiConstants.GAME_ACTION_SURRENDER_LABEL);
         surrenderJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         surrenderJButton.setEnabled(false);
 

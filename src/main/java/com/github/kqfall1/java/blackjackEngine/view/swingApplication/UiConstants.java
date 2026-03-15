@@ -13,60 +13,60 @@ import javax.swing.border.Border;
  */
 public final class UiConstants
 {
+    public static final String BACK_OF_CARD_IMAGE_FILE_NAME = "back_of_card.png";
+    public static final String BLACKJACK_ENGINE_LOG_FILE_PATH = "src/main/resources/logs/SwingUiEngine.log";
+    public static final String BLACKJACK_ENGINE_LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingUiEngine";
     public static final Dimension BLACKJACK_JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
     public static final Border BORDER_RED = BorderFactory.createLineBorder(Color.RED);
+    public static final int CARD_IMAGE_HEIGHT = 225;
+    public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
-    public static final String DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
-    public static final String GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score: ";
-    public static final String GAME_ADVANCE_HAND_JBUTTON_LABEL = "Advance";
-    public static final String GAME_CARD_BACK_IMAGE_FILE_NAME = "back_of_card.png";
-    public static final int GAME_CARD_HEIGHT = 225;
-    public static final int GAME_CARD_WIDTH = 100;
+    public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double down";
+    public static final String GAME_ACTION_HIT_LABEL = "Hit";
+    public static final String GAME_ACTION_SPLIT_LABEL = "Split";
+    public static final String GAME_ACTION_STAND_LABEL = "Stand";
+    public static final String GAME_ACTION_SURRENDER_LABEL = "Surrender";
+    public static final String GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score: ";
+    public static final String GAME_INFO_JPANEL_ADVANCE_HAND_JBUTTON_LABEL = "Advance";
+    public static final String GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL = "Dealer's score: ";
+    public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
+    public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH = 100;
+    public static final String GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips: ";
+    public static final String GAME_INFO_JPANEL_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
+    public static final String GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
     public static final String GAME_CONFIG_JDIALOG_FAILURE_LABEL = "One or more inputs is invalid.";
     public static final double GAME_CONFIG_JDIALOG_HEIGHT_FACTOR = 0.4;
+    public static final String GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL = "Maximum split count:";
+    public static final String GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL = "Minimum bet amount:";
+    public static final String GAME_CONFIG_JDIALOG_PLAY_BUTTON_LABEL = "Play!";
+    public static final String GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL = "Player initial chips:";
     public static final String GAME_CONFIG_JDIALOG_TITLE = "Game Configuration";
+    public static final String GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL = "Shoe deck count:";
+    public static final String GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL = String.format(
+        "Shoe penetration (%.1f-%.1f)",
+        Shoe.MINIMUM_PENETRATION,
+        Shoe.MAXIMUM_PENETRATION
+    );
+    public static final String GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL = "Should dealer hit on soft 17?";
+    public static final String GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL = "Is splitting aces allowed?";
+    public static final String GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL = "Is surrendering allowed?";
+    public static final String GAME_CONFIG_JDIALOG_SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is surrendering on split hands allowed?";
     public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.5;
-    public static final String GAME_DEALER_HAND_SCORE_LABEL = "Dealer's score:";
-    public static final int GAME_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
-    public static final int GAME_ENGINE_JSCROLL_PANEL_WIDTH = 100;
-    public static final String GAME_INSURANCE_BET_LOST = "You have lost your insurance bet.";
-    public static final String GAME_INSURANCE_BET_WON_PREFIX = "You have lost your insurance bet and collect ";
-    public static final String GAME_JBUTTON_DOUBLE_DOWN_LABEL = "Double down";
-    public static final String GAME_JBUTTON_HIT_LABEL = "Hit";
-    public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
-    public static final String GAME_JBUTTON_STAND_LABEL = "Stand";
-    public static final String GAME_JBUTTON_SURRENDER_LABEL = "Surrender";
-    public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips:";
-    public static final String GAME_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
-    public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
-    public static final Font JLABEL_FONT = new Font("Georgia", Font.PLAIN, 16);
+    public static final String GAME_MESSAGE_INSURANCE_BET_LOST = "You have lost your insurance bet.";
+    public static final String GAME_MESSAGE_INSURANCE_BET_WON_PREFIX = "You have lost your insurance bet and collect ";
+    public static final Font JBUTTON_LARGE_FONT = new Font("Rockwell", Font.BOLD, 18);
+    public static final ImageIcon JFRAME_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
+    public static final Font JLABEL_LARGE_FONT = new Font("Georgia", Font.PLAIN, 16);
     public static final String JMENU_FILE_LABEL = "File";
     public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
     public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
-    public static final String LOG_FILE_PATH = "src/main/resources/logs/SwingUiEngine.log";
-    public static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingUiEngine";
-    public static final ImageIcon MAIN_MENU_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final int MARGIN_LARGE = 350;
     public static final int MARGIN_MEDIUM = 100;
     public static final int MARGIN_SMALL = 25;
     public static final int MARGIN_EXTRA_SMALL = 10;
-    public static final String MAXIMUM_SPLIT_COUNT_LABEL = "Maximum split count:";
-    public static final String MINIMUM_BET_AMOUNT_LABEL = "Minimum bet amount:";
-    public static final String PLAY_BUTTON_LABEL = "Play!";
-    public static final String PLAYER_INITIAL_CHIPS_LABEL = "Player initial chips:";
-    public static final String SHOE_DECK_COUNT_LABEL = "Shoe deck count:";
-    public static final String SHOE_PENETRATION_LABEL = String.format(
-        "Shoe penetration (%.1f-%.1f):",
-        Shoe.MINIMUM_PENETRATION,
-        Shoe.MAXIMUM_PENETRATION
-    );
-    public static final String SHOULD_DEALER_HIT_ON_SOFT_17_LABEL = "Should dealer hit on soft 17?";
     public static final int SLEEP_INTERVAL = 1000;
-    public static final String SPLITTING_ACES_ALLOWED_LABEL = "Is splitting aces allowed?";
-    public static final String SURRENDERING_ALLOWED_LABEL = "Is surrendering allowed?";
-    public static final String SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is surrendering on split hands allowed?";
 
     private UiConstants() {}
 

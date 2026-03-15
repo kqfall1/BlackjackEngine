@@ -55,7 +55,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     {
         final var MAIN_PANEL_DIMENSION = UiConstants.getGameConfigJDialogDimension();
 
-        doublingDownOnSplitHandsAllowed = new JCheckBox(UiConstants.DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL);
+        doublingDownOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL);
         errorJLabel = new JLabel();
         errorJLabel.setMaximumSize(new Dimension(
             MAIN_PANEL_DIMENSION.width,
@@ -67,13 +67,13 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             Integer.MAX_VALUE,
             1
         ));
-        maximumSplitCountJLabel = new JLabel(UiConstants.MAXIMUM_SPLIT_COUNT_LABEL);
+        maximumSplitCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL);
         minimumBetAmountInput = new ValidatedJTextField();
-        minimumBetAmountJLabel = new JLabel(UiConstants.MINIMUM_BET_AMOUNT_LABEL);
-        playButton = new JButton(UiConstants.PLAY_BUTTON_LABEL);
+        minimumBetAmountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL);
+        playButton = new JButton(UiConstants.GAME_CONFIG_JDIALOG_PLAY_BUTTON_LABEL);
         playButton.addActionListener(this::readConfigValues);
         playerInitialChipsInput = new ValidatedJTextField();
-        playerInitialChipsJLabel = new JLabel(UiConstants.PLAYER_INITIAL_CHIPS_LABEL);
+        playerInitialChipsJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL);
         this.rootJFrame = rootJFrame;
         shoeDeckCountInput = new JSpinner(new SpinnerNumberModel(
             Shoe.MINIMUM_NUMBER_OF_DECKS,
@@ -81,13 +81,13 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             Shoe.MAXIMUM_NUMBER_OF_DECKS,
             1
         ));
-        shoeDeckCountJLabel = new JLabel(UiConstants.SHOE_DECK_COUNT_LABEL);
+        shoeDeckCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL);
         shoePenetrationInput = new ValidatedJTextField();
-        shoePenetrationJLabel = new JLabel(UiConstants.SHOE_PENETRATION_LABEL);
-        shouldDealerHitOnSoft17 = new JCheckBox(UiConstants.SHOULD_DEALER_HIT_ON_SOFT_17_LABEL);
-        splittingAcesAllowed = new JCheckBox(UiConstants.SPLITTING_ACES_ALLOWED_LABEL);
-        surrenderingAllowed = new JCheckBox(UiConstants.SURRENDERING_ALLOWED_LABEL);
-        surrenderingOnSplitHandsAllowed = new JCheckBox(UiConstants.SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL);
+        shoePenetrationJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL);
+        shouldDealerHitOnSoft17 = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL);
+        splittingAcesAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL);
+        surrenderingAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL);
+        surrenderingOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL);
 
         final var JCHECK_BOX_PANEL_WRAPPER = new JPanel();
         JCHECK_BOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECK_BOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));

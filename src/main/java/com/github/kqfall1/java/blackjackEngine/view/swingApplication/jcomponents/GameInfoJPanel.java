@@ -29,22 +29,21 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
 
     public GameInfoJPanel()
     {
-        activeHandContextHandScoreJLabel = new JLabel(UiConstants.GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
-        advanceEngineJButton = new JButton(UiConstants.GAME_ADVANCE_HAND_JBUTTON_LABEL);
+        activeHandContextHandScoreJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
+        advanceEngineJButton = new JButton(UiConstants.GAME_INFO_JPANEL_ADVANCE_HAND_JBUTTON_LABEL);
         advanceEngineJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dealerHandScoreJLabel = new JLabel(UiConstants.GAME_DEALER_HAND_SCORE_LABEL);
-        dealerHandScoreJLabel.setFont(UiConstants.JBUTTON_FONT);
+        dealerHandScoreJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL);
         engineMessageJTextArea = new JTextArea();
         engineMessageJTextArea.setEditable(false);
         engineMessageJTextArea.setLineWrap(true);
         engineMessageJScrollPane = new JScrollPane(engineMessageJTextArea);
         engineMessageJScrollPane.setPreferredSize(new Dimension(
-            UiConstants.GAME_ENGINE_JSCROLL_PANEL_WIDTH,
-            UiConstants.GAME_ENGINE_JSCROLL_PANEL_HEIGHT
+            UiConstants.GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH,
+            UiConstants.GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_HEIGHT
         ));
         engineMessageJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
-        playerInputJButton = new JButton(UiConstants.GAME_PLAYER_INPUT_JBUTTON_LABEL);
+        playerChipAmountJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL);
+        playerInputJButton = new JButton(UiConstants.GAME_INFO_JPANEL_PLAYER_INPUT_JBUTTON_LABEL);
         playerInputJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJButton.setEnabled(false);
         playerInputJTextField = new ValidatedJTextField();
@@ -81,7 +80,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         {
             if (component instanceof JLabel jlabel)
             {
-                jlabel.setFont(UiConstants.JLABEL_FONT);
+                jlabel.setFont(UiConstants.JLABEL_LARGE_FONT);
             }
         }
     }
