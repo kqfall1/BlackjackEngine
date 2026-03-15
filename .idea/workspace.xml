@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Integrated ValidatedJTextField.java into GameJFrame and bolstered the concurrency model of the Swing application.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Made a solid start on the Swing application/engine integration.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
@@ -186,14 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Patched a subtle error in ResetTest.java.">
-      <option name="closed" value="true" />
-      <created>1767300711817</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1767300711817</updated>
     </task>
     <task id="LOCAL-00006" summary="Integrated the Shoe abstraction into EntityAndHandSubsystemTest.java.">
       <option name="closed" value="true" />
@@ -579,11 +571,18 @@
       <option name="project" value="LOCAL" />
       <updated>1773010550664</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Made a solid start on the Swing application/engine integration.">
+      <option name="closed" value="true" />
+      <created>1773013025545</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1773013025545</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Configured a basic UI and exiting functionality for the main menu. Created scaffolding for future features." />
     <MESSAGE value="Updated sourced.md and renamed files for semantic clarity." />
     <MESSAGE value="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method." />
     <MESSAGE value="Created BlackjackFrame.java to abstract JFrame configuration; began the NewGameJFrame.java code." />
@@ -608,7 +607,8 @@
     <MESSAGE value="Created GameCardsJPanel.java; am ready for engine integration." />
     <MESSAGE value="Have began integrating BlackjackEngine.java and the Swing application." />
     <MESSAGE value="Integrated ValidatedJTextField.java into GameJFrame and bolstered the concurrency model of the Swing application." />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrated ValidatedJTextField.java into GameJFrame and bolstered the concurrency model of the Swing application." />
+    <MESSAGE value="Made a solid start on the Swing application/engine integration." />
+    <option name="LAST_COMMIT_MESSAGE" value="Made a solid start on the Swing application/engine integration." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

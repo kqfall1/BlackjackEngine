@@ -32,6 +32,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     {
         activeHandContextHandScoreJLabel = new JLabel(UiConstants.GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
         advanceEngineJButton = new JButton(UiConstants.GAME_ADVANCE_HAND_JBUTTON_LABEL);
+        advanceEngineJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         dealerHandScoreJLabel = new JLabel(UiConstants.GAME_DEALER_HAND_SCORE_LABEL);
         dealerHandScoreJLabel.setFont(UiConstants.JBUTTON_FONT);
         engineMessageJTextArea = new JTextArea();
@@ -51,6 +52,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         playerInputJLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField = new ValidatedJTextField();
         playerInputJTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerInputJTextField.setEnabled(false);
         playerInputJTextField.setHorizontalAlignment(JTextField.CENTER);
 
         final var GAME_INFO_WRAPPER = new JPanel();
@@ -69,14 +71,14 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         GAME_INPUT_WRAPPER.add(playerInputJTextField);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
         GAME_INPUT_WRAPPER.add(playerInputJButton);
+        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
+        GAME_INPUT_WRAPPER.add(advanceEngineJButton);
+        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(GAME_INFO_WRAPPER);
         add(GAME_INPUT_WRAPPER);
-        add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        add(advanceEngineJButton);
-        add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
         add(engineMessageJScrollPane);
 
         for (Component component : AwtUtils.getNestedComponents(this))

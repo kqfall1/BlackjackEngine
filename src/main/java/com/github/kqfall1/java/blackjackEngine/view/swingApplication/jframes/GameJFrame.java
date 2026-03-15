@@ -70,8 +70,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         });
         gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
         {
-            gameInfoJPanel.getPlayerInputJButton().setEnabled(false);
-            gameInfoJPanel.getPlayerInputJTextField().setEnabled(false);
+            togglePlayerInputComponents(false);
 
             if (blackjackEngine.getState() == EngineState.BETTING)
             {
@@ -87,13 +86,12 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                             {
                                 if (betThrowable == null)
                                 {
-                                    gameInfoJPanel.getPlayerInputJTextField().setText("");
+                                    updatePlayerChipAmountJLabelText();
                                     blackjackEngine.advanceAfterDeal();
                                 }
                                 else
                                 {
-                                    gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
-                                    gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                                    togglePlayerInputComponents(true);
                                     final var BET_THROWABLE_CAUSE = betThrowable.getCause();
 
                                     if (BET_THROWABLE_CAUSE instanceof InsufficientChipsException)
@@ -113,8 +111,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                     else
                     {
-                        gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
-                        gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                        togglePlayerInputComponents(true);
                         gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
                     }
                 });
@@ -126,7 +123,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 {
                     if (throwable == null)
                     {
-                        gameInfoJPanel.getPlayerInputJTextField().setText("");
+                        updatePlayerChipAmountJLabelText();
 
                         if (result == YesNoInput.YES)
                         {
@@ -140,8 +137,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                     else
                     {
-                        gameInfoJPanel.getPlayerInputJButton().setEnabled(true);
-                        gameInfoJPanel.getPlayerInputJTextField().setEnabled(true);
+                        togglePlayerInputComponents(true);
                         gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
                     }
                 });
@@ -185,7 +181,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onGameCompleted() {}
 
     @Override
-    public void onGameStarted() {}
+    public void onGameStarted()
+    {
+        updatePlayerChipAmountJLabelText();
+    }
 
     @Override
     public void onInsuranceBetOpportunityDetected(Card dealerUpCard) {}
@@ -210,12 +209,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         SwingUtilities.invokeLater(() ->
         {
-            gameInfoJPanel.getPlayerChipAmountJLabel().setText(String.format(
-                "%s%.2f",
-                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX,
-                blackjackEngine.getPlayer().getChips()
-            ));
-
             switch (blackjackEngine.getState())
             {
                 case BETTING, INSURANCE_CHECK ->
@@ -233,6 +226,25 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 }
                 //will continue and add more states
             }
+        });
+    }
+
+    private void togglePlayerInputComponents(boolean enabled)
+    {
+        gameInfoJPanel.getPlayerInputJButton().setEnabled(enabled);
+        gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
+    }
+
+    private void updatePlayerChipAmountJLabelText()
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameInfoJPanel.getPlayerChipAmountJLabel().setText(String.format(
+                "%s%.2f",
+                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX,
+                blackjackEngine.getPlayer().getChips()
+            ));
+            gameInfoJPanel.getPlayerInputJTextField().setText("");
         });
     }
 }
