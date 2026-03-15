@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -24,7 +24,7 @@ final class HitAndBustTest extends EngineTest
 	{
 		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			int previousCardCount;
 			while (!super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))

@@ -3,7 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.engine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.*;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
@@ -40,7 +40,7 @@ public abstract class EngineTest
 	{
 		final var BET_AMOUNT = advanceToPlayerTurn(maximumBetAmount);
 
-		if (engine.getState() == EngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			engine.playerStand();
 			engine.dealerTurn();
@@ -51,13 +51,13 @@ public abstract class EngineTest
 
 	public final void advanceToEndOfRound()
 	{
-		if (engine.getState() == EngineState.DEALER_TURN)
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
 			engine.dealerTurn();
 			engine.advanceAfterDealerTurn();
 		}
 
-		if (engine.getState() == EngineState.SHOWDOWN)
+		if (engine.getState() == BlackjackEngineState.SHOWDOWN)
 		{
 			engine.showdown();
 			engine.advanceAfterShowdown();
@@ -78,7 +78,7 @@ public abstract class EngineTest
 
 	public final void declinePossibleInsuranceBet()
 	{
-		if (engine.getState() == EngineState.INSURANCE_CHECK)
+		if (engine.getState() == BlackjackEngineState.INSURANCE_CHECK)
 		{
 			engine.declineInsuranceBet();
 		}
@@ -115,7 +115,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-            assertSame(EngineState.BETTING, engine.getState());
+            assertSame(BlackjackEngineState.BETTING, engine.getState());
 			assertTrue(nearlyEquals(
 				handContext.getBet().getAmount()
 					.multiply(BigDecimal.TWO),
@@ -135,7 +135,7 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.SHOWDOWN, engine.getState());
+			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
 			handler.getOut().println("You have completed a betting round.");
 		}
 
@@ -146,7 +146,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.BETTING, engine.getState());
+			assertEquals(BlackjackEngineState.BETTING, engine.getState());
 			handler.getOut().println("You have started a new betting round! Good luck!");
 		}
 
@@ -158,8 +158,8 @@ public abstract class EngineTest
 				engine.getActiveHandContextIndex()
 			);
 			assertTrue(
-				engine.getState() == EngineState.DEALING
-				|| engine.getState() == EngineState.DEALER_TURN
+				engine.getState() == BlackjackEngineState.DEALING
+				|| engine.getState() == BlackjackEngineState.DEALER_TURN
 			);
 
 			if (isFaceUp)
@@ -175,8 +175,8 @@ public abstract class EngineTest
 		public void onCardDealtToPlayer(Card card, HandContext handContext)
 		{
 			assertTrue(
-				engine.getState() == EngineState.DEALING
-				|| engine.getState() == EngineState.PLAYER_TURN
+				engine.getState() == BlackjackEngineState.DEALING
+				|| engine.getState() == BlackjackEngineState.PLAYER_TURN
 			);
 
 			if (handContext.getHand().getCards().size() > BlackjackConstants.INITIAL_CARD_COUNT)
@@ -198,7 +198,7 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.DEALER_TURN, engine.getState());
+			assertEquals(BlackjackEngineState.DEALER_TURN, engine.getState());
 			handler.getOut().printf(
 				"The dealer has finished drawing. Their hand is %s.\n",
 				dealerHand.toStringPretty()
@@ -207,11 +207,12 @@ public abstract class EngineTest
 
 		@Override
 		public void onDrawingRoundCompletedPlayer(HandContext handContext) {
-			assertEquals(EngineState.PLAYER_TURN, engine.getState());
+			assertEquals(BlackjackEngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
 				"You have completed a drawing round on hand %s.\n",
 				handContext.getHand().toStringPretty()
 			);
+			engine.advanceAfterDrawingRoundCompletedPlayer();
 		}
 
 		@Override
@@ -221,16 +222,16 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.DEALER_TURN, engine.getState());
+			assertEquals(BlackjackEngineState.DEALER_TURN, engine.getState());
 			handler.getOut().println("The dealer has begun drawing.");
 		}
 
 		@Override
 		public void onDrawingRoundStartedPlayer(HandContext handContext)
 		{
-			assertTrue(engine.getState() == EngineState.DEALING
-				|| engine.getState() == EngineState.INSURANCE_CHECK
-				|| engine.getState() == EngineState.PLAYER_TURN);
+			assertTrue(engine.getState() == BlackjackEngineState.DEALING
+				|| engine.getState() == BlackjackEngineState.INSURANCE_CHECK
+				|| engine.getState() == BlackjackEngineState.PLAYER_TURN);
 			handler.getOut().println("You have begun a new drawing round.");
 		}
 
@@ -241,7 +242,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.RESETTING, engine.getState());
+			assertEquals(BlackjackEngineState.RESETTING, engine.getState());
 			handler.getOut().println("Thanks for playing!");
 		}
 
@@ -252,7 +253,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.START, engine.getState());
+			assertEquals(BlackjackEngineState.START, engine.getState());
 			handler.getOut().println("Welcome to the table!");
 		}
 
@@ -263,7 +264,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.DEALING, engine.getState());
+			assertEquals(BlackjackEngineState.DEALING, engine.getState());
 			assertEquals(Rank.ACE, dealerUpCard.getRank());
 			handler.getOut().printf(
 				"The dealer is showing the %s. You are eligible to place an insurance side bet.\n",
@@ -278,7 +279,7 @@ public abstract class EngineTest
 				HandContextType.MAIN.ordinal(),
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.INSURANCE_CHECK, engine.getState());
+			assertEquals(BlackjackEngineState.INSURANCE_CHECK, engine.getState());
 
 			if (wasSuccessful)
 			{
@@ -296,7 +297,7 @@ public abstract class EngineTest
 		@Override
 		public void onPlayerSplit(HandContext currentHand, HandContext splitHand)
 		{
-			assertEquals(EngineState.PLAYER_TURN, engine.getState());
+			assertEquals(BlackjackEngineState.PLAYER_TURN, engine.getState());
 			handler.getOut().printf(
 				String.format(
 					"Your current hand is now %s and your split hand is %s.\n",
@@ -309,11 +310,11 @@ public abstract class EngineTest
 		@Override
 		public void onReset()
 		{
-//			assertEquals(
-//				HandContextType.MAIN.ordinal(),
-//				engine.getActiveHandContextIndex()
-//			);
-			assertEquals(EngineState.RESETTING, engine.getState());
+			assertEquals(
+				HandContextType.MAIN.ordinal(),
+				engine.getActiveHandContextIndex()
+			);
+			assertEquals(BlackjackEngineState.RESETTING, engine.getState());
 			handler.getOut().println("The dealer is initializing a new betting round...");
 		}
 
@@ -325,7 +326,7 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.SHOWDOWN, engine.getState());
+			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
 
 			final var completedString = String.format(
 				"Your score is %d and the dealer's score is %d.",
@@ -365,7 +366,7 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(EngineState.SHOWDOWN, engine.getState());
+			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
 			handler.getOut().printf(
 				"Your hand %s is being shown down against the dealer's hand %s.\n",
 				handContext.getHand().toStringPretty(),
@@ -374,7 +375,7 @@ public abstract class EngineTest
 		}
 
 		@Override
-		public void onStateChanged(EngineState oldState) {}
+		public void onStateChanged(BlackjackEngineState oldState) {}
 	};
 
 	public static boolean nearlyEquals

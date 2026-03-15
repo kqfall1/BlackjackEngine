@@ -4,7 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
@@ -54,25 +54,40 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         {
             gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
 
-            if (blackjackEngine.getState() == EngineState.START)
+            if (blackjackEngine.getState() == BlackjackEngineState.START)
             {
                 executorService.submit(blackjackEngine::start);
             }
-            else if (blackjackEngine.getState() == EngineState.PLAYER_TURN)
+            else if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN)
             {
+                executorService.submit(() ->
+                {
+                    blackjackEngine.advanceAfterDrawingRoundCompletedPlayer();
 
+                    if (blackjackEngine.getState() == BlackjackEngineState.DEALER_TURN)
+                    {
+                        blackjackEngine.dealerTurn();
+                        blackjackEngine.advanceAfterDealerTurn();
+                    }
+
+                    blackjackEngine.showdown();
+                });
             }
-            else
+            else if (blackjackEngine.getState() == BlackjackEngineState.SHOWDOWN)
             {
-                gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
+                executorService.submit(() ->
+                {
+                    blackjackEngine.advanceAfterShowdown();
+                    blackjackEngine.reset();
+                    blackjackEngine.advanceAfterReset();
+                });
             }
-            //will continue and add more states
         });
         gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
         {
             togglePlayerInputComponents(false);
 
-            if (blackjackEngine.getState() == EngineState.BETTING)
+            if (blackjackEngine.getState() == BlackjackEngineState.BETTING)
             {
                 final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getNumber(null, 0, Float.MAX_VALUE);
                 FUTURE_INPUT.whenComplete((result, throwable) ->
@@ -87,6 +102,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                                 if (betThrowable == null)
                                 {
                                     updatePlayerChipAmountJLabelText();
+                                    blackjackEngine.deal();
                                     blackjackEngine.advanceAfterDeal();
                                 }
                                 else
@@ -116,7 +132,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                 });
             }
-            else if (blackjackEngine.getState() == EngineState.INSURANCE_CHECK)
+            else if (blackjackEngine.getState() == BlackjackEngineState.INSURANCE_CHECK)
             {
                 final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getYesNo(null);
                 FUTURE_INPUT.whenComplete((result, throwable) ->
@@ -169,7 +185,14 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onDrawingRoundCompletedDealer(Hand dealerHand) {}
 
     @Override
-    public void onDrawingRoundCompletedPlayer(HandContext handContext) {}
+    public void onDrawingRoundCompletedPlayer(HandContext handContext)
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameActionJPanel.getHitJButton().setEnabled(false);
+            gameActionJPanel.getStandJButton().setEnabled(false);
+        });
+    }
 
     @Override
     public void onDrawingRoundStartedDealer(Hand dealerHand) {}
@@ -205,7 +228,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onShowdownStarted(Hand dealerHand, HandContext handContext) {}
 
     @Override
-    public void onStateChanged(EngineState oldState)
+    public void onStateChanged(BlackjackEngineState oldState)
     {
         SwingUtilities.invokeLater(() ->
         {
@@ -218,13 +241,24 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 }
                 case PLAYER_TURN ->
                 {
-                    gameActionJPanel.getDoubleDownJButton().setEnabled(true);
+                    gameActionJPanel.getDoubleDownJButton().setEnabled(blackjackEngine.getRuleset().isDoubleDownPossible(
+                        blackjackEngine.getActiveHandContext(),
+                        blackjackEngine.getState(),
+                        blackjackEngine.getPlayer()
+                    ));
                     gameActionJPanel.getHitJButton().setEnabled(true);
-                    gameActionJPanel.getSplitJButton().setEnabled(true);
+                    gameActionJPanel.getSplitJButton().setEnabled(blackjackEngine.getRuleset().isSplitPossible(
+                        blackjackEngine.getActiveHandContext(),
+                        blackjackEngine.getState(),
+                        blackjackEngine.getActiveHandContextIndex(),
+                        blackjackEngine.getPlayer()
+                    ));
                     gameActionJPanel.getStandJButton().setEnabled(true);
-                    gameActionJPanel.getSurrenderJButton().setEnabled(true);
+                    gameActionJPanel.getSurrenderJButton().setEnabled(blackjackEngine.getRuleset().isSurrenderingPossible(
+                        blackjackEngine.getActiveHandContext(),
+                        blackjackEngine.getState()
+                    ));
                 }
-                //will continue and add more states
             }
         });
     }

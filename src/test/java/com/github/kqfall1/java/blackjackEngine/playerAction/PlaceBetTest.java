@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +28,7 @@ public final class PlaceBetTest extends EngineTest
 		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
 		final var BET_AMOUNT = super.advanceToPlayerTurn(INITIAL_CHIP_AMOUNT);
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
 

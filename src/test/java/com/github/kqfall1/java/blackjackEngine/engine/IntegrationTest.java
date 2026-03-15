@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -20,15 +20,15 @@ final class IntegrationTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		while (super.engine.getState() != EngineState.END)
+		while (super.engine.getState() != BlackjackEngineState.END)
 		{
 			super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
 
-			if (super.engine.getState() == EngineState.PLAYER_TURN)
+			if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 			{
 				super.engine.playerHit();
 
-				if (super.engine.getState() == EngineState.PLAYER_TURN)
+				if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 				{
 					super.engine.playerStand();
 				}

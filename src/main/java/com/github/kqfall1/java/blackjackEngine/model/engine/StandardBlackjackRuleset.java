@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.model.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
@@ -33,7 +33,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isDealerTurnActive(EngineState currentState, Dealer dealer)
+	public boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer)
 	{
 		final var MINIMUM_SCORE_TO_STAND =
 			config.getShouldDealerHitOnSoft17()
@@ -42,15 +42,15 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 				? BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE + 1
 				: BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE;
 
-		return currentState == EngineState.DEALER_TURN
+		return currentState == BlackjackEngineState.DEALER_TURN
 			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
 
 	@Override
-	public boolean isDoubleDownPossible(HandContext activeHandContext, EngineState currentState,
+	public boolean isDoubleDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 										Player player)
 	{
-		return currentState == EngineState.PLAYER_TURN
+		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
 			&& (activeHandContext.getType() == HandContextType.MAIN
 				|| config.isDoublingDownOnSplitHandsAllowed())
@@ -58,10 +58,10 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isInsuranceBetPossible(HandContext activeHandContext, EngineState currentState,
+	public boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 										  Player player, Hand dealerHand)
 	{
-		return (currentState == EngineState.DEALING || currentState == EngineState.INSURANCE_CHECK)
+		return (currentState == BlackjackEngineState.DEALING || currentState == BlackjackEngineState.INSURANCE_CHECK)
 			&& !activeHandContext.isAltered()
 			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
 			&& dealerHand.getCards().getFirst().getRank() == Rank.ACE
@@ -69,10 +69,10 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isSplitPossible(HandContext activeHandContext, EngineState currentState,
+	public boolean isSplitPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 								   int activeHandContextIndex, Player player)
 	{
-		return currentState == EngineState.PLAYER_TURN
+		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
 			&& activeHandContext.getHand().isPocketPair()
 			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE
@@ -82,9 +82,9 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isSurrenderingPossible(HandContext activeHandContext, EngineState currentState)
+	public boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState)
 	{
-		return currentState == EngineState.PLAYER_TURN
+		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& config.isSurrenderingAllowed()
 			&& !activeHandContext.isAltered()
 			&& (activeHandContext.getType() == HandContextType.MAIN

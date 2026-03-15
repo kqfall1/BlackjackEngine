@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 
 import java.math.BigDecimal;
@@ -71,7 +71,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 
 		super.engine.advanceAfterInsuranceBet(winnings);
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
 		}

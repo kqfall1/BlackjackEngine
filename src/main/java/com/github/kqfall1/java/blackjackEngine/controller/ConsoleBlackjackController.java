@@ -5,7 +5,7 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
 import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
@@ -153,6 +153,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			"You have completed a drawing round on hand %s.\n",
 			handContext.getHand().toStringPretty()
 		);
+		engine.advanceAfterDrawingRoundCompletedPlayer();
 	}
 
 	@Override
@@ -264,7 +265,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	}
 
 	@Override
-	public void onStateChanged(EngineState oldState)
+	public void onStateChanged(BlackjackEngineState oldState)
 	{
 		switch (getEngine().getState())
 		{
@@ -323,7 +324,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			getHandler().presentFailure(e.getMessage());
 
-			if (getEngine().getState() != EngineState.END)
+			if (getEngine().getState() != BlackjackEngineState.END)
 			{
 				performAction();
 			}
@@ -349,7 +350,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			getHandler().presentFailure(e.getMessage());
 
-			if (getEngine().getState() != EngineState.END)
+			if (getEngine().getState() != BlackjackEngineState.END)
 			{
 				placeHandBet();
 			}
@@ -358,7 +359,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 	private void placeInsuranceBet()
 	{
-		if (getEngine().getState() != EngineState.INSURANCE_CHECK)
+		if (getEngine().getState() != BlackjackEngineState.INSURANCE_CHECK)
 		{
 			return;
 		}
@@ -383,7 +384,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			getHandler().presentFailure(e.getMessage());
 
-			if (getEngine().getState() != EngineState.END)
+			if (getEngine().getState() != BlackjackEngineState.END)
 			{
 				placeInsuranceBet();
 			}

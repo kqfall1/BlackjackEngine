@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.rules.surrendering;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -25,7 +25,7 @@ final class SurrenderingNotAllowedTest extends EngineTest
 //		Assertions.assertFalse(super.engine.getConfig().isSurrenderingAllowed());
 		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			try
 			{

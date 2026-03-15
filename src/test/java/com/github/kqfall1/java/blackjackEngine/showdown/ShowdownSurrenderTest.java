@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +32,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 		final var BET_AMOUNT = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerSurrender();
 

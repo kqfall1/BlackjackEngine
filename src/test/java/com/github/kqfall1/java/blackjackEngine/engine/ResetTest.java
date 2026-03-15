@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +25,7 @@ final class ResetTest extends EngineTest
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
 
-		if (super.engine.getState() == EngineState.DEALER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
 			super.engine.advanceAfterDealerTurn();
 		}

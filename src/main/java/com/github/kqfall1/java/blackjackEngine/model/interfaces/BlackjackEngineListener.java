@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.math.BigDecimal;
@@ -32,5 +32,5 @@ public interface BlackjackEngineListener
 	void onReset();
 	void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings);
 	void onShowdownStarted(Hand dealerHand, HandContext handContext);
-	void onStateChanged(EngineState oldState);
+	void onStateChanged(BlackjackEngineState oldState);
 }

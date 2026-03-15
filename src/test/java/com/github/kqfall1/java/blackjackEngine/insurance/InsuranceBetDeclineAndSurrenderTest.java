@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -26,7 +26,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 	{
 		super.advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT);
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerSurrender();
 		}

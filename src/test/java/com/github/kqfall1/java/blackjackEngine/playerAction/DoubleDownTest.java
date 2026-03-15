@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.playerAction;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -32,7 +32,7 @@ final class DoubleDownTest extends EngineTest
 	{
 		final var INITIAL_BET_AMOUNT = super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
 
-		if (super.engine.getState() == EngineState.PLAYER_TURN)
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
 			super.engine.playerDoubleDown();

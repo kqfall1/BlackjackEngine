@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.rules;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -24,7 +24,7 @@ final class PredicateTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		while (super.engine.getState() != EngineState.END)
+		while (super.engine.getState() != BlackjackEngineState.END)
 		{
 			super.placeRandomHandBet(super.engine.getPlayer().getChips());
 			super.engine.deal();
@@ -59,18 +59,18 @@ final class PredicateTest extends CustomDeckTest
 
 			super.declinePossibleInsuranceBet();
 
-			if (super.engine.getState() == EngineState.PLAYER_TURN)
+			if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 			{
 				super.engine.playerHit();
 				verifyStandardAssumptions();
 
-				if (super.engine.getState() == EngineState.PLAYER_TURN)
+				if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 				{
 					super.engine.playerStand();
 				}
 			}
 
-			if (super.engine.getState() == EngineState.DEALER_TURN)
+			if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
 			{
 				verifyPlayerActionsAreIllegal();
 				super.engine.advanceAfterDealerTurn();

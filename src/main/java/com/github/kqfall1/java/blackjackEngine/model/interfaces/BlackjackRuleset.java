@@ -3,7 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 import com.github.kqfall1.java.blackjackEngine.model.betting.PayoutRatio;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.enums.EngineState;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
@@ -58,14 +58,14 @@ public interface BlackjackRuleset
 		return hand.getScore() > BlackjackConstants.DEFAULT_TOP_SCORE;
 	}
 
-	boolean isDealerTurnActive(EngineState currentState, Dealer dealer);
-	boolean isDoubleDownPossible(HandContext activeHandContext, EngineState currentState,
+	boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer);
+	boolean isDoubleDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 								 Player player);
-	boolean isInsuranceBetPossible(HandContext activeHandContext, EngineState currentState,
+	boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 									  Player player, Hand dealerHand);
-	boolean isSplitPossible(HandContext activeHandContext, EngineState currentState,
+	boolean isSplitPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 							   int activeHandContextIndex, Player player);
-	boolean isSurrenderingPossible(HandContext activeHandContext, EngineState currentState);
+	boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState);
 
 	default boolean shouldDealerPeekForBlackjack()
 	{
