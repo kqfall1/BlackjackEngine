@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Tweaked BlackjackEngine.java to not auto-advance when a player drawing round is completed; altered the listener classes to advance when appropriate. Improved GameJFrame.java and renamed BlackjackEngineState.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Cards are now rendering and the score-related JComponents are being updated.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/CardJLabel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameCardsJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameCardsJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/images/sources.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,14 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Patched a bug in PredicateTest.java and created IntegrationTest.java to ensure Shoe functionalities.">
-      <option name="closed" value="true" />
-      <created>1767322077438</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1767322077438</updated>
     </task>
     <task id="LOCAL-00009" summary="Patched minor issues in various classes before a major refactor.">
       <option name="closed" value="true" />
@@ -581,12 +574,18 @@
       <option name="project" value="LOCAL" />
       <updated>1773561143683</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Added card images files to the resources directory; am fully prepared to render cards.">
+      <option name="closed" value="true" />
+      <created>1773598863711</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1773598863711</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created BlackjackFrame.java to abstract JFrame configuration; began the NewGameJFrame.java code." />
-    <MESSAGE value="Created a skeleton for GameConfigJPanel.java and improved UiConstants.java." />
     <MESSAGE value="Am fully prepared to implement GameConfigJPanel.java." />
     <MESSAGE value="Have created scaffolding for the rest of GameConfigJPanel.java." />
     <MESSAGE value="Created a decent UI for GameConfigJPanel.java." />
@@ -610,7 +609,9 @@
     <MESSAGE value="Made a solid start on the Swing application/engine integration." />
     <MESSAGE value="Optimized GameJFrame.java and fixed minor issues." />
     <MESSAGE value="Tweaked BlackjackEngine.java to not auto-advance when a player drawing round is completed; altered the listener classes to advance when appropriate. Improved GameJFrame.java and renamed BlackjackEngineState.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tweaked BlackjackEngine.java to not auto-advance when a player drawing round is completed; altered the listener classes to advance when appropriate. Improved GameJFrame.java and renamed BlackjackEngineState.java." />
+    <MESSAGE value="Added card images files to the resources directory; am fully prepared to render cards." />
+    <MESSAGE value="Cards are now rendering and the score-related JComponents are being updated." />
+    <option name="LAST_COMMIT_MESSAGE" value="Cards are now rendering and the score-related JComponents are being updated." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

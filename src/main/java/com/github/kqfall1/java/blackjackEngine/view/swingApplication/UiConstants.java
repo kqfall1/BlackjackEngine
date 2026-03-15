@@ -19,8 +19,11 @@ public final class UiConstants
     public static final Border BORDER_RED = BorderFactory.createLineBorder(Color.RED);
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
     public static final String DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
-    public static final String GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score:";
+    public static final String GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score: ";
     public static final String GAME_ADVANCE_HAND_JBUTTON_LABEL = "Advance";
+    public static final String GAME_CARD_BACK_IMAGE_FILE_NAME = "back_of_card.png";
+    public static final int GAME_CARD_HEIGHT = 225;
+    public static final int GAME_CARD_WIDTH = 100;
     public static final String GAME_CONFIG_JDIALOG_FAILURE_LABEL = "One or more inputs is invalid.";
     public static final double GAME_CONFIG_JDIALOG_HEIGHT_FACTOR = 0.4;
     public static final String GAME_CONFIG_JDIALOG_TITLE = "Game Configuration";
@@ -35,7 +38,7 @@ public final class UiConstants
     public static final String GAME_JBUTTON_SPLIT_LABEL = "Split";
     public static final String GAME_JBUTTON_STAND_LABEL = "Stand";
     public static final String GAME_JBUTTON_SURRENDER_LABEL = "Surrender";
-    public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX = "Player's chips: ";
+    public static final String GAME_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips:";
     public static final String GAME_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
     public static final Font JBUTTON_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final Font JLABEL_FONT = new Font("Georgia", Font.PLAIN, 16);

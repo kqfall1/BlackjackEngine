@@ -25,7 +25,6 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     private final JScrollPane engineMessageJScrollPane;
     private final JLabel playerChipAmountJLabel;
     private final JButton playerInputJButton;
-    private final JLabel playerInputJLabel;
     private final ValidatedJTextField playerInputJTextField;
 
     public GameInfoJPanel()
@@ -44,12 +43,10 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
             UiConstants.GAME_ENGINE_JSCROLL_PANEL_HEIGHT
         ));
         engineMessageJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX);
+        playerChipAmountJLabel = new JLabel(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
         playerInputJButton = new JButton(UiConstants.GAME_PLAYER_INPUT_JBUTTON_LABEL);
         playerInputJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJButton.setEnabled(false);
-        playerInputJLabel = new JLabel();
-        playerInputJLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField = new ValidatedJTextField();
         playerInputJTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField.setEnabled(false);
@@ -66,7 +63,6 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
 
         final var GAME_INPUT_WRAPPER = new JPanel();
         GAME_INPUT_WRAPPER.setLayout(new BoxLayout(GAME_INPUT_WRAPPER, BoxLayout.Y_AXIS));
-        GAME_INPUT_WRAPPER.add(playerInputJLabel);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         GAME_INPUT_WRAPPER.add(playerInputJTextField);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
@@ -118,11 +114,6 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     public JButton getPlayerInputJButton()
     {
         return playerInputJButton;
-    }
-
-    public JLabel getPlayerInputJLabel()
-    {
-        return playerInputJLabel;
     }
 
     public ValidatedJTextField getPlayerInputJTextField()

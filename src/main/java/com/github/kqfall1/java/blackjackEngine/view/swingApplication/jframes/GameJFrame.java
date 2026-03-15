@@ -10,6 +10,7 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.CardJLabel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameCardsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameInfoJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameActionJPanel;
@@ -32,7 +33,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     private final BlackjackEngine blackjackEngine;
     private final ExecutorService executorService;
     private final GameActionJPanel gameActionJPanel;
-    private final JPanel gameCardsJPanel;
+    private final GameCardsJPanel gameCardsJPanel;
     private final GameInfoJPanel gameInfoJPanel;
     private final MainMenuJFrame mainMenuJFrame;
 
@@ -176,10 +177,29 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onBettingRoundStarted() {}
 
     @Override
-    public void onCardDealtToDealer(Card card, Hand dealerHand, boolean isFaceUp) {}
+    public void onCardDealtToDealer(Card card, Hand dealerHand, boolean isFaceUp)
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameCardsJPanel.getDealerHandJPanel().add(new CardJLabel(card, isFaceUp));
+            gameCardsJPanel.getDealerHandJPanel().revalidate();
+            gameCardsJPanel.getDealerHandJPanel().repaint();
+        });
+    }
 
     @Override
-    public void onCardDealtToPlayer(Card card, HandContext handContext) {}
+    public void onCardDealtToPlayer(Card card, HandContext handContext)
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameCardsJPanel.getActivePlayerHandJPanel().add(new CardJLabel(card, true));
+            gameCardsJPanel.getActivePlayerHandJPanel().revalidate();
+            gameCardsJPanel.getActivePlayerHandJPanel().repaint();
+            gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(String.format(
+                "%s %s", UiConstants.GAME_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL, handContext.getHand().getScore()
+            ));
+        });
+    }
 
     @Override
     public void onDrawingRoundCompletedDealer(Hand dealerHand) {}
@@ -203,7 +223,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onGameCompleted()
     {
-        gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX);
+        gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL);
     }
 
     @Override
@@ -252,10 +272,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         {
             switch (blackjackEngine.getState())
             {
-                case BETTING, INSURANCE_CHECK ->
-                {
-                    togglePlayerInputComponents(true);
-                }
+                case BETTING, INSURANCE_CHECK -> togglePlayerInputComponents(true);
                 case PLAYER_TURN ->
                 {
                     gameActionJPanel.getDoubleDownJButton().setEnabled(blackjackEngine.getRuleset().isDoubleDownPossible(
@@ -291,8 +308,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         SwingUtilities.invokeLater(() ->
         {
             gameInfoJPanel.getPlayerChipAmountJLabel().setText(String.format(
-                "%s%.2f",
-                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL_PREFIX,
+                "%s $%,.2f",
+                UiConstants.GAME_PLAYER_CHIP_AMOUNT_LABEL,
                 blackjackEngine.getPlayer().getChips()
             ));
             gameInfoJPanel.getPlayerInputJTextField().setText("");
