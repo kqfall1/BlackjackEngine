@@ -32,6 +32,7 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
         final var CONFIG = new BlackjackRulesetConfiguration();
         CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
+        CONFIG.setSurrenderingAllowed(true);
 
         SwingUtilities.invokeLater(() ->
         {

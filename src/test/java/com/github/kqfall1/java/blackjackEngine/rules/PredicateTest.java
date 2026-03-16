@@ -38,7 +38,7 @@ final class PredicateTest extends CustomDeckTest
 					super.engine.getPlayer(),
 					super.engine.getDealer().getHand()
 				)
-				&& super.ruleset.isSplitPossible(
+				&& super.ruleset.isSplittingPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState(),
 					super.engine.getActiveHandContextIndex(),
@@ -102,12 +102,12 @@ final class PredicateTest extends CustomDeckTest
 				super.engine.getPlayer(),
 				super.engine.getDealer().getHand()
 			)
-			&& super.ruleset.isDoubleDownPossible(
+			&& super.ruleset.isDoublingDownPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getPlayer()
 			)
-			&& super.ruleset.isSplitPossible(
+			&& super.ruleset.isSplittingPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getActiveHandContextIndex(),

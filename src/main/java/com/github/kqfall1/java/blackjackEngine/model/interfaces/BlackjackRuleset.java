@@ -59,12 +59,12 @@ public interface BlackjackRuleset
 	}
 
 	boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer);
-	boolean isDoubleDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
-								 Player player);
+	boolean isDoublingDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
+								   Player player);
 	boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 									  Player player, Hand dealerHand);
-	boolean isSplitPossible(HandContext activeHandContext, BlackjackEngineState currentState,
-							   int activeHandContextIndex, Player player);
+	boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState,
+								int activeHandContextIndex, Player player);
 	boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState);
 
 	default boolean shouldDealerPeekForBlackjack()

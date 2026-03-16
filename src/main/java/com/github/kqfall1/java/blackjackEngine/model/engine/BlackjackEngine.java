@@ -581,7 +581,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
 		final var context = getActiveHandContext();
-		if (!RULESET.isDoubleDownPossible(getActiveHandContext(), getState(), getPlayer()))
+		if (!RULESET.isDoublingDownPossible(getActiveHandContext(), getState(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered())
 			{
@@ -638,7 +638,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "playerSplit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (!RULESET.isSplitPossible(getActiveHandContext(), getState(),
+		if (!RULESET.isSplittingPossible(getActiveHandContext(), getState(),
 			getActiveHandContextIndex(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered()

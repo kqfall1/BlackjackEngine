@@ -51,6 +51,9 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         playerInputJTextField.setEnabled(false);
         playerInputJTextField.setHorizontalAlignment(JTextField.CENTER);
 
+        final var ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP = engineMessageJScrollPane.getInputMap();
+        ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl H"), "");
+
         final var GAME_INFO_WRAPPER = new JPanel();
         GAME_INFO_WRAPPER.setLayout(new BoxLayout(GAME_INFO_WRAPPER, BoxLayout.Y_AXIS));
         GAME_INFO_WRAPPER.add(dealerHandScoreJLabel);

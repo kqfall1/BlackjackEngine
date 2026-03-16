@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.function.Consumer;
 import javax.swing.*;
 
 /**
@@ -52,6 +53,27 @@ public final class UiActions
         newGame.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
     }
 
+    public Action getGameAction(Consumer<ActionEvent> actionConsumer, ActionMap actionMap, String actionLabel, InputMap inputMap,
+                                KeyStroke keyStroke)
+    {
+        final var ACTION = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                actionConsumer.accept(e);
+            }
+        };
+        ACTION.putValue(Action.LONG_DESCRIPTION, actionLabel);
+        ACTION.putValue(Action.NAME, actionLabel);
+        ACTION.putValue(Action.SHORT_DESCRIPTION, actionLabel);
+        ACTION.setEnabled(false);
+
+        actionMap.put(actionLabel, ACTION);
+        inputMap.put(keyStroke, actionLabel);
+        return ACTION;
+    }
+
     public Action getExit()
     {
         return exit;
@@ -78,15 +100,8 @@ public final class UiActions
         final var INPUT_MAP = jframe.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         ACTION_MAP.put(UiConstants.JMENU_ITEM_EXIT_LABEL, getExit());
-        INPUT_MAP.put(
-            KeyStroke.getKeyStroke("ctrl E"),
-            UiConstants.JMENU_ITEM_EXIT_LABEL
-        );
-
         ACTION_MAP.put(UiConstants.JMENU_ITEM_NEW_GAME_LABEL, getNewGame());
-        INPUT_MAP.put(
-            KeyStroke.getKeyStroke("ctrl N"),
-            UiConstants.JMENU_ITEM_NEW_GAME_LABEL
-        );
+        INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl E"), UiConstants.JMENU_ITEM_EXIT_LABEL);
+        INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl N"), UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
     }
 }

@@ -18,23 +18,18 @@ public class GameActionJPanel extends JPanel
     private final JButton standJButton;
     private final JButton surrenderJButton;
 
-    public GameActionJPanel()
+    public GameActionJPanel(Action doubleDown, Action hit, Action split, Action stand, Action surrender)
     {
-        doubleDownJButton = new JButton(UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL);
+        doubleDownJButton = new JButton(doubleDown);
         doubleDownJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        doubleDownJButton.setEnabled(false);
-        hitJButton = new JButton(UiConstants.GAME_ACTION_HIT_LABEL);
+        hitJButton = new JButton(hit);
         hitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        hitJButton.setEnabled(false);
-        splitJButton = new JButton(UiConstants.GAME_ACTION_SPLIT_LABEL);
+        splitJButton = new JButton(split);
         splitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        splitJButton.setEnabled(false);
-        standJButton = new JButton(UiConstants.GAME_ACTION_STAND_LABEL);
+        standJButton = new JButton(stand);
         standJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        standJButton.setEnabled(false);
-        surrenderJButton = new JButton(UiConstants.GAME_ACTION_SURRENDER_LABEL);
+        surrenderJButton = new JButton(surrender);
         surrenderJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        surrenderJButton.setEnabled(false);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.MARGIN_LARGE));

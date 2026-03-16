@@ -47,8 +47,8 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isDoubleDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
-										Player player)
+	public boolean isDoublingDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
+										  Player player)
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
@@ -69,8 +69,8 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	}
 
 	@Override
-	public boolean isSplitPossible(HandContext activeHandContext, BlackjackEngineState currentState,
-								   int activeHandContextIndex, Player player)
+	public boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState,
+									   int activeHandContextIndex, Player player)
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
