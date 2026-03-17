@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Made significant progress with integrating the Swing application with BlackjackEngine.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Improved UX and fixed a subtle concurrency bug.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -188,14 +185,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Finalized the BlackjackRuleset.java interface and refined the project's folder structure.">
-      <option name="closed" value="true" />
-      <created>1767489487351</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1767489487351</updated>
     </task>
     <task id="LOCAL-00013" summary="Created StandardBlackjackRuleset.java and began refactoring the engine around it.">
       <option name="closed" value="true" />
@@ -581,11 +570,18 @@
       <option name="project" value="LOCAL" />
       <updated>1773632023737</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Improved UX and fixed a subtle concurrency bug.">
+      <option name="closed" value="true" />
+      <created>1773717167948</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1773717167948</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created a decent UI for GameConfigJPanel.java." />
     <MESSAGE value="Improved the UX for GameConfigJPanel.java." />
     <MESSAGE value="Have finalized a sufficient, functional GameConfigJPanel.java." />
     <MESSAGE value="Optimized GameConfigJPanel.java." />
@@ -610,7 +606,8 @@
     <MESSAGE value="Cards are now rendering and the score-related JComponents are being updated." />
     <MESSAGE value="Improved the naming of various UiConstants.java members." />
     <MESSAGE value="Made significant progress with integrating the Swing application with BlackjackEngine.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Made significant progress with integrating the Swing application with BlackjackEngine.java." />
+    <MESSAGE value="Improved UX and fixed a subtle concurrency bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved UX and fixed a subtle concurrency bug." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

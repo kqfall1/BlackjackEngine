@@ -329,13 +329,13 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     UiConstants.GAME_MESSAGE_INSURANCE_BET_WON,
                     playerWinnings.doubleValue()
                 ));
-                updateUiAfterPlayerChipAmountChanges();
             }
             else
             {
                 gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_LOST));
             }
         });
+        updateUiAfterPlayerChipAmountChanges();
     }
 
     @Override
