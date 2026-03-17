@@ -53,7 +53,7 @@ public final class UiActions
         newGame.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
     }
 
-    public Action getGameAction(Consumer<ActionEvent> actionConsumer, ActionMap actionMap, String actionLabel, InputMap inputMap,
+    public Action getGameAction(Consumer<ActionEvent> actionConsumer, String actionLabel, ActionMap actionMap, InputMap inputMap,
                                 KeyStroke keyStroke)
     {
         final var ACTION = new AbstractAction()

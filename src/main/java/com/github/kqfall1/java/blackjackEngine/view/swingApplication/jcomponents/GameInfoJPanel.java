@@ -128,6 +128,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     {
         SwingUtilities.invokeLater(() ->
         {
+            final var DEFAULT_JBUTTON_BORDER = new JButton().getBorder();
             final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
             engineMessageJTextArea.append(String.format("%s\n\n", message));
 
@@ -146,6 +147,10 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
                     if (JCOMPONENT instanceof JTextField)
                     {
                         JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+                    }
+                    else if (JCOMPONENT instanceof JButton)
+                    {
+                        JCOMPONENT.setBorder(DEFAULT_JBUTTON_BORDER);
                     }
                     else
                     {

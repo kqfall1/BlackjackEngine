@@ -62,7 +62,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 executorService.submit(blackjackEngine::playerDoubleDown);
                 updateUiAfterPlayerChipAmountChanges();
             }
-        }, ACTION_MAP, UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL, INPUT_MAP, KeyStroke.getKeyStroke("ctrl D"));
+        }, UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl D"));
         final var HIT = UiActions.getInstance().getGameAction(e ->
         {
             if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN
@@ -70,7 +70,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             {
                 executorService.submit(blackjackEngine::playerHit);
             }
-        }, ACTION_MAP, UiConstants.GAME_ACTION_HIT_LABEL, INPUT_MAP, KeyStroke.getKeyStroke("ctrl H"));
+        }, UiConstants.GAME_ACTION_HIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl H"));
         final var SPLIT = UiActions.getInstance().getGameAction(e ->
         {
             if (blackjackEngine.getRuleset().isSplittingPossible(
@@ -82,7 +82,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 executorService.submit(blackjackEngine::playerSplit);
                 updateUiAfterPlayerChipAmountChanges();
             }
-        }, ACTION_MAP, UiConstants.GAME_ACTION_SPLIT_LABEL, INPUT_MAP, KeyStroke.getKeyStroke("ctrl P"));
+        }, UiConstants.GAME_ACTION_SPLIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl P"));
         final var STAND = UiActions.getInstance().getGameAction(e ->
         {
             if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN
@@ -90,7 +90,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             {
                 executorService.submit(blackjackEngine::playerStand);
             }
-        }, ACTION_MAP, UiConstants.GAME_ACTION_STAND_LABEL, INPUT_MAP, KeyStroke.getKeyStroke("ctrl T"));
+        }, UiConstants.GAME_ACTION_STAND_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl T"));
         final var SURRENDER = UiActions.getInstance().getGameAction(e ->
         {
             if (blackjackEngine.getRuleset().isSurrenderingPossible(
@@ -99,7 +99,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             {
                 executorService.submit(blackjackEngine::playerSurrender);
             }
-        }, ACTION_MAP, UiConstants.GAME_ACTION_SURRENDER_LABEL, INPUT_MAP, KeyStroke.getKeyStroke("ctrl X"));
+        }, UiConstants.GAME_ACTION_SURRENDER_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl X"));
 
         gameActionJPanel = new GameActionJPanel(DOUBLE_DOWN, HIT, SPLIT, STAND, SURRENDER);
         gameCardsJPanel = new GameCardsJPanel();
@@ -181,7 +181,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     else
                     {
                         togglePlayerInputComponents(true);
-                        gameInfoJPanel.presentFailure(throwable.getMessage(), gameInfoJPanel.getPlayerInputJTextField());
+                        gameInfoJPanel.presentFailure(
+                            UiConstants.getInputErrorMessage(gameInfoJPanel.getPlayerInputJTextField().getText().trim()),
+                            gameInfoJPanel.getPlayerInputJTextField()
+                        );
                     }
                 });
             }
@@ -220,6 +223,9 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onBetPlaced(HandContext handContext)
     {
+        gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
+            "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_BET_PLACED, handContext.getBet().getAmount().doubleValue()
+        ));
         updateUiAfterPlayerChipAmountChanges();
     }
 
@@ -304,25 +310,30 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     }
 
     @Override
-    public void onInsuranceBetOpportunityDetected(Card dealerUpCard) {}
+    public void onInsuranceBetOpportunityDetected(Card dealerUpCard)
+    {
+        gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
+            "%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_NOTIFICATION
+        ));
+    }
 
     @Override
     public void onInsuranceBetResolved(boolean wasSuccessful, BigDecimal playerWinnings)
     {
         SwingUtilities.invokeLater(() ->
         {
-            if (playerWinnings.equals(BigDecimal.ZERO))
-            {
-                gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_LOST));
-            }
-            else
+            if (wasSuccessful)
             {
                 gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
                     "%s%.2f.\n\n",
-                    UiConstants.GAME_MESSAGE_INSURANCE_BET_WON_PREFIX,
-                    playerWinnings
+                    UiConstants.GAME_MESSAGE_INSURANCE_BET_WON,
+                    playerWinnings.doubleValue()
                 ));
                 updateUiAfterPlayerChipAmountChanges();
+            }
+            else
+            {
+                gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_LOST));
             }
         });
     }
@@ -351,35 +362,33 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings)
     {
-        JPanel highlightedCardJPanel;
+        if (playerWon)//&& playerWinnings.compareTo(BigDecimal.ZERO) > 0)
+        {
+            SwingUtilities.invokeLater(() ->
+            {
+                gameCardsJPanel.getActivePlayerHandJPanel().setBackground(Color.GREEN);
+                gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(true);
+                gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
+                    "%s%.2f\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_WON, playerWinnings.doubleValue()
+                ));
 
-        if (playerWon)
-        {
-            highlightedCardJPanel = gameCardsJPanel.getActivePlayerHandJPanel();
-        }
-        else
-        {
-            highlightedCardJPanel = gameCardsJPanel.getDealerHandJPanel();
+                new Timer(UiConstants.SLEEP_INTERVAL, e ->
+                {
+                    gameCardsJPanel.getActivePlayerHandJPanel().setBackground(null);
+                    gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(false);
+                    ((Timer) e.getSource()).stop();
+                }).start();
+            });
         }
 
         SwingUtilities.invokeLater(() ->
         {
-            highlightedCardJPanel.setBackground(Color.GREEN);
-            highlightedCardJPanel.setOpaque(true);
-
-            new Timer(UiConstants.SLEEP_INTERVAL, e ->
-            {
-                highlightedCardJPanel.setBackground(null);
-                highlightedCardJPanel.setOpaque(false);
-                ((Timer) e.getSource()).stop();
-            }).start();
-
             gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
             gameInfoJPanel.getDealerHandScoreJLabel().setText(String.format(
                 "%s%d", UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL, dealerHand.getScore()
             ));
-            updateUiAfterPlayerChipAmountChanges();
         });
+        updateUiAfterPlayerChipAmountChanges();
     }
 
     @Override
@@ -395,40 +404,40 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onStateChanged(BlackjackEngineState oldState)
     {
-        SwingUtilities.invokeLater(() ->
+        switch (blackjackEngine.getState())
         {
-            switch (blackjackEngine.getState())
+            case BETTING, INSURANCE_CHECK -> togglePlayerInputComponents(true);
+            case PLAYER_TURN -> SwingUtilities.invokeLater(() ->
             {
-                case BETTING, INSURANCE_CHECK -> togglePlayerInputComponents(true);
-                case PLAYER_TURN ->
-                {
-                    gameActionJPanel.getDoubleDownJButton().getAction().setEnabled(blackjackEngine.getRuleset().isDoublingDownPossible(
-                        blackjackEngine.getActiveHandContext(),
-                        blackjackEngine.getState(),
-                        blackjackEngine.getPlayer()
-                    ));
-                    gameActionJPanel.getHitJButton().getAction().setEnabled(true);
-                    gameActionJPanel.getSplitJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSplittingPossible(
-                        blackjackEngine.getActiveHandContext(),
-                        blackjackEngine.getState(),
-                        blackjackEngine.getActiveHandContextIndex(),
-                        blackjackEngine.getPlayer()
-                    ));
-                    gameActionJPanel.getStandJButton().getAction().setEnabled(true);
-                    gameActionJPanel.getSurrenderJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSurrenderingPossible(
-                        blackjackEngine.getActiveHandContext(),
-                        blackjackEngine.getState()
-                    ));
-                }
-                case SHOWDOWN -> blackjackEngine.showdown();
-            }
-        });
+                gameActionJPanel.getDoubleDownJButton().getAction().setEnabled(blackjackEngine.getRuleset().isDoublingDownPossible(
+                    blackjackEngine.getActiveHandContext(),
+                    blackjackEngine.getState(),
+                    blackjackEngine.getPlayer()
+                ));
+                gameActionJPanel.getHitJButton().getAction().setEnabled(true);
+                gameActionJPanel.getSplitJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSplittingPossible(
+                    blackjackEngine.getActiveHandContext(),
+                    blackjackEngine.getState(),
+                    blackjackEngine.getActiveHandContextIndex(),
+                    blackjackEngine.getPlayer()
+                ));
+                gameActionJPanel.getStandJButton().getAction().setEnabled(true);
+                gameActionJPanel.getSurrenderJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSurrenderingPossible(
+                    blackjackEngine.getActiveHandContext(),
+                    blackjackEngine.getState()
+                ));
+            });
+            case SHOWDOWN -> executorService.submit(blackjackEngine::showdown);
+        }
     }
 
     private void togglePlayerInputComponents(boolean enabled)
     {
-        gameInfoJPanel.getPlayerInputJButton().setEnabled(enabled);
-        gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
+        SwingUtilities.invokeLater(() ->
+        {
+            gameInfoJPanel.getPlayerInputJButton().setEnabled(enabled);
+            gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
+        });
     }
 
     private void updateUiAfterPlayerChipAmountChanges()
