@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Improved UX and fixed a subtle concurrency bug.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Fixed a UX bug involving chip amount's after placing an insurance bet.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,14 +187,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Created StandardBlackjackRuleset.java and began refactoring the engine around it.">
-      <option name="closed" value="true" />
-      <created>1767496567217</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1767496567217</updated>
     </task>
     <task id="LOCAL-00014" summary="Finalized decoupling the rules from configuration.">
       <option name="closed" value="true" />
@@ -578,11 +572,18 @@
       <option name="project" value="LOCAL" />
       <updated>1773717167948</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Fixed a UX bug involving chip amount's after placing an insurance bet.">
+      <option name="closed" value="true" />
+      <created>1773717557272</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1773717557272</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improved the UX for GameConfigJPanel.java." />
     <MESSAGE value="Have finalized a sufficient, functional GameConfigJPanel.java." />
     <MESSAGE value="Optimized GameConfigJPanel.java." />
     <MESSAGE value="Refactored the exception model of the system - ConsoleBlackjackController.java has broken slightly." />
@@ -607,9 +608,19 @@
     <MESSAGE value="Improved the naming of various UiConstants.java members." />
     <MESSAGE value="Made significant progress with integrating the Swing application with BlackjackEngine.java." />
     <MESSAGE value="Improved UX and fixed a subtle concurrency bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved UX and fixed a subtle concurrency bug." />
+    <MESSAGE value="Fixed a UX bug involving chip amount's after placing an insurance bet." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed a UX bug involving chip amount's after placing an insurance bet." />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java</url>
+          <line>781</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="this" />

@@ -68,7 +68,6 @@ public final class UiActions
         ACTION.putValue(Action.NAME, actionLabel);
         ACTION.putValue(Action.SHORT_DESCRIPTION, actionLabel);
         ACTION.setEnabled(false);
-
         actionMap.put(actionLabel, ACTION);
         inputMap.put(keyStroke, actionLabel);
         return ACTION;

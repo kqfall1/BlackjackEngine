@@ -116,16 +116,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             }
             else if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN)
             {
-                executorService.submit(() ->
-                {
-                    blackjackEngine.advanceAfterDrawingRoundCompletedPlayer();
-
-                    if (blackjackEngine.getState() == BlackjackEngineState.DEALER_TURN)
-                    {
-                        blackjackEngine.dealerTurn();
-                        blackjackEngine.advanceAfterDealerTurn();
-                    }
-                });
+                executorService.submit(blackjackEngine::advanceAfterDrawingRoundCompletedPlayer);
             }
             else if (blackjackEngine.getState() == BlackjackEngineState.SHOWDOWN)
             {
@@ -285,9 +276,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
         if (FINAL_HAND_CONTEXT_COMPLETED)
         {
-            blackjackEngine.advanceAfterDrawingRoundCompletedPlayer();
-            blackjackEngine.dealerTurn();
-            blackjackEngine.advanceAfterDealerTurn();
+            blackjackEngine.advanceAfterPlayerTurn();
         }
     }
 
@@ -315,6 +304,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
             "%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_NOTIFICATION
         ));
+        updateUiForEngineMessage();
     }
 
     @Override
@@ -329,13 +319,14 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     UiConstants.GAME_MESSAGE_INSURANCE_BET_WON,
                     playerWinnings.doubleValue()
                 ));
+                updateUiAfterPlayerChipAmountChanges();
             }
             else
             {
                 gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_INSURANCE_BET_LOST));
+                updateUiForEngineMessage();
             }
         });
-        updateUiAfterPlayerChipAmountChanges();
     }
 
     @Override
@@ -362,15 +353,13 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings)
     {
-        if (playerWon)//&& playerWinnings.compareTo(BigDecimal.ZERO) > 0)
+        if (playerWon)
         {
             SwingUtilities.invokeLater(() ->
             {
                 gameCardsJPanel.getActivePlayerHandJPanel().setBackground(Color.GREEN);
                 gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(true);
-                gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
-                    "%s%.2f\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_WON, playerWinnings.doubleValue()
-                ));
+                gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_WON));
 
                 new Timer(UiConstants.SLEEP_INTERVAL, e ->
                 {
@@ -378,12 +367,16 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(false);
                     ((Timer) e.getSource()).stop();
                 }).start();
+                updateUiForEngineMessage();
             });
         }
 
         SwingUtilities.invokeLater(() ->
         {
             gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
+            gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
+                "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_COLLECTION, playerWinnings
+            ));
             gameInfoJPanel.getDealerHandScoreJLabel().setText(String.format(
                 "%s%d", UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL, dealerHand.getScore()
             ));
@@ -427,6 +420,11 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     blackjackEngine.getState()
                 ));
             });
+            case DEALER_TURN -> executorService.submit(() ->
+            {
+                blackjackEngine.dealerTurn();
+                blackjackEngine.advanceAfterDealerTurn();
+            });
             case SHOWDOWN -> executorService.submit(blackjackEngine::showdown);
         }
     }
@@ -450,6 +448,15 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 blackjackEngine.getPlayer().getChips()
             ));
             gameInfoJPanel.getPlayerInputJTextField().setText("");
+        });
+        updateUiForEngineMessage();
+    }
+
+    private void updateUiForEngineMessage()
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameInfoJPanel.getEngineMessageJTextArea().setCaretPosition(gameInfoJPanel.getEngineMessageJTextArea().getText().length());
         });
     }
 }
