@@ -232,7 +232,7 @@ public abstract class EngineTest
 			assertTrue(engine.getState() == BlackjackEngineState.DEALING
 				|| engine.getState() == BlackjackEngineState.INSURANCE_CHECK
 				|| engine.getState() == BlackjackEngineState.PLAYER_TURN);
-			handler.getOut().println("You have begun a new drawing round.");
+			//handler.getOut().println("You have begun a new drawing round.");
 		}
 
 		@Override

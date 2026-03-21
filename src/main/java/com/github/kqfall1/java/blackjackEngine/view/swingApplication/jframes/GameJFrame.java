@@ -194,6 +194,16 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         setVisible(true);
     }
 
+    private void clearActivePlayerHandJPanel()
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameCardsJPanel.getActivePlayerHandJPanel().removeAll();
+            gameCardsJPanel.revalidate();
+            gameCardsJPanel.repaint();
+        });
+    }
+
     @Override
     public void onBetPlaced(HandContext handContext)
     {
@@ -223,15 +233,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onCardDealtToPlayer(Card card, HandContext handContext)
     {
-        SwingUtilities.invokeLater(() ->
-        {
-            gameCardsJPanel.getActivePlayerHandJPanel().add(new CardJLabel(card, true));
-            gameCardsJPanel.getActivePlayerHandJPanel().revalidate();
-            gameCardsJPanel.getActivePlayerHandJPanel().repaint();
-            gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(String.format(
-                "%s %s", UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL, handContext.getHand().getScore()
-            ));
-        });
+        renderCardForPlayer(card);
+        updateUiForPlayerScore();
     }
 
     @Override
@@ -251,12 +254,12 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 }
             }
 
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(ALL_HAND_CONTEXTS_DRAWN);
+            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(!ALL_HAND_CONTEXTS_DRAWN);
         });
 
         if (ALL_HAND_CONTEXTS_DRAWN)
         {
-            blackjackEngine.advanceAfterPlayerTurn();
+            blackjackEngine.advanceAfterDrawingRoundCompletedPlayer();
         }
     }
 
@@ -264,13 +267,27 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onDrawingRoundStartedDealer(Hand dealerHand) {}
 
     @Override
-    public void onDrawingRoundStartedPlayer(HandContext handContext) {}
+    public void onDrawingRoundStartedPlayer(HandContext handContext)
+    {
+        clearActivePlayerHandJPanel();
+
+        for (Card card : handContext.getHand().getCards())
+        {
+            renderCardForPlayer(card);
+        }
+
+        updateUiForPlayerScore();
+    }
 
     @Override
     public void onGameCompleted()
     {
-        SwingUtilities.invokeLater(() -> gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL));
-        updateUiForEngineMessage();
+        SwingUtilities.invokeLater(() ->
+        {
+            gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL);
+            gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_BUSTED));
+            updateUiForEngineMessage();
+        });
     }
 
     @Override
@@ -300,7 +317,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     UiConstants.GAME_MESSAGE_INSURANCE_BET_WON,
                     playerWinnings.doubleValue()
                 ));
-                updateUiAfterPlayerChipAmountChanges();
             }
             else
             {
@@ -308,20 +324,21 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 updateUiForEngineMessage();
             }
         });
+        updateUiAfterPlayerChipAmountChanges();
     }
 
     @Override
-    public void onPlayerSplit(HandContext currentHand, HandContext splitHand) {}
+    public void onPlayerSplit(HandContext currentHand, HandContext splitHand)
+    {
+        gameInfoJPanel.getEngineMessageJTextArea().append(String.format("%s\n\n", UiConstants.GAME_MESSAGE_SPLIT));
+    }
 
     @Override
     public void onReset()
     {
+        clearActivePlayerHandJPanel();
         SwingUtilities.invokeLater(() ->
         {
-            gameCardsJPanel.getActivePlayerHandJPanel().removeAll();
-            gameCardsJPanel.revalidate();
-            gameCardsJPanel.repaint();
-
             gameCardsJPanel.getDealerHandJPanel().removeAll();
             gameCardsJPanel.revalidate();
             gameCardsJPanel.repaint();
@@ -439,5 +456,27 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     private void updateUiForEngineMessage()
     {
         SwingUtilities.invokeLater(() -> gameInfoJPanel.getEngineMessageJTextArea().setCaretPosition(gameInfoJPanel.getEngineMessageJTextArea().getText().length()));
+    }
+
+    private void updateUiForPlayerScore()
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(String.format(
+                "%s %s",
+                UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL,
+                blackjackEngine.getActiveHandContext().getHand().getScore()
+            ));
+        });
+    }
+
+    private void renderCardForPlayer(Card card)
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            gameCardsJPanel.getActivePlayerHandJPanel().add(new CardJLabel(card, true));
+            gameCardsJPanel.getActivePlayerHandJPanel().revalidate();
+            gameCardsJPanel.getActivePlayerHandJPanel().repaint();
+        });
     }
 }

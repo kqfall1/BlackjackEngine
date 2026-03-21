@@ -229,26 +229,15 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == getPlayer().getContexts().size() - 1 : "getActiveHandContextIndex() != getPlayer().getContexts().size() - 1";
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (RULESET.isHandBusted(getActiveHandContext().getHand()))
+		final var PLAYER_HAS_LIVE_HAND_CONTEXT = getPlayer().getContexts().stream()
+			.anyMatch(handContext -> !handContext.hasSurrendered() && !RULESET.isHandBusted(handContext.getHand()));
+		if (PLAYER_HAS_LIVE_HAND_CONTEXT)
 		{
-			getLogger().info(String.format(
-				"Player has busted with a score of %d on hand %s.",
-				getActiveHandContext().getHand().getScore(),
-				getActiveHandContext().getHand()
-			));
-			setState(BlackjackEngineState.SHOWDOWN);
-		}
-		else if (getActiveHandContext().hasSurrendered())
-		{
-			getLogger().info(String.format(
-				"Player has surrendered on hand %s.",
-				getActiveHandContext().getHand()
-			));
-			setState(BlackjackEngineState.SHOWDOWN);
+			setState(BlackjackEngineState.DEALER_TURN);
 		}
 		else
 		{
-			setState(BlackjackEngineState.DEALER_TURN);
+			setState(BlackjackEngineState.SHOWDOWN);
 		}
 		getLogger().exiting(CLASS_NAME, METHOD_NAME);
 	}

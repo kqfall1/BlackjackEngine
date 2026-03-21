@@ -55,11 +55,13 @@ public final class UiConstants
     public static final String GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips: ";
     public static final String GAME_INFO_JPANEL_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
     public static final String GAME_MESSAGE_BET_PLACED = "You have placed a bet of ";
+    public static final String GAME_MESSAGE_BUSTED = "You have busted. Better luck next time!";
     public static final String GAME_MESSAGE_INSURANCE_BET_LOST = "You have lost your insurance bet.";
     public static final String GAME_MESSAGE_INSURANCE_BET_NOTIFICATION = "You are eligible to place an insurance bet. Please enter \"yes\" or \"no\".";
     public static final String GAME_MESSAGE_INSURANCE_BET_WON = "You have won your insurance bet and collect $";
     public static final String GAME_MESSAGE_SHOWDOWN_COLLECTION = "You have collected $";
     public static final String GAME_MESSAGE_SHOWDOWN_WON = "You have won a showdown!";
+    public static final String GAME_MESSAGE_SPLIT = "You have elected to split.";
     public static final Font JBUTTON_LARGE_FONT = new Font("Rockwell", Font.BOLD, 18);
     public static final ImageIcon JFRAME_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final Font JLABEL_LARGE_FONT = new Font("Georgia", Font.PLAIN, 16);
