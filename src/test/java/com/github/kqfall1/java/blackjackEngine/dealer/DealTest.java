@@ -35,8 +35,8 @@ final class DealTest extends EngineTest
 			&& super.engine.getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 		);
 		assertTrue(
-			super.engine.getDealer().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE
-			&& super.engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE
+			super.engine.getDealer().getHand().getScore() <= BlackjackConstants.TOP_SCORE
+			&& super.engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.TOP_SCORE
 		);
 
 		super.engine.advanceAfterDeal();

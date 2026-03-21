@@ -103,7 +103,7 @@ public final class Hand
 		for (int count = 0; count < getAceCount(); count++)
 		{
 			if (score + BlackjackConstants.ACE_VALUE_DIFFERENTIAL
-				<= BlackjackConstants.DEFAULT_TOP_SCORE)
+				<= BlackjackConstants.TOP_SCORE)
 			{
 				score += BlackjackConstants.ACE_VALUE_DIFFERENTIAL;
 			}

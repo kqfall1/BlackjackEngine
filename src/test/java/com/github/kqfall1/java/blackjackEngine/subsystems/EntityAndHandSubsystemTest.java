@@ -112,7 +112,7 @@ public final class EntityAndHandSubsystemTest
 		Assertions.assertTrue(pocketPair.isPocketPair());
 
 		final var bustHand = new Hand();
-		while (bustHand.getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE)
+		while (bustHand.getScore() <= BlackjackConstants.TOP_SCORE)
 		{
 			bustHand.addCards(shoe.draw());
 		}

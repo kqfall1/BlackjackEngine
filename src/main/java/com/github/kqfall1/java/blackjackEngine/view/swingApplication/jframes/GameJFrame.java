@@ -54,52 +54,35 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
         final var DOUBLE_DOWN = UiActions.getInstance().getGameAction(e ->
         {
-            if (blackjackEngine.getRuleset().isDoublingDownPossible(
-                blackjackEngine.getActiveHandContext(),
-                blackjackEngine.getState(),
-                blackjackEngine.getPlayer()))
-            {
-                executorService.submit(blackjackEngine::playerDoubleDown);
-                updateUiAfterPlayerChipAmountChanges();
-            }
+            executorService.submit(blackjackEngine::playerDoubleDown);
+            updateUiAfterPlayerChipAmountChanges();
         }, UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl D"));
-        final var HIT = UiActions.getInstance().getGameAction(e ->
-        {
-            if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN
-                && blackjackEngine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE)
-            {
-                executorService.submit(blackjackEngine::playerHit);
-            }
-        }, UiConstants.GAME_ACTION_HIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl H"));
+        final var HIT = UiActions.getInstance().getGameAction(
+            e -> executorService.submit(blackjackEngine::playerHit),
+            UiConstants.GAME_ACTION_HIT_LABEL,
+            ACTION_MAP,
+            INPUT_MAP,
+            KeyStroke.getKeyStroke("ctrl H")
+        );
         final var SPLIT = UiActions.getInstance().getGameAction(e ->
         {
-            if (blackjackEngine.getRuleset().isSplittingPossible(
-                blackjackEngine.getActiveHandContext(),
-                blackjackEngine.getState(),
-                blackjackEngine.getActiveHandContextIndex(),
-                blackjackEngine.getPlayer()))
-            {
-                executorService.submit(blackjackEngine::playerSplit);
-                updateUiAfterPlayerChipAmountChanges();
-            }
+            executorService.submit(blackjackEngine::playerSplit);
+            updateUiAfterPlayerChipAmountChanges();
         }, UiConstants.GAME_ACTION_SPLIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl P"));
-        final var STAND = UiActions.getInstance().getGameAction(e ->
-        {
-            if (blackjackEngine.getState() == BlackjackEngineState.PLAYER_TURN
-                && blackjackEngine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.DEFAULT_TOP_SCORE)
-            {
-                executorService.submit(blackjackEngine::playerStand);
-            }
-        }, UiConstants.GAME_ACTION_STAND_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl T"));
-        final var SURRENDER = UiActions.getInstance().getGameAction(e ->
-        {
-            if (blackjackEngine.getRuleset().isSurrenderingPossible(
-                blackjackEngine.getActiveHandContext(),
-                blackjackEngine.getState()))
-            {
-                executorService.submit(blackjackEngine::playerSurrender);
-            }
-        }, UiConstants.GAME_ACTION_SURRENDER_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl X"));
+        final var STAND = UiActions.getInstance().getGameAction(
+            e -> executorService.submit(blackjackEngine::playerStand),
+            UiConstants.GAME_ACTION_STAND_LABEL,
+            ACTION_MAP,
+            INPUT_MAP,
+            KeyStroke.getKeyStroke("ctrl T")
+        );
+        final var SURRENDER = UiActions.getInstance().getGameAction(
+            e -> executorService.submit(blackjackEngine::playerSurrender),
+            UiConstants.GAME_ACTION_SURRENDER_LABEL,
+            ACTION_MAP,
+            INPUT_MAP,
+            KeyStroke.getKeyStroke("ctrl X")
+        );
 
         gameActionJPanel = new GameActionJPanel(DOUBLE_DOWN, HIT, SPLIT, STAND, SURRENDER);
         gameCardsJPanel = new GameCardsJPanel();
@@ -257,7 +240,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onDrawingRoundCompletedPlayer(HandContext handContext)
     {
-        final boolean FINAL_HAND_CONTEXT_COMPLETED = handContext.equals(blackjackEngine.getPlayer().getContexts().getLast());
+        final boolean ALL_HAND_CONTEXTS_DRAWN = blackjackEngine.isPlayerActingOnFinalHandContext();
         SwingUtilities.invokeLater(() ->
         {
             for (Component component : AwtUtils.getNestedComponents(gameActionJPanel))
@@ -268,13 +251,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 }
             }
 
-            if (FINAL_HAND_CONTEXT_COMPLETED)
-            {
-                gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
-            }
+            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(ALL_HAND_CONTEXTS_DRAWN);
         });
 
-        if (FINAL_HAND_CONTEXT_COMPLETED)
+        if (ALL_HAND_CONTEXTS_DRAWN)
         {
             blackjackEngine.advanceAfterPlayerTurn();
         }
@@ -290,6 +270,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onGameCompleted()
     {
         SwingUtilities.invokeLater(() -> gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL));
+        updateUiForEngineMessage();
     }
 
     @Override
@@ -407,7 +388,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     blackjackEngine.getState(),
                     blackjackEngine.getPlayer()
                 ));
-                gameActionJPanel.getHitJButton().getAction().setEnabled(true);
+                gameActionJPanel.getHitJButton().getAction().setEnabled(blackjackEngine.getRuleset().isHittingPossible(
+                    blackjackEngine.getActiveHandContext(),
+                    blackjackEngine.getState()
+                ));
                 gameActionJPanel.getSplitJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSplittingPossible(
                     blackjackEngine.getActiveHandContext(),
                     blackjackEngine.getState(),
@@ -454,9 +438,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
     private void updateUiForEngineMessage()
     {
-        SwingUtilities.invokeLater(() ->
-        {
-            gameInfoJPanel.getEngineMessageJTextArea().setCaretPosition(gameInfoJPanel.getEngineMessageJTextArea().getText().length());
-        });
+        SwingUtilities.invokeLater(() -> gameInfoJPanel.getEngineMessageJTextArea().setCaretPosition(gameInfoJPanel.getEngineMessageJTextArea().getText().length()));
     }
 }

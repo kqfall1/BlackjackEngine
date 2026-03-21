@@ -49,18 +49,23 @@ public interface BlackjackRuleset
 
 	default boolean isHandBlackjack(Hand hand)
 	{
-		return hand.getScore() == BlackjackConstants.DEFAULT_TOP_SCORE
+		return hand.getScore() == BlackjackConstants.TOP_SCORE
 			&& hand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT;
 	}
 
 	default boolean isHandBusted(Hand hand)
 	{
-		return hand.getScore() > BlackjackConstants.DEFAULT_TOP_SCORE;
+		return hand.getScore() > BlackjackConstants.TOP_SCORE;
 	}
 
 	boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer);
 	boolean isDoublingDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 								   Player player);
+	default boolean isHittingPossible(HandContext activeHandContext, BlackjackEngineState currentState)
+	{
+		return activeHandContext.getHand().getScore() <= BlackjackConstants.TOP_SCORE
+			&& currentState == BlackjackEngineState.PLAYER_TURN;
+	}
 	boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 									  Player player, Hand dealerHand);
 	boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState,

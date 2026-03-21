@@ -37,12 +37,12 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 		if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT)
 		{
 			assertEquals(
-				BlackjackConstants.DEFAULT_TOP_SCORE,
+				BlackjackConstants.TOP_SCORE,
 				super.engine.getDealer().getHand().getScore()
 			);
 			assertTrue(
 				super.engine.getActiveHandContext().getHand().getScore()
-					< BlackjackConstants.DEFAULT_TOP_SCORE
+					< BlackjackConstants.TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
@@ -56,12 +56,12 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 			< SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT + SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT)
 		{
 			assertEquals(
-				BlackjackConstants.DEFAULT_TOP_SCORE,
+				BlackjackConstants.TOP_SCORE,
 				super.engine.getActiveHandContext().getHand().getScore()
 			);
 			assertTrue(
 				super.engine.getDealer().getHand().getScore()
-					< BlackjackConstants.DEFAULT_TOP_SCORE
+					< BlackjackConstants.TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
@@ -81,7 +81,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				super.engine.getActiveHandContext().getHand().getScore()
 					== super.engine.getDealer().getHand().getScore()
 				&& super.engine.getDealer().getHand().getScore()
-					== BlackjackConstants.DEFAULT_TOP_SCORE
+					== BlackjackConstants.TOP_SCORE
 			);
 			assertTrue(
 				nearlyEquals(
