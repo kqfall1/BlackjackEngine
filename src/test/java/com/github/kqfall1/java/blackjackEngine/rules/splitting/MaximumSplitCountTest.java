@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.IllegalHandOperationException;
-
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -35,21 +34,27 @@ final class MaximumSplitCountTest extends CustomDeckTest
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			try
+			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
 			{
-				for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
-				{
-					super.initSplitHands();
-					super.engine.playerStand();
-				}
 
+				super.initSplitHands();
 				super.engine.playerStand();
-				super.advanceToEndOfRound();
 			}
-			catch (IllegalHandOperationException e)
-			{
-				System.out.println(e.getMessage());
-			}
+
+			super.engine.playerStand();
 		}
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.dealerTurn();
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		{
+			super.engine.showdown();
+		}
+
+		super.advanceToEndOfRound();
 	}
 }

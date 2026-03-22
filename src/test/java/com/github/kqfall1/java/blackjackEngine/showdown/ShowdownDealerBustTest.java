@@ -29,7 +29,6 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		BigDecimal potAmount;
 
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
-		super.engine.dealerTurn();
 		chipAmountAfterBetting = super.engine.getPlayer().getChips();
 		potAmount = super.engine.getActiveHandContext().getPot().getAmount();
 		Assertions.assertTrue(
@@ -37,6 +36,7 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		);
 		super.engine.advanceAfterDealerTurn();
 		super.engine.showdown();
+		super.advanceToEndOfRound();
 
 		Assertions.assertTrue(
 			nearlyEquals(
@@ -47,7 +47,5 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
-
-		super.advanceToEndOfRound();
 	}
 }

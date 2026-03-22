@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +34,7 @@ final class ShowdownPlayerBustTest extends CustomDeckTest
 			super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand())
 		);
 		super.engine.showdown();
-		super.engine.advanceAfterShowdown();
+		super.advanceToEndOfRound();
 
 		Assertions.assertTrue(
 			nearlyEquals(
@@ -44,7 +43,5 @@ final class ShowdownPlayerBustTest extends CustomDeckTest
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
-
-		super.engine.advanceAfterReset();
 	}
 }

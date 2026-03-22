@@ -47,6 +47,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 		}
 
 		super.engine.showdown();
+		super.advanceToEndOfRound();
 
 		Assertions.assertTrue(
 			nearlyEquals(
@@ -57,7 +58,5 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
-
-		super.advanceToEndOfRound();
 	}
 }

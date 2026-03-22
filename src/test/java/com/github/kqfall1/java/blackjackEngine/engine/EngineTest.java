@@ -13,11 +13,9 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineL
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import java.math.BigDecimal;
 import java.util.logging.Level;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -59,7 +57,6 @@ public abstract class EngineTest
 
 		if (engine.getState() == BlackjackEngineState.SHOWDOWN)
 		{
-			engine.showdown();
 			engine.advanceAfterShowdown();
 		}
 

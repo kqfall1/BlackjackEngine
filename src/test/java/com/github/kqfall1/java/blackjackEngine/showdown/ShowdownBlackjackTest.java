@@ -2,11 +2,11 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ShowdownBlackjackTest extends CustomDeckTest
 {
@@ -31,6 +31,11 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 		super.advanceToDealerTurn(INITIAL_CHIP_AMOUNT);
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.advanceAfterPlayerTurn();
+		}
 
 		super.engine.showdown();
 

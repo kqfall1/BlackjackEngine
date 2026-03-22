@@ -41,15 +41,24 @@ final class SplitAndHitTest extends CustomDeckTest
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			for (int count = 0
-			 	; count < super.ruleset.getConfig().getMaximumSplitCount()
-				; count++)
+			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
 			{
 				super.initSplitHands();
 				hit();
 			}
 
 			hit();
+		}
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.dealerTurn();
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		{
+			super.engine.showdown();
 		}
 
 		super.advanceToEndOfRound();

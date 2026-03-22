@@ -32,16 +32,26 @@ final class DoublingDownOnSplitHandsAllowedTest extends CustomDeckTest
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			for (int count = 0;
-				 count < super.ruleset.getConfig().getMaximumSplitCount();
-			 	 count++)
+			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
 			{
 				super.initSplitHands();
 				super.engine.playerDoubleDown();
 			}
 
-			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRound();
+			super.engine.playerDoubleDown();
 		}
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.dealerTurn();
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		{
+			super.engine.showdown();
+		}
+
+		super.advanceToEndOfRound();
 	}
 }

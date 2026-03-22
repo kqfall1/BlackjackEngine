@@ -31,7 +31,6 @@ final class ShowdownNormalTest extends CustomDeckTest
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
 
-		super.engine.dealerTurn();
 		super.engine.advanceAfterDealerTurn();
 		super.engine.showdown();
 

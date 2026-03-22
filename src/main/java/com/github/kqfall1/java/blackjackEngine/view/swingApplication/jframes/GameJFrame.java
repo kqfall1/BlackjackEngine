@@ -390,6 +390,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
             ((CardJLabel) gameCardsJPanel.getDealerHandJPanel().getComponents()[BlackjackConstants.INITIAL_CARD_COUNT - 1]).setFaceUp(true);
         });
+        //implement card-rendering logic
     }
 
     @Override

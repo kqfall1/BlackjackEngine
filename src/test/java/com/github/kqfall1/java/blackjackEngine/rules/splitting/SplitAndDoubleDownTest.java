@@ -41,6 +41,17 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 			super.engine.playerDoubleDown();
 		}
 
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.dealerTurn();
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		{
+			super.engine.showdown();
+		}
+
 		super.advanceToEndOfRound();
 	}
 }

@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -26,29 +27,39 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-//		Assertions.assertFalse(super.engine.getConfig().isDoublingDownOnSplitHandsAllowed());
+		Assertions.assertFalse(super.engine.getRuleset().getConfig().isDoublingDownOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			try
 			{
-				for (int count = 0;
-		 			count < super.ruleset.getConfig().getMaximumSplitCount();
-		 			count++)
+				for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
 				{
 					super.initSplitHands();
 					super.engine.playerDoubleDown();
 				}
+
+				super.engine.playerDoubleDown();
 			}
 			catch (RuleViolationException e)
 			{
 				System.out.println(e.getMessage());
 				super.engine.playerStand();
 			}
-
-			super.engine.advanceAfterPlayerTurn();
-			super.advanceToEndOfRound();
 		}
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.dealerTurn();
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		{
+			super.engine.showdown();
+		}
+
+		super.advanceToEndOfRound();
 	}
 }
