@@ -46,6 +46,7 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 			{
 				System.out.println(e.getMessage());
 				super.engine.playerStand();
+				super.engine.playerStand();
 			}
 		}
 
