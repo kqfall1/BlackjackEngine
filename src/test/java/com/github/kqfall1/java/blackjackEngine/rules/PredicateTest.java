@@ -32,26 +32,26 @@ final class PredicateTest extends CustomDeckTest
 			super.engine.advanceAfterDeal();
 
 			Assertions.assertFalse(
-				super.ruleset.isInsuranceBetPossible(
+				super.engine.getRuleset().isInsuranceBetPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState(),
 					super.engine.getPlayer(),
 					super.engine.getDealer().getHand()
 				)
-				&& super.ruleset.isSplittingPossible(
+				&& super.engine.getRuleset().isSplittingPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState(),
 					super.engine.getActiveHandContextIndex(),
 					super.engine.getPlayer()
 				)
-				&& super.ruleset.isSurrenderingPossible(
+				&& super.engine.getRuleset().isSurrenderingPossible(
 					super.engine.getActiveHandContext(),
 					super.engine.getState()
 				)
 			);
 
 			Assertions.assertFalse(
-				super.ruleset.isDealerTurnActive(
+				super.engine.getRuleset().isDealerTurnActive(
 					super.engine.getState(),
 					super.engine.getDealer()
 				)
@@ -77,7 +77,7 @@ final class PredicateTest extends CustomDeckTest
 			}
 
 			verifyStandardAssumptions();
-			super.advanceToEndOfRound();
+			super.advanceToEndOfRoundAfterShowdown();
 		}
 	}
 
@@ -86,7 +86,7 @@ final class PredicateTest extends CustomDeckTest
 		verifyPlayerActionsAreIllegal();
 
 		Assertions.assertFalse(
-			super.ruleset.isDealerTurnActive(
+			super.engine.getRuleset().isDealerTurnActive(
 				super.engine.getState(),
 				super.engine.getDealer()
 			)
@@ -96,24 +96,24 @@ final class PredicateTest extends CustomDeckTest
 	private void verifyPlayerActionsAreIllegal()
 	{
 		Assertions.assertFalse(
-			super.ruleset.isInsuranceBetPossible(
+			super.engine.getRuleset().isInsuranceBetPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getPlayer(),
 				super.engine.getDealer().getHand()
 			)
-			&& super.ruleset.isDoublingDownPossible(
+			&& super.engine.getRuleset().isDoublingDownPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getPlayer()
 			)
-			&& super.ruleset.isSplittingPossible(
+			&& super.engine.getRuleset().isSplittingPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState(),
 				super.engine.getActiveHandContextIndex(),
 				super.engine.getPlayer()
 			)
-			&& super.ruleset.isSurrenderingPossible(
+			&& super.engine.getRuleset().isSurrenderingPossible(
 				super.engine.getActiveHandContext(),
 				super.engine.getState()
 			)

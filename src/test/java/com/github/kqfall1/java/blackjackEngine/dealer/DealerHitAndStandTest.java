@@ -48,6 +48,8 @@ final class DealerHitAndStandTest extends CustomDeckTest
 			);
 		}
 
-		super.advanceToEndOfRound();
+		super.engine.advanceAfterDealerTurn();
+		super.engine.showdown();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

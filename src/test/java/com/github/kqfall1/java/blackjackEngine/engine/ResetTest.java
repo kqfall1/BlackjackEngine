@@ -30,6 +30,7 @@ final class ResetTest extends EngineTest
 			super.engine.advanceAfterDealerTurn();
 		}
 
+		super.engine.showdown();
 		super.engine.advanceAfterShowdown();
 		super.engine.reset();
 

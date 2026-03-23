@@ -38,6 +38,7 @@ final class HitAndBustTest extends EngineTest
 			}
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

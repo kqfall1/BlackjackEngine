@@ -3,7 +3,6 @@ package com.github.kqfall1.java.blackjackEngine.playerAction;
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
-
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,6 +53,7 @@ public final class PlaceBetTest extends EngineTest
 			);
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

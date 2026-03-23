@@ -36,7 +36,7 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		);
 		super.engine.advanceAfterDealerTurn();
 		super.engine.showdown();
-		super.advanceToEndOfRound();
+		super.advanceToEndOfRoundAfterShowdown();
 
 		Assertions.assertTrue(
 			nearlyEquals(

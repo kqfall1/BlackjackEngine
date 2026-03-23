@@ -3,14 +3,14 @@ package com.github.kqfall1.java.blackjackEngine.insurance;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-final class InsuranceBetAcceptTest extends CustomDeckTest
+final class
+InsuranceBetAcceptTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetAcceptTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetAcceptTest.log";
@@ -76,6 +76,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 			super.engine.playerStand();
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

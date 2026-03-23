@@ -47,7 +47,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 		}
 
 		super.engine.showdown();
-		super.advanceToEndOfRound();
+		super.advanceToEndOfRoundAfterShowdown();
 
 		Assertions.assertTrue(
 			nearlyEquals(

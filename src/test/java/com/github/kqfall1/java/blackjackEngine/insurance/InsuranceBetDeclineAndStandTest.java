@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -23,6 +24,13 @@ final class InsuranceBetDeclineAndStandTest extends CustomDeckTest
 	public void main()
 	{
 		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
-		super.advanceToEndOfRound();
+
+		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			super.engine.advanceAfterDealerTurn();
+		}
+
+		super.engine.showdown();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

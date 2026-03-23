@@ -31,6 +31,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 			super.engine.playerSurrender();
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -88,6 +88,6 @@ final class ShowdownNormalTest extends CustomDeckTest
 			);
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

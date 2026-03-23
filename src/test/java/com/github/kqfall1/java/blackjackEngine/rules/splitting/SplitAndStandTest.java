@@ -39,17 +39,13 @@ final class SplitAndStandTest extends CustomDeckTest
 			super.engine.playerStand();
 		}
 
-		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
-		{
-			super.engine.dealerTurn();
-			super.engine.advanceAfterDealerTurn();
-		}
+		super.advanceToShowdownAfterPlayerTurn();
 
-		for (int count = 0; count < super.engine.getPlayer().getContexts().size(); count++)
+		for (int count = 0; count < super.engine.getPlayer().getContexts().size() - 1; count++)
 		{
 			super.engine.showdown();
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

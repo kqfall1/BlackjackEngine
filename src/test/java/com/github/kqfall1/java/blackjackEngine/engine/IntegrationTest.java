@@ -34,7 +34,8 @@ final class IntegrationTest extends EngineTest
 				}
 			}
 
-			super.advanceToEndOfRound();
+			super.advanceToShowdownAfterPlayerTurn();
+			super.advanceToEndOfRoundAfterShowdown();
 		}
 	}
 }

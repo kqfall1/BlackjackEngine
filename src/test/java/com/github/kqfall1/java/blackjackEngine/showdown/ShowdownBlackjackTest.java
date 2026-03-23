@@ -97,6 +97,6 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 			);
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

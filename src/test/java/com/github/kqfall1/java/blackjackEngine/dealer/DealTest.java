@@ -47,6 +47,7 @@ final class DealTest extends EngineTest
 			super.engine.playerStand();
 		}
 
-		super.advanceToEndOfRound();
+		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -47,14 +47,8 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
-	public final void advanceToEndOfRound()
+	public final void advanceToEndOfRoundAfterShowdown()
 	{
-		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
-		{
-			engine.dealerTurn();
-			engine.advanceAfterDealerTurn();
-		}
-
 		if (engine.getState() == BlackjackEngineState.SHOWDOWN)
 		{
 			engine.advanceAfterShowdown();
@@ -71,6 +65,17 @@ public abstract class EngineTest
 		engine.advanceAfterDeal();
 		declinePossibleInsuranceBet();
 		return BET_AMOUNT;
+	}
+
+	public final void advanceToShowdownAfterPlayerTurn()
+	{
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			engine.dealerTurn();
+			engine.advanceAfterDealerTurn();
+		}
+
+		engine.showdown();
 	}
 
 	public final void declinePossibleInsuranceBet()
