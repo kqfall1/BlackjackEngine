@@ -3,7 +3,6 @@ package com.github.kqfall1.java.blackjackEngine.rules.splitting;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -18,9 +17,7 @@ final class MaximumSplitCountTest extends CustomDeckTest
 	public void init() {
 		super.initCardsForSplittingWithoutHitting(Rank.ACE);
 		super.initDependencies();
-		super.ruleset.getConfig().setMaximumSplitCount(
-			ThreadLocalRandom.current().nextInt(MAXIMUM_SPLIT_COUNT + 1)
-		);
+		super.ruleset.getConfig().setMaximumSplitCount(ThreadLocalRandom.current().nextInt(MAXIMUM_SPLIT_COUNT + 1));
 		super.ruleset.getConfig().setSplittingAcesAllowed(true);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 		super.engine.getDealer().setCardSource(testDeck);
@@ -45,12 +42,6 @@ final class MaximumSplitCountTest extends CustomDeckTest
 		}
 
 		super.advanceToShowdownAfterPlayerTurn();
-
-		for (int count = 0; count < super.engine.getPlayer().getContexts().size() - 1; count++)
-		{
-			super.engine.showdown();
-		}
-
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

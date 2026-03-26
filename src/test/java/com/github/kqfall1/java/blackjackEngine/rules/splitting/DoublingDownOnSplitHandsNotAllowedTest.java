@@ -51,12 +51,6 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 		}
 
 		super.advanceToShowdownAfterPlayerTurn();
-
-		for (int count = 0; count < super.engine.getPlayer().getContexts().size() - 1; count++)
-		{
-			super.engine.showdown();
-		}
-
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

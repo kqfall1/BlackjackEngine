@@ -67,12 +67,12 @@ public class BlackjackEngine
 		assert ruleset != null : "ruleset == null";
 		this.ruleset = ruleset;
 		dealer = new Dealer(
-			ruleset.getIncludedRanks(),
-			ruleset.getConfig().getShoeDeckCount(),
-			ruleset.getConfig().getShoePenetration()
+			getRuleset().getIncludedRanks(),
+			getRuleset().getConfig().getShoeDeckCount(),
+			getRuleset().getConfig().getShoePenetration()
 		);
 		this.listener = listener;
-		if (ruleset.getConfig().isLoggingEnabled())
+		if (getRuleset().getConfig().isLoggingEnabled())
 		{
 			try
 			{
@@ -142,10 +142,10 @@ public class BlackjackEngine
 		var playerWinnings = BigDecimal.ZERO;
 		getPlayer().setChips(getPlayer().getChips().subtract(AMOUNT));
 		final var INSURANCE_POT = new Pot(AMOUNT);
-		final var INSURANCE_RATIO = ruleset
+		final var INSURANCE_RATIO = getRuleset()
 			.getPayoutRatios()
 			.get(BlackjackConstants.INSURANCE_RATIO_KEY);
-		if (ruleset.isHandBlackjack(getDealer().getHand()))
+		if (getRuleset().isHandBlackjack(getDealer().getHand()))
 		{
 			playerWinnings = INSURANCE_POT.scoop().multiply(INSURANCE_RATIO.getPayoutMultiplier());
 			getPlayer().setChips(getPlayer().getChips().add(playerWinnings));
@@ -160,15 +160,15 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.DEALING : "getState() != BlackjackEngineState.DEALING";
-		if (ruleset.isInsuranceBetPossible(
+		if (getRuleset().isInsuranceBetPossible(
 			getActiveHandContext(), getState(), getPlayer(), getDealer().getHand()))
 		{
 			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getFirst());
 			setState(BlackjackEngineState.INSURANCE_CHECK);
 		}
-		else if (ruleset.isHandBlackjack(getActiveHandContext().getHand())
-			|| (ruleset.isHandBlackjack(getDealer().getHand())
-				&& ruleset.shouldDealerPeekForBlackjack()))
+		else if (getRuleset().isHandBlackjack(getActiveHandContext().getHand())
+			|| (getRuleset().isHandBlackjack(getDealer().getHand())
+				&& getRuleset().shouldDealerPeekForBlackjack()))
 		{
 			setState(BlackjackEngineState.SHOWDOWN);
 		}
@@ -212,7 +212,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.INSURANCE_CHECK : "getState() != BlackjackEngineState.INSURANCE_CHECK";
-		if (ruleset.isHandBlackjack(getDealer().getHand()))
+		if (getRuleset().isHandBlackjack(getDealer().getHand()))
 		{
 
 			getListener().onInsuranceBetResolved(true, winnings);
@@ -233,7 +233,7 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == getPlayer().getContexts().size() - 1 : "getActiveHandContextIndex() != getPlayer().getContexts().size() - 1";
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
 		final var PLAYER_HAS_LIVE_HAND_CONTEXT = getPlayer().getContexts().stream()
-			.anyMatch(handContext -> !handContext.hasSurrendered() && !ruleset.isHandBusted(handContext.getHand()));
+			.anyMatch(handContext -> !handContext.hasSurrendered() && !getRuleset().isHandBusted(handContext.getHand()));
 		if (PLAYER_HAS_LIVE_HAND_CONTEXT)
 		{
 			setState(BlackjackEngineState.DEALER_TURN);
@@ -250,7 +250,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "advanceAfterReset";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.RESETTING : "getState() != BlackjackEngineState.RESETTING";
-		if (getPlayer().getChips().compareTo(ruleset.getConfig().getMinimumBetAmount()) >= 0)
+		if (getPlayer().getChips().compareTo(getRuleset().getConfig().getMinimumBetAmount()) >= 0)
 		{
 			setState(BlackjackEngineState.BETTING);
 		}
@@ -346,7 +346,7 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == getPlayer().getContexts().size() - 1 : "getActiveHandContextIndex() != getPlayer().getContexts().size() - 1";
 		assert getState() == BlackjackEngineState.DEALER_TURN : "getState() != BlackjackEngineState.DEALER_TURN";
 		onDrawingRoundStartedDealer();
-		while (ruleset.isDealerTurnActive(getState(), getDealer()))
+		while (getRuleset().isDealerTurnActive(getState(), getDealer()))
 		{
 			dealCardForDealer();
 		}
@@ -361,8 +361,8 @@ public class BlackjackEngine
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.INSURANCE_CHECK
 			: "getState() != BlackjackEngineState.INSURANCE_CHECK";
-		if (ruleset.isHandBlackjack(getDealer().getHand())
-			|| ruleset.isHandBlackjack(getActiveHandContext().getHand()))
+		if (getRuleset().isHandBlackjack(getDealer().getHand())
+			|| getRuleset().isHandBlackjack(getActiveHandContext().getHand()))
 		{
 			setState(BlackjackEngineState.SHOWDOWN);
 		}
@@ -379,7 +379,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
 		dealCardForPlayer();
-		if (ruleset.isHandBusted(getActiveHandContext().getHand()))
+		if (getRuleset().isHandBusted(getActiveHandContext().getHand()))
 		{
 			onDrawingRoundCompletedPlayer();
 		}
@@ -463,7 +463,7 @@ public class BlackjackEngine
 		assert getState() == BlackjackEngineState.DEALING || getState() == BlackjackEngineState.DEALER_TURN
 			: "getState() != BlackjackEngineState.DEALING && getState() != BlackjackEngineState.DEALER_TURN";
 		final var isFaceUpCard = getDealer().getHand().getCards().size() != BlackjackConstants.INITIAL_CARD_COUNT
-			|| !ruleset.isDealerSecondCardFaceDown();
+			|| !getRuleset().isDealerSecondCardFaceDown();
 			getListener().onCardDealtToDealer(card, getDealer().getHand(), isFaceUpCard);
 			getLogger().info(String.format(
 				"Added card %s to dealer's hand %s.",
@@ -552,11 +552,11 @@ public class BlackjackEngine
 				amount
 			), METHOD_NAME);
 		}
-		else if (ruleset.getConfig().getMinimumBetAmount().compareTo(amount) > 0)
+		else if (getRuleset().getConfig().getMinimumBetAmount().compareTo(amount) > 0)
 		{
 			throw new RuleViolationException(String.format(
 				"Cannot place a bet lower than $%.2f.",
-				ruleset.getConfig().getMinimumBetAmount()
+				getRuleset().getConfig().getMinimumBetAmount()
 			));
 		}
 		getListener().onBettingRoundStarted();
@@ -578,7 +578,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
 		final var context = getActiveHandContext();
-		if (!ruleset.isDoublingDownPossible(getActiveHandContext(), getState(), getPlayer()))
+		if (!getRuleset().isDoublingDownPossible(getActiveHandContext(), getState(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered())
 			{
@@ -609,7 +609,7 @@ public class BlackjackEngine
 			context.getHand()
 		));
 		if (getState() == BlackjackEngineState.PLAYER_TURN
-			&& !ruleset.isHandBusted(context.getHand()))
+			&& !getRuleset().isHandBusted(context.getHand()))
 		{
 			onDrawingRoundCompletedPlayer();
 		}
@@ -623,7 +623,7 @@ public class BlackjackEngine
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
 		drawCardForPlayerAction();
 		if (getState() == BlackjackEngineState.PLAYER_TURN
-			&& !ruleset.isHandBusted(getActiveHandContext().getHand()))
+			&& !getRuleset().isHandBusted(getActiveHandContext().getHand()))
 		{
 			setState(BlackjackEngineState.PLAYER_TURN);
 		}
@@ -635,7 +635,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "playerSplit";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (!ruleset.isSplittingPossible(getActiveHandContext(), getState(),
+		if (!getRuleset().isSplittingPossible(getActiveHandContext(), getState(),
 			getActiveHandContextIndex(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered()
@@ -646,13 +646,13 @@ public class BlackjackEngine
 					"An attempt to split a non-pocket pair occurred."
 				), METHOD_NAME);
 			}
-			else if (getActiveHandContextIndex() >= ruleset.getConfig().getMaximumSplitCount() + 1)
+			else if (getActiveHandContextIndex() >= getRuleset().getConfig().getMaximumSplitCount() + 1)
 			{
 				throwException(new IllegalHandOperationException(
 					getActiveHandContext(),
 					String.format(
 						"Player cannot have more than %d hands.",
-						ruleset.getConfig().getMaximumSplitCount() + 1
+						getRuleset().getConfig().getMaximumSplitCount() + 1
 					)
 				), METHOD_NAME);
 			}
@@ -705,7 +705,7 @@ public class BlackjackEngine
 		final var METHOD_NAME = "playerSurrender";
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (!ruleset.isSurrenderingPossible(getActiveHandContext(), getState()))
+		if (!getRuleset().isSurrenderingPossible(getActiveHandContext(), getState()))
 		{
 			if (getActiveHandContext().isAltered())
 			{
@@ -739,9 +739,9 @@ public class BlackjackEngine
 		{
 			getDealer().setCardSource(
 				new Shoe(
-					ruleset.getIncludedRanks(),
+					getRuleset().getIncludedRanks(),
 					BlackjackConstants.DEFAULT_SHOE_DECK_COUNT,
-					ruleset.getConfig().getShoePenetration()
+					getRuleset().getConfig().getShoePenetration()
 				)
 			);
 		}
@@ -784,10 +784,10 @@ public class BlackjackEngine
 		assert showdownHandContextIterator == null || showdownHandContextIterator.hasNext() : "showdownHandContextIterator != null && !showdownHandContextIterator.hasNext()";
 		if (showdownHandContextIterator == null)
 		{
-			showdownHandContextIterator = Arrays.stream(ruleset.getHandContextsInShowdownOrder(getPlayer())).iterator();
+			showdownHandContextIterator = Arrays.stream(getRuleset().getHandContextsInShowdownOrder(getPlayer())).iterator();
 		}
 		final var HAND_CONTEXT = showdownHandContextIterator.next();
-		final var PAYOUT_RATIOS = ruleset.getPayoutRatios();
+		final var PAYOUT_RATIOS = getRuleset().getPayoutRatios();
 		var playerBeatDealer = false;
 		var playerWinnings = BigDecimal.ZERO;
 		getListener().onShowdownStarted(getDealer().getHand(), HAND_CONTEXT);
@@ -797,11 +797,11 @@ public class BlackjackEngine
 				PAYOUT_RATIOS.get(BlackjackConstants.SURRENDER_RATIO_KEY).getPayoutMultiplier()
 			).setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
 		}
-		else if (ruleset.isHandBusted(HAND_CONTEXT.getHand()))
+		else if (getRuleset().isHandBusted(HAND_CONTEXT.getHand()))
 		{
 			HAND_CONTEXT.getPot().scoop();
 		}
-		else if (ruleset.isHandBusted(getDealer().getHand()))
+		else if (getRuleset().isHandBusted(getDealer().getHand()))
 		{
 			playerBeatDealer = true;
 			playerWinnings = HAND_CONTEXT.getPot().scoop().setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
@@ -818,7 +818,7 @@ public class BlackjackEngine
 			{
 				playerBeatDealer = true;
 
-				if (ruleset.isHandBlackjack(HAND_CONTEXT.getHand()))
+				if (getRuleset().isHandBlackjack(HAND_CONTEXT.getHand()))
 				{
 					playerWinnings = HAND_CONTEXT.getPot().scoop().multiply(
 						PAYOUT_RATIOS.get(BlackjackConstants.BLACKJACK_RATIO_KEY).getPayoutMultiplier()
@@ -833,7 +833,11 @@ public class BlackjackEngine
 		getPlayer().setChips(getPlayer().getChips().add(playerWinnings));
 		getLogger().info(String.format("Player's hand %s was showed down against dealer's hand %s.", HAND_CONTEXT, getDealer().getHand()));
 		getListener().onShowdownCompleted(getDealer().getHand(), HAND_CONTEXT, playerBeatDealer, playerWinnings);
-		if (!showdownHandContextIterator.hasNext())
+		if (showdownHandContextIterator.hasNext())
+		{
+			setState(BlackjackEngineState.SHOWDOWN);
+		}
+		else
 		{
 			getListener().onBettingRoundCompleted();
 		}
@@ -866,7 +870,7 @@ public class BlackjackEngine
 			getDealer(),
 			getLogger(),
 			getPlayer(),
-				ruleset,
+			getRuleset(),
 			getState()
 		);
 	}
