@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Refactored the test suite - must refactor controllers now.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Refactored BlackjackEngine.java to set the state to BlackjackEngineState.SHOWDOWN within BlackjackEngine.showdown.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/dealer/DealerHitAndBustTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/dealer/DealerHitAndBustTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsAllowedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsAllowedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsNotAllowedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsNotAllowedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/MaximumSplitCountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/MaximumSplitCountTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndDoubleDownTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndDoubleDownTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndHitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndHitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndStandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndStandTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndSurrenderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownPlayerBustTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownPlayerBustTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,14 +187,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Split hand traversal refactor completed.">
-      <option name="closed" value="true" />
-      <created>1768102933348</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1768102933348</updated>
     </task>
     <task id="LOCAL-00021" summary="Split hand traversal refactor completed.">
       <option name="closed" value="true" />
@@ -588,11 +572,18 @@
       <option name="project" value="LOCAL" />
       <updated>1774244184748</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Refactored BlackjackEngine.java to set the state to BlackjackEngineState.SHOWDOWN within BlackjackEngine.showdown.">
+      <option name="closed" value="true" />
+      <created>1774489764328</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1774489764328</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Stabilized BlackjackEngine.java, ConsoleBlackjackController.java, and the test suite. All tests are passing." />
     <MESSAGE value="Patched a bug with a PayoutRatio.java constant for blackjack-payout calculations." />
     <MESSAGE value="Have began the UI layout for GameJFrame.java." />
     <MESSAGE value="Created a rough GameLeftJPanel.java." />
@@ -617,7 +608,8 @@
     <MESSAGE value="Refactored BlackjackEngine.showdown to support splits elegantly and stabilized the test suite." />
     <MESSAGE value="Stabilized the test suite -- must refine the suite and stabilize the controllers next." />
     <MESSAGE value="Refactored the test suite - must refactor controllers now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored the test suite - must refactor controllers now." />
+    <MESSAGE value="Refactored BlackjackEngine.java to set the state to BlackjackEngineState.SHOWDOWN within BlackjackEngine.showdown." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored BlackjackEngine.java to set the state to BlackjackEngineState.SHOWDOWN within BlackjackEngine.showdown." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

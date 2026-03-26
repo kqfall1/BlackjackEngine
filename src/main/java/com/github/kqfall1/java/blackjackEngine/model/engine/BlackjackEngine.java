@@ -638,8 +638,7 @@ public class BlackjackEngine
 		if (!getRuleset().isSplittingPossible(getActiveHandContext(), getState(),
 			getActiveHandContextIndex(), getPlayer()))
 		{
-			if (getActiveHandContext().isAltered()
-				|| !getActiveHandContext().getHand().isPocketPair())
+			if (getActiveHandContext().isAltered() || !getActiveHandContext().getHand().isPocketPair())
 			{
 				throwException(new IllegalHandOperationException(
 					getActiveHandContext(),
