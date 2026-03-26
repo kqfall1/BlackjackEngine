@@ -244,7 +244,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onCardDealtToPlayer(Card card, HandContext handContext)
     {
         renderCardForPlayer(card);
-        updateUiForPlayerScore();
+        updateUiForPlayerScore(handContext);
     }
 
     @Override
@@ -286,7 +286,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             renderCardForPlayer(card);
         }
 
-        updateUiForPlayerScore();
+        updateUiForPlayerScore(handContext);
     }
 
     @Override
@@ -348,7 +348,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         renderCardForPlayer(currentHand.getHand().getCards().getLast());
         updateUiForEngineMessage();
         updateUiForPlayerChipAmount();
-        updateUiForPlayerScore();
+        updateUiForPlayerScore(currentHand);
     }
 
     @Override
@@ -371,7 +371,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         clearActivePlayerHandJPanel();
         handContext.getHand().getCards().forEach(this::renderCardForPlayer);
-        updateUiForPlayerScore();
+        updateUiForPlayerScore(handContext);
 
         if (playerWon)
         {
@@ -496,14 +496,14 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         updateUiForEngineMessage();
     }
 
-    private void updateUiForPlayerScore()
+    private void updateUiForPlayerScore(HandContext handContext)
     {
         SwingUtilities.invokeLater(() ->
         {
             gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(String.format(
                 "%s %s",
                 UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL,
-                blackjackEngine.getActiveHandContext().getHand().getScore()
+                handContext.getHand().getScore()
             ));
         });
     }
