@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Altered GameJFrame.java to support split hands - minor bugs remain.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Fixed a minor GUI bug involving displayed hand scores and split hand showdowns.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackRulesetConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackRulesetConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackRuleset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackRuleset.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/subsystems/EntityAndHandSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/subsystems/EntityAndHandSubsystemTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,14 +190,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Re-organized the test suite. Also fixed bugs in DoublingDownOnSplitHandsNotAllowed.java.">
-      <option name="closed" value="true" />
-      <created>1768706010360</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1768706010360</updated>
     </task>
     <task id="LOCAL-00023" summary="Updated StandardBlackjackRuleset.java to account for splitting aces and altered the necessary tests. Made minor tweaks to model classes.">
       <option name="closed" value="true" />
@@ -580,11 +575,18 @@
       <option name="project" value="LOCAL" />
       <updated>1774494834918</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Fixed a minor GUI bug involving displayed hand scores and split hand showdowns.">
+      <option name="closed" value="true" />
+      <created>1774564092286</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1774564092286</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Have began the UI layout for GameJFrame.java." />
     <MESSAGE value="Created a rough GameLeftJPanel.java." />
     <MESSAGE value="Completed a rough GameLeftJPanel.java." />
     <MESSAGE value="Added GameRightJPanel.java." />
@@ -609,7 +611,8 @@
     <MESSAGE value="Refactored the test suite - must refactor controllers now." />
     <MESSAGE value="Refactored BlackjackEngine.java to set the state to BlackjackEngineState.SHOWDOWN within BlackjackEngine.showdown." />
     <MESSAGE value="Altered GameJFrame.java to support split hands - minor bugs remain." />
-    <option name="LAST_COMMIT_MESSAGE" value="Altered GameJFrame.java to support split hands - minor bugs remain." />
+    <MESSAGE value="Fixed a minor GUI bug involving displayed hand scores and split hand showdowns." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed a minor GUI bug involving displayed hand scores and split hand showdowns." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

@@ -17,6 +17,7 @@ public final class BlackjackRulesetConfiguration
 	private int maximumSplitCount;
 	private BigDecimal minimumBetAmount;
 	private BigDecimal playerInitialChips;
+	private boolean shouldBlackjackAfterSplitPayoutAsBlackjack;
 	private int shoeDeckCount;
 	private double shoePenetration;
 	private boolean shouldDealerHitOnSoft17;
@@ -55,6 +56,11 @@ public final class BlackjackRulesetConfiguration
 	public double getShoePenetration()
 	{
 		return shoePenetration;
+	}
+
+	public boolean getShouldBlackjackAfterSplitPayoutAsBlackjack()
+	{
+		return shouldBlackjackAfterSplitPayoutAsBlackjack;
 	}
 
 	public boolean getShouldDealerHitOnSoft17()
@@ -146,6 +152,11 @@ public final class BlackjackRulesetConfiguration
 		this.shoePenetration = shoePenetration;
 	}
 
+	public void setShouldBlackjackAfterSplitPayoutAsBlackjack(boolean value)
+	{
+		shouldBlackjackAfterSplitPayoutAsBlackjack = value;
+	}
+
 	public void setShouldDealerHitOnSoft17(boolean value)
 	{
 		shouldDealerHitOnSoft17 = value;
@@ -170,7 +181,7 @@ public final class BlackjackRulesetConfiguration
 	public String toString()
 	{
 		return String.format(
-			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
+			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldBlackjackAfterSplitPayoutAsBlackjack=%s,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
 			getClass().getName(),
 			isDoublingDownOnSplitHandsAllowed(),
 			isLoggingEnabled(),
@@ -179,6 +190,7 @@ public final class BlackjackRulesetConfiguration
 			getPlayerInitialChips(),
 			getShoeDeckCount(),
 			getShoePenetration(),
+			getShouldBlackjackAfterSplitPayoutAsBlackjack(),
 			getShouldDealerHitOnSoft17(),
 			isSplittingAcesAllowed(),
 			isSurrenderingAllowed(),

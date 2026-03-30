@@ -108,7 +108,6 @@ public final class EntityAndHandSubsystemTest
 		mainHand.addCards(newCard);
 		_handTest(1);
 
-//		Assertions.assertTrue(blackjack.isBlackjack());
 		Assertions.assertTrue(pocketPair.isPocketPair());
 
 		final var bustHand = new Hand();
@@ -116,8 +115,6 @@ public final class EntityAndHandSubsystemTest
 		{
 			bustHand.addCards(shoe.draw());
 		}
-
-//		Assertions.assertTrue(bustHand.isBusted());
 	}
 
 	@BeforeEach
