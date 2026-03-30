@@ -28,7 +28,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 	public void main()
 	{
 		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceToDealerTurn(INITIAL_CHIP_AMOUNT);
+		super.advanceThroughDealerTurn(INITIAL_CHIP_AMOUNT);
 		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
 		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
 

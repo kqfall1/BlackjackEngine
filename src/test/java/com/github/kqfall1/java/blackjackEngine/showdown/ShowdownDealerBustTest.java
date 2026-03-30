@@ -28,7 +28,7 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 		BigDecimal chipAmountAfterBetting;
 		BigDecimal potAmount;
 
-		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
 		chipAmountAfterBetting = super.engine.getPlayer().getChips();
 		potAmount = super.engine.getActiveHandContext().getPot().getAmount();
 		Assertions.assertTrue(

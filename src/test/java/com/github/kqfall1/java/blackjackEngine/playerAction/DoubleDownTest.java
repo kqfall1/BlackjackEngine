@@ -51,7 +51,7 @@ final class DoubleDownTest extends EngineTest
 			);
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

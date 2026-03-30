@@ -23,7 +23,7 @@ final class ResetTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
 
 		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{

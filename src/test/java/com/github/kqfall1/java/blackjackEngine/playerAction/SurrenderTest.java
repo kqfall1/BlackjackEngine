@@ -35,7 +35,7 @@ final class SurrenderTest extends EngineTest
 			);
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

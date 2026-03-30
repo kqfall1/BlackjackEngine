@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.engine;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import java.math.BigDecimal;
@@ -311,27 +312,6 @@ public abstract class CustomDeckTest extends EngineTest
 		)));
 	}
 
-	public final void initSplitHands()
-	{
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-
-		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-		Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
-		super.engine.playerSplit();
-
-		Assertions.assertTrue(
-			nearlyEquals(
-				PREVIOUS_CHIP_AMOUNT.subtract(
-					super.engine.getPlayer().getContexts().getLast().getBet().getAmount()
-				),
-				super.engine.getPlayer().getChips(),
-				BlackjackConstants.DEFAULT_CHIP_SCALE
-			)
-		);
-		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-		Assertions.assertFalse(super.engine.getPlayer().getContexts().getLast().isAltered());
-	}
-
 	public final List<Card> _initCardsForSplitting(Rank splitRank)
 	{
 		Assertions.assertNotNull(splitRank);
@@ -376,6 +356,37 @@ public abstract class CustomDeckTest extends EngineTest
 			randomCards.draw(),
 			ITERATOR.next()
 		)));
+	}
+
+	private void _initSplitHands()
+	{
+		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
+
+		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
+		Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
+		super.engine.playerSplit();
+
+		Assertions.assertTrue(
+			nearlyEquals(
+				PREVIOUS_CHIP_AMOUNT.subtract(super.engine.getPlayer().getContexts().getLast().getBet().getAmount()),
+				super.engine.getPlayer().getChips(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			)
+		);
+		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
+		Assertions.assertFalse(super.engine.getPlayer().getContexts().getLast().isAltered());
+	}
+
+	public final void initSplitHands(Runnable postSplitAction)
+	{
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		{
+			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
+			{
+				_initSplitHands();
+				postSplitAction.run();
+			}
+		}
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)

@@ -34,7 +34,7 @@ public abstract class EngineTest
 	public BlackjackRuleset ruleset;
 	public static final int TEST_ITERATIONS = 200;
 
-	public final BigDecimal advanceToDealerTurn(BigDecimal maximumBetAmount)
+	public final BigDecimal advanceThroughDealerTurn(BigDecimal maximumBetAmount)
 	{
 		final var BET_AMOUNT = advanceToPlayerTurn(maximumBetAmount);
 
@@ -47,9 +47,23 @@ public abstract class EngineTest
 		return BET_AMOUNT;
 	}
 
+	public final void advanceThroughShowdownsAfterPlayerTurn()
+	{
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
+		{
+			engine.dealerTurn();
+			engine.advanceAfterDealerTurn();
+		}
+
+		while (engine.getShowdownHandContextIterator() == null || engine.getShowdownHandContextIterator().hasNext())
+		{
+			engine.showdown();
+		}
+	}
+
 	public final void advanceToEndOfRoundAfterShowdown()
 	{
-		if (engine.getState() == BlackjackEngineState.SHOWDOWN)
+		if (engine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND)
 		{
 			engine.advanceAfterShowdown();
 		}
@@ -65,17 +79,6 @@ public abstract class EngineTest
 		engine.advanceAfterDeal();
 		declinePossibleInsuranceBet();
 		return BET_AMOUNT;
-	}
-
-	public final void advanceToShowdownAfterPlayerTurn()
-	{
-		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
-		{
-			engine.dealerTurn();
-			engine.advanceAfterDealerTurn();
-		}
-
-		engine.showdown();
 	}
 
 	public final void declinePossibleInsuranceBet()
@@ -137,7 +140,7 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
+			assertEquals(BlackjackEngineState.SHOWING_DOWN_FINAL_HAND, engine.getState());
 			handler.getOut().println("You have completed a betting round.");
 		}
 
@@ -328,7 +331,8 @@ public abstract class EngineTest
 				engine.getPlayer().getContexts().size() - 1,
 				engine.getActiveHandContextIndex()
 			);
-			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
+			assertTrue(engine.getState() == BlackjackEngineState.SHOWING_DOWN
+					|| engine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND);
 
 			final var completedString = String.format(
 				"Your score is %d and the dealer's score is %d.",
@@ -364,11 +368,9 @@ public abstract class EngineTest
 		@Override
 		public void onShowdownStarted(Hand dealerHand, HandContext handContext)
 		{
-			assertEquals(
-				engine.getPlayer().getContexts().size() - 1,
-				engine.getActiveHandContextIndex()
-			);
-			assertEquals(BlackjackEngineState.SHOWDOWN, engine.getState());
+			assertEquals(engine.getPlayer().getContexts().size() - 1, engine.getActiveHandContextIndex());
+			assertTrue(engine.getState() == BlackjackEngineState.SHOWING_DOWN
+					|| engine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND);
 			handler.getOut().printf(
 				"Your hand %s is being shown down against the dealer's hand %s.\n",
 				handContext.getHand().toStringPretty(),

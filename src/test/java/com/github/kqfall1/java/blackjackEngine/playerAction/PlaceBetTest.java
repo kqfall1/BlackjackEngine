@@ -53,7 +53,7 @@ public final class PlaceBetTest extends EngineTest
 			);
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

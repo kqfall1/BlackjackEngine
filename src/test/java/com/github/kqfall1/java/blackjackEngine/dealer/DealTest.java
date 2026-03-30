@@ -38,16 +38,5 @@ final class DealTest extends EngineTest
 			super.engine.getDealer().getHand().getScore() <= BlackjackConstants.TOP_SCORE
 			&& super.engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.TOP_SCORE
 		);
-
-		super.engine.advanceAfterDeal();
-		super.declinePossibleInsuranceBet();
-
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
-		{
-			super.engine.playerStand();
-		}
-
-		super.advanceToShowdownAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

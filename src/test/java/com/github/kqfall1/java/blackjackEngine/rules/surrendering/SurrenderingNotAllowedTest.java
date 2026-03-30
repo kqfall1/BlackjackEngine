@@ -39,7 +39,7 @@ final class SurrenderingNotAllowedTest extends EngineTest
 			}
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -76,6 +76,7 @@ final class PredicateTest extends CustomDeckTest
 				super.engine.advanceAfterDealerTurn();
 			}
 
+			super.engine.showdown();
 			verifyStandardAssumptions();
 			super.advanceToEndOfRoundAfterShowdown();
 		}

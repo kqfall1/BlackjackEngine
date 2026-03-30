@@ -26,25 +26,8 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 	public void main()
 	{
 		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
-		{
-			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count ++)
-			{
-				super.initSplitHands();
-				super.engine.playerStand();
-			}
-
-			super.engine.playerStand();
-		}
-
-		super.advanceToShowdownAfterPlayerTurn();
-
-		for (int count = 0; count < super.engine.getPlayer().getContexts().size() - 1; count++)
-		{
-			super.engine.showdown();
-		}
-
+		super.initSplitHands(super.engine::playerStand);
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -76,7 +76,7 @@ InsuranceBetAcceptTest extends CustomDeckTest
 			super.engine.playerStand();
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

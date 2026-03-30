@@ -24,7 +24,7 @@ final class DealerHitAndStandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToDealerTurn(super.engine.getPlayer().getChips());
+		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
 
 		if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT)
 		{

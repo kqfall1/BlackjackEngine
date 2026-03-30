@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.rules.splitting;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
@@ -27,19 +26,8 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	public void main()
 	{
 		super.advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
-		{
-			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
-			{
-				super.initSplitHands();
-				super.engine.playerDoubleDown();
-			}
-
-			super.engine.playerDoubleDown();
-		}
-
-		super.advanceToShowdownAfterPlayerTurn();
+		super.initSplitHands(super.engine::playerDoubleDown);
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -282,7 +282,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				getEngine().dealerTurn();
 				getEngine().advanceAfterDealerTurn();
 			}
-			case SHOWDOWN ->
+			case SHOWING_DOWN ->
 			{
 				getEngine().showdown();
 				getEngine().advanceAfterShowdown();

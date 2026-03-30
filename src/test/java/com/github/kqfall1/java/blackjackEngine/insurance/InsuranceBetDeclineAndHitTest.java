@@ -40,7 +40,7 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 			}
 		}
 
-		super.advanceToShowdownAfterPlayerTurn();
+		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
 }

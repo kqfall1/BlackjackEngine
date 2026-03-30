@@ -39,7 +39,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     private final GameCardsJPanel gameCardsJPanel;
     private final GameInfoJPanel gameInfoJPanel;
     private final MainMenuJFrame mainMenuJFrame;
-    private int showdownHandCount;
 
     public GameJFrame(BlackjackRulesetConfiguration config, MainMenuJFrame mainMenuJFrame)
     {
@@ -68,7 +67,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         final var SPLIT = UiActions.getInstance().getGameAction(e ->
         {
             executorService.submit(blackjackEngine::playerSplit);
-            showdownHandCount++;
             updateUiForPlayerChipAmount();
         }, UiConstants.GAME_ACTION_SPLIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl P"));
         final var STAND = UiActions.getInstance().getGameAction(
@@ -103,22 +101,18 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             {
                 executorService.submit(blackjackEngine::advanceAfterDrawingRoundCompletedPlayer);
             }
-            else if (blackjackEngine.getState() == BlackjackEngineState.SHOWDOWN)
+            else if (blackjackEngine.getState() == BlackjackEngineState.SHOWING_DOWN)
             {
-                if (showdownHandCount > 0)
+                executorService.submit(blackjackEngine::showdown);
+            }
+            else if (blackjackEngine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND)
+            {
+                executorService.submit(() ->
                 {
-                    executorService.submit(blackjackEngine::showdown);
-                    showdownHandCount--;
-                }
-                else
-                {
-                    executorService.submit(() ->
-                    {
-                        blackjackEngine.advanceAfterShowdown();
-                        blackjackEngine.reset();
-                        blackjackEngine.advanceAfterReset();
-                    });
-                }
+                    blackjackEngine.advanceAfterShowdown();
+                    blackjackEngine.reset();
+                    blackjackEngine.advanceAfterReset();
+                });
             }
         });
         gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
@@ -442,9 +436,9 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 blackjackEngine.dealerTurn();
                 blackjackEngine.advanceAfterDealerTurn();
             });
-            case SHOWDOWN ->
+            case SHOWING_DOWN ->
             {
-                if (oldState != BlackjackEngineState.SHOWDOWN)
+                if (oldState != BlackjackEngineState.SHOWING_DOWN)
                 {
                     executorService.submit(blackjackEngine::showdown);
                 }

@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.enums;
 
 /**
- * The 9 states of a blackjack game.
+ * The 10 states of a blackjack game.
  *
  * <p>
  * This {@code enum} includes an entries {@code BlackjackEngineState.START} and
@@ -20,7 +20,8 @@ public enum BlackjackEngineState
 	INSURANCE_CHECK,
 	PLAYER_TURN,
 	DEALER_TURN,
-	SHOWDOWN,
+	SHOWING_DOWN,
+	SHOWING_DOWN_FINAL_HAND,
 	RESETTING,
 	END
 }
