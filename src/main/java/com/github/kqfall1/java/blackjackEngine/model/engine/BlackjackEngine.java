@@ -434,11 +434,6 @@ public class BlackjackEngine
 		return state;
 	}
 
-	public boolean isPlayerActingOnFinalHandContext()
-	{
-		return getActiveHandContext().equals(getPlayer().getContexts().getLast());
-	}
-
 	private void onBetPlaced()
 	{
 		final var METHOD_NAME = "onBetPlaced";

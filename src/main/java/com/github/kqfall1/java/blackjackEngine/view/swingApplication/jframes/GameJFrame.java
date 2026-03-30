@@ -253,7 +253,6 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onDrawingRoundCompletedPlayer(HandContext handContext)
     {
-        final boolean ALL_HAND_CONTEXTS_DRAWN = blackjackEngine.isPlayerActingOnFinalHandContext();
         SwingUtilities.invokeLater(() ->
         {
             for (Component component : AwtUtils.getNestedComponents(gameActionJPanel))
@@ -264,7 +263,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 }
             }
 
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(ALL_HAND_CONTEXTS_DRAWN);
+            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
         });
     }
 
