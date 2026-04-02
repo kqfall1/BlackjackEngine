@@ -55,7 +55,7 @@ public abstract class EngineTest
 			engine.advanceAfterDealerTurn();
 		}
 
-		while (engine.getShowdownHandContextIterator() == null || engine.getShowdownHandContextIterator().hasNext())
+		while (engine.getState() == BlackjackEngineState.SHOWING_DOWN)
 		{
 			engine.showdown();
 		}

@@ -15,7 +15,7 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 	@BeforeEach
 	@Override
 	public void init() {
-		super.initCardsForSplittingWithoutHitting(Rank.TEN);
+		super.initCardsForSplittingAndHittingOnce(Rank.TEN);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -36,7 +36,6 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 			}
 			catch (RuleViolationException e)
 			{
-				System.out.println(e.getMessage());
 				super.engine.playerStand();
 			}
 		});

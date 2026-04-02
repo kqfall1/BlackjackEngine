@@ -386,6 +386,8 @@ public abstract class CustomDeckTest extends EngineTest
 				_initSplitHands();
 				postSplitAction.run();
 			}
+
+			postSplitAction.run();
 		}
 	}
 
