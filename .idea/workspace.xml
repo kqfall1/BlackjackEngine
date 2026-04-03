@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Fixed broken tests - must verify the correctness of the test suite before proceeding.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/dealer/DealTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/dealer/DealTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/ResetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/ResetTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/playerAction/StandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/playerAction/StandTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsNotAllowedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/DoublingDownOnSplitHandsNotAllowedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/splitting/SplitAndSurrenderTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnAllHandsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnAllHandsTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnMainHandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnMainHandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controller/ConsoleBlackjackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controller/ConsoleBlackjackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,77 +55,77 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ConsoleBlackjackController.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.MainMenuFrame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainMenuJFrame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.PrelimFrame.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BettingSubsystemTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CardSubsystemTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CustomDeckTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerHitAndBustTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerHitAndStandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerHitsOnSoft17Test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerStandsOnSoft17Test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTurnSoft17Test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DealerTurnTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DoubleDownTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DoublingDownOnSplitHandsAllowed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DoublingDownOnSplitHandsAllowedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DoublingDownOnSplitHandsNotAllowed.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DoublingDownOnSplitHandsNotAllowedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EngineTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EngineTestTemplate.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.EntityAndHandSubsystemTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.HitAndBustTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.HitTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetAcceptTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndDoubleDownTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndHitTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndSplitTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndStand.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndStandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndSurrender.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineAndSurrenderTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.InsuranceBetDeclineStand.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.IntegrationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MaximumSplitCountTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PlaceBetTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PredicateTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ResetTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownBlackjackTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownBustTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownDealerBustTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownNormalTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownPlayerBustTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ShowdownSurrenderTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SimpleRulePredicateTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SplitAndDoubleDownTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SplitAndHitTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SplitAndStandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SplitAndSurrenderTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.StandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SurrenderTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SurrenderingAllowedOnAllHandsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SurrenderingAllowedOnMainHandTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.SurrenderingNotAllowedTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.BlackjackEngine [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.BlackjackEngine [test].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Work/Career/Coding/Java/BlackjackEngine&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ConsoleBlackjackController.executor": "Run",
+    "Application.MainMenuFrame.executor": "Run",
+    "Application.MainMenuJFrame.executor": "Run",
+    "Application.PrelimFrame.executor": "Run",
+    "JUnit.BettingSubsystemTest.executor": "Run",
+    "JUnit.CardSubsystemTest.executor": "Run",
+    "JUnit.CustomDeckTest.executor": "Run",
+    "JUnit.DealTest.executor": "Run",
+    "JUnit.DealerHitAndBustTest.executor": "Run",
+    "JUnit.DealerHitAndStandTest.executor": "Run",
+    "JUnit.DealerHitsOnSoft17Test.executor": "Run",
+    "JUnit.DealerStandsOnSoft17Test.executor": "Run",
+    "JUnit.DealerTurnSoft17Test.executor": "Run",
+    "JUnit.DealerTurnTest.executor": "Run",
+    "JUnit.DoubleDownTest.executor": "Run",
+    "JUnit.DoublingDownOnSplitHandsAllowed.executor": "Run",
+    "JUnit.DoublingDownOnSplitHandsAllowedTest.executor": "Run",
+    "JUnit.DoublingDownOnSplitHandsNotAllowed.executor": "Run",
+    "JUnit.DoublingDownOnSplitHandsNotAllowedTest.executor": "Run",
+    "JUnit.EngineTest.executor": "Run",
+    "JUnit.EngineTestTemplate.executor": "Run",
+    "JUnit.EntityAndHandSubsystemTest.executor": "Run",
+    "JUnit.HitAndBustTest.executor": "Run",
+    "JUnit.HitTest.executor": "Run",
+    "JUnit.InsuranceBetAcceptTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndDoubleDownTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndHitTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndSplitTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndStand.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndStandTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndSurrender.executor": "Run",
+    "JUnit.InsuranceBetDeclineAndSurrenderTest.executor": "Run",
+    "JUnit.InsuranceBetDeclineStand.executor": "Run",
+    "JUnit.IntegrationTest.executor": "Run",
+    "JUnit.MaximumSplitCountTest.executor": "Run",
+    "JUnit.PlaceBetTest.executor": "Run",
+    "JUnit.PredicateTest.executor": "Run",
+    "JUnit.ResetTest.executor": "Run",
+    "JUnit.ShowdownBlackjackTest.executor": "Run",
+    "JUnit.ShowdownBustTest.executor": "Run",
+    "JUnit.ShowdownDealerBustTest.executor": "Run",
+    "JUnit.ShowdownNormalTest.executor": "Run",
+    "JUnit.ShowdownPlayerBustTest.executor": "Run",
+    "JUnit.ShowdownSurrenderTest.executor": "Run",
+    "JUnit.SimpleRulePredicateTest.executor": "Run",
+    "JUnit.SplitAndDoubleDownTest.executor": "Run",
+    "JUnit.SplitAndHitTest.executor": "Run",
+    "JUnit.SplitAndStandTest.executor": "Run",
+    "JUnit.SplitAndSurrenderTest.executor": "Run",
+    "JUnit.StandTest.executor": "Run",
+    "JUnit.SurrenderTest.executor": "Run",
+    "JUnit.SurrenderingAllowedOnAllHandsTest.executor": "Run",
+    "JUnit.SurrenderingAllowedOnMainHandTest.executor": "Run",
+    "JUnit.SurrenderingNotAllowedTest.executor": "Run",
+    "Maven.BlackjackEngine [install].executor": "Run",
+    "Maven.BlackjackEngine [test].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Work/Career/Coding/Java/BlackjackEngine",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Work\Career\Coding\Java\BlackjackEngine\src\test\java\com\github\kqfall1\java\blackjackEngine\engine" />
@@ -193,14 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Added a simple JMenuBar to the Swing application.">
-      <option name="closed" value="true" />
-      <created>1769377867000</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1769377867000</updated>
     </task>
     <task id="LOCAL-00028" summary="Configured a basic UI and exiting functionality for the main menu. Created scaffolding for future features.">
       <option name="closed" value="true" />
@@ -586,11 +574,18 @@
       <option name="project" value="LOCAL" />
       <updated>1775116375426</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite.">
+      <option name="closed" value="true" />
+      <created>1775225354923</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1775225354923</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created GameCardsJPanel.java; am ready for engine integration." />
     <MESSAGE value="Have began integrating BlackjackEngine.java and the Swing application." />
     <MESSAGE value="Integrated ValidatedJTextField.java into GameJFrame and bolstered the concurrency model of the Swing application." />
     <MESSAGE value="Made a solid start on the Swing application/engine integration." />
@@ -615,7 +610,8 @@
     <MESSAGE value="Refactored advancement logic and removed a method from BlackjackEngine.java." />
     <MESSAGE value="Renamed constants in BlackjackEngineState; added SHOWING_DOWN_FINAL_HAND for BlackjackEngineListener convenience. Some tests are failing." />
     <MESSAGE value="Fixed broken tests - must verify the correctness of the test suite before proceeding." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed broken tests - must verify the correctness of the test suite before proceeding." />
+    <MESSAGE value="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

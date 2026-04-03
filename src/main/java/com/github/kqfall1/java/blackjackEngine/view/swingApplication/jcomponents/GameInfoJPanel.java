@@ -24,8 +24,8 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     private final JTextArea engineMessageJTextArea;
     private final JScrollPane engineMessageJScrollPane;
     private final JLabel playerChipAmountJLabel;
-    private final JButton playerInputJButton;
     private final ValidatedJTextField playerInputJTextField;
+    private final JButton submitJButton;
 
     public GameInfoJPanel()
     {
@@ -43,13 +43,13 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         ));
         engineMessageJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         playerChipAmountJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL);
-        playerInputJButton = new JButton(UiConstants.GAME_INFO_JPANEL_PLAYER_INPUT_JBUTTON_LABEL);
-        playerInputJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playerInputJButton.setEnabled(false);
         playerInputJTextField = new ValidatedJTextField();
         playerInputJTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerInputJTextField.setEnabled(false);
         playerInputJTextField.setHorizontalAlignment(JTextField.CENTER);
+        submitJButton = new JButton(UiConstants.GAME_ACTION_SUBMIT_LABEL);
+        submitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitJButton.setEnabled(false);
 
         final var ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP = engineMessageJScrollPane.getInputMap();
         ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl H"), "");
@@ -68,7 +68,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         GAME_INPUT_WRAPPER.add(playerInputJTextField);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
-        GAME_INPUT_WRAPPER.add(playerInputJButton);
+        GAME_INPUT_WRAPPER.add(submitJButton);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         GAME_INPUT_WRAPPER.add(advanceEngineJButton);
         GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
@@ -113,9 +113,9 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         return playerChipAmountJLabel;
     }
 
-    public JButton getPlayerInputJButton()
+    public JButton getSubmitJButton()
     {
-        return playerInputJButton;
+        return submitJButton;
     }
 
     public ValidatedJTextField getPlayerInputJTextField()

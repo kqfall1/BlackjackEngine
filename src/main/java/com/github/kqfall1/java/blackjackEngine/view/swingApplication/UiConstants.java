@@ -23,10 +23,13 @@ public final class UiConstants
     public static final int CARD_IMAGE_HEIGHT = 225;
     public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
+    public static final String GAME_ACTION_ADVANCE_LABEL = "Advance";
     public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double down";
+    public static final String GAME_ACTION_ENTER_KEYSTROKE_LABEL = "ENTER";
     public static final String GAME_ACTION_HIT_LABEL = "Hit";
     public static final String GAME_ACTION_SPLIT_LABEL = "Split";
     public static final String GAME_ACTION_STAND_LABEL = "Stand";
+    public static final String GAME_ACTION_SUBMIT_LABEL = "Submit";
     public static final String GAME_ACTION_SURRENDER_LABEL = "Surrender";
     public static final String GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
     public static final String GAME_CONFIG_JDIALOG_FAILURE_LABEL = "One or more inputs is invalid.";
@@ -53,7 +56,6 @@ public final class UiConstants
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH = 100;
     public static final String GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips: ";
-    public static final String GAME_INFO_JPANEL_PLAYER_INPUT_JBUTTON_LABEL = "Submit";
     public static final String GAME_MESSAGE_BET_PLACED = "You have placed a bet of ";
     public static final String GAME_MESSAGE_BUSTED = "You have busted. Better luck next time!";
     public static final String GAME_MESSAGE_INSURANCE_BET_LOST = "You have lost your insurance bet.";

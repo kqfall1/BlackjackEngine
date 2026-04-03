@@ -292,10 +292,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 				getEngine().reset();
 				getEngine().advanceAfterReset();
 			}
-			case END ->
-			{
-				System.exit(0);
-			}
+			case END -> System.exit(0);
 		}
 	}
 

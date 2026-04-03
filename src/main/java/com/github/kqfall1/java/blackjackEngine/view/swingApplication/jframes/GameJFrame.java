@@ -42,54 +42,21 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
     public GameJFrame(BlackjackRulesetConfiguration config, MainMenuJFrame mainMenuJFrame)
     {
-        final var ACTION_MAP = getRootPane().getActionMap();
-        final var INPUT_MAP = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        blackjackEngine = new BlackjackEngine(
-                this,
-                UiConstants.BLACKJACK_ENGINE_LOG_FILE_PATH,
-                UiConstants.BLACKJACK_ENGINE_LOGGER_NAME,
-                new StandardBlackjackRuleset(config)
-        );
-        executorService = Executors.newSingleThreadExecutor();
-
-        final var DOUBLE_DOWN = UiActions.getInstance().getGameAction(e ->
-        {
-            executorService.submit(blackjackEngine::playerDoubleDown);
-            updateUiForPlayerChipAmount();
-        }, UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl D"));
-        final var HIT = UiActions.getInstance().getGameAction(
-            e -> executorService.submit(blackjackEngine::playerHit),
-            UiConstants.GAME_ACTION_HIT_LABEL,
-            ACTION_MAP,
-            INPUT_MAP,
-            KeyStroke.getKeyStroke("ctrl H")
-        );
-        final var SPLIT = UiActions.getInstance().getGameAction(e ->
-        {
-            executorService.submit(blackjackEngine::playerSplit);
-            updateUiForPlayerChipAmount();
-        }, UiConstants.GAME_ACTION_SPLIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ctrl P"));
-        final var STAND = UiActions.getInstance().getGameAction(
-            e -> executorService.submit(blackjackEngine::playerStand),
-            UiConstants.GAME_ACTION_STAND_LABEL,
-            ACTION_MAP,
-            INPUT_MAP,
-            KeyStroke.getKeyStroke("ctrl T")
-        );
-        final var SURRENDER = UiActions.getInstance().getGameAction(
-            e -> executorService.submit(blackjackEngine::playerSurrender),
-            UiConstants.GAME_ACTION_SURRENDER_LABEL,
-            ACTION_MAP,
-            INPUT_MAP,
-            KeyStroke.getKeyStroke("ctrl X")
-        );
-
-        gameActionJPanel = new GameActionJPanel(DOUBLE_DOWN, HIT, SPLIT, STAND, SURRENDER);
         gameCardsJPanel = new GameCardsJPanel();
         gameInfoJPanel = new GameInfoJPanel();
         this.mainMenuJFrame = mainMenuJFrame;
 
-        gameInfoJPanel.getAdvanceEngineJButton().addActionListener(e ->
+        final var ACTION_MAP = getRootPane().getActionMap();
+        final var INPUT_MAP = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        blackjackEngine = new BlackjackEngine(
+            this,
+            UiConstants.BLACKJACK_ENGINE_LOG_FILE_PATH,
+            UiConstants.BLACKJACK_ENGINE_LOGGER_NAME,
+            new StandardBlackjackRuleset(config)
+        );
+        executorService = Executors.newSingleThreadExecutor();
+
+        final var ADVANCE = UiActions.getInstance().getGameAction(e ->
         {
             gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
 
@@ -114,8 +81,30 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     blackjackEngine.advanceAfterReset();
                 });
             }
-        });
-        gameInfoJPanel.getPlayerInputJButton().addActionListener(e ->
+        }, UiConstants.GAME_ACTION_ADVANCE_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("SPACE"));
+        final var DOUBLE_DOWN = UiActions.getInstance().getGameAction(e ->
+        {
+            disableGameActionJPanelJButtons();
+            executorService.submit(blackjackEngine::playerDoubleDown);
+            updateUiForPlayerChipAmount();
+        }, UiConstants.GAME_ACTION_DOUBLE_DOWN_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("D"));
+        final var HIT = UiActions.getInstance().getGameAction(e ->
+        {
+            disableGameActionJPanelJButtons();
+            executorService.submit(blackjackEngine::playerHit);
+        }, UiConstants.GAME_ACTION_HIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("H"));
+        final var SPLIT = UiActions.getInstance().getGameAction(e ->
+        {
+            disableGameActionJPanelJButtons();
+            executorService.submit(blackjackEngine::playerSplit);
+            updateUiForPlayerChipAmount();
+        }, UiConstants.GAME_ACTION_SPLIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("P"));
+        final var STAND = UiActions.getInstance().getGameAction(e ->
+        {
+            disableGameActionJPanelJButtons();
+            executorService.submit(blackjackEngine::playerStand);
+        }, UiConstants.GAME_ACTION_STAND_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("T"));
+        final var SUBMIT = UiActions.getInstance().getGameAction(e ->
         {
             toggleGameInfoJPanelPlayerInputComponents(false);
 
@@ -175,12 +164,12 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     {
                         if (result == YesNoInput.YES)
                         {
-                            CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService)
-                                .thenAccept(blackjackEngine::advanceAfterInsuranceBet);
+                            CompletableFuture.supplyAsync(blackjackEngine::acceptInsuranceBet, executorService).thenAccept(blackjackEngine::advanceAfterInsuranceBet);
                         }
                         else
                         {
                             executorService.submit(blackjackEngine::declineInsuranceBet);
+                            SwingUtilities.invokeLater(() -> gameInfoJPanel.getPlayerInputJTextField().setText(""));
                         }
                     }
                     else
@@ -190,8 +179,18 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                 });
             }
-        });
+        }, UiConstants.GAME_ACTION_SUBMIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke(UiConstants.GAME_ACTION_ENTER_KEYSTROKE_LABEL));
+        final var SURRENDER = UiActions.getInstance().getGameAction(e ->
+        {
+            disableGameActionJPanelJButtons();
+            executorService.submit(blackjackEngine::playerSurrender);
+        }, UiConstants.GAME_ACTION_SURRENDER_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("X"));
 
+        gameActionJPanel = new GameActionJPanel(DOUBLE_DOWN, HIT, SPLIT, STAND, SURRENDER);
+        gameInfoJPanel.getAdvanceEngineJButton().setAction(ADVANCE);
+        gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
+        gameInfoJPanel.getPlayerInputJTextField().addActionListener(SUBMIT);
+        gameInfoJPanel.getSubmitJButton().setAction(SUBMIT);
         add(gameActionJPanel, BorderLayout.EAST);
         add(gameInfoJPanel, BorderLayout.WEST);
         add(gameCardsJPanel, BorderLayout.CENTER);
@@ -205,6 +204,20 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             gameCardsJPanel.getActivePlayerHandJPanel().removeAll();
             gameCardsJPanel.revalidate();
             gameCardsJPanel.repaint();
+        });
+    }
+
+    private void disableGameActionJPanelJButtons()
+    {
+        SwingUtilities.invokeLater(() ->
+        {
+            for (Component component : AwtUtils.getNestedComponents(gameActionJPanel))
+            {
+                if (component instanceof JButton jbutton)
+                {
+                    jbutton.getAction().setEnabled(false);
+                }
+            }
         });
     }
 
@@ -247,18 +260,9 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onDrawingRoundCompletedPlayer(HandContext handContext)
     {
-        SwingUtilities.invokeLater(() ->
-        {
-            for (Component component : AwtUtils.getNestedComponents(gameActionJPanel))
-            {
-                if (component instanceof JButton jbutton)
-                {
-                    jbutton.getAction().setEnabled(false);
-                }
-            }
-
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
-        });
+        disableGameActionJPanelJButtons();
+        gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
+        gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
     }
 
     @Override
@@ -381,7 +385,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
         SwingUtilities.invokeLater(() ->
         {
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(true);
+            gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
             gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
                 "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_COLLECTION, playerWinnings
             ));
@@ -397,7 +401,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         SwingUtilities.invokeLater(() ->
         {
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
+            gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(false);
             ((CardJLabel) gameCardsJPanel.getDealerHandJPanel().getComponents()[BlackjackConstants.INITIAL_CARD_COUNT - 1]).setFaceUp(true);
         });
     }
@@ -460,8 +464,14 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         SwingUtilities.invokeLater(() ->
         {
-            gameInfoJPanel.getPlayerInputJButton().setEnabled(enabled);
             gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
+
+            if (enabled)
+            {
+                gameInfoJPanel.getPlayerInputJTextField().requestFocusInWindow();
+            }
+
+            gameInfoJPanel.getSubmitJButton().setEnabled(enabled);
         });
     }
 
