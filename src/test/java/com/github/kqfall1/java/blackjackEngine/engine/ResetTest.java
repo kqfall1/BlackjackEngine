@@ -33,16 +33,8 @@ final class ResetTest extends EngineTest
 		super.engine.showdown();
 		super.engine.advanceAfterShowdown();
 		super.engine.reset();
-
-		Assertions.assertEquals(
-			new Hand(),
-			super.engine.getDealer().getHand()
-		);
-		Assertions.assertEquals(
-			HandContextType.MAIN.ordinal(),
-			super.engine.getPlayer().getContexts().size()
-		);
-
+		Assertions.assertEquals(new Hand(), super.engine.getDealer().getHand());
+		Assertions.assertEquals(HandContextType.MAIN.ordinal(), super.engine.getPlayer().getContexts().size());
 		super.engine.advanceAfterReset();
 	}
 }

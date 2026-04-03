@@ -13,7 +13,8 @@ final class StandTest extends EngineTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}

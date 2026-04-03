@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.rules.surrendering;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -811,7 +811,8 @@ public class BlackjackEngine
 				playerBeatDealer = true;
 
 				if (getRuleset().isHandBlackjack(HAND_CONTEXT.getHand())
-					&& (HAND_CONTEXT.getType() == HandContextType.MAIN || getRuleset().getConfig().getShouldBlackjackAfterSplitPayoutAsBlackjack()))
+					&& HAND_CONTEXT.getType() == HandContextType.MAIN
+					&& (!showdownHandContextIterator.hasNext() || getRuleset().getConfig().getShouldBlackjackAfterSplitPayoutAsBlackjack()))
 				{
 					playerWinnings = HAND_CONTEXT.getPot().scoop().multiply(
 						PAYOUT_RATIOS.get(BlackjackConstants.BLACKJACK_RATIO_KEY).getPayoutMultiplier()

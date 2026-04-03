@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.dealer;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +24,7 @@ final class DealTest extends EngineTest
 	{
 		super.placeRandomHandBet(super.engine.getPlayer().getChips());
 		super.engine.deal();
-
-		assertTrue(
-			super.engine.getDealer().getHand() != null
-			&& super.engine.getActiveHandContext().getHand() != null
-		);
+		assertTrue(super.engine.getDealer().getHand() != null && super.engine.getActiveHandContext().getHand() != null);
 		assertTrue(
 			super.engine.getDealer().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 			&& super.engine.getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT

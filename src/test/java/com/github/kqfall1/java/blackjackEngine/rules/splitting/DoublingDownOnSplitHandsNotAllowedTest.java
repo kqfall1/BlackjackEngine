@@ -36,6 +36,7 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 			}
 			catch (RuleViolationException e)
 			{
+				System.out.println(e.getMessage());
 				super.engine.playerStand();
 			}
 		});
