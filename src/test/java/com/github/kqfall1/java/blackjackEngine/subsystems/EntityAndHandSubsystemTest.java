@@ -62,9 +62,9 @@ public final class EntityAndHandSubsystemTest
 		assertEquals(BET, splitContext.getBet());
 		assertEquals(BigDecimal.ZERO, splitContext.getPot().getAmount());
 		Assertions.assertFalse(mainContext.isAltered());
-		Assertions.assertFalse(mainContext.hasSurrendered());
+		Assertions.assertFalse(mainContext.isSurrendered());
 		Assertions.assertFalse(splitContext.isAltered());
-		Assertions.assertFalse(splitContext.hasSurrendered());
+		Assertions.assertFalse(splitContext.isSurrendered());
 		Assertions.assertNotEquals(mainContext.getType(), splitContext.getType());
 
 		mainContext.getPot().addChips(BET_AND_POT_INITIAL_AMOUNT);
@@ -72,9 +72,9 @@ public final class EntityAndHandSubsystemTest
 		assertEquals(mainContext.getPot().getAmount(), splitContext.getPot().getAmount());
 		mainContext.setBet(new Bet(BigDecimal.valueOf(100)));
 		Assertions.assertNotEquals(mainContext.getBet(), splitContext.getBet());
-		mainContext.setHasSurrendered();
-		Assertions.assertTrue(mainContext.hasSurrendered());
-		Assertions.assertNotEquals(mainContext.hasSurrendered(), splitContext.hasSurrendered());
+		mainContext.setSurrendered();
+		Assertions.assertTrue(mainContext.isSurrendered());
+		Assertions.assertNotEquals(mainContext.isSurrendered(), splitContext.isSurrendered());
 
 		try
 		{

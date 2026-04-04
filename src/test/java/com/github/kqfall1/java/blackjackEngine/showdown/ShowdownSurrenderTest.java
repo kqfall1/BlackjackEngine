@@ -43,7 +43,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
-			Assertions.assertTrue(super.engine.getActiveHandContext().hasSurrendered());
+			Assertions.assertTrue(super.engine.getActiveHandContext().isSurrendered());
 		}
 
 		super.engine.showdown();

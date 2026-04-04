@@ -16,14 +16,15 @@ public final class HandContext
 {
 	/**
  	 * Indicates whether the {@code Player} that encapsulates this {@code HandContext} has
-	 * taken any action on this {@code HandContext}, such as adding a {@code Card} to this
-	 * {@code HandContext} object's {@code Hand}, surrendering, standing, or splitting.
+	 * taken any non-split action on this {@code HandContext}, such as adding a {@code Card} to this
+	 * {@code HandContext} object's {@code Hand}, surrendering, or standing.
  	 */
 	private boolean altered;
 	private Bet bet;
 	private final Hand hand;
-	private boolean hasSurrendered;
 	private final Pot pot;
+	private boolean split;
+	private boolean surrendered;
 	private final HandContextType type;
 
 	public HandContext(Bet bet, HandContextType type)
@@ -73,11 +74,6 @@ public final class HandContext
 		return type;
 	}
 
-	public boolean hasSurrendered()
-	{
-		return hasSurrendered;
-	}
-
 	@Override
 	public int hashCode()
 	{
@@ -89,11 +85,21 @@ public final class HandContext
 		return altered;
 	}
 
+	public boolean isSplit()
+	{
+		return split;
+	}
+
+	public boolean isSurrendered()
+	{
+		return surrendered;
+	}
+
 	/**
  	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call
 	 * this method whenever this {@code HandContext} is altered.
  	 */
-	public void markAsAltered()
+	public void setAltered()
 	{
 		altered = true;
 	}
@@ -104,23 +110,29 @@ public final class HandContext
 		this.bet = bet;
 	}
 
-	public void setHasSurrendered()
+	public void setSplit()
 	{
-		hasSurrendered = true;
-		markAsAltered();
+		split = true;
+	}
+
+	public void setSurrendered()
+	{
+		surrendered = true;
+		setAltered();
 	}
 
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[altered=%s,bet=%s,hand=%s,hasSurrendered=%s,pot=%s,type=%s]",
+			"%s[altered=%s,bet=%s,hand=%s,pot=%s,split=%s,surrendered=%s,type=%s]",
 			getClass().getName(),
 			isAltered(),
 			getBet(),
 			getHand(),
-			hasSurrendered(),
 			getPot(),
+			isSplit(),
+			isSurrendered(),
 			getType()
 		);
 	}

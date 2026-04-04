@@ -42,8 +42,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 				? BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE + 1
 				: BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE;
 
-		return currentState == BlackjackEngineState.DEALER_TURN
-			&& dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
+		return currentState == BlackjackEngineState.DEALER_TURN && dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
 	}
 
 	@Override
@@ -52,8 +51,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
-			&& (activeHandContext.getType() == HandContextType.MAIN
-				|| config.isDoublingDownOnSplitHandsAllowed())
+			&& (activeHandContext.getType() == HandContextType.MAIN || config.isDoublingDownOnSplitHandsAllowed())
 			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
 	}
 
@@ -75,8 +73,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
 			&& activeHandContext.getHand().isPocketPair()
-			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE
-				|| getConfig().isSplittingAcesAllowed())
+			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE || getConfig().isSplittingAcesAllowed())
 		    && activeHandContextIndex < config.getMaximumSplitCount()
 			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
 	}
@@ -86,9 +83,9 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& config.isSurrenderingAllowed()
+			&& activeHandContext.getType() == HandContextType.MAIN
 			&& !activeHandContext.isAltered()
-			&& (activeHandContext.getType() == HandContextType.MAIN
-				|| config.isSurrenderingOnSplitHandsAllowed());
+			&& !activeHandContext.isSplit();
 	}
 
 	@Override

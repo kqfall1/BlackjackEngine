@@ -49,7 +49,6 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JCheckBox shouldDealerHitOnSoft17;
     private final JCheckBox splittingAcesAllowed;
     private final JCheckBox surrenderingAllowed;
-    private final JCheckBox surrenderingOnSplitHandsAllowed;
 
     public GameConfigJPanel(MainMenuJFrame rootJFrame)
     {
@@ -87,7 +86,6 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         shouldDealerHitOnSoft17 = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL);
         splittingAcesAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL);
         surrenderingAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL);
-        surrenderingOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL);
 
         final var JCHECK_BOX_PANEL_WRAPPER = new JPanel();
         JCHECK_BOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECK_BOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));
@@ -95,7 +93,6 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         JCHECK_BOX_PANEL_WRAPPER.add(shouldDealerHitOnSoft17);
         JCHECK_BOX_PANEL_WRAPPER.add(splittingAcesAllowed);
         JCHECK_BOX_PANEL_WRAPPER.add(surrenderingAllowed);
-        JCHECK_BOX_PANEL_WRAPPER.add(surrenderingOnSplitHandsAllowed);
         JCHECK_BOX_PANEL_WRAPPER.setMaximumSize(JCHECK_BOX_PANEL_WRAPPER.getPreferredSize());
 
         final var JTEXT_FIELD_PANEL_WRAPPER = new JPanel(new GridBagLayout());
@@ -214,7 +211,6 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
         CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
         CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
-        CONFIG.setSurrenderingOnSplitHandsAllowed(surrenderingOnSplitHandsAllowed.isSelected());
 
         final var WINDOW = SwingUtilities.getWindowAncestor(this);
         WINDOW.dispose();

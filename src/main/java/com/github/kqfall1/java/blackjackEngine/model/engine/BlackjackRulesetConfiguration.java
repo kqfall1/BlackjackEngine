@@ -23,7 +23,6 @@ public final class BlackjackRulesetConfiguration
 	private boolean shouldDealerHitOnSoft17;
 	private boolean splittingAcesAllowed;
 	private boolean surrenderingAllowed;
-	private boolean surrenderingOnSplitHandsAllowed;
 
 	public BlackjackRulesetConfiguration()
 	{
@@ -86,11 +85,6 @@ public final class BlackjackRulesetConfiguration
 	public boolean isSurrenderingAllowed()
 	{
 		return surrenderingAllowed;
-	}
-
-	public boolean isSurrenderingOnSplitHandsAllowed()
-	{
-		return surrenderingOnSplitHandsAllowed;
 	}
 
 	public void setDoublingDownOnSplitHandsAllowed(boolean value)
@@ -172,16 +166,11 @@ public final class BlackjackRulesetConfiguration
 		surrenderingAllowed = value;
 	}
 
-	public void setSurrenderingOnSplitHandsAllowed(boolean value)
-	{
-		surrenderingOnSplitHandsAllowed = value;
-	}
-
 	@Override
 	public String toString()
 	{
 		return String.format(
-			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldBlackjackAfterSplitPayoutAsBlackjack=%s,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s,surrenderingOnSplitHandsAllowed=%s]",
+			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldBlackjackAfterSplitPayoutAsBlackjack=%s,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s]",
 			getClass().getName(),
 			isDoublingDownOnSplitHandsAllowed(),
 			isLoggingEnabled(),
@@ -193,8 +182,7 @@ public final class BlackjackRulesetConfiguration
 			getShouldBlackjackAfterSplitPayoutAsBlackjack(),
 			getShouldDealerHitOnSoft17(),
 			isSplittingAcesAllowed(),
-			isSurrenderingAllowed(),
-			isSurrenderingOnSplitHandsAllowed()
+			isSurrenderingAllowed()
 		);
 	}
 }

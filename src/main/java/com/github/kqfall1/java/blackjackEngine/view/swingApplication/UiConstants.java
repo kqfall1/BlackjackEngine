@@ -48,7 +48,6 @@ public final class UiConstants
     public static final String GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL = "Should dealer hit on soft 17?";
     public static final String GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL = "Is splitting aces allowed?";
     public static final String GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL = "Is surrendering allowed?";
-    public static final String GAME_CONFIG_JDIALOG_SURRENDERING_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is surrendering on split hands allowed?";
     public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.5;
     public static final String GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score: ";
     public static final String GAME_INFO_JPANEL_ADVANCE_HAND_JBUTTON_LABEL = "Advance";

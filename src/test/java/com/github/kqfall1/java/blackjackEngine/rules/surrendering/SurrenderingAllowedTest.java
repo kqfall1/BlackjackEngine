@@ -1,16 +1,16 @@
 package com.github.kqfall1.java.blackjackEngine.rules.surrendering;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
+import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
+final class SurrenderingAllowedTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderingAllowedOnMainHandTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.SurrenderingAllowedOnMainHandTest.log";
+	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderingAllowedTest.log";
+	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.SurrenderingAllowedTest.log";
 
 	@BeforeEach
 	@Override
@@ -28,20 +28,11 @@ final class SurrenderingAllowedOnMainHandTest extends CustomDeckTest
 	public void main()
 	{
 		Assertions.assertTrue(super.engine.getRuleset().getConfig().isSurrenderingAllowed());
-		Assertions.assertFalse(super.engine.getRuleset().getConfig().isSurrenderingOnSplitHandsAllowed());
 		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-		super.initSplitHands(() ->
+		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			try
-			{
-				super.engine.playerSurrender();
-			}
-			catch (RuleViolationException e)
-			{
-				System.out.println(e.getMessage());
-				super.engine.playerStand();
-			}
-		});
+			super.engine.playerSurrender();
+		}
 		super.advanceThroughShowdownsAfterPlayerTurn();
 		super.advanceToEndOfRoundAfterShowdown();
 	}
