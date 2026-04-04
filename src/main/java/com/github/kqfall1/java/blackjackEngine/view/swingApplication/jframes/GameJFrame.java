@@ -284,6 +284,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     @Override
     public void onGameCompleted()
     {
+        executorService.shutdown();
         SwingUtilities.invokeLater(() ->
         {
             gameInfoJPanel.getPlayerChipAmountJLabel().setText(UiConstants.GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL);

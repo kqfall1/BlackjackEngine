@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConf
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
-import java.math.BigDecimal;
 import javax.swing.*;
 
 /**
@@ -28,17 +27,7 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
     public static void main(String[] args)
     {
-//        SwingUtilities.invokeLater(MainMenuJFrame::new);
-
-        final var CONFIG = new BlackjackRulesetConfiguration();
-        CONFIG.setPlayerInitialChips(BigDecimal.valueOf(5000));
-        CONFIG.setSurrenderingAllowed(true);
-
-        SwingUtilities.invokeLater(() ->
-        {
-            final var MAIN_MENU_JFRAME = new MainMenuJFrame();
-            MAIN_MENU_JFRAME.newGame(CONFIG);
-        });
+        SwingUtilities.invokeLater(MainMenuJFrame::new);
     }
 
     public void newGame(BlackjackRulesetConfiguration config)

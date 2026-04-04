@@ -41,7 +41,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JButton playButton;
     private final NumberInputter playerInitialChipsInput;
     private final JLabel playerInitialChipsJLabel;
-    private final MainMenuJFrame rootJFrame;
+    private final JFrame rootJFrame;
     private final JSpinner shoeDeckCountInput;
     private final JLabel shoeDeckCountJLabel;
     private final NumberInputter shoePenetrationInput;
@@ -50,7 +50,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JCheckBox splittingAcesAllowed;
     private final JCheckBox surrenderingAllowed;
 
-    public GameConfigJPanel(MainMenuJFrame rootJFrame)
+    public GameConfigJPanel(JFrame rootJFrame)
     {
         final var MAIN_PANEL_DIMENSION = UiConstants.getGameConfigJDialogDimension();
 
@@ -214,7 +214,16 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
         final var WINDOW = SwingUtilities.getWindowAncestor(this);
         WINDOW.dispose();
-        rootJFrame.newGame(CONFIG);
+
+        if (rootJFrame instanceof MainMenuJFrame mainMenuJFrame)
+        {
+            mainMenuJFrame.newGame(CONFIG);
+        }
+        else
+        {
+            rootJFrame.setVisible(false);
+            new MainMenuJFrame().newGame(CONFIG);
+        }
     }
 
     @Override

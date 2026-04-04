@@ -4,19 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Polished UX for the Swing GUI application; added keystrokes for advancing the engine and submitting text input.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackRulesetConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackRulesetConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardBlackjackRuleset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardBlackjackRuleset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/HandContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/HandContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/playerAction/SurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/playerAction/SurrenderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnAllHandsTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedOnMainHandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/rules/surrendering/SurrenderingAllowedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownSurrenderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/showdown/ShowdownSurrenderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/subsystems/EntityAndHandSubsystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/subsystems/EntityAndHandSubsystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/MainMenuJFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,14 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Updated sourced.md and renamed files for semantic clarity.">
-      <option name="closed" value="true" />
-      <created>1769393740574</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1769393740574</updated>
     </task>
     <task id="LOCAL-00030" summary="Polished the UI code; implemented the singleton pattern in Action.java and added a keystroke method.">
       <option name="closed" value="true" />
@@ -589,11 +574,18 @@
       <option name="project" value="LOCAL" />
       <updated>1775250587844</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests.">
+      <option name="closed" value="true" />
+      <created>1775289532299</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1775289532299</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Integrated ValidatedJTextField.java into GameJFrame and bolstered the concurrency model of the Swing application." />
     <MESSAGE value="Made a solid start on the Swing application/engine integration." />
     <MESSAGE value="Optimized GameJFrame.java and fixed minor issues." />
     <MESSAGE value="Tweaked BlackjackEngine.java to not auto-advance when a player drawing round is completed; altered the listener classes to advance when appropriate. Improved GameJFrame.java and renamed BlackjackEngineState.java." />
@@ -618,7 +610,8 @@
     <MESSAGE value="Fixed broken tests - must verify the correctness of the test suite before proceeding." />
     <MESSAGE value="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite." />
     <MESSAGE value="Polished UX for the Swing GUI application; added keystrokes for advancing the engine and submitting text input." />
-    <option name="LAST_COMMIT_MESSAGE" value="Polished UX for the Swing GUI application; added keystrokes for advancing the engine and submitting text input." />
+    <MESSAGE value="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

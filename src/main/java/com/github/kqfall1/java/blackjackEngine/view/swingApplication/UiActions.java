@@ -39,7 +39,7 @@ public final class UiActions
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final var ROOT = (MainMenuJFrame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
+                final var ROOT = (JFrame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
                 final var CONFIG_DIALOG = new JDialog(ROOT, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
                 CONFIG_DIALOG.setContentPane(new GameConfigJPanel(ROOT));
                 CONFIG_DIALOG.setSize(UiConstants.getGameConfigJDialogDimension());
