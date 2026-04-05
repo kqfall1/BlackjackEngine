@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import java.awt.*;
+import java.io.File;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -14,8 +15,8 @@ import javax.swing.border.Border;
 public final class UiConstants
 {
     public static final String BACK_OF_CARD_IMAGE_FILE_NAME = "back_of_card.png";
-    public static final String BLACKJACK_ENGINE_LOG_FILE_PATH = "src/main/resources/logs/SwingUiEngine.log";
-    public static final String BLACKJACK_ENGINE_LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.SwingUiEngine";
+    public static final String BLACKJACK_ENGINE_LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.BlackjackEngine";
+    public static final String BLACKJACK_ENGINE_LOGGER_FILE_PATH = String.format("%s%s%s.log", System.getProperty("java.io.tmpdir"), File.separator, BLACKJACK_ENGINE_LOGGER_NAME);
     public static final Dimension BLACKJACK_JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
@@ -34,6 +35,7 @@ public final class UiConstants
     public static final String GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL = "Is doubling down on split hands allowed?";
     public static final String GAME_CONFIG_JDIALOG_FAILURE_LABEL = "One or more inputs is invalid.";
     public static final double GAME_CONFIG_JDIALOG_HEIGHT_FACTOR = 0.4;
+    public static final String GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL = "Is logging enabled?";
     public static final String GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL = "Maximum split count:";
     public static final String GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL = "Minimum bet amount:";
     public static final String GAME_CONFIG_JDIALOG_PLAY_BUTTON_LABEL = "Play!";

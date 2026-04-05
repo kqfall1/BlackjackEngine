@@ -38,19 +38,17 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     private final GameActionJPanel gameActionJPanel;
     private final GameCardsJPanel gameCardsJPanel;
     private final GameInfoJPanel gameInfoJPanel;
-    private final MainMenuJFrame mainMenuJFrame;
 
-    public GameJFrame(BlackjackRulesetConfiguration config, MainMenuJFrame mainMenuJFrame)
+    public GameJFrame(BlackjackRulesetConfiguration config)
     {
         gameCardsJPanel = new GameCardsJPanel();
         gameInfoJPanel = new GameInfoJPanel();
-        this.mainMenuJFrame = mainMenuJFrame;
 
         final var ACTION_MAP = getRootPane().getActionMap();
         final var INPUT_MAP = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         blackjackEngine = new BlackjackEngine(
             this,
-            UiConstants.BLACKJACK_ENGINE_LOG_FILE_PATH,
+            UiConstants.BLACKJACK_ENGINE_LOGGER_FILE_PATH,
             UiConstants.BLACKJACK_ENGINE_LOGGER_NAME,
             new StandardBlackjackRuleset(config)
         );
@@ -138,7 +136,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                                     {
                                         gameInfoJPanel.presentFailure(
                                             betThrowable.getMessage(),
-                                            gameInfoJPanel.getAdvanceEngineJButton(),
+                                            //gameInfoJPanel.getAdvanceEngineJButton(),
                                             gameInfoJPanel.getEngineMessageJTextArea()
                                         );
                                     }

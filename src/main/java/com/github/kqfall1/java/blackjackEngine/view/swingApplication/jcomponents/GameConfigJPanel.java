@@ -34,6 +34,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
         JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE
     );
+    private final JCheckBox loggingEnabled;
     private final JSpinner maximumSplitCountInput;
     private final JLabel maximumSplitCountJLabel;
     private final NumberInputter minimumBetAmountInput;
@@ -66,6 +67,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             Integer.MAX_VALUE,
             1
         ));
+        loggingEnabled = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL);
         maximumSplitCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL);
         minimumBetAmountInput = new ValidatedJTextField();
         minimumBetAmountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL);
@@ -89,6 +91,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
         final var JCHECK_BOX_PANEL_WRAPPER = new JPanel();
         JCHECK_BOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECK_BOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));
+        JCHECK_BOX_PANEL_WRAPPER.add(loggingEnabled);
         JCHECK_BOX_PANEL_WRAPPER.add(doublingDownOnSplitHandsAllowed);
         JCHECK_BOX_PANEL_WRAPPER.add(shouldDealerHitOnSoft17);
         JCHECK_BOX_PANEL_WRAPPER.add(splittingAcesAllowed);
@@ -106,17 +109,11 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         JTEXT_FIELD_PANEL_WRAPPER.add(shoeDeckCountInput, getSecondaryJComponentConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add(shoePenetrationJLabel, getJLabelConstraints());
         JTEXT_FIELD_PANEL_WRAPPER.add((ValidatedJTextField) shoePenetrationInput, getSecondaryJComponentConstraints());
-        JTEXT_FIELD_PANEL_WRAPPER.setMaximumSize(new Dimension(
-            Integer.MAX_VALUE,
-            JTEXT_FIELD_PANEL_WRAPPER.getPreferredSize().height
-        ));
+        JTEXT_FIELD_PANEL_WRAPPER.setMaximumSize(new Dimension(Integer.MAX_VALUE, JTEXT_FIELD_PANEL_WRAPPER.getPreferredSize().height));
 
         final var ERROR_JLABEL_PANEL_WRAPPER = new JPanel(new GridBagLayout());
         ERROR_JLABEL_PANEL_WRAPPER.add(errorJLabel);
-        ERROR_JLABEL_PANEL_WRAPPER.setMaximumSize(new Dimension(
-            Integer.MAX_VALUE,
-            ERROR_JLABEL_PANEL_WRAPPER.getPreferredSize().height
-        ));
+        ERROR_JLABEL_PANEL_WRAPPER.setMaximumSize(new Dimension(Integer.MAX_VALUE, ERROR_JLABEL_PANEL_WRAPPER.getPreferredSize().height));
 
         final var PLAY_BUTTON_PANEL_WRAPPER = new JPanel(new GridBagLayout());
         PLAY_BUTTON_PANEL_WRAPPER.add(playButton);
@@ -207,6 +204,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         CONFIG.setPlayerInitialChips(playerInitialChips);
         CONFIG.setShoeDeckCount(shoeDeckCount);
         CONFIG.setShoePenetration(shoePenetration);
+        CONFIG.setLoggingEnabled(loggingEnabled.isSelected());
         CONFIG.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
         CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
         CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());

@@ -61,6 +61,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	{
 		return (currentState == BlackjackEngineState.DEALING || currentState == BlackjackEngineState.INSURANCE_CHECK)
 			&& !activeHandContext.isAltered()
+			&& !activeHandContext.isSplit()
 			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
 			&& dealerHand.getCards().getFirst().getRank() == Rank.ACE
 			&& player.getContexts().size() == 1;
@@ -72,6 +73,7 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
+			&& !activeHandContext.isSplit()
 			&& activeHandContext.getHand().isPocketPair()
 			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE || getConfig().isSplittingAcesAllowed())
 		    && activeHandContextIndex < config.getMaximumSplitCount()

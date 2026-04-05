@@ -49,13 +49,12 @@ public class BlackjackEngine
 	 * </p>
  	 */
 	private int activeHandContextIndex;
-	public static final String CLASS_NAME = "BlackjackEngine";
+	private static final String CLASS_NAME = "BlackjackEngine";
 	private final Dealer dealer;
 	private final BlackjackEngineListener listener;
 	private Logger logger;
 	private final Player player;
 	private final BlackjackRuleset ruleset;
-	private static final String RULE_VIOLATION_MESSAGE = "A blackjack rule was violated.";
 	private static Iterator<HandContext> showdownHandContextIterator;
 	private BlackjackEngineState state;
 
@@ -135,7 +134,7 @@ public class BlackjackEngine
 			}
 			else
 			{
-				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(BlackjackConstants.RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var AMOUNT = getActiveHandContext().getBet().getHalf();
@@ -160,8 +159,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, METHOD_NAME);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.DEALING : "getState() != BlackjackEngineState.DEALING";
-		if (getRuleset().isInsuranceBetPossible(
-			getActiveHandContext(), getState(), getPlayer(), getDealer().getHand()))
+		if (getRuleset().isInsuranceBetPossible(getActiveHandContext(), getState(), getPlayer(), getDealer().getHand()))
 		{
 			getListener().onInsuranceBetOpportunityDetected(getDealer().getHand().getCards().getFirst());
 			setState(BlackjackEngineState.INSURANCE_CHECK);
@@ -586,7 +584,7 @@ public class BlackjackEngine
 			}
 			else
 			{
-				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(BlackjackConstants.RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var doubleDownAmount = getActiveHandContext().getBet().getAmount();
@@ -652,7 +650,7 @@ public class BlackjackEngine
 			}
 			else
 			{
-				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(BlackjackConstants.RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		final var splitAmount = getActiveHandContext().getBet().getAmount();
@@ -707,7 +705,7 @@ public class BlackjackEngine
 			}
 			else
 			{
-				throwException(new RuleViolationException(RULE_VIOLATION_MESSAGE), METHOD_NAME);
+				throwException(new RuleViolationException(BlackjackConstants.RULE_VIOLATION_MESSAGE), METHOD_NAME);
 			}
 		}
 		getActiveHandContext().setSurrendered();

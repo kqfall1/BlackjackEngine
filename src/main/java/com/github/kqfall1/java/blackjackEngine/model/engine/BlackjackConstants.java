@@ -23,27 +23,15 @@ public final class BlackjackConstants
 	public static final double DEFAULT_SHOE_PENETRATION = 80.0;
 	public static final int INITIAL_CARD_COUNT = 2;
 	public static final int INITIAL_HAND_COUNT = 1;
+	public static final String RULE_VIOLATION_MESSAGE = "A blackjack rule was violated.";
 	public static final int TOP_SCORE = 21;
-
-	public static final PayoutRatio BLACKJACK_RATIO = new PayoutRatio(
-		BigDecimal.valueOf(5),
-		BigDecimal.valueOf(4)
-	);
+	public static final PayoutRatio BLACKJACK_RATIO = new PayoutRatio(BigDecimal.valueOf(5), BigDecimal.valueOf(4));
 	public static final String BLACKJACK_RATIO_KEY = "Blackjack Payout Ratio";
-	public static final PayoutRatio INSURANCE_RATIO = new PayoutRatio(
-		BigDecimal.TWO,
-		BigDecimal.ONE
-	);
+	public static final PayoutRatio INSURANCE_RATIO = new PayoutRatio(BigDecimal.TWO, BigDecimal.ONE);
 	public static final String INSURANCE_RATIO_KEY = "Insurance Payout Ratio";
-	public static final PayoutRatio PUSH_RATIO = new PayoutRatio(
-		BigDecimal.ONE,
-		BigDecimal.TWO
-	);
+	public static final PayoutRatio PUSH_RATIO = new PayoutRatio(BigDecimal.ONE, BigDecimal.TWO);
 	public static final String PUSH_RATIO_KEY = "Push Payout Ratio";
-	public static final PayoutRatio SURRENDER_RATIO = new PayoutRatio(
-		BigDecimal.ONE,
-		BigDecimal.valueOf(4)
-	);
+	public static final PayoutRatio SURRENDER_RATIO = new PayoutRatio(BigDecimal.ONE, BigDecimal.valueOf(4));
 	public static final String SURRENDER_RATIO_KEY = "Surrender Payout Ratio";
 
 	private BlackjackConstants() {}

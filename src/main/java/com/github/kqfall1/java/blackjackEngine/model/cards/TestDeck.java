@@ -35,9 +35,7 @@ public final class TestDeck extends Deck
 
 	public List<Card> getInitialCards()
 	{
-		return initialCards == null
-			? List.of()
-			: List.copyOf(initialCards);
+		return initialCards == null ? List.of() : List.copyOf(initialCards);
 	}
 
 	public void removeCards(Card... cards)
