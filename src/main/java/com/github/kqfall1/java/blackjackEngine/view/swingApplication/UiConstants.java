@@ -14,8 +14,9 @@ import javax.swing.border.Border;
  */
 public final class UiConstants
 {
+    public static final String SWING_APPLICATION_PACKAGE_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication";
     public static final String BACK_OF_CARD_IMAGE_FILE_NAME = "back_of_card.png";
-    public static final String BLACKJACK_ENGINE_LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication.BlackjackEngine";
+    public static final String BLACKJACK_ENGINE_LOGGER_NAME = String.format("%s%s", SWING_APPLICATION_PACKAGE_NAME, ".BlackjackEngine");
     public static final String BLACKJACK_ENGINE_LOGGER_FILE_PATH = String.format("%s%s%s.log", System.getProperty("java.io.tmpdir"), File.separator, BLACKJACK_ENGINE_LOGGER_NAME);
     public static final Dimension BLACKJACK_JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));

@@ -39,11 +39,21 @@ public final class UiActions
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                final var ROOT = (JFrame) SwingUtilities.getAncestorOfClass(Frame.class, (Component) e.getSource());
-                final var CONFIG_DIALOG = new JDialog(ROOT, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
-                CONFIG_DIALOG.setContentPane(new GameConfigJPanel(ROOT));
+                JFrame root;
+
+                if (e.getSource() instanceof JMenuItem)
+                {
+                    root = (JFrame) SwingUtilities.getWindowAncestor(((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker());
+                }
+                else
+                {
+                    root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (Component) e.getSource());
+                }
+
+                final var CONFIG_DIALOG = new JDialog(root, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
+                CONFIG_DIALOG.setContentPane(new GameConfigJPanel(root));
                 CONFIG_DIALOG.setSize(UiConstants.getGameConfigJDialogDimension());
-                CONFIG_DIALOG.setLocationRelativeTo(ROOT);
+                CONFIG_DIALOG.setLocationRelativeTo(root);
                 CONFIG_DIALOG.setVisible(true);
             }
         };

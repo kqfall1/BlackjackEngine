@@ -32,7 +32,7 @@ public final class MainMenuJFrame extends BlackjackJFrame
 
     public void newGame(BlackjackRulesetConfiguration config)
     {
-        new GameJFrame(config, this);
+        new GameJFrame(config);
         setVisible(false);
     }
 }

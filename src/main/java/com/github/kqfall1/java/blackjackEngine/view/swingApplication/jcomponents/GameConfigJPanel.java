@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.util.concurrent.CompletionException;
 import java.util.HashSet;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 
 /**
@@ -54,45 +55,49 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     public GameConfigJPanel(JFrame rootJFrame)
     {
         final var MAIN_PANEL_DIMENSION = UiConstants.getGameConfigJDialogDimension();
+        final var PREFERENCES_NODE = Preferences.userRoot().node(UiConstants.SWING_APPLICATION_PACKAGE_NAME);
 
         doublingDownOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL);
+        doublingDownOnSplitHandsAllowed.setSelected(PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL, false));
         errorJLabel = new JLabel();
-        errorJLabel.setMaximumSize(new Dimension(
-            MAIN_PANEL_DIMENSION.width,
-            errorJLabel.getHeight()
-        ));
-        maximumSplitCountInput = new JSpinner(new SpinnerNumberModel(
-            1,
-            0,
-            Integer.MAX_VALUE,
-            1
-        ));
+        errorJLabel.setMaximumSize(new Dimension(MAIN_PANEL_DIMENSION.width, errorJLabel.getHeight()));
         loggingEnabled = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL);
+        loggingEnabled.setSelected(PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL, false));
+        maximumSplitCountInput = new JSpinner(new SpinnerNumberModel(
+            PREFERENCES_NODE.getInt(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL, 1),
+            0, Integer.MAX_VALUE, 1
+        ));
         maximumSplitCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL);
         minimumBetAmountInput = new ValidatedJTextField();
+        ((JTextField) minimumBetAmountInput).setText(Double.valueOf(PREFERENCES_NODE.getDouble(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL, 1)).toString());
         minimumBetAmountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL);
         playButton = new JButton(UiConstants.GAME_CONFIG_JDIALOG_PLAY_BUTTON_LABEL);
         playButton.addActionListener(this::readConfigValues);
         playerInitialChipsInput = new ValidatedJTextField();
+        ((JTextField) playerInitialChipsInput).setText(Double.valueOf(PREFERENCES_NODE.getDouble(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL, 1)).toString());
         playerInitialChipsJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL);
         this.rootJFrame = rootJFrame;
         shoeDeckCountInput = new JSpinner(new SpinnerNumberModel(
-            Shoe.MINIMUM_NUMBER_OF_DECKS,
-            Shoe.MINIMUM_NUMBER_OF_DECKS,
-            Shoe.MAXIMUM_NUMBER_OF_DECKS,
-            1
+            PREFERENCES_NODE.getInt(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL, Shoe.MINIMUM_NUMBER_OF_DECKS),
+            Shoe.MINIMUM_NUMBER_OF_DECKS, Shoe.MAXIMUM_NUMBER_OF_DECKS, 1
         ));
         shoeDeckCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL);
         shoePenetrationInput = new ValidatedJTextField();
+        ((JTextField) shoePenetrationInput).setText(Double.valueOf(PREFERENCES_NODE.getDouble(
+            UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL, Shoe.MINIMUM_PENETRATION
+        )).toString());
         shoePenetrationJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL);
         shouldDealerHitOnSoft17 = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL);
+        shouldDealerHitOnSoft17.setSelected(PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL, false));
         splittingAcesAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL);
+        splittingAcesAllowed.setSelected(PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL, false));
         surrenderingAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL);
+        surrenderingAllowed.setSelected(PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL, false));
 
         final var JCHECK_BOX_PANEL_WRAPPER = new JPanel();
         JCHECK_BOX_PANEL_WRAPPER.setLayout(new BoxLayout(JCHECK_BOX_PANEL_WRAPPER, BoxLayout.Y_AXIS));
-        JCHECK_BOX_PANEL_WRAPPER.add(loggingEnabled);
         JCHECK_BOX_PANEL_WRAPPER.add(doublingDownOnSplitHandsAllowed);
+        JCHECK_BOX_PANEL_WRAPPER.add(loggingEnabled);
         JCHECK_BOX_PANEL_WRAPPER.add(shouldDealerHitOnSoft17);
         JCHECK_BOX_PANEL_WRAPPER.add(splittingAcesAllowed);
         JCHECK_BOX_PANEL_WRAPPER.add(surrenderingAllowed);
@@ -183,6 +188,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         BigDecimal playerInitialChips;
         int shoeDeckCount;
         double shoePenetration;
+        final var PREFERENCES_NODE = Preferences.userRoot().node(UiConstants.SWING_APPLICATION_PACKAGE_NAME);
 
         try
         {
@@ -198,17 +204,28 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
             return;
         }
 
+        PREFERENCES_NODE.putBoolean(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL, doublingDownOnSplitHandsAllowed.isSelected());
+        PREFERENCES_NODE.putBoolean(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL, loggingEnabled.isSelected());
+        PREFERENCES_NODE.putBoolean(UiConstants.GAME_CONFIG_JDIALOG_SHOULD_DEALER_HIT_ON_SOFT_17_LABEL, shouldDealerHitOnSoft17.isSelected());
+        PREFERENCES_NODE.putBoolean(UiConstants.GAME_CONFIG_JDIALOG_SPLITTING_ACES_ALLOWED_LABEL, splittingAcesAllowed.isSelected());
+        PREFERENCES_NODE.putBoolean(UiConstants.GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL, surrenderingAllowed.isSelected());
+        PREFERENCES_NODE.putInt(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL, maximumSplitCount);
+        PREFERENCES_NODE.putDouble(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL, minimumBetAmount.doubleValue());
+        PREFERENCES_NODE.putDouble(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL, playerInitialChips.doubleValue());
+        PREFERENCES_NODE.putInt(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL, shoeDeckCount);
+        PREFERENCES_NODE.putDouble(UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL, shoePenetration);
+
         final var CONFIG = new BlackjackRulesetConfiguration();
+        CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
+        CONFIG.setLoggingEnabled(loggingEnabled.isSelected());
+        CONFIG.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
+        CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
+        CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
         CONFIG.setMaximumSplitCount(maximumSplitCount);
         CONFIG.setMinimumBetAmount(minimumBetAmount);
         CONFIG.setPlayerInitialChips(playerInitialChips);
         CONFIG.setShoeDeckCount(shoeDeckCount);
         CONFIG.setShoePenetration(shoePenetration);
-        CONFIG.setLoggingEnabled(loggingEnabled.isSelected());
-        CONFIG.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
-        CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
-        CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
-        CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
 
         final var WINDOW = SwingUtilities.getWindowAncestor(this);
         WINDOW.dispose();
