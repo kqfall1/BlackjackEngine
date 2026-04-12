@@ -1,7 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.function.Consumer;

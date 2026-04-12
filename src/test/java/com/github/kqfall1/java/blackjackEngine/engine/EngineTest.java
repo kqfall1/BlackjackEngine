@@ -8,7 +8,7 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
-import com.github.kqfall1.java.handlers.input.ConsoleHandler;
+import com.github.kqfall1.java.handlers.io.ConsoleIoHandler;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class EngineTest
 {
 	public BlackjackEngine engine;
-	public ConsoleHandler handler;
+	public ConsoleIoHandler handler;
 	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	public String logFilePath;
 	public String loggerName;
@@ -94,7 +94,7 @@ public abstract class EngineTest
 
 	public final void initDependencies()
 	{
-		handler = new ConsoleHandler();
+		handler = new ConsoleIoHandler();
 		final var CONFIG = new BlackjackRulesetConfiguration();
 		CONFIG.setPlayerInitialChips(INITIAL_PLAYER_CHIP_AMOUNT);
 		ruleset = new StandardBlackjackRuleset(CONFIG);
