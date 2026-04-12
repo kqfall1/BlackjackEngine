@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import java.awt.*;
 import java.io.File;
+import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -76,6 +77,7 @@ public final class UiConstants
     public static final int MARGIN_MEDIUM = 100;
     public static final int MARGIN_SMALL = 25;
     public static final int MARGIN_EXTRA_SMALL = 10;
+    public static final Preferences PREFERENCES_NODE = Preferences.userRoot().node(UiConstants.SWING_APPLICATION_PACKAGE_NAME);
     public static final int SLEEP_INTERVAL = 1000;
 
     private UiConstants() {}
