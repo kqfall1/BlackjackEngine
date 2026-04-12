@@ -17,10 +17,10 @@ public final class MainMenuJFrame extends BlackjackJFrame
 {
     public MainMenuJFrame()
     {
-        final var PANEL_WRAPPER = new JPanel(new GridBagLayout());
-        PANEL_WRAPPER.add(new MainMenuButtonJPanel(UiActions.getInstance()));
-        PANEL_WRAPPER.setOpaque(false);
-        add(PANEL_WRAPPER, BorderLayout.CENTER);
+        final var panelWrapper = new JPanel(new GridBagLayout());
+        panelWrapper.add(new MainMenuButtonJPanel(UiActions.getInstance()));
+        panelWrapper.setOpaque(false);
+        add(panelWrapper, BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }

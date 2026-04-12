@@ -11,9 +11,11 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import com.github.kqfall1.java.enums.YesNoInput;
-import com.github.kqfall1.java.handlers.input.ConsoleHandler;
+import com.github.kqfall1.java.handlers.io.ConsoleIoHandler;
 import com.github.kqfall1.java.managers.InputManager;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.util.Optional;
 import java.util.logging.Level;
 
 /**
@@ -33,23 +35,20 @@ import java.util.logging.Level;
 public final class ConsoleBlackjackController implements BlackjackEngineListener
 {
 	private final BlackjackEngine engine;
-	private final ConsoleHandler handler;
+	private final ConsoleIoHandler handler;
 	private final InputManager inputManager;
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.ConsoleBlackjackControllerEngine";
 	private static final String LOG_FILE_PATH = "src/main/resources/logs/ConsoleBlackjackControllerEngine.log";
 	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
-	ConsoleBlackjackController(ConsoleHandler handler, String logFilePath, String loggerName, BlackjackRuleset ruleset)
+	ConsoleBlackjackController(ConsoleIoHandler handler, Optional<Path> loggerFilePath, BlackjackRuleset ruleset)
 	{
 		assert handler != null : "handler == null";
-		assert logFilePath != null && !logFilePath.isBlank()
-			: "logFilePath == null || logFilePath.isBlank()";
-		assert loggerName != null && !loggerName.isBlank()
-			: "loggerName == null || loggerName.isBlank()";
+		assert loggerFilePath != null : "loggerFilePath == null";
 		assert ruleset != null : "ruleset == null";
 		this.handler = handler;
 		inputManager = new InputManager(handler, handler, handler);
-		engine = new BlackjackEngine(this, logFilePath, loggerName, ruleset);
+		engine = new BlackjackEngine(this, Optional.empty(), ruleset);
 	}
 
 	BlackjackEngine getEngine()
@@ -57,7 +56,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		return engine;
 	}
 
-	private ConsoleHandler getHandler()
+	private ConsoleIoHandler getHandler()
 	{
 		return handler;
 	}
@@ -69,20 +68,15 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 	public static void main(String[] args)
 	{
-		final var CONFIG = new BlackjackRulesetConfiguration();
-		final var HANDLER = new ConsoleHandler();
-		CONFIG.setLoggingEnabled(true);
-		CONFIG.setSurrenderingAllowed(true);
-		CONFIG.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
-		final var RULESET = new StandardBlackjackRuleset(CONFIG);
-		final var CONTROLLER = new ConsoleBlackjackController(
-			HANDLER,
-			LOG_FILE_PATH,
-			LOGGER_NAME,
-			RULESET
-		);
-		CONTROLLER.getEngine().getLogger().setLevel(Level.OFF);
-		CONTROLLER.getEngine().start();
+		final var config = new BlackjackRulesetConfiguration();
+		final var handler = new ConsoleIoHandler();
+		config.setLoggingEnabled(true);
+		config.setSurrenderingAllowed(true);
+		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
+		final var ruleset = new StandardBlackjackRuleset(config);
+		final var controller = new ConsoleBlackjackController(handler, Optional.empty(), ruleset);
+		controller.getEngine().getLogger().setLevel(Level.OFF);
+		controller.getEngine().start();
 	}
 
 	@Override
@@ -299,11 +293,11 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private void performAction()
 	{
 		final var selection = getInputManager().getStringInputter().getString(
-			String.format(
+			Optional.of(String.format(
 				"Your score is %d. Enter 'd' to double down, 'h' to hit, 'sp' to split, 'st' to stand, 'su' to surrender",
 				getEngine().getActiveHandContext().getHand().getScore()
-			),
-			new String[] {"d", "h", "sp", "st", "su"}
+			)),
+			Optional.of(new String[] {"d", "h", "sp", "st", "su"})
 		).join();
 
 		try
@@ -331,10 +325,10 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private void placeHandBet()
 	{
 		final var amount = getInputManager().getNumberInputter().getNumber(
-			String.format(
+			Optional.of(String.format(
 				"You have $%.2f. Please place a bet",
 				getEngine().getPlayer().getChips()
-			),
+			)),
 			Float.MIN_VALUE,
 			Float.MAX_VALUE
 		).join();
@@ -361,7 +355,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			return;
 		}
 
-		final var ANSWER = getInputManager().getYesNoInputter().getYesNo("Do you wish to place an insurance bet?").join();
+		final var ANSWER = getInputManager().getYesNoInputter().getYesNo(Optional.of("Do you wish to place an insurance bet?")).join();
 
 		try
 		{

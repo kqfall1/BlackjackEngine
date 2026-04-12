@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
+import com.github.kqfall1.java.frameworks.awt.swing.SwingUtils;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.function.Consumer;
@@ -38,22 +39,15 @@ public final class UiActions
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                JFrame root;
-
-                if (e.getSource() instanceof JMenuItem)
+                final var optionalRootJFrame = SwingUtils.getRootJFrame(e);
+                optionalRootJFrame.ifPresent(rootJFrame ->
                 {
-                    root = (JFrame) SwingUtilities.getWindowAncestor(((JPopupMenu) ((JMenuItem) e.getSource()).getParent()).getInvoker());
-                }
-                else
-                {
-                    root = (JFrame) SwingUtilities.getAncestorOfClass(JFrame.class, (Component) e.getSource());
-                }
-
-                final var CONFIG_DIALOG = new JDialog(root, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
-                CONFIG_DIALOG.setContentPane(new GameConfigJPanel(root));
-                CONFIG_DIALOG.setSize(UiConstants.getGameConfigJDialogDimension());
-                CONFIG_DIALOG.setLocationRelativeTo(root);
-                CONFIG_DIALOG.setVisible(true);
+                    final var configDialog = new JDialog(rootJFrame, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
+                    configDialog.setContentPane(new GameConfigJPanel(rootJFrame));
+                    configDialog.setSize(UiConstants.getGameConfigJDialogDimension());
+                    configDialog.setLocationRelativeTo(rootJFrame);
+                    configDialog.setVisible(true);
+                });
             }
         };
 
@@ -104,12 +98,12 @@ public final class UiActions
 
     public void setKeystrokes(JFrame jframe)
     {
-        final var ACTION_MAP = jframe.getRootPane().getActionMap();
-        final var INPUT_MAP = jframe.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        final var actionMap = jframe.getRootPane().getActionMap();
+        final var inputMap = jframe.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        ACTION_MAP.put(UiConstants.JMENU_ITEM_EXIT_LABEL, getExit());
-        ACTION_MAP.put(UiConstants.JMENU_ITEM_NEW_GAME_LABEL, getNewGame());
-        INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl E"), UiConstants.JMENU_ITEM_EXIT_LABEL);
-        INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl N"), UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        actionMap.put(UiConstants.JMENU_ITEM_EXIT_LABEL, getExit());
+        actionMap.put(UiConstants.JMENU_ITEM_NEW_GAME_LABEL, getNewGame());
+        inputMap.put(KeyStroke.getKeyStroke("ctrl E"), UiConstants.JMENU_ITEM_EXIT_LABEL);
+        inputMap.put(KeyStroke.getKeyStroke("ctrl N"), UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
     }
 }

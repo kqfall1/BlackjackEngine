@@ -4,16 +4,17 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
+import com.github.kqfall1.java.frameworks.awt.AwtUtils;
+import com.github.kqfall1.java.frameworks.awt.swing.ValidatedJTextField;
 import com.github.kqfall1.java.interfaces.FailurePresenter;
 import com.github.kqfall1.java.interfaces.inputters.NumberInputter;
-import com.github.kqfall1.java.javax.swing.AwtUtils;
-import com.github.kqfall1.java.javax.swing.ValidatedJTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.util.concurrent.CompletionException;
 import java.util.HashSet;
 import java.util.prefs.Preferences;
+import java.util.Optional;
 import javax.swing.*;
 
 /**
@@ -134,7 +135,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
     private Component[] getErrorRelatedComponents()
     {
-        final var ALL_COMPONENTS = AwtUtils.getNestedComponents(this);
+        final var ALL_COMPONENTS = AwtUtils.getNestedComponents(Optional.empty(), this);
         final var ERROR_RELATED_COMPONENTS = new HashSet<Component>();
 
         for (Component component : ALL_COMPONENTS)

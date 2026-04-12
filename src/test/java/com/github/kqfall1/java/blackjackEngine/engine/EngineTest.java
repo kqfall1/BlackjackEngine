@@ -12,6 +12,7 @@ import com.github.kqfall1.java.handlers.io.ConsoleIoHandler;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.logging.Level;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -406,7 +407,7 @@ public abstract class EngineTest
 
 	private void start()
 	{
-		engine = new BlackjackEngine(LISTENER, logFilePath, loggerName, ruleset);
+		engine = new BlackjackEngine(LISTENER, Optional.empty(), ruleset);
 		engine.start();
 	}
 }

@@ -15,12 +15,15 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset
 import com.github.kqfall1.java.utils.LoggerUtils;
 import com.github.kqfall1.java.utils.StringUtils;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Optional;
 
 /**
  * Orchestrates the entire blackjack library by continuously processing input and
@@ -58,11 +61,10 @@ public class BlackjackEngine
 	private static Iterator<HandContext> showdownHandContextIterator;
 	private BlackjackEngineState state;
 
-	public BlackjackEngine(BlackjackEngineListener listener, String loggerFilePath, String loggerName, BlackjackRuleset ruleset)
+	public BlackjackEngine(BlackjackEngineListener listener, Optional<Path> loggerFilePath, BlackjackRuleset ruleset)
 	{
 		assert listener != null : "listener == null";
 		assert loggerFilePath != null : "loggerFilePath == null";
-		assert loggerName != null : "loggerName == null";
 		assert ruleset != null : "ruleset == null";
 		this.ruleset = ruleset;
 		dealer = new Dealer(
@@ -75,16 +77,16 @@ public class BlackjackEngine
 		{
 			try
 			{
-				logger = LoggerUtils.newFileLogger(loggerFilePath, loggerName, true);
+				logger = LoggerUtils.getFileLogger(loggerFilePath, true);
 			}
 			catch (IOException e)
 			{
-				logger = Logger.getLogger(loggerName);
+				throw new UncheckedIOException(e);
 			}
 		}
 		else
 		{
-			logger = Logger.getLogger(loggerName);
+			logger = Logger.getAnonymousLogger();
 			logger.setLevel(Level.OFF);
 		}
 		player = new Player();

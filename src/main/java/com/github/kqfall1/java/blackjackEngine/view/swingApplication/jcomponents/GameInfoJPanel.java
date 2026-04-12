@@ -1,10 +1,11 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.frameworks.awt.AwtUtils;
+import com.github.kqfall1.java.frameworks.awt.swing.ValidatedJTextField;
 import com.github.kqfall1.java.interfaces.FailurePresenter;
-import com.github.kqfall1.java.javax.swing.AwtUtils;
-import com.github.kqfall1.java.javax.swing.ValidatedJTextField;
 import java.awt.*;
+import java.util.Optional;
 import javax.swing.*;
 
 /**
@@ -79,12 +80,9 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         add(GAME_INPUT_WRAPPER);
         add(engineMessageJScrollPane);
 
-        for (Component component : AwtUtils.getNestedComponents(this))
+        for (Component jLabel : AwtUtils.getNestedComponents(Optional.of(JLabel.class), this))
         {
-            if (component instanceof JLabel jlabel)
-            {
-                jlabel.setFont(UiConstants.JLABEL_LARGE_FONT);
-            }
+            jLabel.setFont(UiConstants.JLABEL_LARGE_FONT);
         }
     }
 
