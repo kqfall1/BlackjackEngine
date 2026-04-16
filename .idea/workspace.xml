@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Re-integrated kqfall1JavaUtils after refactoring it.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Polished GameConfigJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiActions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/ApplicationJMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/ApplicationJMenuBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sources.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sources.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,14 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Created a decent UI for GameConfigJPanel.java.">
-      <option name="closed" value="true" />
-      <created>1771166127123</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1771166127123</updated>
     </task>
     <task id="LOCAL-00036" summary="Improved the UX for GameConfigJPanel.java.">
       <option name="closed" value="true" />
@@ -580,11 +576,18 @@
       <option name="project" value="LOCAL" />
       <updated>1776036903012</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Polished GameConfigJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1776038392023</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1776038392025</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improved the naming of various UiConstants.java members." />
     <MESSAGE value="Made significant progress with integrating the Swing application with BlackjackEngine.java." />
     <MESSAGE value="Improved UX and fixed a subtle concurrency bug." />
     <MESSAGE value="Fixed a UX bug involving chip amount's after placing an insurance bet." />
@@ -609,7 +612,8 @@
     <MESSAGE value="User configuration settings are stored and retrieved with the Preferences API; fixed a bug involving the new game action being invoked from the JMenu." />
     <MESSAGE value="Re-synced with Maven; polished source code." />
     <MESSAGE value="Re-integrated kqfall1JavaUtils after refactoring it." />
-    <option name="LAST_COMMIT_MESSAGE" value="Re-integrated kqfall1JavaUtils after refactoring it." />
+    <MESSAGE value="Polished GameConfigJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Polished GameConfigJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

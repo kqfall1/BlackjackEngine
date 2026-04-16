@@ -16,6 +16,7 @@ public class ApplicationJMenuBar extends JMenuBar
     {
         final var FILE_MENU = new JMenu(UiConstants.JMENU_FILE_LABEL);
         FILE_MENU.add(uiActions.getExit());
+        FILE_MENU.add(uiActions.getMainMenu());
         FILE_MENU.add(uiActions.getNewGame());
         add(FILE_MENU);
     }

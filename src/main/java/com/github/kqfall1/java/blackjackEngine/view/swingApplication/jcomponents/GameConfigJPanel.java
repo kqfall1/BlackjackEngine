@@ -235,8 +235,8 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         }
         else
         {
-            rootJFrame.setVisible(false);
             new MainMenuJFrame().newGame(CONFIG);
+            rootJFrame.setVisible(false);
         }
     }
 

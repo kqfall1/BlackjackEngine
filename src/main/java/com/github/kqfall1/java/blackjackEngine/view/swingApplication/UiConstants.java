@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import java.awt.*;
-import java.io.File;
 import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -18,7 +17,6 @@ public final class UiConstants
     public static final String SWING_APPLICATION_PACKAGE_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication";
     public static final String BACK_OF_CARD_IMAGE_FILE_NAME = "back_of_card.png";
     public static final String BLACKJACK_ENGINE_LOGGER_NAME = String.format("%s%s", SWING_APPLICATION_PACKAGE_NAME, ".BlackjackEngine");
-    public static final String BLACKJACK_ENGINE_LOGGER_FILE_PATH = String.format("%s%s%s.log", System.getProperty("java.io.tmpdir"), File.separator, BLACKJACK_ENGINE_LOGGER_NAME);
     public static final Dimension BLACKJACK_JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
@@ -27,7 +25,7 @@ public final class UiConstants
     public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
     public static final String GAME_ACTION_ADVANCE_LABEL = "Advance";
-    public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double down";
+    public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double Down";
     public static final String GAME_ACTION_ENTER_KEYSTROKE_LABEL = "ENTER";
     public static final String GAME_ACTION_HIT_LABEL = "Hit";
     public static final String GAME_ACTION_SPLIT_LABEL = "Split";
@@ -72,6 +70,7 @@ public final class UiConstants
     public static final Font JLABEL_LARGE_FONT = new Font("Georgia", Font.PLAIN, 16);
     public static final String JMENU_FILE_LABEL = "File";
     public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
+    public static final String JMENU_ITEM_MAIN_MENU_LABEL = "Main Menu";
     public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
     public static final int MARGIN_LARGE = 350;
     public static final int MARGIN_MEDIUM = 100;
