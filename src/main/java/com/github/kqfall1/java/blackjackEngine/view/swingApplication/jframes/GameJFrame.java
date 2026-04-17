@@ -173,7 +173,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                 });
             }
-        }, UiConstants.GAME_ACTION_SUBMIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke(UiConstants.GAME_ACTION_ENTER_KEYSTROKE_LABEL));
+        }, UiConstants.GAME_ACTION_SUBMIT_LABEL, ACTION_MAP, INPUT_MAP, KeyStroke.getKeyStroke("ENTER"));
         final var surrender = UiActions.getInstance().getGameAction(e ->
         {
             disableGameActionJPanelJButtons();

@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.util.concurrent.CompletionException;
 import java.util.HashSet;
-import java.util.prefs.Preferences;
 import java.util.Optional;
 import javax.swing.*;
 
@@ -55,8 +54,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
     public GameConfigJPanel(JFrame rootJFrame)
     {
-        final var mainPanelDimension = UiConstants.getGameConfigJDialogDimension();
-
+        final var mainPanelDimension = UiConstants.GAME_JDIALOG_DIMENSION;
         doublingDownOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL);
         doublingDownOnSplitHandsAllowed.setSelected(UiConstants.PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL, false));
         errorJLabel = new JLabel();

@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
- * A static class that holds simple, constant values required for the Swing user interface.
+ * A static class that holds and computes simple, constant values required for the Swing user interface.
  *
  * @author kqfall1
  * @since 24/01/2026
@@ -16,7 +16,6 @@ public final class UiConstants
 {
     public static final String SWING_APPLICATION_PACKAGE_NAME = "com.github.kqfall1.java.blackjackEngine.view.swingApplication";
     public static final String BACK_OF_CARD_IMAGE_FILE_NAME = "back_of_card.png";
-    public static final String BLACKJACK_ENGINE_LOGGER_NAME = String.format("%s%s", SWING_APPLICATION_PACKAGE_NAME, ".BlackjackEngine");
     public static final Dimension BLACKJACK_JFRAME_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
@@ -25,9 +24,12 @@ public final class UiConstants
     public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
     public static final String GAME_ACTION_ADVANCE_LABEL = "Advance";
+    public static final String GAME_ACTION_CREDITS_LABEL = "Credits";
     public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double Down";
-    public static final String GAME_ACTION_ENTER_KEYSTROKE_LABEL = "ENTER";
+    public static final String GAME_ACTION_EXIT_LABEL = "Exit";
     public static final String GAME_ACTION_HIT_LABEL = "Hit";
+    public static final String GAME_ACTION_MAIN_MENU_LABEL = "Main Menu";
+    public static final String GAME_ACTION_NEW_GAME_LABEL = "New Game";
     public static final String GAME_ACTION_SPLIT_LABEL = "Split";
     public static final String GAME_ACTION_STAND_LABEL = "Stand";
     public static final String GAME_ACTION_SUBMIT_LABEL = "Submit";
@@ -57,6 +59,10 @@ public final class UiConstants
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH = 100;
     public static final String GAME_INFO_JPANEL_PLAYER_CHIP_AMOUNT_LABEL = "Player's chips: ";
+    public static final Dimension GAME_JDIALOG_DIMENSION = new Dimension(
+        (int) (BLACKJACK_JFRAME_DIMENSION.width * GAME_CONFIG_JDIALOG_WIDTH_FACTOR),
+        (int) (BLACKJACK_JFRAME_DIMENSION.height * GAME_CONFIG_JDIALOG_HEIGHT_FACTOR)
+    );
     public static final String GAME_MESSAGE_BET_PLACED = "You have placed a bet of ";
     public static final String GAME_MESSAGE_BUSTED = "You have busted. Better luck next time!";
     public static final String GAME_MESSAGE_INSURANCE_BET_LOST = "You have lost your insurance bet.";
@@ -69,9 +75,6 @@ public final class UiConstants
     public static final ImageIcon JFRAME_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final Font JLABEL_LARGE_FONT = new Font("Georgia", Font.PLAIN, 16);
     public static final String JMENU_FILE_LABEL = "File";
-    public static final String JMENU_ITEM_EXIT_LABEL = "Exit";
-    public static final String JMENU_ITEM_MAIN_MENU_LABEL = "Main Menu";
-    public static final String JMENU_ITEM_NEW_GAME_LABEL = "New Game";
     public static final int MARGIN_LARGE = 350;
     public static final int MARGIN_MEDIUM = 100;
     public static final int MARGIN_SMALL = 25;
@@ -84,13 +87,5 @@ public final class UiConstants
     public static String getInputErrorMessage(String input)
     {
         return String.format("Your input of \"%s\" is invalid.", input);
-    }
-
-    public static Dimension getGameConfigJDialogDimension()
-    {
-        return new Dimension(
-            (int) (BLACKJACK_JFRAME_DIMENSION.width * GAME_CONFIG_JDIALOG_WIDTH_FACTOR),
-            (int) (BLACKJACK_JFRAME_DIMENSION.height * GAME_CONFIG_JDIALOG_HEIGHT_FACTOR)
-        );
     }
 }

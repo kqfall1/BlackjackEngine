@@ -22,16 +22,19 @@ public final class MainMenuButtonJPanel extends JPanel
         setOpaque(false);
 
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        final var NEW_GAME_BUTTON = new MainMenuJPanelJButton(uiActions.getNewGame());
-        NEW_GAME_BUTTON.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(NEW_GAME_BUTTON);
+        final var newGameButton = new MainMenuJPanelJButton(uiActions.getNewGame());
+        newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(newGameButton);
 
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        final var EXIT_BUTTON = new MainMenuJPanelJButton(uiActions.getExit());
-        EXIT_BUTTON.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(EXIT_BUTTON);
+        final var creditsButton = new MainMenuJPanelJButton(uiActions.getCredits());
+        creditsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(creditsButton);
 
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
+        final var exitButton = new MainMenuJPanelJButton(uiActions.getExit());
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(exitButton);
     }
 
     private static class MainMenuJPanelJButton extends JButton

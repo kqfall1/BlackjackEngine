@@ -1,5 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.CreditsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
@@ -17,6 +18,7 @@ import javax.swing.*;
  */
 public final class UiActions
 {
+    private final Action credits;
     private final Action exit;
     private static UiActions instance;
     private final Action mainMenu;
@@ -24,6 +26,26 @@ public final class UiActions
 
     private UiActions()
     {
+        credits = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                final var optionalWindow = AwtUtils.getRootWindow(e);
+                optionalWindow.ifPresent(window ->
+                {
+                    final var configDialog = new JDialog(window, UiConstants.GAME_ACTION_CREDITS_LABEL, Dialog.ModalityType.MODELESS);
+                    configDialog.setContentPane(new CreditsJPanel());
+                    configDialog.setSize(UiConstants.GAME_JDIALOG_DIMENSION);
+                    configDialog.setLocationRelativeTo(window);
+                    configDialog.setVisible(true);
+                });
+            }
+        };
+        credits.putValue(Action.LONG_DESCRIPTION, UiConstants.GAME_ACTION_CREDITS_LABEL);
+        credits.putValue(Action.NAME, UiConstants.GAME_ACTION_CREDITS_LABEL);
+        credits.putValue(Action.SHORT_DESCRIPTION, UiConstants.GAME_ACTION_CREDITS_LABEL);
+
         exit = new AbstractAction()
         {
             @Override
@@ -32,9 +54,9 @@ public final class UiActions
                 System.exit(0);
             }
         };
-        exit.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
-        exit.putValue(Action.NAME, UiConstants.JMENU_ITEM_EXIT_LABEL);
-        exit.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_EXIT_LABEL);
+        exit.putValue(Action.LONG_DESCRIPTION, UiConstants.GAME_ACTION_EXIT_LABEL);
+        exit.putValue(Action.NAME, UiConstants.GAME_ACTION_EXIT_LABEL);
+        exit.putValue(Action.SHORT_DESCRIPTION, UiConstants.GAME_ACTION_EXIT_LABEL);
 
         mainMenu = new AbstractAction()
         {
@@ -52,9 +74,9 @@ public final class UiActions
                 });
             }
         };
-        mainMenu.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_MAIN_MENU_LABEL);
-        mainMenu.putValue(Action.NAME, UiConstants.JMENU_ITEM_MAIN_MENU_LABEL);
-        mainMenu.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_MAIN_MENU_LABEL);
+        mainMenu.putValue(Action.LONG_DESCRIPTION, UiConstants.GAME_ACTION_MAIN_MENU_LABEL);
+        mainMenu.putValue(Action.NAME, UiConstants.GAME_ACTION_MAIN_MENU_LABEL);
+        mainMenu.putValue(Action.SHORT_DESCRIPTION, UiConstants.GAME_ACTION_MAIN_MENU_LABEL);
 
         newGame = new AbstractAction()
         {
@@ -68,16 +90,16 @@ public final class UiActions
                     {
                         final var configDialog = new JDialog(windowJFrame, UiConstants.GAME_CONFIG_JDIALOG_TITLE, true);
                         configDialog.setContentPane(new GameConfigJPanel(windowJFrame));
-                        configDialog.setSize(UiConstants.getGameConfigJDialogDimension());
+                        configDialog.setSize(UiConstants.GAME_JDIALOG_DIMENSION);
                         configDialog.setLocationRelativeTo(window);
                         configDialog.setVisible(true);
                     }
                 });
             }
         };
-        newGame.putValue(Action.LONG_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        newGame.putValue(Action.NAME, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
-        newGame.putValue(Action.SHORT_DESCRIPTION, UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        newGame.putValue(Action.LONG_DESCRIPTION, UiConstants.GAME_ACTION_NEW_GAME_LABEL);
+        newGame.putValue(Action.NAME, UiConstants.GAME_ACTION_NEW_GAME_LABEL);
+        newGame.putValue(Action.SHORT_DESCRIPTION, UiConstants.GAME_ACTION_NEW_GAME_LABEL);
     }
 
     public Action getGameAction(Consumer<ActionEvent> actionConsumer, String actionLabel, ActionMap actionMap, InputMap inputMap,
@@ -98,6 +120,11 @@ public final class UiActions
         actionMap.put(actionLabel, ACTION);
         inputMap.put(keyStroke, actionLabel);
         return ACTION;
+    }
+
+    public Action getCredits()
+    {
+        return credits;
     }
 
     public Action getExit()
@@ -130,11 +157,13 @@ public final class UiActions
         final var actionMap = jframe.getRootPane().getActionMap();
         final var inputMap = jframe.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        actionMap.put(UiConstants.JMENU_ITEM_EXIT_LABEL, getExit());
-        actionMap.put(UiConstants.JMENU_ITEM_MAIN_MENU_LABEL, getMainMenu());
-        actionMap.put(UiConstants.JMENU_ITEM_NEW_GAME_LABEL, getNewGame());
-        inputMap.put(KeyStroke.getKeyStroke("ctrl E"), UiConstants.JMENU_ITEM_EXIT_LABEL);
-        inputMap.put(KeyStroke.getKeyStroke("ctrl M"), UiConstants.JMENU_ITEM_MAIN_MENU_LABEL);
-        inputMap.put(KeyStroke.getKeyStroke("ctrl N"), UiConstants.JMENU_ITEM_NEW_GAME_LABEL);
+        actionMap.put(UiConstants.GAME_ACTION_CREDITS_LABEL, getCredits());
+        actionMap.put(UiConstants.GAME_ACTION_EXIT_LABEL, getExit());
+        actionMap.put(UiConstants.GAME_ACTION_MAIN_MENU_LABEL, getMainMenu());
+        actionMap.put(UiConstants.GAME_ACTION_NEW_GAME_LABEL, getNewGame());
+        inputMap.put(KeyStroke.getKeyStroke("ctrl C"), UiConstants.GAME_ACTION_CREDITS_LABEL);
+        inputMap.put(KeyStroke.getKeyStroke("ctrl E"), UiConstants.GAME_ACTION_EXIT_LABEL);
+        inputMap.put(KeyStroke.getKeyStroke("ctrl M"), UiConstants.GAME_ACTION_MAIN_MENU_LABEL);
+        inputMap.put(KeyStroke.getKeyStroke("ctrl N"), UiConstants.GAME_ACTION_NEW_GAME_LABEL);
     }
 }

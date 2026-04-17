@@ -14,10 +14,11 @@ public class ApplicationJMenuBar extends JMenuBar
 {
     public ApplicationJMenuBar(UiActions uiActions)
     {
-        final var FILE_MENU = new JMenu(UiConstants.JMENU_FILE_LABEL);
-        FILE_MENU.add(uiActions.getExit());
-        FILE_MENU.add(uiActions.getMainMenu());
-        FILE_MENU.add(uiActions.getNewGame());
-        add(FILE_MENU);
+        final var fileMenu = new JMenu(UiConstants.JMENU_FILE_LABEL);
+        fileMenu.add(uiActions.getExit());
+        fileMenu.add(uiActions.getNewGame());
+        fileMenu.add(uiActions.getMainMenu());
+        fileMenu.add(uiActions.getCredits());
+        add(fileMenu);
     }
 }
