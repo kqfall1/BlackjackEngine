@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Optimized UiConstants.java; added a credits action to UiActions.java, ApplicationJMenuBar.java, and MainMenuButtonJPanel.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Began reading data from sources.md for CreditsJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/CreditsJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/CreditsJPanel.java" afterDir="false" />
     </list>
@@ -186,14 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Optimized GameConfigJPanel.java.">
-      <option name="closed" value="true" />
-      <created>1771266158243</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1771266158244</updated>
     </task>
     <task id="LOCAL-00039" summary="Refactored the exception model of the system - ConsoleBlackjackController.java has broken slightly.">
       <option name="closed" value="true" />
@@ -579,11 +571,18 @@
       <option name="project" value="LOCAL" />
       <updated>1776389229011</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Began reading data from sources.md for CreditsJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1776392093287</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1776392093287</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed a UX bug involving chip amount's after placing an insurance bet." />
     <MESSAGE value="Further optimized the UX and fixed a bug with engine advancement." />
     <MESSAGE value="Decoupled GameJFrame.java and BlackjackEngine.java slightly; minor tweaks." />
     <MESSAGE value="Fixed a bug in BlackjackEngine.java; further optimized GameJFrame.java." />
@@ -608,7 +607,8 @@
     <MESSAGE value="Polished GameConfigJPanel.java." />
     <MESSAGE value="Added a main menu item to the Swing app's menu bar; added a source of photos to sources.md." />
     <MESSAGE value="Optimized UiConstants.java; added a credits action to UiActions.java, ApplicationJMenuBar.java, and MainMenuButtonJPanel.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimized UiConstants.java; added a credits action to UiActions.java, ApplicationJMenuBar.java, and MainMenuButtonJPanel.java." />
+    <MESSAGE value="Began reading data from sources.md for CreditsJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Began reading data from sources.md for CreditsJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

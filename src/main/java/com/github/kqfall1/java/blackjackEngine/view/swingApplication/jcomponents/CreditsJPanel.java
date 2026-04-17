@@ -19,30 +19,23 @@ public final class CreditsJPanel extends JPanel
 
     public CreditsJPanel()
     {
-        var sourcesString = "<ul>";
+        var htmlBuilder = new StringBuilder("<html><ul>");
 
         try (InputStream in = CreditsJPanel.class.getResourceAsStream("/sources.md"))
         {
             final var scanner = new Scanner(in);
-
             while (scanner.hasNextLine())
             {
-                var sourceStringFormat = "%s<li>%s</li>";
-
-                if (!scanner.hasNextLine())
-                {
-                    sourceStringFormat = String.format("%s</ul>", sourceStringFormat);
-                }
-
-                sourcesString = String.format(sourceStringFormat, sourcesString, scanner.nextLine().trim());
+                htmlBuilder.append(String.format("<li>%s</li>", scanner.nextLine().trim()));
             }
+            htmlBuilder.append("</ul></html>");
         }
         catch (IOException e)
         {
-            throw new UncheckedIOException(e);
+            htmlBuilder = new StringBuilder("<html><p>No sources found!</p></html>");
         }
 
-        sourcesJLabel = new JLabel(sourcesString);
-        add(sourcesJLabel, BorderLayout.CENTER);
+        sourcesJLabel = new JLabel(htmlBuilder.toString());
+        add(sourcesJLabel);
     }
 }
