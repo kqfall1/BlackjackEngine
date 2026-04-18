@@ -30,33 +30,7 @@ final class PredicateTest extends CustomDeckTest
 			super.engine.deal();
 			verifyStandardAssumptions();
 			super.engine.advanceAfterDeal();
-
-			Assertions.assertFalse(
-				super.engine.getRuleset().isInsuranceBetPossible(
-					super.engine.getActiveHandContext(),
-					super.engine.getState(),
-					super.engine.getPlayer(),
-					super.engine.getDealer().getHand()
-				)
-				&& super.engine.getRuleset().isSplittingPossible(
-					super.engine.getActiveHandContext(),
-					super.engine.getState(),
-					super.engine.getActiveHandContextIndex(),
-					super.engine.getPlayer()
-				)
-				&& super.engine.getRuleset().isSurrenderingPossible(
-					super.engine.getActiveHandContext(),
-					super.engine.getState()
-				)
-			);
-
-			Assertions.assertFalse(
-				super.engine.getRuleset().isDealerTurnActive(
-					super.engine.getState(),
-					super.engine.getDealer()
-				)
-			);
-
+			verifyStandardAssumptions();
 			super.declinePossibleInsuranceBet();
 
 			if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)

@@ -20,7 +20,7 @@ public final class UiConstants
     public static final ImageIcon BLACKJACK_JFRAME_LOGO = new ImageIcon(UiConstants.class.getResource("/images/logo.jpg"));
     public static final String BLACKJACK_JFRAME_TITLE = "Blackjack";
     public static final Border BORDER_RED = BorderFactory.createLineBorder(Color.RED);
-    public static final int CARD_IMAGE_HEIGHT = 225;
+    public static final int CARD_IMAGE_HEIGHT = 250;
     public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
     public static final String GAME_ACTION_ADVANCE_LABEL = "Advance";
@@ -76,11 +76,13 @@ public final class UiConstants
     public static final ImageIcon JFRAME_BACKGROUND = new ImageIcon(UiConstants.class.getResource("/images/background.jpg"));
     public static final Font JLABEL_LARGE_FONT = new Font("Georgia", Font.PLAIN, 16);
     public static final String JMENU_FILE_LABEL = "File";
+    public static final int MARGIN_EXTRA_SMALL = 10;
+    public static final Insets JTEXT_AREA_INSETS = new Insets(MARGIN_EXTRA_SMALL, MARGIN_EXTRA_SMALL, MARGIN_EXTRA_SMALL, MARGIN_EXTRA_SMALL);
+    public static final int MARGIN_EXTRA_EXTRA_SMALL = 5;
     public static final int MARGIN_LARGE = 350;
     public static final int MARGIN_MEDIUM = 100;
     public static final int MARGIN_SMALL = 25;
-    public static final int MARGIN_EXTRA_SMALL = 10;
-    public static final Preferences PREFERENCES_NODE = Preferences.userRoot().node(UiConstants.SWING_APPLICATION_PACKAGE_NAME);
+    public static final Preferences PREFERENCES_NODE = Preferences.userRoot().node(SWING_APPLICATION_PACKAGE_NAME);
     public static final int SLEEP_INTERVAL = 1000;
 
     private UiConstants() {}

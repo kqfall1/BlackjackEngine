@@ -28,13 +28,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 {
     private final JCheckBox doublingDownOnSplitHandsAllowed;
     private final JLabel errorJLabel;
-    private static final int JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE = 5;
-    private static final Insets JTEXT_FIELD_PANEL_COMPONENT_INSETS = new Insets(
-        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
-        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
-        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE,
-        JTEXT_FIELD_PANEL_COMPONENT_INSETS_VALUE
-    );
+    private final Insets JCOMPONENT_INSETS = new Insets(UiConstants.MARGIN_EXTRA_EXTRA_SMALL, UiConstants.MARGIN_EXTRA_EXTRA_SMALL, UiConstants.MARGIN_EXTRA_EXTRA_SMALL, UiConstants.MARGIN_EXTRA_EXTRA_SMALL);
     private final JCheckBox loggingEnabled;
     private final JSpinner maximumSplitCountInput;
     private final JLabel maximumSplitCountJLabel;
@@ -156,7 +150,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         jLabelConstraints.gridy = GridBagConstraints.RELATIVE;
         jLabelConstraints.gridwidth = 1;
         jLabelConstraints.gridheight = 1;
-        jLabelConstraints.insets = JTEXT_FIELD_PANEL_COMPONENT_INSETS;
+        jLabelConstraints.insets = JCOMPONENT_INSETS;
         jLabelConstraints.weightx = 0;
         jLabelConstraints.weighty = 0;
 
@@ -172,7 +166,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         secondaryJComponentConstraints.gridy = GridBagConstraints.RELATIVE;
         secondaryJComponentConstraints.gridwidth = 1;
         secondaryJComponentConstraints.gridheight = 1;
-        secondaryJComponentConstraints.insets = JTEXT_FIELD_PANEL_COMPONENT_INSETS;
+        secondaryJComponentConstraints.insets = JCOMPONENT_INSETS;
         secondaryJComponentConstraints.weightx = UiConstants.DEFAULT_GRID_BAG_LAYOUT_WEIGHT;
         secondaryJComponentConstraints.weighty = UiConstants.DEFAULT_GRID_BAG_LAYOUT_WEIGHT;
 

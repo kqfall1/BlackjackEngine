@@ -28,9 +28,9 @@ final class SplitAndHitTest extends CustomDeckTest
 		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
 		super.initSplitHands(() ->
 		{
-			final var ACTIVE_CONTEXT_INDEX = super.engine.getActiveHandContextIndex();
+			final var activeHandContextIndex = super.engine.getActiveHandContextIndex();
 			super.engine.playerHit();
-			if (ACTIVE_CONTEXT_INDEX == super.engine.getActiveHandContextIndex())
+			if (activeHandContextIndex == super.engine.getActiveHandContextIndex())
 			{
 				super.engine.playerStand();
 			}

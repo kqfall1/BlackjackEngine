@@ -37,6 +37,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         engineMessageJTextArea = new JTextArea();
         engineMessageJTextArea.setEditable(false);
         engineMessageJTextArea.setLineWrap(true);
+        engineMessageJTextArea.setMargin(UiConstants.JTEXT_AREA_INSETS);
         engineMessageJScrollPane = new JScrollPane(engineMessageJTextArea);
         engineMessageJScrollPane.setPreferredSize(new Dimension(
             UiConstants.GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH,

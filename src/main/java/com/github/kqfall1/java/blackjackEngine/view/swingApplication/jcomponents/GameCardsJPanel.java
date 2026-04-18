@@ -18,7 +18,7 @@ public final class GameCardsJPanel extends JPanel
     public GameCardsJPanel()
     {
         activePlayerHandJPanel = new JPanel();
-        activePlayerHandJPanel.setLayout(new FlowLayout(FlowLayout.LEFT, UiConstants.MARGIN_EXTRA_SMALL, UiConstants.MARGIN_EXTRA_SMALL));
+        activePlayerHandJPanel.setLayout(new FlowLayout(FlowLayout.LEFT, UiConstants.MARGIN_EXTRA_SMALL, UiConstants.MARGIN_SMALL));
         activePlayerHandJPanel.setOpaque(false);
         dealerHandJPanel = new JPanel();
         dealerHandJPanel.setLayout(new FlowLayout(FlowLayout.LEFT, UiConstants.MARGIN_EXTRA_SMALL, UiConstants.MARGIN_EXTRA_SMALL));

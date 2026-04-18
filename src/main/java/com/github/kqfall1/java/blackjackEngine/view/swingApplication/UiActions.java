@@ -4,7 +4,6 @@ import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.function.Consumer;
@@ -51,7 +50,10 @@ public final class UiActions
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.exit(0);
+                if (JOptionPane.showConfirmDialog((Component) e.getSource(), String.format("%s?", UiConstants.GAME_ACTION_EXIT_LABEL)) == JOptionPane.YES_OPTION)
+                {
+                    System.exit(0);
+                }
             }
         };
         exit.putValue(Action.LONG_DESCRIPTION, UiConstants.GAME_ACTION_EXIT_LABEL);

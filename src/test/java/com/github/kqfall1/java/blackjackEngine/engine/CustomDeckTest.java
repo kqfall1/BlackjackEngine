@@ -326,41 +326,41 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public final void initCardsForSplittingAndHittingOnce(Rank splitRank)
 	{
-		final var ITERATOR = _initCardsForSplitting(splitRank).iterator();
+		final var iterator = _initCardsForSplitting(splitRank).iterator();
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			ITERATOR.next(),
+			iterator.next(),
 			randomCards.draw(),
-			ITERATOR.next(),
-			randomCards.draw(),
-			randomCards.draw(),
-			ITERATOR.next(),
+			iterator.next(),
 			randomCards.draw(),
 			randomCards.draw(),
-			ITERATOR.next(),
+			iterator.next(),
+			randomCards.draw(),
+			randomCards.draw(),
+			iterator.next(),
 			randomCards.draw()
 		)));
 	}
 
 	public final void initCardsForSplittingWithoutHitting(Rank splitRank)
 	{
-		final var ITERATOR = _initCardsForSplitting(splitRank).iterator();
+		final var iterator = _initCardsForSplitting(splitRank).iterator();
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			ITERATOR.next(),
+			iterator.next(),
 			randomCards.draw(),
-			ITERATOR.next(),
+			iterator.next(),
 			randomCards.draw(),
 			randomCards.draw(),
-			ITERATOR.next(),
+			iterator.next(),
 			randomCards.draw(),
-			ITERATOR.next()
+			iterator.next()
 		)));
 	}
 
 	private void _initSplitHands()
 	{
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
+		final var previousChipAmount = super.engine.getPlayer().getChips();
 
 		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
 		Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
@@ -368,7 +368,7 @@ public abstract class CustomDeckTest extends EngineTest
 
 		Assertions.assertTrue(
 			nearlyEquals(
-				PREVIOUS_CHIP_AMOUNT.subtract(super.engine.getPlayer().getContexts().getLast().getBet().getAmount()),
+				previousChipAmount.subtract(super.engine.getPlayer().getContexts().getLast().getBet().getAmount()),
 				super.engine.getPlayer().getChips(),
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
