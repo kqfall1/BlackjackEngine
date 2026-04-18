@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
+package com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import java.awt.*;

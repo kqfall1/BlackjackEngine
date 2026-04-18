@@ -2,7 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponent
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
 import com.github.kqfall1.java.frameworks.awt.swing.ValidatedJTextField;

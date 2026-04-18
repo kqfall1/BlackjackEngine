@@ -1,4 +1,4 @@
-package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
+package com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.CreditsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;

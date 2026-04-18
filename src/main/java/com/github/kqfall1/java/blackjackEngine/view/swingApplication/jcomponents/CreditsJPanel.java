@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;

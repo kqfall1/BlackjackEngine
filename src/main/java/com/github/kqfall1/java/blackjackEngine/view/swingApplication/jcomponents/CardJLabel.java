@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.utils.StringUtils;
 import javax.swing.*;
 import java.awt.*;

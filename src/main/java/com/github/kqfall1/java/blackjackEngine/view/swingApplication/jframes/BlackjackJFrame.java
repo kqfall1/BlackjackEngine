@@ -2,8 +2,8 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.ApplicationBackground;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.ApplicationJMenuBar;
-import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants.*;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
+import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants.*;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiActions;
 import java.awt.*;
 import javax.swing.*;
 

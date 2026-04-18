@@ -10,8 +10,8 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChip
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiActions;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.CardJLabel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameCardsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameInfoJPanel;
@@ -188,6 +188,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         add(gameActionJPanel, BorderLayout.EAST);
         add(gameInfoJPanel, BorderLayout.WEST);
         add(gameCardsJPanel, BorderLayout.CENTER);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 

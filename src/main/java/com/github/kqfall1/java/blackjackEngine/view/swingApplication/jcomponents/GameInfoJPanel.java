@@ -1,6 +1,6 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
 import com.github.kqfall1.java.frameworks.awt.swing.ValidatedJTextField;
 import com.github.kqfall1.java.interfaces.FailurePresenter;

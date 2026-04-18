@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiActions;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.MainMenuButtonJPanel;
 import java.awt.*;
 import javax.swing.*;
