@@ -52,32 +52,32 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         submitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitJButton.setEnabled(false);
 
-        final var ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP = engineMessageJScrollPane.getInputMap();
-        ENGINE_MESSAGE_JSCROLL_PANE_INPUT_MAP.put(KeyStroke.getKeyStroke("ctrl H"), "");
+        final var engineMessageJScrollPaneInputMap = engineMessageJScrollPane.getInputMap();
+        engineMessageJScrollPaneInputMap.put(KeyStroke.getKeyStroke("ctrl H"), "");
 
-        final var GAME_INFO_WRAPPER = new JPanel();
-        GAME_INFO_WRAPPER.setLayout(new BoxLayout(GAME_INFO_WRAPPER, BoxLayout.Y_AXIS));
-        GAME_INFO_WRAPPER.add(dealerHandScoreJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
-        GAME_INFO_WRAPPER.add(playerChipAmountJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        GAME_INFO_WRAPPER.add(activeHandContextHandScoreJLabel);
-        GAME_INFO_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
+        final var gameInfoWrapper = new JPanel();
+        gameInfoWrapper.setLayout(new BoxLayout(gameInfoWrapper, BoxLayout.Y_AXIS));
+        gameInfoWrapper.add(dealerHandScoreJLabel);
+        gameInfoWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
+        gameInfoWrapper.add(playerChipAmountJLabel);
+        gameInfoWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
+        gameInfoWrapper.add(activeHandContextHandScoreJLabel);
+        gameInfoWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_MEDIUM));
 
-        final var GAME_INPUT_WRAPPER = new JPanel();
-        GAME_INPUT_WRAPPER.setLayout(new BoxLayout(GAME_INPUT_WRAPPER, BoxLayout.Y_AXIS));
-        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        GAME_INPUT_WRAPPER.add(playerInputJTextField);
-        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
-        GAME_INPUT_WRAPPER.add(submitJButton);
-        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        GAME_INPUT_WRAPPER.add(advanceEngineJButton);
-        GAME_INPUT_WRAPPER.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        final var gameInputWrapper = new JPanel();
+        gameInputWrapper.setLayout(new BoxLayout(gameInputWrapper, BoxLayout.Y_AXIS));
+        gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
+        gameInputWrapper.add(playerInputJTextField);
+        gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        gameInputWrapper.add(submitJButton);
+        gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
+        gameInputWrapper.add(advanceEngineJButton);
+        gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
-        add(GAME_INFO_WRAPPER);
-        add(GAME_INPUT_WRAPPER);
+        add(gameInfoWrapper);
+        add(gameInputWrapper);
         add(engineMessageJScrollPane);
 
         for (Component jLabel : AwtUtils.getNestedComponents(Optional.of(JLabel.class), this))

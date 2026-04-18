@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Began reading data from sources.md for CreditsJPanel.java.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Trying to render data from sources.md for CreditsJPanel.java.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/UiConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/CreditsJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/CreditsJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameInfoJPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sources.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sources.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,14 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Refactored the exception model of the system - ConsoleBlackjackController.java has broken slightly.">
-      <option name="closed" value="true" />
-      <created>1771722527427</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1771722527427</updated>
     </task>
     <task id="LOCAL-00040" summary="Have prepared to refactor BlackjackEngine.java to not automatically advance to showdown.">
       <option name="closed" value="true" />
@@ -579,11 +574,18 @@
       <option name="project" value="LOCAL" />
       <updated>1776392093287</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Trying to render data from sources.md for CreditsJPanel.java.">
+      <option name="closed" value="true" />
+      <created>1776392977341</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1776392977341</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Further optimized the UX and fixed a bug with engine advancement." />
     <MESSAGE value="Decoupled GameJFrame.java and BlackjackEngine.java slightly; minor tweaks." />
     <MESSAGE value="Fixed a bug in BlackjackEngine.java; further optimized GameJFrame.java." />
     <MESSAGE value="Refactored BlackjackEngine.showdown to support splits elegantly and stabilized the test suite." />
@@ -608,7 +610,8 @@
     <MESSAGE value="Added a main menu item to the Swing app's menu bar; added a source of photos to sources.md." />
     <MESSAGE value="Optimized UiConstants.java; added a credits action to UiActions.java, ApplicationJMenuBar.java, and MainMenuButtonJPanel.java." />
     <MESSAGE value="Began reading data from sources.md for CreditsJPanel.java." />
-    <option name="LAST_COMMIT_MESSAGE" value="Began reading data from sources.md for CreditsJPanel.java." />
+    <MESSAGE value="Trying to render data from sources.md for CreditsJPanel.java." />
+    <option name="LAST_COMMIT_MESSAGE" value="Trying to render data from sources.md for CreditsJPanel.java." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

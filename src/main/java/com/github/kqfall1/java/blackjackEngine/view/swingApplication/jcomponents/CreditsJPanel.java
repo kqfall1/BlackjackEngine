@@ -1,10 +1,11 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents;
 
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.UiConstants;
+
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 import javax.swing.*;
 
 /**
@@ -15,27 +16,28 @@ import javax.swing.*;
  */
 public final class CreditsJPanel extends JPanel
 {
-    private final JLabel sourcesJLabel;
+    private final JTextArea sourcesJTextArea;
 
     public CreditsJPanel()
     {
-        var htmlBuilder = new StringBuilder("<html><ul>");
+        String sources;
 
         try (InputStream in = CreditsJPanel.class.getResourceAsStream("/sources.md"))
         {
-            final var scanner = new Scanner(in);
-            while (scanner.hasNextLine())
-            {
-                htmlBuilder.append(String.format("<li>%s</li>", scanner.nextLine().trim()));
-            }
-            htmlBuilder.append("</ul></html>");
+            sources = new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
         catch (IOException e)
         {
-            htmlBuilder = new StringBuilder("<html><p>No sources found!</p></html>");
+            sources = UiConstants.GAME_MESSAGE_NO_SOURCES_FOUND;
         }
 
-        sourcesJLabel = new JLabel(htmlBuilder.toString());
-        add(sourcesJLabel);
+        sourcesJTextArea = new JTextArea(sources);
+        sourcesJTextArea.setLineWrap(true);
+        sourcesJTextArea.setEditable(false);
+        final var sourcesJScrollPane = new JScrollPane(sourcesJTextArea);
+        sourcesJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        setLayout(new BorderLayout());
+        add(sourcesJScrollPane, BorderLayout.CENTER);
     }
 }
