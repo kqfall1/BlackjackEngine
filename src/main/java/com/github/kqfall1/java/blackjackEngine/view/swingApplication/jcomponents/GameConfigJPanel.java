@@ -206,29 +206,28 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         UiConstants.PREFERENCES_NODE.putInt(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL, shoeDeckCount);
         UiConstants.PREFERENCES_NODE.putDouble(UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL, shoePenetration);
 
-        final var CONFIG = new BlackjackRulesetConfiguration();
-        CONFIG.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
-        CONFIG.setLoggingEnabled(loggingEnabled.isSelected());
-        CONFIG.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
-        CONFIG.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
-        CONFIG.setSurrenderingAllowed(surrenderingAllowed.isSelected());
-        CONFIG.setMaximumSplitCount(maximumSplitCount);
-        CONFIG.setMinimumBetAmount(minimumBetAmount);
-        CONFIG.setPlayerInitialChips(playerInitialChips);
-        CONFIG.setShoeDeckCount(shoeDeckCount);
-        CONFIG.setShoePenetration(shoePenetration);
+        final var config = new BlackjackRulesetConfiguration();
+        config.setDoublingDownOnSplitHandsAllowed(doublingDownOnSplitHandsAllowed.isSelected());
+        config.setLoggingEnabled(loggingEnabled.isSelected());
+        config.setShouldDealerHitOnSoft17(shouldDealerHitOnSoft17.isSelected());
+        config.setSplittingAcesAllowed(splittingAcesAllowed.isSelected());
+        config.setSurrenderingAllowed(surrenderingAllowed.isSelected());
+        config.setMaximumSplitCount(maximumSplitCount);
+        config.setMinimumBetAmount(minimumBetAmount);
+        config.setPlayerInitialChips(playerInitialChips);
+        config.setShoeDeckCount(shoeDeckCount);
+        config.setShoePenetration(shoePenetration);
 
-        final var WINDOW = SwingUtilities.getWindowAncestor(this);
-        WINDOW.dispose();
+        final var window = SwingUtilities.getWindowAncestor(this);
+        window.dispose();
 
         if (rootJFrame instanceof MainMenuJFrame mainMenuJFrame)
         {
-            mainMenuJFrame.newGame(CONFIG);
+            mainMenuJFrame.newGame(config);
         }
         else
         {
-            new MainMenuJFrame().newGame(CONFIG);
-            rootJFrame.setVisible(false);
+            new MainMenuJFrame().newGame(config);
         }
     }
 

@@ -2,6 +2,7 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication;
 
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.CreditsJPanel;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponents.GameConfigJPanel;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.GameJFrame;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
 import java.awt.*;
@@ -70,8 +71,20 @@ public final class UiActions
                 {
                     if (!(window instanceof MainMenuJFrame))
                     {
+                        if (window instanceof GameJFrame gameJFrame)
+                        {
+                            if (JOptionPane.showConfirmDialog(window, String.format("%s?", UiConstants.GAME_MESSAGE_MAIN_MENU_WARNING)) == JOptionPane.YES_OPTION)
+                            {
+                                gameJFrame.getExecutorService().shutdown();
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+
                         new MainMenuJFrame();
-                        window.setVisible(false);
+                        window.dispose();
                     }
                 });
             }

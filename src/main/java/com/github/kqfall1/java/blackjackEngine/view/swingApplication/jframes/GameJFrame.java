@@ -212,6 +212,11 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         });
     }
 
+    public ExecutorService getExecutorService()
+    {
+        return executorService;
+    }
+
     @Override
     public void onBetPlaced(HandContext handContext)
     {
