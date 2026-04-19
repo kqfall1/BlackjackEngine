@@ -228,6 +228,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         else
         {
             new MainMenuJFrame().newGame(config);
+            rootJFrame.dispose();
         }
     }
 

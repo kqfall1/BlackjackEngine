@@ -117,6 +117,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                                 if (betThrowable == null)
                                 {
                                     blackjackEngine.deal();
+                                    SwingUtilities.invokeLater(() -> gameCardsJPanel.setVisible(true));
                                     blackjackEngine.advanceAfterDeal();
                                 }
                                 else
@@ -343,10 +344,11 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         clearActivePlayerHandJPanel();
         SwingUtilities.invokeLater(() ->
         {
+            gameCardsJPanel.setVisible(false);
+            gameCardsJPanel.getActivePlayerHandJPanel().setBackground(null);
             gameCardsJPanel.getDealerHandJPanel().removeAll();
             gameCardsJPanel.revalidate();
             gameCardsJPanel.repaint();
-
             gameInfoJPanel.getDealerHandScoreJLabel().setText(UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL);
             gameInfoJPanel.getActiveHandContextHandScoreJLabel().setText(UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
         });
@@ -369,17 +371,24 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
                 new Timer(UiConstants.SLEEP_INTERVAL, e ->
                 {
-                    gameCardsJPanel.getActivePlayerHandJPanel().setBackground(null);
-                    gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(false);
+                    SwingUtilities.invokeLater(() ->
+                    {
+                        gameCardsJPanel.getActivePlayerHandJPanel().setBackground(null);
+                        gameCardsJPanel.getActivePlayerHandJPanel().setOpaque(false);
+                        gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
+                    });
                     ((Timer) e.getSource()).stop();
                 }).start();
                 updateUiForEngineMessage();
             });
         }
+        else
+        {
+            SwingUtilities.invokeLater(() -> gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true));
+        }
 
         SwingUtilities.invokeLater(() ->
         {
-            gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
             gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
                 "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_COLLECTION, playerWinnings
             ));
