@@ -35,14 +35,14 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	@Override
 	public boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer)
 	{
-		final var MINIMUM_SCORE_TO_STAND =
+		final var minimumScoreToStand =
 			config.getShouldDealerHitOnSoft17()
 			&& dealer.getHand().getScore() == BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE
 			&& dealer.getHand().isSoft()
 				? BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE + 1
 				: BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE;
 
-		return currentState == BlackjackEngineState.DEALER_TURN && dealer.getHand().getScore() < MINIMUM_SCORE_TO_STAND;
+		return currentState == BlackjackEngineState.DEALER_TURN && dealer.getHand().getScore() < minimumScoreToStand;
 	}
 
 	@Override

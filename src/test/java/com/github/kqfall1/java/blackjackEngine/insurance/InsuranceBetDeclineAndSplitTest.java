@@ -12,7 +12,8 @@ final class InsuranceBetDeclineAndSplitTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForInsuranceAndSplitting(Rank.JACK);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);

@@ -25,12 +25,7 @@ final class InsuranceBetDeclineAndDoubleDownTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(
-			super.engine.getPlayer().getChips().divide(
-				BigDecimal.TWO,
-				MathContext.DECIMAL128
-			)
-		);
+		super.advanceToPlayerTurn(super.engine.getPlayer().getChips().divide(BigDecimal.TWO, MathContext.DECIMAL128));
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

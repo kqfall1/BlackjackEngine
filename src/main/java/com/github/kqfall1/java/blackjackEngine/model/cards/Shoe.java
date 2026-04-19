@@ -60,16 +60,13 @@ public final class Shoe implements Drawable
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);
 
-		assert penetration >= MINIMUM_PENETRATION && penetration <= MAXIMUM_PENETRATION
-			: "penetration < MINIMUM_PENETRATION || penetration > MAXIMUM_PENETRATION";
+		assert penetration >= MINIMUM_PENETRATION && penetration <= MAXIMUM_PENETRATION : "penetration < MINIMUM_PENETRATION || penetration > MAXIMUM_PENETRATION";
 		this.penetration = penetration;
 		cutoffAmount =
 			(int) (getCards().size() * (getPenetrationPercentage() + Math.random() * VARIANCE));
-		assert cutoffAmount > 0 && cutoffAmount < cards.size()
-			: "cutCardIndex <= 0 || cutCardIndex >= cards.size()";
+		assert cutoffAmount > 0 && cutoffAmount < cards.size() : "cutCardIndex <= 0 || cutCardIndex >= cards.size()";
 
-		assert numberOfDecks >= MINIMUM_NUMBER_OF_DECKS && numberOfDecks <= MAXIMUM_NUMBER_OF_DECKS
-				: "numberOfDecks < MINIMUM_NUMBER_OF_DECKS || numberOfDecks > MAXIMUM_NUMBER_OF_DECKS";
+		assert numberOfDecks >= MINIMUM_NUMBER_OF_DECKS && numberOfDecks <= MAXIMUM_NUMBER_OF_DECKS : "numberOfDecks < MINIMUM_NUMBER_OF_DECKS || numberOfDecks > MAXIMUM_NUMBER_OF_DECKS";
 		this.numberOfDecks = numberOfDecks;
 	}
 

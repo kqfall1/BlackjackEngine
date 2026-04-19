@@ -13,14 +13,11 @@ final class DoubleDownTest extends EngineTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DoubleDownTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.DoubleDownTest.log";
-	private static final BigDecimal MAXIMUM_INITIAL_BET_AMOUNT = INITIAL_PLAYER_CHIP_AMOUNT.divide(
-		BigDecimal.TWO,
-		MathContext.DECIMAL128
-	);
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
@@ -29,7 +26,7 @@ final class DoubleDownTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var INITIAL_BET_AMOUNT = super.advanceToPlayerTurn(MAXIMUM_INITIAL_BET_AMOUNT);
+		final var initialBetAmount = super.advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
@@ -37,7 +34,7 @@ final class DoubleDownTest extends EngineTest
 			super.engine.playerDoubleDown();
 			Assertions.assertTrue(
 				nearlyEquals(
-					INITIAL_BET_AMOUNT
+					initialBetAmount
 						.multiply(BigDecimal.valueOf(4))
 						.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),

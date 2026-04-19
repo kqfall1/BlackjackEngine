@@ -12,7 +12,8 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForSplittingAndHittingOnce(Rank.KING);
 		super.initDependencies();
 		super.ruleset.getConfig().setDoublingDownOnSplitHandsAllowed(true);

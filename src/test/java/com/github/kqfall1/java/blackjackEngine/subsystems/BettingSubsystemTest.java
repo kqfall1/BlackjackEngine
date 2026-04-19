@@ -29,13 +29,7 @@ final class BettingSubsystemTest
 	{
 		assertEquals(bet1, bet2);
 		Assertions.assertNotEquals(new Bet(BigDecimal.ONE), bet1);
-		assertTrue(
-			EngineTest.nearlyEquals(
-				initialBetAmount,
-				bet1.getAmount(),
-				BlackjackConstants.DEFAULT_CHIP_SCALE
-			)
-		);
+		assertTrue(EngineTest.nearlyEquals(initialBetAmount, bet1.getAmount(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		assertTrue(
 			EngineTest.nearlyEquals(
 				initialBetAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128),
@@ -43,20 +37,8 @@ final class BettingSubsystemTest
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)
 		);
-		assertTrue(
-			EngineTest.nearlyEquals(
-				bet1.getAmount(),
-				bet2.getAmount(),
-				BlackjackConstants.DEFAULT_CHIP_SCALE
-			)
-		);
-		assertTrue(
-			EngineTest.nearlyEquals(
-				bet1.getHalf(),
-				bet2.getHalf(),
-				BlackjackConstants.DEFAULT_CHIP_SCALE
-			)
-		);
+		assertTrue(EngineTest.nearlyEquals(bet1.getAmount(), bet2.getAmount(), BlackjackConstants.DEFAULT_CHIP_SCALE));
+		assertTrue(EngineTest.nearlyEquals(bet1.getHalf(), bet2.getHalf(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		assertEquals(bet1.toString(), bet2.toString());
 
 		try
@@ -155,10 +137,7 @@ final class BettingSubsystemTest
 		pot1.addChips(bet1.getAmount());
 		pot2.addChips(bet2.getAmount());
 		assertEquals(bet1.getAmount().stripTrailingZeros(), pot1.getAmount());
-		assertEquals(
-			initialPotAmount.add(bet2.getAmount()),
-			pot2.getAmount()
-		);
+		assertEquals(initialPotAmount.add(bet2.getAmount()), pot2.getAmount());
 		pot1.scoop();
 		pot2.scoop();
 		assertEquals(pot1.getAmount(), pot2.getAmount());

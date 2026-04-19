@@ -34,15 +34,10 @@ public abstract class CustomDeckTest extends EngineTest
 	public TestDeck testDeck;
 
 	public static final BigDecimal DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT
-		= INITIAL_PLAYER_CHIP_AMOUNT.divide(
-			BigDecimal.valueOf((MAXIMUM_SPLIT_COUNT + 2) * 2),
-			MathContext.DECIMAL128
-		);
+		= INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.valueOf((MAXIMUM_SPLIT_COUNT + 2) * 2), MathContext.DECIMAL128
+	);
 	public static final BigDecimal SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT
-		= INITIAL_PLAYER_CHIP_AMOUNT.divide(
-			BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2),
-			MathContext.DECIMAL128
-		);
+		= INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2), MathContext.DECIMAL128);
 
 	public CustomDeckTest()
 	{
@@ -55,7 +50,7 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public final int _initCardsForBlackjack()
 	{
-		final var BLACKJACK_METHOD_INDEX =
+		final var blackjackMethodIndex =
 			(int) (Math.random() * SHOWDOWN_BLACKJACK_METHOD_COUNT);
 
 		Hand testHand = new Hand();
@@ -67,20 +62,20 @@ public abstract class CustomDeckTest extends EngineTest
 			testHand.addCards(randomCards.draw());
 		}
 
-		final var CARD_1 = testHand.getCards().getFirst();
-		final var CARD_2 = testHand.getCards().getLast();
+		final var card1 = testHand.getCards().getFirst();
+		final var card2 = testHand.getCards().getLast();
 
-		switch (BLACKJACK_METHOD_INDEX)
+		switch (blackjackMethodIndex)
 		{
-			case 0 -> initCardsForDealerBlackjack1(CARD_1, CARD_2);
-			case 1 -> initCardsForDealerBlackjack2(CARD_1, CARD_2);
-			case 2 -> initCardsForPlayerBlackjack1(CARD_1, CARD_2);
-			case 3 -> initCardsForPlayerBlackjack2(CARD_1, CARD_2);
+			case 0 -> initCardsForDealerBlackjack1(card1, card2);
+			case 1 -> initCardsForDealerBlackjack2(card1, card2);
+			case 2 -> initCardsForPlayerBlackjack1(card1, card2);
+			case 3 -> initCardsForPlayerBlackjack2(card1, card2);
 			case 4 -> initBlackjackPush1();
 			case 5 -> initBlackjackPush2();
 		}
 
-		return BLACKJACK_METHOD_INDEX;
+		return blackjackMethodIndex;
 	}
 
 	private void initBlackjackPush1()
@@ -105,16 +100,16 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public final int _initCardsForBust()
 	{
-		final var BUST_METHOD_INDEX = (int) (Math.random() * BUST_METHOD_COUNT);
+		final var bustMethodIndex = (int) (Math.random() * BUST_METHOD_COUNT);
 
-		switch (BUST_METHOD_INDEX)
+		switch (bustMethodIndex)
 		{
 			case 0 -> initCardsForBust1();
 			case 1 -> initCardsForBust2();
 			case 2 -> initCardsForBust3();
 		}
 
-		return BUST_METHOD_INDEX;
+		return bustMethodIndex;
 	}
 
 	private void initCardsForBust1()
@@ -215,28 +210,28 @@ public abstract class CustomDeckTest extends EngineTest
 	public final void initCardsForInsuranceAndSplitting(Rank rank)
 	{
 		Assertions.assertNotNull(rank);
-		final var SPLIT_CARD_1 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_2 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_3 = randomCards.removeCardOfRank(rank);
-		final var SPLIT_CARD_4 = randomCards.removeCardOfRank(rank);
+		final var splitCard1 = randomCards.removeCardOfRank(rank);
+		final var splitCard2 = randomCards.removeCardOfRank(rank);
+		final var splitCard3 = randomCards.removeCardOfRank(rank);
+		final var splitCard4 = randomCards.removeCardOfRank(rank);
 
 		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			SPLIT_CARD_1,
+			splitCard1,
 			randomCards.removeCardOfRank(Rank.ACE),
-			SPLIT_CARD_2,
+			splitCard2,
 			randomCards.draw(),
 			randomCards.draw(),
-			SPLIT_CARD_3,
+			splitCard3,
 			randomCards.draw(),
-			SPLIT_CARD_4
+			splitCard4
 		)));
 	}
 
 	public final int _initCardsForNormalShowdown()
 	{
-		final var SHOWDOWN_METHOD_INDEX = (int) (Math.random() * SHOWDOWN_NORMAL_METHOD_COUNT);
+		final var showdownMethodIndex = (int) (Math.random() * SHOWDOWN_NORMAL_METHOD_COUNT);
 
-		switch (SHOWDOWN_METHOD_INDEX)
+		switch (showdownMethodIndex)
 		{
 			case 0 -> initCardsForDealerWin1();
 			case 1 -> initCardsForDealerWin2();
@@ -246,7 +241,7 @@ public abstract class CustomDeckTest extends EngineTest
 			case 5 -> initCardsForPush2();
 		}
 
-		return SHOWDOWN_METHOD_INDEX;
+		return showdownMethodIndex;
 	}
 
 	private void initCardsForPlayerBlackjack1(Card dealerCard1, Card dealerCard2)

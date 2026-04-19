@@ -13,7 +13,8 @@ final class MaximumSplitCountTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForSplittingWithoutHitting(Rank.ACE);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(ThreadLocalRandom.current().nextInt(MAXIMUM_SPLIT_COUNT + 1));

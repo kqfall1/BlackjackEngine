@@ -120,7 +120,7 @@ public final class UiActions
     public Action getGameAction(Consumer<ActionEvent> actionConsumer, String actionLabel, ActionMap actionMap, InputMap inputMap,
                                 KeyStroke keyStroke)
     {
-        final var ACTION = new AbstractAction()
+        final var action = new AbstractAction()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -128,13 +128,13 @@ public final class UiActions
                 actionConsumer.accept(e);
             }
         };
-        ACTION.putValue(Action.LONG_DESCRIPTION, actionLabel);
-        ACTION.putValue(Action.NAME, actionLabel);
-        ACTION.putValue(Action.SHORT_DESCRIPTION, actionLabel);
-        ACTION.setEnabled(false);
-        actionMap.put(actionLabel, ACTION);
+        action.putValue(Action.LONG_DESCRIPTION, actionLabel);
+        action.putValue(Action.NAME, actionLabel);
+        action.putValue(Action.SHORT_DESCRIPTION, actionLabel);
+        action.setEnabled(false);
+        actionMap.put(actionLabel, action);
         inputMap.put(keyStroke, actionLabel);
-        return ACTION;
+        return action;
     }
 
     public Action getCredits()

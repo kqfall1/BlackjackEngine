@@ -14,7 +14,8 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForInsurance();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -25,12 +26,7 @@ final class InsuranceBetDeclineAndHitTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(
-			super.engine.getPlayer().getChips().divide(
-				BigDecimal.TWO,
-				MathContext.DECIMAL128
-			)
-		);
+		super.advanceToPlayerTurn(super.engine.getPlayer().getChips().divide(BigDecimal.TWO, MathContext.DECIMAL128));
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

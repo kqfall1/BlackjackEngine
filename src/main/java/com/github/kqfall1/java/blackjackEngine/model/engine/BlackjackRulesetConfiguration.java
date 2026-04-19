@@ -17,7 +17,6 @@ public final class BlackjackRulesetConfiguration
 	private int maximumSplitCount;
 	private BigDecimal minimumBetAmount;
 	private BigDecimal playerInitialChips;
-	private boolean shouldBlackjackAfterSplitPayoutAsBlackjack;
 	private int shoeDeckCount;
 	private double shoePenetration;
 	private boolean shouldDealerHitOnSoft17;
@@ -57,11 +56,6 @@ public final class BlackjackRulesetConfiguration
 		return shoePenetration;
 	}
 
-	public boolean getShouldBlackjackAfterSplitPayoutAsBlackjack()
-	{
-		return shouldBlackjackAfterSplitPayoutAsBlackjack;
-	}
-
 	public boolean getShouldDealerHitOnSoft17()
 	{
 		return shouldDealerHitOnSoft17;
@@ -94,13 +88,7 @@ public final class BlackjackRulesetConfiguration
 
 	public void setMaximumSplitCount(int maximumSplitCount)
 	{
-		InputManager.validateNumber(
-			maximumSplitCount,
-			"maximumSplitCount",
-			0,
-			Float.MAX_VALUE
-		);
-
+		InputManager.validateNumber(maximumSplitCount, "maximumSplitCount", 0, Float.MAX_VALUE);
 		this.maximumSplitCount = maximumSplitCount;
 	}
 
@@ -117,8 +105,7 @@ public final class BlackjackRulesetConfiguration
 
 	public void setPlayerInitialChips(BigDecimal playerInitialChips)
 	{
-		assert playerInitialChips != null && playerInitialChips.compareTo(BigDecimal.ZERO) > 0
-			: "playerInitialChips == null || playerInitialChips.compareTo(BigDecimal.ZERO) <= 0";
+		assert playerInitialChips != null && playerInitialChips.compareTo(BigDecimal.ZERO) > 0 : "playerInitialChips == null || playerInitialChips.compareTo(BigDecimal.ZERO) <= 0";
 		this.playerInitialChips = playerInitialChips;
 	}
 
@@ -146,11 +133,6 @@ public final class BlackjackRulesetConfiguration
 		this.shoePenetration = shoePenetration;
 	}
 
-	public void setShouldBlackjackAfterSplitPayoutAsBlackjack(boolean value)
-	{
-		shouldBlackjackAfterSplitPayoutAsBlackjack = value;
-	}
-
 	public void setShouldDealerHitOnSoft17(boolean value)
 	{
 		shouldDealerHitOnSoft17 = value;
@@ -170,7 +152,7 @@ public final class BlackjackRulesetConfiguration
 	public String toString()
 	{
 		return String.format(
-			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldBlackjackAfterSplitPayoutAsBlackjack=%s,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s]",
+			"%s[doublingDownOnSplitHandsAllowed=%s,loggingEnabled=%s,maximumSplitCount=%d,minimumBetAmount=%s,playerInitialChips=%s,shoeDeckCount=%d,shoePenetration=%.2f,shouldDealerHitOnSoft17=%s,splittingAcesAllowed=%s,surrenderingAllowed=%s]",
 			getClass().getName(),
 			isDoublingDownOnSplitHandsAllowed(),
 			isLoggingEnabled(),
@@ -179,7 +161,6 @@ public final class BlackjackRulesetConfiguration
 			getPlayerInitialChips(),
 			getShoeDeckCount(),
 			getShoePenetration(),
-			getShouldBlackjackAfterSplitPayoutAsBlackjack(),
 			getShouldDealerHitOnSoft17(),
 			isSplittingAcesAllowed(),
 			isSurrenderingAllowed()

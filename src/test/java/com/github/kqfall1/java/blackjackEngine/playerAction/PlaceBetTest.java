@@ -15,7 +15,8 @@ public final class PlaceBetTest extends EngineTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
 	}
@@ -24,29 +25,25 @@ public final class PlaceBetTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		final var BET_AMOUNT = super.advanceToPlayerTurn(INITIAL_CHIP_AMOUNT);
+		final var initialChipAmount = super.engine.getPlayer().getChips();
+		final var betAmount = super.advanceToPlayerTurn(initialChipAmount);
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerStand();
-
-			Assertions.assertTrue(
-				INITIAL_CHIP_AMOUNT.compareTo(
-					super.engine.getPlayer().getChips()) > 0
-			);
+			Assertions.assertTrue(initialChipAmount.compareTo(super.engine.getPlayer().getChips()) > 0);
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
 			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
 			Assertions.assertTrue(
 				nearlyEquals(
-					BET_AMOUNT.stripTrailingZeros(),
+					betAmount.stripTrailingZeros(),
 					super.engine.getActiveHandContext().getBet().getAmount(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
 				nearlyEquals(
-					BET_AMOUNT.multiply(BigDecimal.TWO).stripTrailingZeros(),
+					betAmount.multiply(BigDecimal.TWO).stripTrailingZeros(),
 					super.engine.getActiveHandContext().getPot().getAmount(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)

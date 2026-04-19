@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-final class
-InsuranceBetAcceptTest extends CustomDeckTest
+final class InsuranceBetAcceptTest extends CustomDeckTest
 {
 	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetAcceptTest.log";
 	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetAcceptTest.log";
@@ -28,27 +27,23 @@ InsuranceBetAcceptTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(
-			BigDecimal.TWO,
-			MathContext.DECIMAL128
-		));
+		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
 		super.engine.deal();
 		super.engine.advanceAfterDeal();
 
-		final var CHIPS_BEFORE_INSURANCE = super.engine.getPlayer().getChips();
-		final var HALF_OF_ACTIVE_BET = super.engine.getActiveHandContext().getBet().getHalf();
+		final var chipsBeforeInsurance = super.engine.getPlayer().getChips();
+		final var halfOfActiveBet = super.engine.getActiveHandContext().getBet().getHalf();
+		var winnings = BigDecimal.ZERO;
+
 		super.engine.acceptInsuranceBet();
 
-		var winnings = BigDecimal.ZERO;
 		if (super.ruleset.isHandBlackjack(super.engine.getDealer().getHand()))
 		{
-			winnings = HALF_OF_ACTIVE_BET.multiply(
-				BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier()
-			);
+			winnings = halfOfActiveBet.multiply(BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier());
 			Assertions.assertTrue(
 				nearlyEquals(
-					CHIPS_BEFORE_INSURANCE
-						.subtract(HALF_OF_ACTIVE_BET)
+					chipsBeforeInsurance
+						.subtract(halfOfActiveBet)
 						.add(winnings)
 						.stripTrailingZeros(),
 					super.engine.getPlayer().getChips(),
@@ -60,8 +55,8 @@ InsuranceBetAcceptTest extends CustomDeckTest
 		{
 			Assertions.assertTrue(
 				nearlyEquals(
-					CHIPS_BEFORE_INSURANCE
-						.subtract(HALF_OF_ACTIVE_BET)
+					chipsBeforeInsurance
+						.subtract(halfOfActiveBet)
 						.stripTrailingZeros(),
 					super.engine.getPlayer().getChips(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE

@@ -20,17 +20,10 @@ public abstract class BlackjackJFrame extends JFrame
         final var iconImageHeight = 32;
         final var iconImageWidth = 32;
         final var uiActions = UiActions.getInstance();
-
-        final var BACKGROUND = new ApplicationBackground();
-        BACKGROUND.setLayout(new BorderLayout());
-        setContentPane(BACKGROUND);
-        setIconImage(
-            BLACKJACK_JFRAME_LOGO.getImage().getScaledInstance(
-                iconImageWidth,
-                iconImageHeight,
-                Image.SCALE_SMOOTH
-            )
-        );
+        final var background = new ApplicationBackground();
+        background.setLayout(new BorderLayout());
+        setContentPane(background);
+        setIconImage(BLACKJACK_JFRAME_LOGO.getImage().getScaledInstance(iconImageWidth, iconImageHeight, Image.SCALE_SMOOTH));
         setJMenuBar(new ApplicationJMenuBar(uiActions));
         uiActions.setKeystrokes(this);
         setResizable(false);

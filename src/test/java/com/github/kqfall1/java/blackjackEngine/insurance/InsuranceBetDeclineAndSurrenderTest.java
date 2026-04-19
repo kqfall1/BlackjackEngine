@@ -12,7 +12,8 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForInsurance();
 		super.initDependencies();
 		super.ruleset.getConfig().setSurrenderingAllowed(true);

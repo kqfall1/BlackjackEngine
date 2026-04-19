@@ -112,8 +112,8 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         errorJLabelPanelWrapper.add(errorJLabel);
         errorJLabelPanelWrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, errorJLabelPanelWrapper.getPreferredSize().height));
 
-        final var PLAY_BUTTON_PANEL_WRAPPER = new JPanel(new GridBagLayout());
-        PLAY_BUTTON_PANEL_WRAPPER.add(playButton);
+        final var playButtonPanelWrapper = new JPanel(new GridBagLayout());
+        playButtonPanelWrapper.add(playButton);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
@@ -121,7 +121,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         add(jTextFieldPanelWrapper);
         add(errorJLabelPanelWrapper);
-        add(PLAY_BUTTON_PANEL_WRAPPER);
+        add(playButtonPanelWrapper);
     }
 
     private Component[] getErrorRelatedComponents()
@@ -234,13 +234,12 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     @Override
     public void presentFailure(String message, Component... components)
     {
-        final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
+        final var defaultJTextFieldBorder = new JTextField().getBorder();
         errorJLabel.setText(message);
 
-        for (Component component : components)
+        for (var component : components)
         {
-            final var JCOMPONENT = (JComponent) component;
-            JCOMPONENT.setBorder(UiConstants.BORDER_RED);
+            ((JComponent) component).setBorder(UiConstants.BORDER_RED);
         }
 
         SwingUtilities.invokeLater(() ->
@@ -250,7 +249,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
                 for (Component component : components)
                 {
                     final var JCOMPONENT = (JComponent) component;
-                    JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+                    JCOMPONENT.setBorder(defaultJTextFieldBorder);
                 }
 
                 errorJLabel.setText("");

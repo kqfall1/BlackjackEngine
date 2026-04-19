@@ -2,7 +2,6 @@ package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -14,7 +13,8 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super._initCardsForBust();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -25,24 +25,17 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		BigDecimal chipAmountAfterBetting;
-		BigDecimal potAmount;
-
 		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
-		chipAmountAfterBetting = super.engine.getPlayer().getChips();
-		potAmount = super.engine.getActiveHandContext().getPot().getAmount();
-		Assertions.assertTrue(
-			super.ruleset.isHandBusted(super.engine.getDealer().getHand())
-		);
+		final var chipAmountAfterBetting = super.engine.getPlayer().getChips();
+		final var potAmount = super.engine.getActiveHandContext().getPot().getAmount();
+		Assertions.assertTrue(super.ruleset.isHandBusted(super.engine.getDealer().getHand()));
 		super.engine.advanceAfterDealerTurn();
 		super.engine.showdown();
 		super.advanceToEndOfRoundAfterShowdown();
 
 		Assertions.assertTrue(
 			nearlyEquals(
-				chipAmountAfterBetting
-					.add(potAmount)
-					.stripTrailingZeros(),
+				chipAmountAfterBetting.add(potAmount).stripTrailingZeros(),
 				super.engine.getPlayer().getChips(),
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)

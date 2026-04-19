@@ -10,7 +10,8 @@ import org.junit.jupiter.api.RepeatedTest;
 final class DealerStandsOnSoft17Test extends CustomDeckTest
 {
 	@BeforeEach
-	public void init() {
+	public void init()
+	{
 		super.initCardsForDealerSoft17();
 		super.initDependencies();
 	}
@@ -23,11 +24,7 @@ final class DealerStandsOnSoft17Test extends CustomDeckTest
 		dealer.getHand().addCards(dealer.getCardSource().draw());
 		dealer.getCardSource().draw();
 		dealer.getHand().addCards(dealer.getCardSource().draw());
-
 		Assertions.assertFalse(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
-		Assertions.assertFalse(super.ruleset.isDealerTurnActive(
-			BlackjackEngineState.DEALER_TURN,
-			dealer
-		));
+		Assertions.assertFalse(super.ruleset.isDealerTurnActive(BlackjackEngineState.DEALER_TURN, dealer));
 	}
 }

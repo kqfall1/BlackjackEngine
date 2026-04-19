@@ -16,7 +16,8 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		blackjackMethodIndex = super._initCardsForBlackjack();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -27,10 +28,10 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var INITIAL_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		super.advanceThroughDealerTurn(INITIAL_CHIP_AMOUNT);
-		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
-		final var POT_AMOUNT = super.engine.getActiveHandContext().getPot().getAmount();
+		final var initialChipAmount = super.engine.getPlayer().getChips();
+		super.advanceThroughDealerTurn(initialChipAmount);
+		final var chipAmountAfterBetting = super.engine.getPlayer().getChips();
+		final var potAmount = super.engine.getActiveHandContext().getPot().getAmount();
 
 		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
@@ -41,40 +42,18 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 
 		if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT)
 		{
-			assertEquals(
-				BlackjackConstants.TOP_SCORE,
-				super.engine.getDealer().getHand().getScore()
-			);
-			assertTrue(
-				super.engine.getActiveHandContext().getHand().getScore()
-					< BlackjackConstants.TOP_SCORE
-			);
-			assertTrue(
-				nearlyEquals(
-					CHIP_AMOUNT_AFTER_BETTING,
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			assertEquals(BlackjackConstants.TOP_SCORE, super.engine.getDealer().getHand().getScore());
+			assertTrue(super.engine.getActiveHandContext().getHand().getScore() < BlackjackConstants.TOP_SCORE);
+			assertTrue(nearlyEquals(chipAmountAfterBetting, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		}
 		else if (blackjackMethodIndex
 			< SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT + SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT)
 		{
-			assertEquals(
-				BlackjackConstants.TOP_SCORE,
-				super.engine.getActiveHandContext().getHand().getScore()
-			);
-			assertTrue(
-				super.engine.getDealer().getHand().getScore()
-					< BlackjackConstants.TOP_SCORE
-			);
+			assertEquals(BlackjackConstants.TOP_SCORE, super.engine.getActiveHandContext().getHand().getScore());
+			assertTrue(super.engine.getDealer().getHand().getScore() < BlackjackConstants.TOP_SCORE);
 			assertTrue(
 				nearlyEquals(
-					CHIP_AMOUNT_AFTER_BETTING.add(
-						POT_AMOUNT.multiply(
-							BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier()
-						)
-					),
+					chipAmountAfterBetting.add(potAmount.multiply(BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier())),
 					super.engine.getPlayer().getChips(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
@@ -88,13 +67,7 @@ public class ShowdownBlackjackTest extends CustomDeckTest
 				&& super.engine.getDealer().getHand().getScore()
 					== BlackjackConstants.TOP_SCORE
 			);
-			assertTrue(
-				nearlyEquals(
-					INITIAL_CHIP_AMOUNT,
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			assertTrue(nearlyEquals(initialChipAmount, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		}
 
 		super.advanceToEndOfRoundAfterShowdown();

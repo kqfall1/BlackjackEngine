@@ -16,7 +16,8 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super._initCardsForBust();
 		super.initDependencies();
 		super.ruleset.getConfig().setSurrenderingAllowed(true);
@@ -28,21 +29,15 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var PREVIOUS_CHIP_AMOUNT = super.engine.getPlayer().getChips();
-		final var BET_AMOUNT = super.advanceToPlayerTurn(PREVIOUS_CHIP_AMOUNT);
-		final var CHIP_AMOUNT_AFTER_BETTING = super.engine.getPlayer().getChips();
+		final var previousChipAmount = super.engine.getPlayer().getChips();
+		final var betAmount = super.advanceToPlayerTurn(previousChipAmount);
+		final var chipAmountAfterBetting = super.engine.getPlayer().getChips();
 
 		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			super.engine.playerSurrender();
 
-			Assertions.assertTrue(
-				nearlyEquals(
-					CHIP_AMOUNT_AFTER_BETTING,
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			Assertions.assertTrue(nearlyEquals(chipAmountAfterBetting, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 			Assertions.assertTrue(super.engine.getActiveHandContext().isSurrendered());
 		}
 
@@ -51,9 +46,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 
 		Assertions.assertTrue(
 			nearlyEquals(
-				CHIP_AMOUNT_AFTER_BETTING
-					.add(BET_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128))
-					.stripTrailingZeros(),
+				chipAmountAfterBetting.add(betAmount.divide(BigDecimal.TWO, MathContext.DECIMAL128)).stripTrailingZeros(),
 				super.engine.getPlayer().getChips(),
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			)

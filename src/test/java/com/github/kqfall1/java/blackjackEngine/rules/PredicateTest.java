@@ -13,7 +13,8 @@ final class PredicateTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super._initCardsForNormalShowdown();
 		super.initDependencies();
 		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
@@ -59,13 +60,7 @@ final class PredicateTest extends CustomDeckTest
 	private void verifyStandardAssumptions()
 	{
 		verifyPlayerActionsAreIllegal();
-
-		Assertions.assertFalse(
-			super.engine.getRuleset().isDealerTurnActive(
-				super.engine.getState(),
-				super.engine.getDealer()
-			)
-		);
+		Assertions.assertFalse(super.engine.getRuleset().isDealerTurnActive(super.engine.getState(), super.engine.getDealer()));
 	}
 
 	private void verifyPlayerActionsAreIllegal()

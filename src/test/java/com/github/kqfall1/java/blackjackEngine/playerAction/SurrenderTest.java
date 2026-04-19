@@ -29,10 +29,7 @@ final class SurrenderTest extends EngineTest
 		{
 			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
 			super.engine.playerSurrender();
-			Assertions.assertTrue(
-				super.engine.getActiveHandContext().isSurrendered()
-				&& super.engine.getActiveHandContext().isAltered()
-			);
+			Assertions.assertTrue(super.engine.getActiveHandContext().isSurrendered() && super.engine.getActiveHandContext().isAltered());
 		}
 
 		super.advanceThroughShowdownsAfterPlayerTurn();

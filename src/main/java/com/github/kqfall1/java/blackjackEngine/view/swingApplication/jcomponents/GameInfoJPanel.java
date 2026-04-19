@@ -127,33 +127,32 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     {
         SwingUtilities.invokeLater(() ->
         {
-            final var DEFAULT_JBUTTON_BORDER = new JButton().getBorder();
-            final var DEFAULT_JTEXT_FIELD_BORDER = new JTextField().getBorder();
+            final var defaultJButtonBorder = new JButton().getBorder();
+            final var defaultJTextFieldBorder = new JTextField().getBorder();
             engineMessageJTextArea.append(String.format("%s\n\n", message));
 
-            for (Component component : components)
+            for (final var component : components)
             {
-                final var JCOMPONENT = (JComponent) component;
-                JCOMPONENT.setBorder(UiConstants.BORDER_RED);
+                ((JComponent) component).setBorder(UiConstants.BORDER_RED);
             }
 
             new Timer(UiConstants.SLEEP_INTERVAL, event ->
             {
-                for (Component component : components)
+                for (final var component : components)
                 {
-                    final var JCOMPONENT = (JComponent) component;
+                    final var jComponent = (JComponent) component;
 
-                    if (JCOMPONENT instanceof JTextField)
+                    if (jComponent instanceof JTextField)
                     {
-                        JCOMPONENT.setBorder(DEFAULT_JTEXT_FIELD_BORDER);
+                        jComponent.setBorder(defaultJTextFieldBorder);
                     }
-                    else if (JCOMPONENT instanceof JButton)
+                    else if (jComponent instanceof JButton)
                     {
-                        JCOMPONENT.setBorder(DEFAULT_JBUTTON_BORDER);
+                        jComponent.setBorder(defaultJButtonBorder);
                     }
                     else
                     {
-                        JCOMPONENT.setBorder(null);
+                        jComponent.setBorder(null);
                     }
                 }
 

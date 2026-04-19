@@ -14,7 +14,8 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 
 	@BeforeEach
 	@Override
-	public void init() {
+	public void init()
+	{
 		super.initCardsForSplittingAndHittingOnce(Rank.TEN);
 		super.initDependencies();
 		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);

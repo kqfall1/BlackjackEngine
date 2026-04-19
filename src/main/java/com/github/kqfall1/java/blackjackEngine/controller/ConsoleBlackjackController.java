@@ -37,9 +37,6 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	private final BlackjackEngine engine;
 	private final ConsoleIoHandler handler;
 	private final InputManager inputManager;
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.model.engine.ConsoleBlackjackControllerEngine";
-	private static final String LOG_FILE_PATH = "src/main/resources/logs/ConsoleBlackjackControllerEngine.log";
-	private static final BigDecimal PLAYER_INITIAL_CHIPS = BigDecimal.valueOf(5000);
 
 	ConsoleBlackjackController(ConsoleIoHandler handler, Optional<Path> loggerFilePath, BlackjackRuleset ruleset)
 	{
@@ -72,7 +69,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		final var handler = new ConsoleIoHandler();
 		config.setLoggingEnabled(true);
 		config.setSurrenderingAllowed(true);
-		config.setPlayerInitialChips(PLAYER_INITIAL_CHIPS);
+		config.setPlayerInitialChips(BigDecimal.valueOf(5000));
 		final var ruleset = new StandardBlackjackRuleset(config);
 		final var controller = new ConsoleBlackjackController(handler, Optional.empty(), ruleset);
 		controller.getEngine().getLogger().setLevel(Level.OFF);
@@ -107,17 +104,11 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 		{
 			if (dealerHand.getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT - 1)
 			{
-				getHandler().getOut().printf(
-					"The dealer is showing a %s.\n",
-					card.toStringPretty()
-				);
+				getHandler().getOut().printf("The dealer is showing a %s.\n", card.toStringPretty());
 			}
 			else
 			{
-				getHandler().getOut().printf(
-					"The dealer was dealt the %s.\n",
-					card.toStringPretty()
-				);
+				getHandler().getOut().printf("The dealer was dealt the %s.\n", card.toStringPretty());
 			}
 		}
 	}
@@ -126,27 +117,18 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	public void onCardDealtToPlayer(Card card, HandContext handContext)
 	{
 		getHandler().getOut().printf(
-			"You were dealt a %s. Your current hand is now %s.\n",
-			card.toStringPretty(),
-			handContext.getHand().toStringPretty()
-		);
+			"You were dealt a %s. Your current hand is now %s.\n", card.toStringPretty(), handContext.getHand().toStringPretty());
 	}
 
 	@Override
 	public void onDrawingRoundCompletedDealer(Hand dealerHand)
 	{
-		getHandler().getOut().printf(
-			"The dealer has finished drawing. Their hand is %s.\n",
-			dealerHand.toStringPretty()
-		);
+		getHandler().getOut().printf("The dealer has finished drawing. Their hand is %s.\n", dealerHand.toStringPretty());
 	}
 
 	@Override
 	public void onDrawingRoundCompletedPlayer(HandContext handContext) {
-		getHandler().getOut().printf(
-			"You have completed a drawing round on hand %s.\n",
-			handContext.getHand().toStringPretty()
-		);
+		getHandler().getOut().printf("You have completed a drawing round on hand %s.\n", handContext.getHand().toStringPretty());
 		engine.advanceAfterDrawingRoundCompletedPlayer();
 	}
 
@@ -185,10 +167,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	{
 		if (wasSuccessful)
 		{
-			getHandler().getOut().printf(
-				"You have won your insurance bet and collect $%.2f.\n",
-				playerWinnings
-			);
+			getHandler().getOut().printf("You have won your insurance bet and collect $%.2f.\n", playerWinnings);
 		}
 		else
 		{
@@ -217,34 +196,19 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 	@Override
 	public void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings)
 	{
-		final var completedString = String.format(
-			"Your score is %d and the dealer's score is %d.",
-			handContext.getHand().getScore(),
-			dealerHand.getScore()
-		);
+		final var completedString = String.format("Your score is %d and the dealer's score is %d.", handContext.getHand().getScore(), dealerHand.getScore());
 
 		if (playerWon)
 		{
-			getHandler().getOut().printf(
-				"%s You have won the showdown and collect $%.2f.\n",
-				completedString,
-				playerWinnings
-			);
+			getHandler().getOut().printf("%s You have won the showdown and collect $%.2f.\n", completedString, playerWinnings);
 		}
 		else if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
 		{
-			getHandler().getOut().printf(
-				"%s You did not win the showdown, yet still collect $%.2f.\n",
-				completedString,
-				playerWinnings
-			);
+			getHandler().getOut().printf("%s You did not win the showdown, yet still collect $%.2f.\n", completedString, playerWinnings);
 		}
 		else
 		{
-			getHandler().getOut().printf(
-				"%s You have lost the showdown.\n",
-				completedString
-			);
+			getHandler().getOut().printf("%s You have lost the showdown.\n", completedString);
 		}
 	}
 
@@ -355,13 +319,13 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			return;
 		}
 
-		final var ANSWER = getInputManager().getYesNoInputter().getYesNo(Optional.of("Do you wish to place an insurance bet?")).join();
+		final var yesNo = getInputManager().getYesNoInputter().getYesNo(Optional.of("Do you wish to place an insurance bet?")).join();
 
 		try
 		{
 			var playerWinnings = BigDecimal.ZERO;
 
-			if (ANSWER == YesNoInput.YES)
+			if (yesNo == YesNoInput.YES)
 			{
 				playerWinnings = getEngine().acceptInsuranceBet();
 				getEngine().advanceAfterInsuranceBet(playerWinnings);

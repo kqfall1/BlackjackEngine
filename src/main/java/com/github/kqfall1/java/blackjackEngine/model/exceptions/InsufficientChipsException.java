@@ -14,10 +14,6 @@ public final class InsufficientChipsException extends RuntimeException
 {
 	public InsufficientChipsException(Player player, BigDecimal requiredChips)
 	{
-		super(String.format(
-			"Player %s has insufficient chips to bet $%s.",
-			player,
-			requiredChips.toPlainString()
-		));
+		super(String.format("Player %s has insufficient chips to bet $%s.", player, requiredChips.toPlainString()));
 	}
 }

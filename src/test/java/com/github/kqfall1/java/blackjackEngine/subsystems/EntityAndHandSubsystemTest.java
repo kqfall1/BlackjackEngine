@@ -24,7 +24,7 @@ import org.junit.jupiter.api.RepeatedTest;
 
 public final class EntityAndHandSubsystemTest
 {
-	private final Bet BET = new Bet(BET_AND_POT_INITIAL_AMOUNT);
+	private final Bet bet = new Bet(BET_AND_POT_INITIAL_AMOUNT);
 	private static final BigDecimal BET_AND_POT_INITIAL_AMOUNT = BigDecimal.valueOf(1000);
 	private Dealer dealer;
 	private Hand dealerHand;
@@ -35,19 +35,18 @@ public final class EntityAndHandSubsystemTest
 	private static final BigDecimal PLAYER_INITIAL_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	private Hand pocketPair = new Hand();
 	private Shoe shoe;
-	public static final double SHOE_PENETRATION_RANGE =
-		Shoe.MAXIMUM_PENETRATION - Shoe.MINIMUM_PENETRATION;
+	public static final double SHOE_PENETRATION_RANGE = Shoe.MAXIMUM_PENETRATION - Shoe.MINIMUM_PENETRATION;
 	private HandContext splitContext;
 	private static final int TEST_ITERATIONS = 5000;
 
 	private void dealerTest()
 	{
-		final var PREVIOUS_HAND = dealer.getHand();
-		final var PREVIOUS_SOURCE = dealer.getCardSource();
+		final var previousHand = dealer.getHand();
+		final var previousSource = dealer.getCardSource();
 		dealer.setHand(dealerHand);
 		dealer.setCardSource(shoe);
-		Assertions.assertNotEquals(PREVIOUS_HAND, dealer.getHand());
-		Assertions.assertNotEquals(PREVIOUS_SOURCE, dealer.getCardSource());
+		Assertions.assertNotEquals(previousHand, dealer.getHand());
+		Assertions.assertNotEquals(previousSource, dealer.getCardSource());
 		final int PREVIOUS_DEALER_HAND_SIZE = dealer.getHand().getCards().size();
 		dealer.getHand().addCards(dealer.getCardSource().draw());
 		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
@@ -55,11 +54,11 @@ public final class EntityAndHandSubsystemTest
 
 	private void handContextTest()
 	{
-		assertEquals(mainContext, new HandContext(BET, HandContextType.MAIN));
-		assertEquals(BET, mainContext.getBet());
+		assertEquals(mainContext, new HandContext(bet, HandContextType.MAIN));
+		assertEquals(bet, mainContext.getBet());
 		assertEquals(BigDecimal.ZERO, mainContext.getPot().getAmount());
-		assertEquals(splitContext, new HandContext(BET, HandContextType.SPLIT));
-		assertEquals(BET, splitContext.getBet());
+		assertEquals(splitContext, new HandContext(bet, HandContextType.SPLIT));
+		assertEquals(bet, splitContext.getBet());
 		assertEquals(BigDecimal.ZERO, splitContext.getPot().getAmount());
 		Assertions.assertFalse(mainContext.isAltered());
 		Assertions.assertFalse(mainContext.isSurrendered());
@@ -107,10 +106,9 @@ public final class EntityAndHandSubsystemTest
 		dealerHand.addCards(newCard);
 		mainHand.addCards(newCard);
 		_handTest(1);
-
 		Assertions.assertTrue(pocketPair.isPocketPair());
-
 		final var bustHand = new Hand();
+
 		while (bustHand.getScore() <= BlackjackConstants.TOP_SCORE)
 		{
 			bustHand.addCards(shoe.draw());
@@ -120,29 +118,20 @@ public final class EntityAndHandSubsystemTest
 	@BeforeEach
 	void init()
 	{
-		final var CONFIG = new BlackjackRulesetConfiguration();
-		final var PENETRATION
-			= Math.random() * SHOE_PENETRATION_RANGE + Shoe.MINIMUM_PENETRATION;
-		final var NUMBER_OF_DECKS = ThreadLocalRandom.current().nextInt(Shoe.MINIMUM_NUMBER_OF_DECKS, Shoe.MAXIMUM_NUMBER_OF_DECKS + 1);
-		final var RULESET = new StandardBlackjackRuleset(CONFIG);
+		final var config = new BlackjackRulesetConfiguration();
+		final var penetration = Math.random() * SHOE_PENETRATION_RANGE + Shoe.MINIMUM_PENETRATION;
+		final var numberOfDecks = ThreadLocalRandom.current().nextInt(Shoe.MINIMUM_NUMBER_OF_DECKS, Shoe.MAXIMUM_NUMBER_OF_DECKS + 1);
+		final var ruleset = new StandardBlackjackRuleset(config);
 
-		dealer = new Dealer(
-			RULESET.getIncludedRanks(),
-			NUMBER_OF_DECKS,
-			PENETRATION
-		);
+		dealer = new Dealer(ruleset.getIncludedRanks(), numberOfDecks, penetration);
 		dealerHand = new Hand();
-		mainContext = new HandContext(BET, HandContextType.MAIN);
+		mainContext = new HandContext(bet, HandContextType.MAIN);
 		player1 = new Player();
 		player2 = new Player();
 		mainHand = new Hand();
 		pocketPair = randomPocketPair();
-		shoe = new Shoe(
-			RULESET.getIncludedRanks(),
-			8,
-			90
-		);
-		splitContext = new HandContext(BET, HandContextType.SPLIT);
+		shoe = new Shoe(ruleset.getIncludedRanks(), 8, 90);
+		splitContext = new HandContext(bet, HandContextType.SPLIT);
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
@@ -162,9 +151,7 @@ public final class EntityAndHandSubsystemTest
 		player1.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
 		player2.addContext(splitContext);
 		player2.setChips(PLAYER_INITIAL_CHIP_AMOUNT);
-		assertTrue(PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player1.getChips()) == 0
-			&& PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player2.getChips()) == 0
-		);
+		assertTrue(PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player1.getChips()) == 0 && PLAYER_INITIAL_CHIP_AMOUNT.compareTo(player2.getChips()) == 0);
 		assertEquals(player1.getContexts().size(), player2.getContexts().size());
 		player1.clearContexts();
 		player2.removeContext(0);
@@ -179,18 +166,10 @@ public final class EntityAndHandSubsystemTest
 
 	private Hand randomPocketPair()
 	{
-		final var POCKET_PAIR = new Hand();
-		final int RANDOM_RANK_INDEX = (int) (Math.random() * Rank.values().length);
-
-		POCKET_PAIR.addCards(new Card(
-			Rank.values()[RANDOM_RANK_INDEX],
-			Suit.values()[0]
-		));
-		POCKET_PAIR.addCards(new Card(
-			Rank.values()[RANDOM_RANK_INDEX],
-			Suit.values()[1]
-		));
-
-		return POCKET_PAIR;
+		final var pocketPair = new Hand();
+		final int randomRankIndex = (int) (Math.random() * Rank.values().length);
+		pocketPair.addCards(new Card(Rank.values()[randomRankIndex], Suit.values()[0]));
+		pocketPair.addCards(new Card(Rank.values()[randomRankIndex], Suit.values()[1]));
+		return pocketPair;
 	}
 }

@@ -21,10 +21,6 @@ public final class IllegalHandOperationException extends RuntimeException
 {
 	public IllegalHandOperationException(HandContext handContext, String message)
 	{
-		super(String.format(
-			"An illegal operation was attempted on hand context %s. %s",
-			handContext,
-			message
-		));
+		super(String.format("An illegal operation was attempted on hand context %s. %s", handContext, message));
 	}
 }
