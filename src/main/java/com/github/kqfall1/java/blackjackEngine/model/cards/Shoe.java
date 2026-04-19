@@ -71,7 +71,7 @@ public final class Shoe implements Drawable
 	}
 
 	@Override
-	public Card draw()
+	public Card draw() throws NoMoreCardsException
 	{
 		if (getCards().isEmpty())
 		{

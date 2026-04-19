@@ -147,8 +147,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             }
             else if (blackjackEngine.getState() == BlackjackEngineState.INSURANCE_CHECK)
             {
-                final var FUTURE_INPUT = gameInfoJPanel.getPlayerInputJTextField().getYesNo(Optional.empty());
-                FUTURE_INPUT.whenComplete((result, throwable) ->
+                final var futureInput = gameInfoJPanel.getPlayerInputJTextField().getYesNo(Optional.empty());
+                futureInput.whenComplete((result, throwable) ->
                 {
                     if (throwable == null)
                     {
@@ -202,7 +202,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         SwingUtilities.invokeLater(() ->
         {
-            for (Component jButton : AwtUtils.getNestedComponents(Optional.of(JButton.class), gameActionJPanel))
+            for (final var jButton : AwtUtils.getNestedComponents(Optional.of(JButton.class), gameActionJPanel))
             {
                 ((JButton) jButton).getAction().setEnabled(false);
             }
@@ -266,7 +266,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     {
         clearActivePlayerHandJPanel();
 
-        for (Card card : handContext.getHand().getCards())
+        for (final var card : handContext.getHand().getCards())
         {
             renderCardForPlayer(card);
         }

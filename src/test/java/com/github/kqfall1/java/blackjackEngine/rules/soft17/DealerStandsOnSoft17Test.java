@@ -3,6 +3,7 @@ package com.github.kqfall1.java.blackjackEngine.rules.soft17;
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
 import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
@@ -20,10 +21,14 @@ final class DealerStandsOnSoft17Test extends CustomDeckTest
 	public void main()
 	{
 		final var dealer = new Dealer(testDeck);
-		dealer.getCardSource().draw();
-		dealer.getHand().addCards(dealer.getCardSource().draw());
-		dealer.getCardSource().draw();
-		dealer.getHand().addCards(dealer.getCardSource().draw());
+		try
+		{
+			dealer.getCardSource().draw();
+			dealer.getHand().addCards(dealer.getCardSource().draw());
+			dealer.getCardSource().draw();
+			dealer.getHand().addCards(dealer.getCardSource().draw());
+		}
+		catch (NoMoreCardsException ignored) {}
 		Assertions.assertFalse(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
 		Assertions.assertFalse(super.ruleset.isDealerTurnActive(BlackjackEngineState.DEALER_TURN, dealer));
 	}

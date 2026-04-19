@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.interfaces;
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 
 /**
  * Defines the methods that all {@code Card} containers must implement to
@@ -11,5 +12,5 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
  */
 public interface Drawable
 {
-	Card draw();
+	Card draw() throws NoMoreCardsException;
 }

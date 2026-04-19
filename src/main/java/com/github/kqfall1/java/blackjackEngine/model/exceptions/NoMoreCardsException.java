@@ -1,6 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.model.exceptions;
 
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
+import java.io.IOException;
 
 /**
  * Encapsulates data about failures resulting from drawing a {@code Card} from
@@ -9,7 +10,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
  * @author kqfall1
  * @since 14/12/2025
  */
-public final class NoMoreCardsException extends RuntimeException
+public final class NoMoreCardsException extends IOException
 {
 	public NoMoreCardsException(Drawable cardSource)
 	{

@@ -4,6 +4,7 @@ import com.github.kqfall1.java.blackjackEngine.model.cards.*;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
 import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -50,16 +51,24 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public final int _initCardsForBlackjack()
 	{
-		final var blackjackMethodIndex =
-			(int) (Math.random() * SHOWDOWN_BLACKJACK_METHOD_COUNT);
-
+		final var blackjackMethodIndex = (int) (Math.random() * SHOWDOWN_BLACKJACK_METHOD_COUNT);
 		Hand testHand = new Hand();
-		testHand.addCards(randomCards.draw(), randomCards.draw());
+
+		try
+		{
+			testHand.addCards(randomCards.draw(), randomCards.draw());
+		}
+		catch (NoMoreCardsException ignored) {}
 
 		while (testHand.getScore() == BlackjackConstants.TOP_SCORE)
 		{
 			testHand.removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
-			testHand.addCards(randomCards.draw());
+
+			try
+			{
+				testHand.addCards(randomCards.draw());
+			}
+			catch (NoMoreCardsException ignored) {}
 		}
 
 		final var card1 = testHand.getCards().getFirst();
@@ -147,12 +156,16 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public void initCardsForDealerSoft17()
 	{
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			randomCards.draw(),
-			randomCards.removeCardOfRank(Rank.SIX),
-			randomCards.draw(),
-			randomCards.removeCardOfRank(Rank.ACE)
-		)));
+		try
+		{
+			testDeck.setInitialCards(new ArrayDeque<>(List.of(
+				randomCards.draw(),
+				randomCards.removeCardOfRank(Rank.SIX),
+				randomCards.draw(),
+				randomCards.removeCardOfRank(Rank.ACE)
+			)));
+		}
+		catch (NoMoreCardsException ignored) {}
 	}
 
 	private void initCardsForDealerBlackjack1 (Card playerCard1, Card playerCard2)
@@ -199,12 +212,16 @@ public abstract class CustomDeckTest extends EngineTest
 
 	public final void initCardsForInsurance()
 	{
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			randomCards.draw(),
-			randomCards.removeCardOfRank(Rank.ACE),
-			randomCards.draw(),
-			randomCards.draw()
-		)));
+		try
+		{
+			testDeck.setInitialCards(new ArrayDeque<>(List.of(
+				randomCards.draw(),
+				randomCards.removeCardOfRank(Rank.ACE),
+				randomCards.draw(),
+				randomCards.draw()
+			)));
+		}
+		catch (NoMoreCardsException ignored) {}
 	}
 
 	public final void initCardsForInsuranceAndSplitting(Rank rank)
@@ -215,16 +232,20 @@ public abstract class CustomDeckTest extends EngineTest
 		final var splitCard3 = randomCards.removeCardOfRank(rank);
 		final var splitCard4 = randomCards.removeCardOfRank(rank);
 
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			splitCard1,
-			randomCards.removeCardOfRank(Rank.ACE),
-			splitCard2,
-			randomCards.draw(),
-			randomCards.draw(),
-			splitCard3,
-			randomCards.draw(),
-			splitCard4
-		)));
+		try
+		{
+			testDeck.setInitialCards(new ArrayDeque<>(List.of(
+				splitCard1,
+				randomCards.removeCardOfRank(Rank.ACE),
+				splitCard2,
+				randomCards.draw(),
+				randomCards.draw(),
+				splitCard3,
+				randomCards.draw(),
+				splitCard4
+			)));
+		}
+		catch (NoMoreCardsException ignored) {}
 	}
 
 	public final int _initCardsForNormalShowdown()
@@ -323,34 +344,42 @@ public abstract class CustomDeckTest extends EngineTest
 	{
 		final var iterator = _initCardsForSplitting(splitRank).iterator();
 
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			iterator.next(),
-			randomCards.draw(),
-			iterator.next(),
-			randomCards.draw(),
-			randomCards.draw(),
-			iterator.next(),
-			randomCards.draw(),
-			randomCards.draw(),
-			iterator.next(),
-			randomCards.draw()
-		)));
+		try
+		{
+			testDeck.setInitialCards(new ArrayDeque<>(List.of(
+				iterator.next(),
+				randomCards.draw(),
+				iterator.next(),
+				randomCards.draw(),
+				randomCards.draw(),
+				iterator.next(),
+				randomCards.draw(),
+				randomCards.draw(),
+				iterator.next(),
+				randomCards.draw()
+			)));
+		}
+		catch (NoMoreCardsException ignored) {}
 	}
 
 	public final void initCardsForSplittingWithoutHitting(Rank splitRank)
 	{
 		final var iterator = _initCardsForSplitting(splitRank).iterator();
 
-		testDeck.setInitialCards(new ArrayDeque<>(List.of(
-			iterator.next(),
-			randomCards.draw(),
-			iterator.next(),
-			randomCards.draw(),
-			randomCards.draw(),
-			iterator.next(),
-			randomCards.draw(),
-			iterator.next()
-		)));
+		try
+		{
+			testDeck.setInitialCards(new ArrayDeque<>(List.of(
+				iterator.next(),
+				randomCards.draw(),
+				iterator.next(),
+				randomCards.draw(),
+				randomCards.draw(),
+				iterator.next(),
+				randomCards.draw(),
+				iterator.next()
+			)));
+		}
+		catch (NoMoreCardsException ignored) {}
 	}
 
 	private void _initSplitHands()

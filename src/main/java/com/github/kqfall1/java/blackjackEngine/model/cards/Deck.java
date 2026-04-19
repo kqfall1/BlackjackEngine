@@ -28,9 +28,9 @@ public class Deck implements Drawable
 		this.includedRanks = includedRanks;
 		final List<Card> cardsList = new ArrayList<>();
 
-		for (Rank rank : includedRanks)
+		for (final var rank : includedRanks)
 		{
-			for (Suit suit : Suit.values())
+			for (final var suit : Suit.values())
 			{
 				cardsList.add(new Card(rank, suit));
 			}
@@ -40,7 +40,7 @@ public class Deck implements Drawable
 		cards = new ArrayDeque<>(cardsList);
 	}
 
-	public Card draw()
+	public Card draw() throws NoMoreCardsException
 	{
 		if (getCards().isEmpty())
 		{

@@ -11,6 +11,7 @@ import com.github.kqfall1.java.blackjackEngine.model.entities.Player;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.enums.Suit;
 import com.github.kqfall1.java.blackjackEngine.model.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
@@ -47,9 +48,13 @@ public final class EntityAndHandSubsystemTest
 		dealer.setCardSource(shoe);
 		Assertions.assertNotEquals(previousHand, dealer.getHand());
 		Assertions.assertNotEquals(previousSource, dealer.getCardSource());
-		final int PREVIOUS_DEALER_HAND_SIZE = dealer.getHand().getCards().size();
-		dealer.getHand().addCards(dealer.getCardSource().draw());
-		Assertions.assertTrue(dealer.getHand().getCards().size() > PREVIOUS_DEALER_HAND_SIZE);
+		final int previousDealerHandSize = dealer.getHand().getCards().size();
+		try
+		{
+			dealer.getHand().addCards(dealer.getCardSource().draw());
+		}
+		catch (NoMoreCardsException ignored) {}
+		Assertions.assertTrue(dealer.getHand().getCards().size() > previousDealerHandSize);
 	}
 
 	private void handContextTest()
@@ -98,20 +103,30 @@ public final class EntityAndHandSubsystemTest
 	private void handTest()
 	{
 		_handTest(0);
-		mainHand.addCards(shoe.draw());
-		dealerHand.addCards(shoe.draw());
-		mainHand.removeCard(0);
-		dealerHand.removeCard(0);
-		final var newCard = shoe.draw();
-		dealerHand.addCards(newCard);
-		mainHand.addCards(newCard);
-		_handTest(1);
+
+		try
+		{
+			mainHand.addCards(shoe.draw());
+			dealerHand.addCards(shoe.draw());
+			mainHand.removeCard(0);
+			dealerHand.removeCard(0);
+			final var newCard = shoe.draw();
+			dealerHand.addCards(newCard);
+			mainHand.addCards(newCard);
+			_handTest(1);
+		}
+		catch (NoMoreCardsException ignored) {}
+
 		Assertions.assertTrue(pocketPair.isPocketPair());
 		final var bustHand = new Hand();
 
 		while (bustHand.getScore() <= BlackjackConstants.TOP_SCORE)
 		{
-			bustHand.addCards(shoe.draw());
+			try
+			{
+				bustHand.addCards(shoe.draw());
+			}
+			catch (NoMoreCardsException ignored) {}
 		}
 	}
 

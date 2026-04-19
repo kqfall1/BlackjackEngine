@@ -36,6 +36,9 @@ import java.util.Optional;
  * appropriate; one should call the advance instance methods of this {@code BlackjackEngine} to
  * advance past all other {@code BlackjackEngineState} states.</p>
  *
+ * <p>Throws {@code AssertionError}, {@code IllegalHandOperationException}, {@code InsufficentChipsException},
+ * and {@code RuleViolationException} objects if called in an invalid state.</p>
+ *
  * @author kqfall1
  * @since 15/12/2025
  */
@@ -100,8 +103,7 @@ public class BlackjackEngine
 		getLogger().entering(CLASS_NAME, methodName);
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.INSURANCE_CHECK : "getState() != BlackjackEngineState.INSURANCE_CHECK";
-		if (!ruleset.isInsuranceBetPossible(
-			getActiveHandContext(), getState(), getPlayer(), getDealer().getHand()))
+		if (!ruleset.isInsuranceBetPossible(getActiveHandContext(), getState(), getPlayer(), getDealer().getHand()))
 		{
 			if (getActiveHandContext().isAltered())
 			{
@@ -134,9 +136,7 @@ public class BlackjackEngine
 		var playerWinnings = BigDecimal.ZERO;
 		getPlayer().setChips(getPlayer().getChips().subtract(amount));
 		final var insurancePot = new Pot(amount);
-		final var insuranceRatio = getRuleset()
-			.getPayoutRatios()
-			.get(BlackjackConstants.INSURANCE_RATIO_KEY);
+		final var insuranceRatio = getRuleset().getPayoutRatios().get(BlackjackConstants.INSURANCE_RATIO_KEY);
 		if (getRuleset().isHandBlackjack(getDealer().getHand()))
 		{
 			playerWinnings = insurancePot.scoop().multiply(insuranceRatio.getPayoutMultiplier());
@@ -262,6 +262,23 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, methodName);
 	}
 
+	private Card changeDealerCardSourceAndDraw(NoMoreCardsException e)
+	{
+		final var methodName = "changeDealerCardSource";
+		getLogger().entering(CLASS_NAME, methodName);
+		assert e != null : "e == null";
+		getDealer().setCardSource(new Deck());
+		try
+		{
+			getLogger().exiting(CLASS_NAME, methodName);
+			return getDealer().getCardSource().draw();
+		}
+		catch (NoMoreCardsException ex)
+		{
+			throw new UncheckedIOException(ex);
+		}
+	}
+
 	public void deal()
 	{
 		final var methodName = "deal";
@@ -298,8 +315,7 @@ public class BlackjackEngine
 		}
 		catch (NoMoreCardsException e)
 		{
-			getDealer().setCardSource(new Deck());
-			card = getDealer().getCardSource().draw();
+			card = changeDealerCardSourceAndDraw(e);
 		}
 		getDealer().getHand().addCards(card);
 		onCardDealtToDealer(card);
@@ -318,8 +334,7 @@ public class BlackjackEngine
 		}
 		catch (NoMoreCardsException e)
 		{
-			getDealer().setCardSource(new Deck());
-			card = getDealer().getCardSource().draw();
+			card = changeDealerCardSourceAndDraw(e);
 		}
 		getActiveHandContext().getHand().addCards(card);
 		onCardDealtToPlayer(card);
@@ -610,20 +625,34 @@ public class BlackjackEngine
 		}
 		final var splitAmount = getActiveHandContext().getBet().getAmount();
 		getPlayer().setChips(getPlayer().getChips().subtract(splitAmount));
-		final var playerSplitHand = new HandContext(new Bet(splitAmount), HandContextType.SPLIT);
-		playerSplitHand.getHand().addCards(getActiveHandContext().getHand().getCards().getLast());
-		getPlayer().addContext(playerSplitHand);
-		getActiveHandContext().getHand().removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
-		getActiveHandContext().getHand().addCards(getDealer().getCardSource().draw());
+		final var playerSplitHandContext = new HandContext(new Bet(splitAmount), HandContextType.SPLIT);
+		playerSplitHandContext.getHand().addCards(getActiveHandContext().getHand().getCards().getLast());
+		getPlayer().addContext(playerSplitHandContext);
 		getActiveHandContext().setSplit();
-		playerSplitHand.getHand().addCards(getDealer().getCardSource().draw());
-		playerSplitHand.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
+		getActiveHandContext().getHand().removeCard(BlackjackConstants.INITIAL_CARD_COUNT - 1);
+		try
+		{
+			getActiveHandContext().getHand().addCards(getDealer().getCardSource().draw());
+		}
+		catch (NoMoreCardsException e)
+		{
+			getActiveHandContext().getHand().addCards(changeDealerCardSourceAndDraw(e));
+		}
+		try
+		{
+			playerSplitHandContext.getHand().addCards(getDealer().getCardSource().draw());
+		}
+		catch (NoMoreCardsException e)
+		{
+			playerSplitHandContext.getHand().addCards(changeDealerCardSourceAndDraw(e));
+		}
+		playerSplitHandContext.getPot().addChips(splitAmount.multiply(BigDecimal.TWO));
 		getLogger().info(String.format(
 			"Player has elected to split. Player now has a current hand of %s and a split hand of %s.",
 			getPlayer().getContexts().getFirst(),
-			playerSplitHand
+			playerSplitHandContext
 		));
-		getListener().onPlayerSplit(getActiveHandContext(), playerSplitHand);
+		getListener().onPlayerSplit(getActiveHandContext(), playerSplitHandContext);
 		onDrawingRoundStartedPlayer();
 		getLogger().exiting(CLASS_NAME, methodName);
 	}

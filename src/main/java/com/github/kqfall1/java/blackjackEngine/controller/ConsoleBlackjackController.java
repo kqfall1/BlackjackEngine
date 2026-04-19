@@ -264,25 +264,13 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			Optional.of(new String[] {"d", "h", "sp", "st", "su"})
 		).join();
 
-		try
+		switch (selection)
 		{
-			switch (selection)
-			{
-				case "d" -> getEngine().playerDoubleDown();
-				case "h" -> getEngine().playerHit();
-				case "sp" -> getEngine().playerSplit();
-				case "st" -> getEngine().playerStand();
-				case "su" -> getEngine().playerSurrender();
-			}
-		}
-		catch (RuntimeException e)
-		{
-			getHandler().presentFailure(e.getMessage());
-
-			if (getEngine().getState() != BlackjackEngineState.END)
-			{
-				performAction();
-			}
+			case "d" -> getEngine().playerDoubleDown();
+			case "h" -> getEngine().playerHit();
+			case "sp" -> getEngine().playerSplit();
+			case "st" -> getEngine().playerStand();
+			case "su" -> getEngine().playerSurrender();
 		}
 	}
 
@@ -297,19 +285,7 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 			Float.MAX_VALUE
 		).join();
 
-		try
-		{
-			getEngine().placeBet(BigDecimal.valueOf(amount));
-		}
-		catch (Exception e)
-		{
-			getHandler().presentFailure(e.getMessage());
-
-			if (getEngine().getState() != BlackjackEngineState.END)
-			{
-				placeHandBet();
-			}
-		}
+		getEngine().placeBet(BigDecimal.valueOf(amount));
 	}
 
 	private void placeInsuranceBet()
@@ -321,28 +297,13 @@ public final class ConsoleBlackjackController implements BlackjackEngineListener
 
 		final var yesNo = getInputManager().getYesNoInputter().getYesNo(Optional.of("Do you wish to place an insurance bet?")).join();
 
-		try
+		if (yesNo == YesNoInput.YES)
 		{
-			var playerWinnings = BigDecimal.ZERO;
-
-			if (yesNo == YesNoInput.YES)
-			{
-				playerWinnings = getEngine().acceptInsuranceBet();
-				getEngine().advanceAfterInsuranceBet(playerWinnings);
-			}
-			else
-			{
-				getEngine().declineInsuranceBet();
-			}
+			getEngine().advanceAfterInsuranceBet(getEngine().acceptInsuranceBet());
 		}
-		catch (Exception e)
+		else
 		{
-			getHandler().presentFailure(e.getMessage());
-
-			if (getEngine().getState() != BlackjackEngineState.END)
-			{
-				placeInsuranceBet();
-			}
+			getEngine().declineInsuranceBet();
 		}
 	}
 

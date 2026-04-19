@@ -129,7 +129,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         final var allComponents = AwtUtils.getNestedComponents(Optional.empty(), this);
         final var errorRelatedComponents = new HashSet<Component>();
 
-        for (var component : allComponents)
+        for (final var component : allComponents)
         {
             if (component instanceof NumberInputter)
             {
@@ -237,7 +237,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         final var defaultJTextFieldBorder = new JTextField().getBorder();
         errorJLabel.setText(message);
 
-        for (var component : components)
+        for (final var component : components)
         {
             ((JComponent) component).setBorder(UiConstants.BORDER_RED);
         }
@@ -246,7 +246,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         {
             new Timer(UiConstants.SLEEP_INTERVAL, event ->
             {
-                for (Component component : components)
+                for (final var component : components)
                 {
                     final var JCOMPONENT = (JComponent) component;
                     JCOMPONENT.setBorder(defaultJTextFieldBorder);

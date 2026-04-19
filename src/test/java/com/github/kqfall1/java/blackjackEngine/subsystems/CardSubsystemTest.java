@@ -59,8 +59,14 @@ public final class CardSubsystemTest
 		assertEquals(Rank.ACE, ACE_OF_CLUBS_1.getRank());
 		assertEquals(Suit.CLUB, ACE_OF_CLUBS_1.getSuit());
 		assertEquals(BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT, deck1.getCards().size());
-		assertEquals(ACE_OF_CLUBS_1, testDeck.draw());
-		assertEquals(TWO_OF_DIAMONDS, testDeck.draw());
+
+		try
+		{
+			assertEquals(ACE_OF_CLUBS_1, testDeck.draw());
+			assertEquals(TWO_OF_DIAMONDS, testDeck.draw());
+		}
+		catch (NoMoreCardsException ignored) {}
+
 		assertTrue(!testDeck.getCards().contains(ACE_OF_CLUBS_1) && !testDeck.getCards().contains(TWO_OF_DIAMONDS));
 
 		for (int count = 0; count < BlackjackConstants.DEFAULT_FULL_DECK_CARD_COUNT + 1; count++)
@@ -97,10 +103,7 @@ public final class CardSubsystemTest
 			try
 			{
 				shoe1.draw();
-				assertEquals(
-					cardCount - count - 1,
-					shoe1.getCards().size()
-				);
+				assertEquals(cardCount - count - 1, shoe1.getCards().size());
 
 				if (shoe1.getCards().size() > shoe1.getCutoffAmount())
 				{

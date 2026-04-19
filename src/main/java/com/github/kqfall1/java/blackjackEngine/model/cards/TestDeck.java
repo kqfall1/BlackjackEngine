@@ -19,7 +19,7 @@ public final class TestDeck extends Deck
 	private Queue<Card> initialCards;
 
 	@Override
-	public Card draw()
+	public Card draw() throws NoMoreCardsException
 	{
 		if (!getInitialCards().isEmpty())
 		{
@@ -40,7 +40,7 @@ public final class TestDeck extends Deck
 
 	public void removeCards(Card... cards)
 	{
-		for (Card card : cards)
+		for (final var card : cards)
 		{
 			super.cards.remove(card);
 		}
@@ -50,7 +50,7 @@ public final class TestDeck extends Deck
 	{
 		assert rank != null : "rank == null";
 
-		for (Card card : getCards())
+		for (final var card : getCards())
 		{
 			if (card.getRank() == rank)
 			{
@@ -78,7 +78,7 @@ public final class TestDeck extends Deck
 
 		final var includedRanksList = List.of(super.getIncludedRanks());
 
-		for (Card card : initialCards)
+		for (final var card : initialCards)
 		{
 			assert card != null && includedRanksList.contains(card.getRank())
 				: "card == null || !includedRanksList.contains(card.getRank())";
@@ -86,7 +86,7 @@ public final class TestDeck extends Deck
 
 		this.initialCards = new ArrayDeque<>(initialCards);
 
-		for (Card card : initialCards)
+		for (final var card : initialCards)
 		{
 			removeCards(card);
 		}

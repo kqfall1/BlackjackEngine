@@ -25,7 +25,7 @@ public final class Hand
 	{
 		assert cards != null && cards.length > 0 : "cards == null || cards.length <= 0";
 
-		for (Card card : cards)
+		for (final var card : cards)
 		{
 			assert card != null: "card == null";
 			this.cards.add(card);
@@ -52,7 +52,7 @@ public final class Hand
 	{
 		int aceCount = 0;
 
-		for (Card card : getCards())
+		for (final var card : getCards())
 		{
 			if (card.getRank() == Rank.ACE)
 			{
@@ -76,7 +76,7 @@ public final class Hand
 	{
 		int lowScore = 0;
 
-		for (Card card : getCards())
+		for (final var card : getCards())
 		{
 			lowScore += switch (card.getRank())
 			{
@@ -161,10 +161,12 @@ public final class Hand
 	{
 		final var builder = new StringBuilder();
 		builder.append("[");
-		for (Card card : getCards())
+
+		for (final var card : getCards())
 		{
 			builder.append(String.format("%s,", card.toStringPretty()));
 		}
+
 		return builder.append("]").toString();
 	}
 }
