@@ -6,7 +6,7 @@ import com.github.kqfall1.java.utils.StringUtils;
 import java.util.Objects;
 
 /**
- * Immutable objects that correspond to the cards found in a standard, 52-card deck.
+ * Immutable cards found in a standard, 52-card {@code Deck}.
  *
  * @author kqfall1
  * @since 13/12/2025
@@ -37,8 +37,7 @@ public final class Card
 		}
 
 		final var otherCard = (Card) otherObject;
-		return Objects.equals(getRank(), otherCard.getRank())
-			&& Objects.equals(getSuit(), otherCard.getSuit());
+		return Objects.equals(getRank(), otherCard.getRank()) && Objects.equals(getSuit(), otherCard.getSuit());
 	}
 
 	public Rank getRank()
@@ -60,12 +59,7 @@ public final class Card
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"%s[rank=%s,suit=%s]",
-			getClass().getName(),
-			getRank(),
-			getSuit()
-		);
+		return String.format("%s[rank=%s,suit=%s]", getClass().getName(), getRank(), getSuit());
 	}
 
 	public String toStringPretty()

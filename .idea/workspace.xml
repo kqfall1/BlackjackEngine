@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="More codebase polish; also changed NoMoreCardsException.java to extend IOException and be checked, since it gets caught within the engine.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Polished UX by improving the rendering of cards and preventing the player from advancing until the animation indicating that they have won a showdown has completed.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/controller/ConsoleBlackjackController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Bet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Bet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/PayoutRatio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/PayoutRatio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Pot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/betting/Pot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Shoe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/Shoe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/TestDeck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/cards/TestDeck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardBlackjackRuleset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/StandardBlackjackRuleset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jcomponents/GameConfigJPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Dealer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Dealer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/exceptions/IllegalHandOperationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/exceptions/IllegalHandOperationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/HandContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/hands/HandContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackRuleset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/BlackjackRuleset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/interfaces/Drawable.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,14 +200,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Created a rough GameLeftJPanel.java.">
-      <option name="closed" value="true" />
-      <created>1772433840068</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1772433840068</updated>
     </task>
     <task id="LOCAL-00047" summary="Completed a rough GameLeftJPanel.java.">
       <option name="closed" value="true" />
@@ -582,11 +585,18 @@
       <option name="project" value="LOCAL" />
       <updated>1776623821819</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Polished UX by improving the rendering of cards and preventing the player from advancing until the animation indicating that they have won a showdown has completed.">
+      <option name="closed" value="true" />
+      <created>1776629231159</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1776629231159</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Altered GameJFrame.java to support split hands - minor bugs remain." />
     <MESSAGE value="Fixed a minor GUI bug involving displayed hand scores and split hand showdowns." />
     <MESSAGE value="Added another toggle to BlackjackRulesetConfiguration.java; have stopped the Swing application from auto-advancing into the first showdown." />
     <MESSAGE value="Refactored advancement logic and removed a method from BlackjackEngine.java." />
@@ -611,7 +621,8 @@
     <MESSAGE value="Created a view/swingApplication/ui; made the app close when a GameJFrame is closed with the top-right close button." />
     <MESSAGE value="Polished the source code files of the codebase." />
     <MESSAGE value="More codebase polish; also changed NoMoreCardsException.java to extend IOException and be checked, since it gets caught within the engine." />
-    <option name="LAST_COMMIT_MESSAGE" value="More codebase polish; also changed NoMoreCardsException.java to extend IOException and be checked, since it gets caught within the engine." />
+    <MESSAGE value="Polished UX by improving the rendering of cards and preventing the player from advancing until the animation indicating that they have won a showdown has completed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Polished UX by improving the rendering of cards and preventing the player from advancing until the animation indicating that they have won a showdown has completed." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

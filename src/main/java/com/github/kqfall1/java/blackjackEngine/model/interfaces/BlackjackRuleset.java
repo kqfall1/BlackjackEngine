@@ -12,8 +12,7 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import java.util.Map;
 
 /**
- * Defines the methods that blackjack rule objects must have a valid implementation for to
- * be serviced by any {@code BlackjackEngine}.
+ * Defines the methods that blackjack rule objects require to be serviced by a {@code BlackjackEngine}.
  *
  * @author kqfall1
  * @since 03/01/2026

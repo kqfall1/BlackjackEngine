@@ -18,12 +18,8 @@ public final class Bet
 
 	public Bet(BigDecimal amount)
 	{
-		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 :
-			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
-		this.amount = amount.setScale(
-			BlackjackConstants.DEFAULT_CHIP_SCALE,
-			RoundingMode.HALF_DOWN
-		).stripTrailingZeros();
+		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 : "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
+		this.amount = amount.setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN).stripTrailingZeros();
 	}
 
 	@Override
@@ -61,10 +57,6 @@ public final class Bet
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"%s[amount=%s]",
-			getClass().getName(),
-			getAmount()
-		);
+		return String.format("%s[amount=%s]", getClass().getName(), getAmount());
 	}
 }

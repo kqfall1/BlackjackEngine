@@ -6,7 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;
 
 /**
- * A container for randomly assorted collections of {@code Card} objects.
+ * A container for randomly assorted collections of {@code Card} objects derived from a certain number of {@code Deck} objects.
  *
  * @author kqfall1
  * @since 31/12/2025
@@ -59,33 +59,34 @@ public final class Shoe implements Drawable
 
 		Collections.shuffle(cardsList);
 		cards = new ArrayDeque<>(cardsList);
-
-		assert penetration >= MINIMUM_PENETRATION && penetration <= MAXIMUM_PENETRATION : "penetration < MINIMUM_PENETRATION || penetration > MAXIMUM_PENETRATION";
+		assert penetration >= MINIMUM_PENETRATION && penetration <= MAXIMUM_PENETRATION
+				: "penetration < MINIMUM_PENETRATION || penetration > MAXIMUM_PENETRATION";
 		this.penetration = penetration;
-		cutoffAmount =
-			(int) (getCards().size() * (getPenetrationPercentage() + Math.random() * VARIANCE));
+		cutoffAmount = (int) (getCards().size() * (getPenetrationPercentage() + Math.random() * VARIANCE));
 		assert cutoffAmount > 0 && cutoffAmount < cards.size() : "cutCardIndex <= 0 || cutCardIndex >= cards.size()";
-
-		assert numberOfDecks >= MINIMUM_NUMBER_OF_DECKS && numberOfDecks <= MAXIMUM_NUMBER_OF_DECKS : "numberOfDecks < MINIMUM_NUMBER_OF_DECKS || numberOfDecks > MAXIMUM_NUMBER_OF_DECKS";
+		assert numberOfDecks >= MINIMUM_NUMBER_OF_DECKS && numberOfDecks <= MAXIMUM_NUMBER_OF_DECKS
+				: "numberOfDecks < MINIMUM_NUMBER_OF_DECKS || numberOfDecks > MAXIMUM_NUMBER_OF_DECKS";
 		this.numberOfDecks = numberOfDecks;
 	}
 
 	@Override
 	public Card draw() throws NoMoreCardsException
 	{
-		if (getCards().isEmpty())
+		try
 		{
-			throw new NoMoreCardsException(this);
+			if (getCards().size() - 1 <= getCutoffAmount())
+			{
+				shufflingRequired = true;
+			}
+
+			return cards.remove();
 		}
-
-		final var card = cards.poll();
-
-		if (getCards().size() <= getCutoffAmount())
+		catch (NoSuchElementException e)
 		{
-			setShufflingRequired(true);
+			final var ex = new NoMoreCardsException(this);
+			ex.initCause(e);
+			throw ex;
 		}
-
-		return card;
 	}
 
 	public List<Card> getCards()
@@ -116,11 +117,6 @@ public final class Shoe implements Drawable
 	public boolean isShufflingRequired()
 	{
 		return shufflingRequired;
-	}
-
-	private void setShufflingRequired(boolean value)
-	{
-		shufflingRequired = value;
 	}
 
 	@Override

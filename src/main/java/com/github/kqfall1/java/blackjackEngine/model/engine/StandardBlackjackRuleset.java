@@ -90,10 +90,6 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"%s[config=%s]",
-			getClass().getName(),
-			config
-		);
+		return String.format("%s[config=%s]", getClass().getName(), config);
 	}
 }

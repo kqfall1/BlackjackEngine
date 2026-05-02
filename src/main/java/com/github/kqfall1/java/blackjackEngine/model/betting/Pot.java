@@ -25,8 +25,7 @@ public final class Pot
 
 	public void addChips(BigDecimal amount)
 	{
-		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) > 0 :
-			"amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
+		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) > 0 : "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		setAmount(getAmount().add(amount));
 	}
 
@@ -59,8 +58,7 @@ public final class Pot
 
 	private void setAmount(BigDecimal amount)
 	{
-		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) >= 0 :
-			"amount == null || amount.compareTo(BigDecimal.ZERO) < 0";
+		assert amount != null &&  amount.compareTo(BigDecimal.ZERO) >= 0 : "amount == null || amount.compareTo(BigDecimal.ZERO) < 0";
 		this.amount = amount.stripTrailingZeros();
 	}
 
@@ -74,10 +72,6 @@ public final class Pot
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"%s[amount=%s]",
-			getClass().getName(),
-			getAmount()
-		);
+		return String.format("%s[amount=%s]", getClass().getName(), getAmount());
 	}
 }

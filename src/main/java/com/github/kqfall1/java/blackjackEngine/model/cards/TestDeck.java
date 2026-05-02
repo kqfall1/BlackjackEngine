@@ -5,11 +5,12 @@ import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsExcep
 import com.github.kqfall1.java.utils.StringUtils;
 import java.util.ArrayDeque;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 /**
- * Exposes public mechanisms that make {@code BlackjackEngine} testing significantly
- * easier, especially regarding splitting operations.
+ * Exposes APIs that allows clients to select an initial sequence of {@code Card} objects, making
+ * {@code BlackjackEngine} testing significantly easier.
  *
  * @author kqfall1
  * @since 23/12/2025
@@ -18,32 +19,36 @@ public final class TestDeck extends Deck
 {
 	private Queue<Card> initialCards;
 
+	public TestDeck()
+	{
+		initialCards = new ArrayDeque<>();
+	}
+
 	@Override
 	public Card draw() throws NoMoreCardsException
 	{
-		if (!getInitialCards().isEmpty())
+		try
 		{
-			return initialCards.poll();
+			try
+			{
+				return initialCards.remove();
+			}
+			catch (NoSuchElementException e)
+			{
+				return super.cards.remove();
+			}
 		}
-		else if (!getCards().isEmpty())
+		catch (NoSuchElementException e)
 		{
-			return super.cards.poll();
+			final var ex = new NoMoreCardsException(this);
+			ex.initCause(e);
+			throw ex;
 		}
-
-		throw new NoMoreCardsException(this);
 	}
 
 	public List<Card> getInitialCards()
 	{
 		return initialCards == null ? List.of() : List.copyOf(initialCards);
-	}
-
-	public void removeCards(Card... cards)
-	{
-		for (final var card : cards)
-		{
-			super.cards.remove(card);
-		}
 	}
 
 	public Card removeCardOfRank(Rank rank)
@@ -64,41 +69,30 @@ public final class TestDeck extends Deck
 			}
 		}
 
-		throw new IllegalStateException(String.format(
-			"No %s is present in test deck %s.",
-			StringUtils.normalizeLower(rank.toString()),
-			this
-		));
+		throw new IllegalStateException(String.format("No %s is present in test deck %s.", StringUtils.normalizeLower(rank.toString()), this));
 	}
 
 	public void setInitialCards(Queue<Card> initialCards)
 	{
-		assert initialCards != null && !initialCards.isEmpty()
-			: "initialCards == null || initialCards.isEmpty()";
-
+		assert initialCards != null && !initialCards.isEmpty() : "initialCards == null || initialCards.isEmpty()";
 		final var includedRanksList = List.of(super.getIncludedRanks());
 
 		for (final var card : initialCards)
 		{
-			assert card != null && includedRanksList.contains(card.getRank())
-				: "card == null || !includedRanksList.contains(card.getRank())";
+			assert card != null && includedRanksList.contains(card.getRank()) : "card == null || !includedRanksList.contains(card.getRank())";
 		}
 
 		this.initialCards = new ArrayDeque<>(initialCards);
 
 		for (final var card : initialCards)
 		{
-			removeCards(card);
+			super.cards.remove(card);
 		}
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format(
-			"%s[initialCards=%s]",
-			super.toString(),
-			getInitialCards()
-		);
+		return String.format("%s[initialCards=%s]", super.toString(), getInitialCards());
 	}
 }

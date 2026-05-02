@@ -30,7 +30,7 @@ import java.util.Optional;
  * executing the main game loop.
  *
  * <p>Centralizes all core logic that influences gameplay as a public API, emits all internal
- * events through {@code BlackjackEngineListener} hooks, and logs pertinent information.</p>
+ * events through {@code BlackjackEngineListener} callback methods, and logs pertinent information.</p>
  *
  * <p>Auto-advances past {@code BlackjackEngineState.BETTING} and {@code BlackjackEngineState.PLAYER_TURN} when
  * appropriate; one should call the advance instance methods of this {@code BlackjackEngine} to
@@ -44,24 +44,14 @@ import java.util.Optional;
  */
 public class BlackjackEngine
 {
-	/**
- 	 * Identifies the {@code HandContext} object in the encapsulated {@code Player} object's
-	 * {@code contexts} property that is currently being acted upon by this {@code BlackjackEngine}
-	 * in a blackjack betting round.
-	 *
-	 * <p>
-	 * During the {@code BlackjackEngineState.PLAYER_TURN} state, it indicates the {@code HandContext} that
-	 * the {@code Player} is actively making decisions on; during other states, it remains at 0.
-	 * </p>
- 	 */
 	private int activeHandContextIndex;
 	private static final String CLASS_NAME = "BlackjackEngine";
 	private final Dealer dealer;
 	private final BlackjackEngineListener listener;
-	private Logger logger;
+	private final Logger logger;
 	private final Player player;
 	private final BlackjackRuleset ruleset;
-	private static Iterator<HandContext> showdownHandContextIterator;
+	private Iterator<HandContext> showdownHandContextIterator;
 	private BlackjackEngineState state;
 
 	public BlackjackEngine(BlackjackEngineListener listener, Optional<Path> loggerFilePath, BlackjackRuleset ruleset)
@@ -386,14 +376,6 @@ public class BlackjackEngine
 		getLogger().exiting(CLASS_NAME, methodName);
 	}
 
-	/**
-	 * Retrieves the {@code HandContext} object corresponding to {@code activeHandContextIndex}.
-	 *
-	 * <p>
-	 * This method is safe to call in all {@code BlackjackEngineState} states as long as the
-	 * {@code Player} possesses at least one non-null {@code HandContext}.
-	 * </p>
- 	 */
 	public HandContext getActiveHandContext()
 	{
 		return getPlayer().getContexts().get(getActiveHandContextIndex());
@@ -597,8 +579,7 @@ public class BlackjackEngine
 		final var methodName = "playerSplit";
 		getLogger().entering(CLASS_NAME, methodName);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (!getRuleset().isSplittingPossible(getActiveHandContext(), getState(),
-			getActiveHandContextIndex(), getPlayer()))
+		if (!getRuleset().isSplittingPossible(getActiveHandContext(), getState(), getActiveHandContextIndex(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered() || !getActiveHandContext().getHand().isPocketPair())
 			{

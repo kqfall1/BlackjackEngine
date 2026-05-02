@@ -7,7 +7,7 @@ import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 import java.util.*;
 
 /**
- * Represents a standard deck of playing {@code Card} objects.
+ * A standard deck of playing {@code Card} objects.
  *
  * @author kqfall1
  * @since 13/12/2025
@@ -42,12 +42,16 @@ public class Deck implements Drawable
 
 	public Card draw() throws NoMoreCardsException
 	{
-		if (getCards().isEmpty())
+		try
 		{
-			throw new NoMoreCardsException(this);
+			return cards.remove();
 		}
-
-		return cards.poll();
+		catch (NoSuchElementException e)
+		{
+			final var ex = new NoMoreCardsException(this);
+			ex.initCause(e);
+			throw ex;
+		}
 	}
 
 	@Override

@@ -6,8 +6,7 @@ import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.Drawable;
 
 /**
- * Controls a {@code Drawable} and a {@code Hand}. Draws {@code Card} objects
- * one at a time.
+ * Controls a {@code Drawable} and a {@code Hand}. Draws {@code Card} objects one at a time.
  *
  * <p>
  * The encapsulated {@code Hand} is played in a mechanical manner after all

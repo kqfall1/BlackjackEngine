@@ -96,8 +96,8 @@ public final class HandContext
 	}
 
 	/**
- 	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call
-	 * this method whenever this {@code HandContext} is altered.
+ 	 * All {@code BlackjackEngine} processes involving {@code Player} actions need to call this method whenever
+	 * a non-split action is taken on this {@code HandContext}.
  	 */
 	public void setAltered()
 	{

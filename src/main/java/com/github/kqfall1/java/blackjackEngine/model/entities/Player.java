@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An actor that places {@code Bet} objects and plays at least one
- * {@code Hand} before the {@code Dealer} in a blackjack betting round.
+ * An actor that places {@code Bet} objects and plays at least one {@code Hand} before the {@code Dealer}
+ * in a blackjack betting round.
  *
  * @author kqfall1
  * @since 14/12/2025
@@ -28,8 +28,7 @@ public final class Player
 
 	public void addContext(HandContext context)
 	{
-		assert context != null && !getContexts().contains(context)
-			: "context == null || getContexts().contains(context)";
+		assert context != null && !getContexts().contains(context) : "context == null || getContexts().contains(context)";
 		contexts.add(context);
 	}
 
