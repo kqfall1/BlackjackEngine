@@ -19,21 +19,21 @@ public final class CreditsJPanel extends JPanel
 
     public CreditsJPanel()
     {
-        String sources;
+        String text;
 
         try (InputStream in = CreditsJPanel.class.getResourceAsStream("/sources.md"))
         {
-            sources = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+            text = new String(in.readAllBytes(), StandardCharsets.UTF_8);
         }
         catch (IOException e)
         {
-            sources = UiConstants.GAME_MESSAGE_NO_SOURCES_FOUND;
+            text = UiConstants.GAME_MESSAGE_NO_SOURCES_FOUND;
         }
 
-        sourcesJTextArea = new JTextArea(sources);
+        sourcesJTextArea = new JTextArea(text);
+        sourcesJTextArea.setEditable(false);
         sourcesJTextArea.setLineWrap(true);
         sourcesJTextArea.setMargin(UiConstants.JTEXT_AREA_INSETS);
-        sourcesJTextArea.setEditable(false);
         final var sourcesJScrollPane = new JScrollPane(sourcesJTextArea);
         sourcesJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         setLayout(new BorderLayout());

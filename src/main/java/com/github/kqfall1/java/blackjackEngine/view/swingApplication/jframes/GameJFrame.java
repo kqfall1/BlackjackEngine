@@ -27,7 +27,8 @@ import java.util.Optional;
 import javax.swing.*;
 
 /**
- * Allows players to use and control a {@code BlackjackEngine} to play a game of blackjack.
+ * Allows players to use and control a {@code BlackjackEngine} to play a game of blackjack with the help of various
+ * custom components.
  *
  * @author kqfall1
  * @since 21/02/2026
@@ -42,17 +43,16 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
 
     public GameJFrame(BlackjackRulesetConfiguration config)
     {
+        blackjackEngine = new BlackjackEngine(this, Optional.empty(), new StandardBlackjackRuleset(config));
         gameCardsJPanel = new GameCardsJPanel();
         gameInfoJPanel = new GameInfoJPanel();
+        executorService = Executors.newSingleThreadExecutor();
 
         final var actionMap = getRootPane().getActionMap();
         final var inputMap = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        blackjackEngine = new BlackjackEngine(this, Optional.empty(), new StandardBlackjackRuleset(config));
-        executorService = Executors.newSingleThreadExecutor();
-
         final var advance = UiActions.getInstance().getGameAction(e ->
         {
-            gameInfoJPanel.getAdvanceEngineJButton().setEnabled(false);
+            gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(false);
 
             if (blackjackEngine.getState() == BlackjackEngineState.START)
             {
@@ -474,7 +474,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 gameInfoJPanel.getPlayerInputJTextField().requestFocusInWindow();
             }
 
-            gameInfoJPanel.getSubmitJButton().setEnabled(enabled);
+            gameInfoJPanel.getSubmitJButton().getAction().setEnabled(enabled);
         });
     }
 

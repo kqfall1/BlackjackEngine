@@ -12,7 +12,7 @@ import javax.swing.*;
  * Contains all {@code JComponent} objects required to provide general information about the blackjack game.
  *
  * <p>This information includes the {@code Dealer}'s {@code Hand}'s score, the active {@code PlayerHand}'s {@code Hand}'s score,
- * and the {@code Player}'s chip count. {@code JComponent} objects are provided to advance the game and provide {@code String} input.</p>
+ * and the {@code Player}'s chip count. A {@code JComponent} is provided to advance the game and provide {@code String} input.</p>
  *
  * @author kqfall1
  * @since 01/03/2026
@@ -52,9 +52,6 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         submitJButton = new JButton(UiConstants.GAME_ACTION_SUBMIT_LABEL);
         submitJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitJButton.setEnabled(false);
-
-        final var engineMessageJScrollPaneInputMap = engineMessageJScrollPane.getInputMap();
-        engineMessageJScrollPaneInputMap.put(KeyStroke.getKeyStroke("ctrl H"), "");
 
         final var gameInfoWrapper = new JPanel();
         gameInfoWrapper.setLayout(new BoxLayout(gameInfoWrapper, BoxLayout.Y_AXIS));
@@ -127,8 +124,6 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     {
         SwingUtilities.invokeLater(() ->
         {
-            final var defaultJButtonBorder = new JButton().getBorder();
-            final var defaultJTextFieldBorder = new JTextField().getBorder();
             engineMessageJTextArea.append(String.format("%s\n\n", message));
 
             for (final var component : components)
@@ -144,11 +139,11 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
 
                     if (jComponent instanceof JTextField)
                     {
-                        jComponent.setBorder(defaultJTextFieldBorder);
+                        jComponent.setBorder(new JTextField().getBorder());
                     }
                     else if (jComponent instanceof JButton)
                     {
-                        jComponent.setBorder(defaultJButtonBorder);
+                        jComponent.setBorder(new JButton().getBorder());
                     }
                     else
                     {

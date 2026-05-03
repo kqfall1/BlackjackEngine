@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Contains two {@code JPanel} objects to display cards to the player.
+ * Contains two {@code JPanel} objects to display cards to the {@code Player} actor.
  *
  * @author kqfall1
  * @since 07/03/2025

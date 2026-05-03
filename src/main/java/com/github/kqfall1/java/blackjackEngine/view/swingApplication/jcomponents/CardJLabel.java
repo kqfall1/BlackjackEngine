@@ -3,8 +3,8 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponent
 import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.utils.StringUtils;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * A {@code JLabel} to hold an {@code ImageIcon} to render cards.
@@ -15,7 +15,6 @@ import java.awt.*;
 public final class CardJLabel extends JLabel
 {
     private final Card card;
-    private boolean faceUp;
     private static final String RESOURCE_LOOKUP_STRING_PREFIX = "/images/cards/";
 
     public CardJLabel(Card card, boolean faceUp)
@@ -26,12 +25,6 @@ public final class CardJLabel extends JLabel
     }
 
     public void setFaceUp(boolean faceUp)
-    {
-        this.faceUp = faceUp;
-        updateImageIcon();
-    }
-
-    public void updateImageIcon()
     {
         String resourceLookupString;
 
@@ -54,6 +47,7 @@ public final class CardJLabel extends JLabel
             UiConstants.CARD_IMAGE_HEIGHT,
             Image.SCALE_SMOOTH
         );
+
         setIcon(new ImageIcon(cardImage));
     }
 }

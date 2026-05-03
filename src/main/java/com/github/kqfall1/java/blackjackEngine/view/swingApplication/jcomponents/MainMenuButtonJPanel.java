@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Contains all {@code JButton} objects required by a {@code MainMenuJFrame} object.
+ * Contains all {@code JButton} objects required by a {@code MainMenuJFrame}.
  *
  * @author kqfall1
  * @since 24/01/2026

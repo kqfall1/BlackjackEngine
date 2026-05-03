@@ -2,8 +2,8 @@ package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jcomponent
 
 import com.github.kqfall1.java.blackjackEngine.model.cards.Shoe;
 import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes.MainMenuJFrame;
+import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
 import com.github.kqfall1.java.frameworks.awt.AwtUtils;
 import com.github.kqfall1.java.frameworks.awt.swing.ValidatedJTextField;
 import com.github.kqfall1.java.interfaces.FailurePresenter;
@@ -18,8 +18,7 @@ import javax.swing.*;
 
 /**
  * Contains all {@code JComponent} objects required by a {@code MainMenuJFrame} to configure a new blackjack game.
- *
- * <p>Implements {@code FailurePresenter} to bolster application's user experience.</p>
+ * Implements {@code FailurePresenter} to bolster application's user experience.
  *
  * @author kqfall1
  * @since 14/02/2026
@@ -126,10 +125,9 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
     private Component[] getErrorRelatedComponents()
     {
-        final var allComponents = AwtUtils.getNestedComponents(Optional.empty(), this);
         final var errorRelatedComponents = new HashSet<Component>();
 
-        for (final var component : allComponents)
+        for (final var component : AwtUtils.getNestedComponents(Optional.empty(), this))
         {
             if (component instanceof NumberInputter)
             {
@@ -146,10 +144,10 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
         jLabelConstraints.anchor = GridBagConstraints.WEST;
         jLabelConstraints.fill = GridBagConstraints.NONE;
+        jLabelConstraints.gridheight = 1;
+        jLabelConstraints.gridwidth = 1;
         jLabelConstraints.gridx = 0;
         jLabelConstraints.gridy = GridBagConstraints.RELATIVE;
-        jLabelConstraints.gridwidth = 1;
-        jLabelConstraints.gridheight = 1;
         jLabelConstraints.insets = JCOMPONENT_INSETS;
         jLabelConstraints.weightx = 0;
         jLabelConstraints.weighty = 0;
@@ -162,10 +160,10 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         final var secondaryJComponentConstraints = new GridBagConstraints();
 
         secondaryJComponentConstraints.fill = GridBagConstraints.HORIZONTAL;
+        secondaryJComponentConstraints.gridheight = 1;
+        secondaryJComponentConstraints.gridwidth = 1;
         secondaryJComponentConstraints.gridx = 1;
         secondaryJComponentConstraints.gridy = GridBagConstraints.RELATIVE;
-        secondaryJComponentConstraints.gridwidth = 1;
-        secondaryJComponentConstraints.gridheight = 1;
         secondaryJComponentConstraints.insets = JCOMPONENT_INSETS;
         secondaryJComponentConstraints.weightx = UiConstants.DEFAULT_GRID_BAG_LAYOUT_WEIGHT;
         secondaryJComponentConstraints.weighty = UiConstants.DEFAULT_GRID_BAG_LAYOUT_WEIGHT;
@@ -235,22 +233,20 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     @Override
     public void presentFailure(String message, Component... components)
     {
-        final var defaultJTextFieldBorder = new JTextField().getBorder();
-        errorJLabel.setText(message);
-
-        for (final var component : components)
-        {
-            ((JComponent) component).setBorder(UiConstants.BORDER_RED);
-        }
-
         SwingUtilities.invokeLater(() ->
         {
+            errorJLabel.setText(message);
+
+            for (final var component : components)
+            {
+                ((JComponent) component).setBorder(UiConstants.BORDER_RED);
+            }
+
             new Timer(UiConstants.SLEEP_INTERVAL, event ->
             {
                 for (final var component : components)
                 {
-                    final var JCOMPONENT = (JComponent) component;
-                    JCOMPONENT.setBorder(defaultJTextFieldBorder);
+                    ((JComponent) component).setBorder(new JTextField().getBorder());
                 }
 
                 errorJLabel.setText("");

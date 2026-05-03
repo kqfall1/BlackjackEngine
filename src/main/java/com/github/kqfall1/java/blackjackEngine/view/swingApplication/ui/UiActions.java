@@ -73,7 +73,7 @@ public final class UiActions
                     {
                         if (window instanceof GameJFrame gameJFrame)
                         {
-                            if (JOptionPane.showConfirmDialog(window, String.format("%s?", UiConstants.GAME_MESSAGE_MAIN_MENU_WARNING)) == JOptionPane.YES_OPTION)
+                            if (JOptionPane.showConfirmDialog(window, UiConstants.GAME_MESSAGE_MAIN_MENU_WARNING) == JOptionPane.YES_OPTION)
                             {
                                 gameJFrame.getExecutorService().shutdown();
                             }
