@@ -27,7 +27,7 @@ final class ShowdownSurrenderTest extends CustomDeckTest
 	public void main()
 	{
 		final var previousChipAmount = engine.getPlayer().getChips();
-		final var betAmount = advanceToPlayerTurn(previousChipAmount);
+		final var betAmount = advanceToPlayerTurn(previousChipAmount.subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 		final var chipAmountAfterBetting = engine.getPlayer().getChips();
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)

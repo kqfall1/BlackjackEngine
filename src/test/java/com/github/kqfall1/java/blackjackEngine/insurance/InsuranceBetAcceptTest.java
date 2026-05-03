@@ -25,7 +25,8 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
+		placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.subtract(engine.getRuleset().getConfig().getMinimumBetAmount())
+			.divide(BigDecimal.TWO, MathContext.DECIMAL128));
 		engine.deal();
 		engine.advanceAfterDeal();
 

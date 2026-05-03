@@ -26,7 +26,7 @@ final class SurrenderingAllowedTest extends CustomDeckTest
 	public void main()
 	{
 		Assertions.assertTrue(engine.getRuleset().getConfig().isSurrenderingAllowed());
-		advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		advanceToPlayerTurn(getSplitDownTestMaximumInitialBetAmount());
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			engine.playerSurrender();

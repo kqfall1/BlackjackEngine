@@ -22,7 +22,7 @@ final class InsuranceBetDeclineAndSurrenderTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT);
+		advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT.subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

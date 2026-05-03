@@ -22,7 +22,7 @@ final class SurrenderingNotAllowedTest extends EngineTest
 	public void main()
 	{
 		Assertions.assertFalse(engine.getRuleset().getConfig().isSurrenderingAllowed());
-		advanceToPlayerTurn(engine.getPlayer().getChips());
+		advanceToPlayerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

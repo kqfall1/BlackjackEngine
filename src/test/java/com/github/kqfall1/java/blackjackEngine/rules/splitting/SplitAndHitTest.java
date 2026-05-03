@@ -23,7 +23,7 @@ final class SplitAndHitTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		advanceToPlayerTurn(getSplitDownTestMaximumInitialBetAmount());
 		initSplitHands(() ->
 		{
 			final var activeHandContextIndex = engine.getActiveHandContextIndex();

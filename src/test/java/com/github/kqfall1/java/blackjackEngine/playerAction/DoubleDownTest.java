@@ -23,7 +23,9 @@ final class DoubleDownTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var initialBetAmount = advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
+		final var initialBetAmount = advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT
+			.subtract(engine.getRuleset().getConfig().getMinimumBetAmount())
+			.divide(BigDecimal.TWO, MathContext.DECIMAL128));
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

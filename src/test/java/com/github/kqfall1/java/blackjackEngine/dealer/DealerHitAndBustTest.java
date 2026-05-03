@@ -21,7 +21,7 @@ public class DealerHitAndBustTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceThroughDealerTurn(engine.getPlayer().getChips());
+		advanceThroughDealerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 		Assertions.assertTrue(ruleset.isHandBusted(engine.getDealer().getHand()));
 		engine.advanceAfterDealerTurn();
 		engine.showdown();

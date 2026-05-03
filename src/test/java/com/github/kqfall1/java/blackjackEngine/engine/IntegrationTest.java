@@ -20,7 +20,17 @@ final class IntegrationTest extends EngineTest
 	{
 		while (engine.getState() != BlackjackEngineState.END)
 		{
-			advanceToPlayerTurn(engine.getPlayer().getChips());
+			if (engine.getPlayer().getChips().compareTo(engine.getRuleset().getConfig().getMinimumBetAmount().add(CHIP_AMOUNT_BUFFER)) >= 0)
+			{
+				advanceToPlayerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
+			}
+			else
+			{
+				engine.placeBet(engine.getPlayer().getChips());
+				engine.deal();
+				engine.advanceAfterDeal();
+				declinePossibleInsuranceBet();
+			}
 
 			if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 			{

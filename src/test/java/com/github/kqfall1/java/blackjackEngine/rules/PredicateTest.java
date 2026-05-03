@@ -24,7 +24,15 @@ final class PredicateTest extends CustomDeckTest
 	{
 		while (engine.getState() != BlackjackEngineState.END)
 		{
-			placeRandomHandBet(engine.getPlayer().getChips());
+			if (engine.getPlayer().getChips().compareTo(engine.getRuleset().getConfig().getMinimumBetAmount().add(CHIP_AMOUNT_BUFFER)) >= 0)
+			{
+				engine.placeBet(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
+			}
+			else
+			{
+				engine.placeBet(engine.getPlayer().getChips());
+			}
+
 			engine.deal();
 			verifyStandardAssumptions();
 			engine.advanceAfterDeal();
@@ -82,7 +90,8 @@ final class PredicateTest extends CustomDeckTest
 			)
 			&& engine.getRuleset().isSurrenderingPossible(
 				engine.getActiveHandContext(),
-				engine.getState()
+				engine.getState(),
+				engine.getPlayer()
 			)
 		);
 	}

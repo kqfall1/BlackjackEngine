@@ -34,16 +34,22 @@ public abstract class CustomDeckTest extends EngineTest
 	public static final int SHOWDOWN_NORMAL_PLAYER_WIN_METHOD_COUNT = 2;
 	public TestDeck testDeck;
 
-	public static final BigDecimal DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT
-		= INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.valueOf((MAXIMUM_SPLIT_COUNT + 2) * 2), MathContext.DECIMAL128
-	);
-	public static final BigDecimal SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT
-		= INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2), MathContext.DECIMAL128);
-
 	public CustomDeckTest()
 	{
 		randomCards = new TestDeck();
 		testDeck = new TestDeck();
+	}
+
+	public BigDecimal getDoubleDownTestMaximumInitialBetAmount()
+	{
+		return INITIAL_PLAYER_CHIP_AMOUNT.subtract(engine.getRuleset().getConfig().getMinimumBetAmount())
+			.divide(BigDecimal.valueOf((MAXIMUM_SPLIT_COUNT + 2) * 2), MathContext.DECIMAL128);
+	}
+
+	public BigDecimal getSplitDownTestMaximumInitialBetAmount()
+	{
+		return INITIAL_PLAYER_CHIP_AMOUNT.subtract(engine.getRuleset().getConfig().getMinimumBetAmount())
+			.divide(BigDecimal.valueOf(MAXIMUM_SPLIT_COUNT + 2), MathContext.DECIMAL128);
 	}
 
 	@BeforeEach

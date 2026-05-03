@@ -36,6 +36,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
     private final JButton playButton;
     private final NumberInputter playerInitialChipsInput;
     private final JLabel playerInitialChipsJLabel;
+    private static final String READ_CONFIG_KEY = "Read Config";
     private final JFrame rootJFrame;
     private final JSpinner shoeDeckCountInput;
     private final JLabel shoeDeckCountJLabel;
@@ -47,11 +48,24 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
 
     public GameConfigJPanel(JFrame rootJFrame)
     {
+        final var actionMap = getActionMap();
+        final var inputMap = getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         final var mainPanelDimension = UiConstants.GAME_JDIALOG_DIMENSION;
+        final var readConfig = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                readConfig(e);
+            }
+        };
+
+        actionMap.put(READ_CONFIG_KEY, readConfig);
         doublingDownOnSplitHandsAllowed = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL);
         doublingDownOnSplitHandsAllowed.setSelected(UiConstants.PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_DOUBLING_DOWN_ON_SPLIT_HANDS_ALLOWED_LABEL, false));
         errorJLabel = new JLabel();
         errorJLabel.setMaximumSize(new Dimension(mainPanelDimension.width, errorJLabel.getHeight()));
+        inputMap.put(KeyStroke.getKeyStroke("ENTER"), READ_CONFIG_KEY);
         loggingEnabled = new JCheckBox(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL);
         loggingEnabled.setSelected(UiConstants.PREFERENCES_NODE.getBoolean(UiConstants.GAME_CONFIG_JDIALOG_LOGGING_ENABLED_LABEL, false));
         maximumSplitCountInput = new JSpinner(new SpinnerNumberModel(
@@ -60,11 +74,13 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         ));
         maximumSplitCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MAXIMUM_SPLIT_COUNT_LABEL);
         minimumBetAmountInput = new ValidatedJTextField();
+        ((JTextField) minimumBetAmountInput).addActionListener(readConfig);
         ((JTextField) minimumBetAmountInput).setText(Double.valueOf(UiConstants.PREFERENCES_NODE.getDouble(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL, 1)).toString());
         minimumBetAmountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_MINIMUM_BET_AMOUNT_LABEL);
         playButton = new JButton(UiConstants.GAME_CONFIG_JDIALOG_PLAY_BUTTON_LABEL);
-        playButton.addActionListener(this::readConfigValues);
+        playButton.addActionListener(readConfig);
         playerInitialChipsInput = new ValidatedJTextField();
+        ((JTextField) playerInitialChipsInput).addActionListener(readConfig);
         ((JTextField) playerInitialChipsInput).setText(Double.valueOf(UiConstants.PREFERENCES_NODE.getDouble(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL, 1)).toString());
         playerInitialChipsJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_PLAYER_INITIAL_CHIPS_LABEL);
         this.rootJFrame = rootJFrame;
@@ -74,6 +90,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         ));
         shoeDeckCountJLabel = new JLabel(UiConstants.GAME_CONFIG_JDIALOG_SHOE_DECK_COUNT_LABEL);
         shoePenetrationInput = new ValidatedJTextField();
+        ((JTextField) shoePenetrationInput).addActionListener(readConfig);
         ((JTextField) shoePenetrationInput).setText(Double.valueOf(UiConstants.PREFERENCES_NODE.getDouble(
             UiConstants.GAME_CONFIG_JDIALOG_SHOE_PENETRATION_LABEL, Shoe.MINIMUM_PENETRATION
         )).toString());
@@ -171,7 +188,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         return secondaryJComponentConstraints;
     }
 
-    private void readConfigValues(ActionEvent e)
+    private void readConfig(ActionEvent e)
     {
         int maximumSplitCount;
         BigDecimal minimumBetAmount;
@@ -183,7 +200,7 @@ public final class GameConfigJPanel extends JPanel implements FailurePresenter
         {
             maximumSplitCount = (int) maximumSplitCountInput.getValue();
             minimumBetAmount = BigDecimal.valueOf(minimumBetAmountInput.getNumber(Optional.empty(), 1, Float.MAX_VALUE).join());
-            playerInitialChips = BigDecimal.valueOf(playerInitialChipsInput.getNumber(Optional.empty(), 1, Float.MAX_VALUE).join());
+            playerInitialChips = BigDecimal.valueOf(playerInitialChipsInput.getNumber(Optional.empty(), minimumBetAmount.doubleValue(), Float.MAX_VALUE).join());
             shoeDeckCount = (int) shoeDeckCountInput.getValue();
             shoePenetration = shoePenetrationInput.getNumber(Optional.empty(), Shoe.MINIMUM_PENETRATION, Shoe.MAXIMUM_PENETRATION).join();
         }

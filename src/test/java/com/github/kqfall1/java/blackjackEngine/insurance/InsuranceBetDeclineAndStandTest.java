@@ -21,7 +21,7 @@ final class InsuranceBetDeclineAndStandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceThroughDealerTurn(engine.getPlayer().getChips());
+		advanceThroughDealerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 
 		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{

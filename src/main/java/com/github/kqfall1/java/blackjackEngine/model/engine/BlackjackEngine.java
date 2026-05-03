@@ -509,7 +509,9 @@ public class BlackjackEngine
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 : "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.BETTING : "getState() != BlackjackEngineState.BETTING";
-		if (getPlayer().getChips().compareTo(amount) < 0)
+		if (getPlayer().getChips().compareTo(amount) < 0
+				|| (getPlayer().getChips().subtract(amount).compareTo(getRuleset().getConfig().getMinimumBetAmount()) < 0
+				&& getPlayer().getChips().subtract(amount).compareTo(BigDecimal.ZERO) != 0))
 		{
 			throwException(new InsufficientChipsException(getPlayer(), amount), methodName);
 		}
@@ -653,7 +655,7 @@ public class BlackjackEngine
 		final var methodName = "playerSurrender";
 		getLogger().entering(CLASS_NAME, methodName);
 		assert getState() == BlackjackEngineState.PLAYER_TURN : "getState() != BlackjackEngineState.PLAYER_TURN";
-		if (!getRuleset().isSurrenderingPossible(getActiveHandContext(), getState()))
+		if (!getRuleset().isSurrenderingPossible(getActiveHandContext(), getState(), getPlayer()))
 		{
 			if (getActiveHandContext().isAltered())
 			{

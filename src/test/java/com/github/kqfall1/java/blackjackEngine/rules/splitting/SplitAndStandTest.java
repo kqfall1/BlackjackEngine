@@ -23,7 +23,7 @@ final class SplitAndStandTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		advanceToPlayerTurn(getSplitDownTestMaximumInitialBetAmount());
 		initSplitHands(engine::playerStand);
 		advanceThroughShowdownsAfterPlayerTurn();
 		advanceToEndOfRoundAfterShowdown();

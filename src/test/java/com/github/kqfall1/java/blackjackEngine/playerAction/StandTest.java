@@ -20,7 +20,7 @@ final class StandTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceToPlayerTurn(engine.getPlayer().getChips());
+		advanceToPlayerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

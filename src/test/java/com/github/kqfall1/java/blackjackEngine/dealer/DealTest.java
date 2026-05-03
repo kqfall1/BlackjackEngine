@@ -20,7 +20,7 @@ final class DealTest extends EngineTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		placeRandomHandBet(engine.getPlayer().getChips());
+		placeRandomHandBet(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 		engine.deal();
 		assertTrue(engine.getDealer().getHand() != null && engine.getActiveHandContext().getHand() != null);
 		assertTrue(

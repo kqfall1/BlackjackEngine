@@ -8,6 +8,7 @@ import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
 import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
 import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
 import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
+import java.math.BigDecimal;
 
 /**
  * Represents the standard, North American rules of blackjack; determines valid game actions,
@@ -51,7 +52,9 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& !activeHandContext.isAltered()
 			&& (activeHandContext.getType() == HandContextType.MAIN || config.isDoublingDownOnSplitHandsAllowed())
-			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(BigDecimal.ZERO) == 0);
 	}
 
 	@Override
@@ -60,8 +63,10 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 		return (currentState == BlackjackEngineState.DEALING || currentState == BlackjackEngineState.INSURANCE_CHECK)
 			&& !activeHandContext.isAltered()
 			&& !activeHandContext.isSplit()
-			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
 			&& dealerHand.getCards().getFirst().getRank() == Rank.ACE
+			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getHalf()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getHalf()).compareTo(BigDecimal.ZERO) == 0)
 			&& player.getContexts().size() == 1;
 	}
 
@@ -74,17 +79,20 @@ public final class StandardBlackjackRuleset implements BlackjackRuleset
 			&& activeHandContext.getHand().isPocketPair()
 			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE || getConfig().isSplittingAcesAllowed())
 		    && activeHandContextIndex < config.getMaximumSplitCount()
-			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0;
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(BigDecimal.ZERO) == 0);
 	}
 
 	@Override
-	public boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState)
+	public boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState, Player player)
 	{
 		return currentState == BlackjackEngineState.PLAYER_TURN
 			&& config.isSurrenderingAllowed()
 			&& activeHandContext.getType() == HandContextType.MAIN
 			&& !activeHandContext.isAltered()
-			&& !activeHandContext.isSplit();
+			&& !activeHandContext.isSplit()
+			&& player.getChips().add(activeHandContext.getBet().getHalf()).compareTo(getConfig().getMinimumBetAmount()) >= 0;
 	}
 
 	@Override

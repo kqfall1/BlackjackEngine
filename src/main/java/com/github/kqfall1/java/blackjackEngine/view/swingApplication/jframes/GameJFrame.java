@@ -76,6 +76,14 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 });
             }
         }, UiConstants.GAME_ACTION_ADVANCE_LABEL, actionMap, inputMap, KeyStroke.getKeyStroke("SPACE"));
+        final var allIn = UiActions.getInstance().getGameAction(e ->
+        {
+            toggleGameInfoJPanelPlayerInputComponents(false);
+            blackjackEngine.placeBet(blackjackEngine.getPlayer().getChips());
+            blackjackEngine.deal();
+            SwingUtilities.invokeLater(() -> gameCardsJPanel.setVisible(true));
+            blackjackEngine.advanceAfterDeal();
+        }, UiConstants.GAME_ACTION_ALL_IN_LABEL, actionMap, inputMap, KeyStroke.getKeyStroke("A"));
         final var doubleDown = UiActions.getInstance().getGameAction(e ->
         {
             disableGameActionJPanelJButtons();
@@ -170,7 +178,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                     }
                 });
             }
-        }, UiConstants.GAME_ACTION_SUBMIT_LABEL, actionMap, inputMap, KeyStroke.getKeyStroke("ENTER"));
+        }, UiConstants.GAME_ACTION_SUBMIT_LABEL, actionMap, inputMap, null);
         final var surrender = UiActions.getInstance().getGameAction(e ->
         {
             disableGameActionJPanelJButtons();
@@ -180,6 +188,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         gameActionJPanel = new GameActionJPanel(doubleDown, hit, split, stand, surrender);
         gameInfoJPanel.getAdvanceEngineJButton().setAction(advance);
         gameInfoJPanel.getAdvanceEngineJButton().getAction().setEnabled(true);
+        gameInfoJPanel.getAllInJButton().setAction(allIn);
         gameInfoJPanel.getPlayerInputJTextField().addActionListener(submit);
         gameInfoJPanel.getSubmitJButton().setAction(submit);
         add(gameActionJPanel, BorderLayout.EAST);
@@ -219,7 +228,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
     public void onBetPlaced(HandContext handContext)
     {
         gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
-            "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_BET_PLACED, handContext.getBet().getAmount().doubleValue()
+            "%s%,.2f.\n\n", UiConstants.GAME_MESSAGE_BET_PLACED, handContext.getBet().getAmount().doubleValue()
         ));
         updateUiForPlayerChipAmount();
     }
@@ -390,7 +399,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         SwingUtilities.invokeLater(() ->
         {
             gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
-                "%s%.2f.\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_COLLECTION, playerWinnings
+                "%s%,.2f.\n\n", UiConstants.GAME_MESSAGE_SHOWDOWN_COLLECTION, playerWinnings
             ));
             gameInfoJPanel.getDealerHandScoreJLabel().setText(String.format(
                 "%s%d", UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL, dealerHand.getScore()
@@ -435,7 +444,8 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
                 gameActionJPanel.getStandJButton().getAction().setEnabled(true);
                 gameActionJPanel.getSurrenderJButton().getAction().setEnabled(blackjackEngine.getRuleset().isSurrenderingPossible(
                     blackjackEngine.getActiveHandContext(),
-                    blackjackEngine.getState()
+                    blackjackEngine.getState(),
+                    blackjackEngine.getPlayer()
                 ));
             });
             case DEALER_TURN -> executorService.submit(() ->
@@ -469,6 +479,10 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
         {
             gameInfoJPanel.getPlayerInputJTextField().setEnabled(enabled);
 
+            if (blackjackEngine.getState() != BlackjackEngineState.INSURANCE_CHECK)
+            {
+                gameInfoJPanel.getAllInJButton().getAction().setEnabled(enabled);
+            }
             if (enabled)
             {
                 gameInfoJPanel.getPlayerInputJTextField().requestFocusInWindow();

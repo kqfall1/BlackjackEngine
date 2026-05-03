@@ -23,7 +23,7 @@ final class SplitAndDoubleDownTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		advanceToPlayerTurn(getDoubleDownTestMaximumInitialBetAmount());
 		initSplitHands(engine::playerDoubleDown);
 		advanceThroughShowdownsAfterPlayerTurn();
 		advanceToEndOfRoundAfterShowdown();

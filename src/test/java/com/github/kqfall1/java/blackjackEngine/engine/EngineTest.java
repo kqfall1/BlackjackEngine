@@ -27,11 +27,15 @@ import org.junit.jupiter.api.RepeatedTest;
  */
 public abstract class EngineTest
 {
+	/**
+	 * Used to determine an appropriate point to bet the player's full amount of chips to prevent infinite gameplay.
+	 */
+	public static final BigDecimal CHIP_AMOUNT_BUFFER = BigDecimal.valueOf(1);
 	public BlackjackEngine engine;
 	public ConsoleIoHandler handler;
 	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
 	public BlackjackRuleset ruleset;
-	public static final int TEST_ITERATIONS = 200;
+	public static final int TEST_ITERATIONS = 2000;
 
 	public final BigDecimal advanceThroughDealerTurn(BigDecimal maximumBetAmount)
 	{

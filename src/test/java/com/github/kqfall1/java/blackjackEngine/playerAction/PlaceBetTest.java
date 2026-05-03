@@ -23,7 +23,7 @@ public final class PlaceBetTest extends EngineTest
 	public void main()
 	{
 		final var initialChipAmount = engine.getPlayer().getChips();
-		final var betAmount = advanceToPlayerTurn(initialChipAmount);
+		final var betAmount = advanceToPlayerTurn(initialChipAmount.subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 
 		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{

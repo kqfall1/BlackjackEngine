@@ -21,6 +21,7 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
 {
     private final JLabel activeHandContextHandScoreJLabel;
     private final JButton advanceEngineJButton;
+    private final JButton allInJButton;
     private final JLabel dealerHandScoreJLabel;
     private final JTextArea engineMessageJTextArea;
     private final JScrollPane engineMessageJScrollPane;
@@ -31,7 +32,10 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     public GameInfoJPanel()
     {
         activeHandContextHandScoreJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL);
-        advanceEngineJButton = new JButton(UiConstants.GAME_INFO_JPANEL_ADVANCE_HAND_JBUTTON_LABEL);
+        allInJButton = new JButton();
+        allInJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        allInJButton.setEnabled(false);
+        advanceEngineJButton = new JButton();
         advanceEngineJButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         dealerHandScoreJLabel = new JLabel(UiConstants.GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL);
         engineMessageJTextArea = new JTextArea();
@@ -71,6 +75,8 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
         gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
         gameInputWrapper.add(advanceEngineJButton);
         gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
+        gameInputWrapper.add(allInJButton);
+        gameInputWrapper.add(Box.createVerticalStrut(UiConstants.MARGIN_EXTRA_SMALL));
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(Box.createVerticalStrut(UiConstants.MARGIN_SMALL));
@@ -92,6 +98,11 @@ public final class GameInfoJPanel extends JPanel implements FailurePresenter
     public JButton getAdvanceEngineJButton()
     {
         return advanceEngineJButton;
+    }
+
+    public JButton getAllInJButton()
+    {
+        return allInJButton;
     }
 
     public JLabel getDealerHandScoreJLabel()

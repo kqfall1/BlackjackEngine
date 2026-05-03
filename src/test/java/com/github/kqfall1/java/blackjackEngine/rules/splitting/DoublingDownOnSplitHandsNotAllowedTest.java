@@ -25,7 +25,7 @@ final class DoublingDownOnSplitHandsNotAllowedTest extends CustomDeckTest
 	public void main()
 	{
 		Assertions.assertFalse(engine.getRuleset().getConfig().isDoublingDownOnSplitHandsAllowed());
-		advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		advanceToPlayerTurn(getDoubleDownTestMaximumInitialBetAmount());
 		initSplitHands(() ->
 		{
 			try

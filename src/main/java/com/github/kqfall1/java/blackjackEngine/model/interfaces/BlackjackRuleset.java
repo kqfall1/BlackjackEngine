@@ -67,7 +67,7 @@ public interface BlackjackRuleset
 									  Player player, Hand dealerHand);
 	boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 								int activeHandContextIndex, Player player);
-	boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState);
+	boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState, Player player);
 
 	default boolean shouldDealerPeekForBlackjack()
 	{

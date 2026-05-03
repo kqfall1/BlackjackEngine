@@ -24,6 +24,7 @@ public final class UiConstants
     public static final int CARD_IMAGE_WIDTH = 100;
     public static final int DEFAULT_GRID_BAG_LAYOUT_WEIGHT = 100;
     public static final String GAME_ACTION_ADVANCE_LABEL = "Advance";
+    public static final String GAME_ACTION_ALL_IN_LABEL = "All In";
     public static final String GAME_ACTION_CREDITS_LABEL = "Credits";
     public static final String GAME_ACTION_DOUBLE_DOWN_LABEL = "Double Down";
     public static final String GAME_ACTION_EXIT_LABEL = "Exit";
@@ -54,7 +55,6 @@ public final class UiConstants
     public static final String GAME_CONFIG_JDIALOG_SURRENDERING_ALLOWED_LABEL = "Is surrendering allowed?";
     public static final double GAME_CONFIG_JDIALOG_WIDTH_FACTOR = 0.5;
     public static final String GAME_INFO_JPANEL_ACTIVE_HAND_CONTEXT_HAND_SCORE_LABEL = "Current score: ";
-    public static final String GAME_INFO_JPANEL_ADVANCE_HAND_JBUTTON_LABEL = "Advance";
     public static final String GAME_INFO_JPANEL_DEALER_HAND_SCORE_LABEL = "Dealer's score: ";
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_HEIGHT = 475;
     public static final int GAME_INFO_JPANEL_ENGINE_JSCROLL_PANEL_WIDTH = 100;

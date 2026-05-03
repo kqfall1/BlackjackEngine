@@ -25,7 +25,7 @@ final class ShowdownNormalTest extends CustomDeckTest
 	public void main()
 	{
 		final var initialChipAmount = engine.getPlayer().getChips();
-		advanceThroughDealerTurn(initialChipAmount);
+		advanceThroughDealerTurn(initialChipAmount.subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 		final var chipAmountAfterBetting = engine.getPlayer().getChips();
 		final var potAmount = engine.getActiveHandContext().getPot().getAmount();
 

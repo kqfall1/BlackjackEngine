@@ -22,7 +22,7 @@ final class ShowdownDealerBustTest extends CustomDeckTest
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		advanceThroughDealerTurn(engine.getPlayer().getChips());
+		advanceThroughDealerTurn(engine.getPlayer().getChips().subtract(engine.getRuleset().getConfig().getMinimumBetAmount()));
 		final var chipAmountAfterBetting = engine.getPlayer().getChips();
 		final var potAmount = engine.getActiveHandContext().getPot().getAmount();
 		Assertions.assertTrue(ruleset.isHandBusted(engine.getDealer().getHand()));
