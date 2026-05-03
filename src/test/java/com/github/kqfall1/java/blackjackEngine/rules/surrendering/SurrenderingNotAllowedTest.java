@@ -9,38 +9,35 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class SurrenderingNotAllowedTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderingNotAllowedTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.SurrenderingNotAllowedTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		Assertions.assertFalse(super.engine.getRuleset().getConfig().isSurrenderingAllowed());
-		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+		Assertions.assertFalse(engine.getRuleset().getConfig().isSurrenderingAllowed());
+		advanceToPlayerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			try
 			{
-				super.engine.playerSurrender();
+				engine.playerSurrender();
 			}
 			catch (RuleViolationException e)
 			{
 				System.out.println(e.getMessage());
-				super.engine.playerStand();
+				engine.playerStand();
 			}
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

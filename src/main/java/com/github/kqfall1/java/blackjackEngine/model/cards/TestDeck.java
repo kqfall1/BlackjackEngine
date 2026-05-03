@@ -35,7 +35,7 @@ public final class TestDeck extends Deck
 			}
 			catch (NoSuchElementException e)
 			{
-				return super.cards.remove();
+				return cards.remove();
 			}
 		}
 		catch (NoSuchElementException e)
@@ -64,7 +64,7 @@ public final class TestDeck extends Deck
 					initialCards.remove(card);
 				}
 
-				super.cards.remove(card);
+				cards.remove(card);
 				return card;
 			}
 		}
@@ -75,7 +75,7 @@ public final class TestDeck extends Deck
 	public void setInitialCards(Queue<Card> initialCards)
 	{
 		assert initialCards != null && !initialCards.isEmpty() : "initialCards == null || initialCards.isEmpty()";
-		final var includedRanksList = List.of(super.getIncludedRanks());
+		final var includedRanksList = List.of(getIncludedRanks());
 
 		for (final var card : initialCards)
 		{
@@ -86,7 +86,7 @@ public final class TestDeck extends Deck
 
 		for (final var card : initialCards)
 		{
-			super.cards.remove(card);
+			cards.remove(card);
 		}
 	}
 

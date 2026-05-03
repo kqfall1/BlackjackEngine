@@ -15,9 +15,9 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.logging.Level;
 import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Provides abstraction for creating {@code BlackjackEngine}-related tests.
@@ -30,8 +30,6 @@ public abstract class EngineTest
 	public BlackjackEngine engine;
 	public ConsoleIoHandler handler;
 	public static final BigDecimal INITIAL_PLAYER_CHIP_AMOUNT = BigDecimal.valueOf(5000);
-	public String logFilePath;
-	public String loggerName;
 	public BlackjackRuleset ruleset;
 	public static final int TEST_ITERATIONS = 200;
 
@@ -67,10 +65,9 @@ public abstract class EngineTest
 		if (engine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND)
 		{
 			engine.advanceAfterShowdown();
+			engine.reset();
+			engine.advanceAfterReset();
 		}
-
-		engine.reset();
-		engine.advanceAfterReset();
 	}
 
 	public final BigDecimal advanceToPlayerTurn(BigDecimal maximumBetAmount)
@@ -101,10 +98,8 @@ public abstract class EngineTest
 		ruleset = new StandardBlackjackRuleset(config);
 	}
 
-	public final void initEngine(String logFilePath, String loggerName)
+	public final void initEngine()
 	{
-		this.logFilePath = logFilePath;
-		this.loggerName = loggerName;
 		start();
 		engine.getLogger().setLevel(Level.OFF);
 	}
@@ -271,8 +266,7 @@ public abstract class EngineTest
 		}
 
 		@Override
-		public void onShowdownCompleted(Hand dealerHand, HandContext handContext,
-										boolean playerWon, BigDecimal playerWinnings)
+		public void onShowdownCompleted(Hand dealerHand, HandContext handContext, boolean playerWon, BigDecimal playerWinnings)
 		{
 			assertEquals(engine.getPlayer().getContexts().size() - 1, engine.getActiveHandContextIndex());
 			assertTrue(engine.getState() == BlackjackEngineState.SHOWING_DOWN || engine.getState() == BlackjackEngineState.SHOWING_DOWN_FINAL_HAND);
@@ -314,8 +308,7 @@ public abstract class EngineTest
 		public void onStateChanged(BlackjackEngineState oldState) {}
 	};
 
-	public static boolean nearlyEquals
-	(BigDecimal expectedValue, BigDecimal actualValue, int scale)
+	public static boolean nearlyEquals(BigDecimal expectedValue, BigDecimal actualValue, int scale)
 	{
 		Assertions.assertTrue(scale > 0);
 		final var threshold = BigDecimal.ONE.movePointLeft(scale);

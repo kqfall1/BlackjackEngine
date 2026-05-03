@@ -8,84 +8,81 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class PredicateTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/RulePredicateTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.RulePredicateTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super._initCardsForNormalShowdown();
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		_initCardsForNormalShowdown();
+		initDependencies();
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		while (super.engine.getState() != BlackjackEngineState.END)
+		while (engine.getState() != BlackjackEngineState.END)
 		{
-			super.placeRandomHandBet(super.engine.getPlayer().getChips());
-			super.engine.deal();
+			placeRandomHandBet(engine.getPlayer().getChips());
+			engine.deal();
 			verifyStandardAssumptions();
-			super.engine.advanceAfterDeal();
+			engine.advanceAfterDeal();
 			verifyStandardAssumptions();
-			super.declinePossibleInsuranceBet();
+			declinePossibleInsuranceBet();
 
-			if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+			if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 			{
-				super.engine.playerHit();
+				engine.playerHit();
 				verifyStandardAssumptions();
 
-				if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+				if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 				{
-					super.engine.playerStand();
+					engine.playerStand();
 				}
 			}
 
-			if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+			if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 			{
 				verifyPlayerActionsAreIllegal();
-				super.engine.advanceAfterDealerTurn();
+				engine.advanceAfterDealerTurn();
 			}
 
-			super.engine.showdown();
+			engine.showdown();
 			verifyStandardAssumptions();
-			super.advanceToEndOfRoundAfterShowdown();
+			advanceToEndOfRoundAfterShowdown();
 		}
 	}
 
 	private void verifyStandardAssumptions()
 	{
 		verifyPlayerActionsAreIllegal();
-		Assertions.assertFalse(super.engine.getRuleset().isDealerTurnActive(super.engine.getState(), super.engine.getDealer()));
+		Assertions.assertFalse(engine.getRuleset().isDealerTurnActive(engine.getState(), engine.getDealer()));
 	}
 
 	private void verifyPlayerActionsAreIllegal()
 	{
 		Assertions.assertFalse(
-			super.engine.getRuleset().isInsuranceBetPossible(
-				super.engine.getActiveHandContext(),
-				super.engine.getState(),
-				super.engine.getPlayer(),
-				super.engine.getDealer().getHand()
+			engine.getRuleset().isInsuranceBetPossible(
+				engine.getActiveHandContext(),
+				engine.getState(),
+				engine.getPlayer(),
+				engine.getDealer().getHand()
 			)
-			&& super.engine.getRuleset().isDoublingDownPossible(
-				super.engine.getActiveHandContext(),
-				super.engine.getState(),
-				super.engine.getPlayer()
+			&& engine.getRuleset().isDoublingDownPossible(
+				engine.getActiveHandContext(),
+				engine.getState(),
+				engine.getPlayer()
 			)
-			&& super.engine.getRuleset().isSplittingPossible(
-				super.engine.getActiveHandContext(),
-				super.engine.getState(),
-				super.engine.getActiveHandContextIndex(),
-				super.engine.getPlayer()
+			&& engine.getRuleset().isSplittingPossible(
+				engine.getActiveHandContext(),
+				engine.getState(),
+				engine.getActiveHandContextIndex(),
+				engine.getPlayer()
 			)
-			&& super.engine.getRuleset().isSurrenderingPossible(
-				super.engine.getActiveHandContext(),
-				super.engine.getState()
+			&& engine.getRuleset().isSurrenderingPossible(
+				engine.getActiveHandContext(),
+				engine.getState()
 			)
 		);
 	}

@@ -9,32 +9,30 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class ResetTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/ResetTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.ResetTest.log";
-
 	@BeforeEach
 	@Override
-	public void init() {
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+	public void init()
+	{
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
+		advanceThroughDealerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
-			super.engine.advanceAfterDealerTurn();
+			engine.advanceAfterDealerTurn();
 		}
 
-		super.engine.showdown();
-		super.engine.advanceAfterShowdown();
-		super.engine.reset();
-		Assertions.assertEquals(new Hand(), super.engine.getDealer().getHand());
-		Assertions.assertEquals(HandContextType.MAIN.ordinal(), super.engine.getPlayer().getContexts().size());
-		super.engine.advanceAfterReset();
+		engine.showdown();
+		engine.advanceAfterShowdown();
+		engine.reset();
+		Assertions.assertEquals(new Hand(), engine.getDealer().getHand());
+		Assertions.assertEquals(HandContextType.MAIN.ordinal(), engine.getPlayer().getContexts().size());
+		engine.advanceAfterReset();
 	}
 }

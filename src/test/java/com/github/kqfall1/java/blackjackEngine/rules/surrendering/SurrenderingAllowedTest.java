@@ -9,32 +9,29 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class SurrenderingAllowedTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderingAllowedTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.SurrenderingAllowedTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initCardsForSplittingWithoutHitting(Rank.JACK);
-		super.initDependencies();
-		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.ruleset.getConfig().setSurrenderingAllowed(true);
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		initCardsForSplittingWithoutHitting(Rank.JACK);
+		initDependencies();
+		ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		ruleset.getConfig().setSurrenderingAllowed(true);
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		Assertions.assertTrue(super.engine.getRuleset().getConfig().isSurrenderingAllowed());
-		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		Assertions.assertTrue(engine.getRuleset().getConfig().isSurrenderingAllowed());
+		advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			super.engine.playerSurrender();
+			engine.playerSurrender();
 		}
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

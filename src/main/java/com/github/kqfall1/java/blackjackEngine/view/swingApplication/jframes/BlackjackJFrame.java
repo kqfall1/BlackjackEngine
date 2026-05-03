@@ -1,8 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.view.swingApplication.jframes;
 
-import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants.*;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiActions;
 import com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants;
+import static com.github.kqfall1.java.blackjackEngine.view.swingApplication.ui.UiConstants.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -24,7 +24,7 @@ public abstract class BlackjackJFrame extends JFrame
             @Override
             public void paintComponent(Graphics g)
             {
-                super.paintComponent(g);
+                paintComponent(g);
                 g.drawImage(UiConstants.JFRAME_BACKGROUND.getImage(), 0, 0, null);
             }
         };

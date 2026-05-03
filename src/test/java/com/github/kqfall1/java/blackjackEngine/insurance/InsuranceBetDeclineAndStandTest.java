@@ -7,31 +7,28 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class InsuranceBetDeclineAndStandTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetDeclineAndStandTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetDeclineAndStandTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initCardsForInsurance();
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		initCardsForInsurance();
+		initDependencies();
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceThroughDealerTurn(super.engine.getPlayer().getChips());
+		advanceThroughDealerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
-			super.engine.advanceAfterDealerTurn();
+			engine.advanceAfterDealerTurn();
 		}
 
-		super.engine.showdown();
-		super.advanceToEndOfRoundAfterShowdown();
+		engine.showdown();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

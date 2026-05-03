@@ -13,9 +13,9 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 	@BeforeEach
 	public void init()
 	{
-		super.initCardsForDealerSoft17();
-		super.initDependencies();
-		super.ruleset.getConfig().setShouldDealerHitOnSoft17(true);
+		initCardsForDealerSoft17();
+		initDependencies();
+		ruleset.getConfig().setShouldDealerHitOnSoft17(true);
 	}
 
 	@RepeatedTest(TEST_ITERATIONS)
@@ -30,7 +30,7 @@ final class DealerHitsOnSoft17Test extends CustomDeckTest
 			dealer.getHand().addCards(dealer.getCardSource().draw());
 		}
 		catch (NoMoreCardsException ignored) {}
-		Assertions.assertTrue(super.ruleset.getConfig().getShouldDealerHitOnSoft17());
-		Assertions.assertTrue(super.ruleset.isDealerTurnActive(BlackjackEngineState.DEALER_TURN, dealer));
+		Assertions.assertTrue(ruleset.getConfig().getShouldDealerHitOnSoft17());
+		Assertions.assertTrue(ruleset.isDealerTurnActive(BlackjackEngineState.DEALER_TURN, dealer));
 	}
 }

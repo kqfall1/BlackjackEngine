@@ -11,44 +11,41 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class DoubleDownTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DoubleDownTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.DoubleDownTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var initialBetAmount = super.advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
+		final var initialBetAmount = advanceToPlayerTurn(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-			super.engine.playerDoubleDown();
+			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
+			engine.playerDoubleDown();
 			Assertions.assertTrue(
 				nearlyEquals(
 					initialBetAmount
 						.multiply(BigDecimal.valueOf(4))
 						.stripTrailingZeros(),
-					super.engine.getActiveHandContext().getPot().getAmount(),
+					engine.getActiveHandContext().getPot().getAmount(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 			Assertions.assertTrue(
-				super.engine.getActiveHandContext().getHand().getCards().size()
+				engine.getActiveHandContext().getHand().getCards().size()
 					== BlackjackConstants.INITIAL_CARD_COUNT + 1
-				&& super.engine.getActiveHandContext().isAltered()
+				&& engine.getActiveHandContext().isAltered()
 			);
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

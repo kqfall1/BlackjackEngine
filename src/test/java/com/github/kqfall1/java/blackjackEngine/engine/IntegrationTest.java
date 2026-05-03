@@ -6,36 +6,34 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class IntegrationTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/IntegrationTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.IntegrationTest.log";
-
 	@BeforeEach
 	@Override
-	public void init() {
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+	public void init()
+	{
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		while (super.engine.getState() != BlackjackEngineState.END)
+		while (engine.getState() != BlackjackEngineState.END)
 		{
-			super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+			advanceToPlayerTurn(engine.getPlayer().getChips());
 
-			if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+			if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 			{
-				super.engine.playerHit();
+				engine.playerHit();
 
-				if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+				if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 				{
-					super.engine.playerStand();
+					engine.playerStand();
 				}
 			}
 
-			super.advanceThroughShowdownsAfterPlayerTurn();
-			super.advanceToEndOfRoundAfterShowdown();
+			advanceThroughShowdownsAfterPlayerTurn();
+			advanceToEndOfRoundAfterShowdown();
 		}
 	}
 }

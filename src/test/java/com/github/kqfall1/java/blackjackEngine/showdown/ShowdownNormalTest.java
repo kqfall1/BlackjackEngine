@@ -8,65 +8,58 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class ShowdownNormalTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/ShowdownNormalTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.ShowdownNormalTest.log";
 	private int showdownMethodIndex;
 
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		showdownMethodIndex = super._initCardsForNormalShowdown();
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		showdownMethodIndex = _initCardsForNormalShowdown();
+		initDependencies();
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var initialChipAmount = super.engine.getPlayer().getChips();
-		super.advanceThroughDealerTurn(initialChipAmount);
-		final var chipAmountAfterBetting = super.engine.getPlayer().getChips();
-		final var potAmount = super.engine.getActiveHandContext().getPot().getAmount();
+		final var initialChipAmount = engine.getPlayer().getChips();
+		advanceThroughDealerTurn(initialChipAmount);
+		final var chipAmountAfterBetting = engine.getPlayer().getChips();
+		final var potAmount = engine.getActiveHandContext().getPot().getAmount();
 
-		super.engine.advanceAfterDealerTurn();
-		super.engine.showdown();
+		engine.advanceAfterDealerTurn();
+		engine.showdown();
 
 		if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT)
 		{
-			Assertions.assertTrue(super.engine.getDealer().getHand().getScore() > super.engine.getActiveHandContext().getHand().getScore());
-			Assertions.assertTrue(
-				nearlyEquals(
-					chipAmountAfterBetting.stripTrailingZeros(),
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			Assertions.assertTrue(engine.getDealer().getHand().getScore() > engine.getActiveHandContext().getHand().getScore());
+			Assertions.assertTrue(nearlyEquals(
+				chipAmountAfterBetting.stripTrailingZeros(),
+				engine.getPlayer().getChips(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			));
 
-			Assertions.assertEquals(chipAmountAfterBetting, super.engine.getPlayer().getChips());
+			Assertions.assertEquals(chipAmountAfterBetting, engine.getPlayer().getChips());
 		}
-		else if (showdownMethodIndex <
-			SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT + SHOWDOWN_NORMAL_PLAYER_WIN_METHOD_COUNT)
+		else if (showdownMethodIndex < SHOWDOWN_NORMAL_DEALER_WIN_METHOD_COUNT + SHOWDOWN_NORMAL_PLAYER_WIN_METHOD_COUNT)
 		{
-			Assertions.assertTrue(super.engine.getDealer().getHand().getScore() < super.engine.getActiveHandContext().getHand().getScore());
-			super.engine.advanceAfterShowdown();
+			Assertions.assertTrue(engine.getDealer().getHand().getScore() < engine.getActiveHandContext().getHand().getScore());
+			engine.advanceAfterShowdown();
 
-			Assertions.assertTrue(
-				nearlyEquals(
-					chipAmountAfterBetting.add(potAmount).stripTrailingZeros(),
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			Assertions.assertTrue(nearlyEquals(
+				chipAmountAfterBetting.add(potAmount).stripTrailingZeros(),
+				engine.getPlayer().getChips(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			));
 		}
 		else
 		{
-			Assertions.assertEquals(super.engine.getDealer().getHand().getScore(), super.engine.getActiveHandContext().getHand().getScore());
-			Assertions.assertTrue(nearlyEquals(initialChipAmount, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
+			Assertions.assertEquals(engine.getDealer().getHand().getScore(), engine.getActiveHandContext().getHand().getScore());
+			Assertions.assertTrue(nearlyEquals(initialChipAmount, engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		}
 
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

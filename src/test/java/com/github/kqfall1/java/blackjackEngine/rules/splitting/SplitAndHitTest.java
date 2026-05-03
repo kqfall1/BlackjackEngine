@@ -7,36 +7,33 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class SplitAndHitTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SplitAndStandTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.splitting.SplitAndStandTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initCardsForSplittingAndHittingOnce(Rank.ACE);
-		super.initDependencies();
-		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.ruleset.getConfig().setSplittingAcesAllowed(true);
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		initCardsForSplittingAndHittingOnce(Rank.ACE);
+		initDependencies();
+		ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		ruleset.getConfig().setSplittingAcesAllowed(true);
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-		super.initSplitHands(() ->
+		advanceToPlayerTurn(SPLIT_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		initSplitHands(() ->
 		{
-			final var activeHandContextIndex = super.engine.getActiveHandContextIndex();
-			super.engine.playerHit();
-			if (activeHandContextIndex == super.engine.getActiveHandContextIndex())
+			final var activeHandContextIndex = engine.getActiveHandContextIndex();
+			engine.playerHit();
+			if (activeHandContextIndex == engine.getActiveHandContextIndex())
 			{
-				super.engine.playerStand();
+				engine.playerStand();
 			}
 		});
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

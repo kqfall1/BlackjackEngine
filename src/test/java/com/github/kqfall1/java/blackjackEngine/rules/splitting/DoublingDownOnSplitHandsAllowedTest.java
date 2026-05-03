@@ -8,28 +8,26 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class DoublingDownOnSplitHandsAllowedTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DoublingDownOnSplitHandsAllowedTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.config.DoublingDownOnSplitHandsAllowedTest.log";
-
 	@BeforeEach
 	@Override
-	public void init() {
-		super.initCardsForSplittingAndHittingOnce(Rank.TEN);
-		super.initDependencies();
-		super.ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
-		super.ruleset.getConfig().setDoublingDownOnSplitHandsAllowed(true);
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+	public void init()
+	{
+		initCardsForSplittingAndHittingOnce(Rank.TEN);
+		initDependencies();
+		ruleset.getConfig().setMaximumSplitCount(MAXIMUM_SPLIT_COUNT);
+		ruleset.getConfig().setDoublingDownOnSplitHandsAllowed(true);
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		Assertions.assertTrue(super.ruleset.getConfig().isDoublingDownOnSplitHandsAllowed());
-		super.advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
-		super.initSplitHands(super.engine::playerDoubleDown);
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		Assertions.assertTrue(ruleset.getConfig().isDoublingDownOnSplitHandsAllowed());
+		advanceToPlayerTurn(DOUBLE_DOWN_TEST_MAXIMUM_INITIAL_BET_AMOUNT);
+		initSplitHands(engine::playerDoubleDown);
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

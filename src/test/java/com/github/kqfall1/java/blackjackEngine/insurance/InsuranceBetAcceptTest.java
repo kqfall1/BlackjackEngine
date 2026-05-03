@@ -11,33 +11,30 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class InsuranceBetAcceptTest extends CustomDeckTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/InsuranceBetAcceptTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.insurance.InsuranceBetAcceptTest.log";
-
 	@BeforeEach
 	@Override
-	public void init() {
-		super.initCardsForInsurance();
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+	public void init()
+	{
+		initCardsForInsurance();
+		initDependencies();
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
-		super.engine.deal();
-		super.engine.advanceAfterDeal();
+		placeRandomHandBet(INITIAL_PLAYER_CHIP_AMOUNT.divide(BigDecimal.TWO, MathContext.DECIMAL128));
+		engine.deal();
+		engine.advanceAfterDeal();
 
-		final var chipsBeforeInsurance = super.engine.getPlayer().getChips();
-		final var halfOfActiveBet = super.engine.getActiveHandContext().getBet().getHalf();
+		final var chipsBeforeInsurance = engine.getPlayer().getChips();
+		final var halfOfActiveBet = engine.getActiveHandContext().getBet().getHalf();
 		var winnings = BigDecimal.ZERO;
+		engine.acceptInsuranceBet();
 
-		super.engine.acceptInsuranceBet();
-
-		if (super.ruleset.isHandBlackjack(super.engine.getDealer().getHand()))
+		if (ruleset.isHandBlackjack(engine.getDealer().getHand()))
 		{
 			winnings = halfOfActiveBet.multiply(BlackjackConstants.INSURANCE_RATIO.getPayoutMultiplier());
 			Assertions.assertTrue(
@@ -46,7 +43,7 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 						.subtract(halfOfActiveBet)
 						.add(winnings)
 						.stripTrailingZeros(),
-					super.engine.getPlayer().getChips(),
+					engine.getPlayer().getChips(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
@@ -58,20 +55,20 @@ final class InsuranceBetAcceptTest extends CustomDeckTest
 					chipsBeforeInsurance
 						.subtract(halfOfActiveBet)
 						.stripTrailingZeros(),
-					super.engine.getPlayer().getChips(),
+					engine.getPlayer().getChips(),
 					BlackjackConstants.DEFAULT_CHIP_SCALE
 				)
 			);
 		}
 
-		super.engine.advanceAfterInsuranceBet(winnings);
+		engine.advanceAfterInsuranceBet(winnings);
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			super.engine.playerStand();
+			engine.playerStand();
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -8,38 +8,35 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class HitAndBustTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/HitAndBustTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.HitAndBustTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+		advanceToPlayerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			int previousCardCount;
-			while (!super.ruleset.isHandBusted(super.engine.getActiveHandContext().getHand()))
+			while (!ruleset.isHandBusted(engine.getActiveHandContext().getHand()))
 			{
-				previousCardCount = super.engine.getActiveHandContext().getHand().getCards().size();
-				super.engine.playerHit();
+				previousCardCount = engine.getActiveHandContext().getHand().getCards().size();
+				engine.playerHit();
 				Assertions.assertTrue(
-					super.engine.getActiveHandContext().getHand().getCards().size() == previousCardCount + 1
-					&& super.engine.getActiveHandContext().isAltered()
+					engine.getActiveHandContext().getHand().getCards().size() == previousCardCount + 1
+					&& engine.getActiveHandContext().isAltered()
 				);
 			}
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -8,31 +8,28 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class DealTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/DealTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.dealer.DealTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.placeRandomHandBet(super.engine.getPlayer().getChips());
-		super.engine.deal();
-		assertTrue(super.engine.getDealer().getHand() != null && super.engine.getActiveHandContext().getHand() != null);
+		placeRandomHandBet(engine.getPlayer().getChips());
+		engine.deal();
+		assertTrue(engine.getDealer().getHand() != null && engine.getActiveHandContext().getHand() != null);
 		assertTrue(
-			super.engine.getDealer().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
-			&& super.engine.getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
+			engine.getDealer().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
+			&& engine.getActiveHandContext().getHand().getCards().size() == BlackjackConstants.INITIAL_CARD_COUNT
 		);
 		assertTrue(
-			super.engine.getDealer().getHand().getScore() <= BlackjackConstants.TOP_SCORE
-			&& super.engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.TOP_SCORE
+			engine.getDealer().getHand().getScore() <= BlackjackConstants.TOP_SCORE
+			&& engine.getActiveHandContext().getHand().getScore() <= BlackjackConstants.TOP_SCORE
 		);
 	}
 }

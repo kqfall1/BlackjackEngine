@@ -15,8 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 /**
- * Provides abstraction for creating tests that require the use of a
- * {@code TestDeck} to guarantee certain game actions are possible.
+ * Provides abstraction for creating tests that require the use of a {@code TestDeck} to guarantee that certain
+ * game actions are possible.
  *
  * @author kqfall1
  * @since 23/12/2025
@@ -71,15 +71,12 @@ public abstract class CustomDeckTest extends EngineTest
 			catch (NoMoreCardsException ignored) {}
 		}
 
-		final var card1 = testHand.getCards().getFirst();
-		final var card2 = testHand.getCards().getLast();
-
 		switch (blackjackMethodIndex)
 		{
-			case 0 -> initCardsForDealerBlackjack1(card1, card2);
-			case 1 -> initCardsForDealerBlackjack2(card1, card2);
-			case 2 -> initCardsForPlayerBlackjack1(card1, card2);
-			case 3 -> initCardsForPlayerBlackjack2(card1, card2);
+			case 0 -> initCardsForDealerBlackjack1(testHand.getCards().getFirst(), testHand.getCards().getLast());
+			case 1 -> initCardsForDealerBlackjack2(testHand.getCards().getFirst(), testHand.getCards().getLast());
+			case 2 -> initCardsForPlayerBlackjack1(testHand.getCards().getFirst(), testHand.getCards().getLast());
+			case 3 -> initCardsForPlayerBlackjack2(testHand.getCards().getFirst(), testHand.getCards().getLast());
 			case 4 -> initBlackjackPush1();
 			case 5 -> initBlackjackPush2();
 		}
@@ -384,28 +381,26 @@ public abstract class CustomDeckTest extends EngineTest
 
 	private void _initSplitHands()
 	{
-		final var previousChipAmount = super.engine.getPlayer().getChips();
+		final var previousChipAmount = engine.getPlayer().getChips();
 
-		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-		Assertions.assertTrue(super.engine.getActiveHandContext().getHand().isPocketPair());
-		super.engine.playerSplit();
+		Assertions.assertFalse(engine.getActiveHandContext().isAltered());
+		Assertions.assertTrue(engine.getActiveHandContext().getHand().isPocketPair());
+		engine.playerSplit();
 
-		Assertions.assertTrue(
-			nearlyEquals(
-				previousChipAmount.subtract(super.engine.getPlayer().getContexts().getLast().getBet().getAmount()),
-				super.engine.getPlayer().getChips(),
-				BlackjackConstants.DEFAULT_CHIP_SCALE
-			)
-		);
-		Assertions.assertFalse(super.engine.getActiveHandContext().isAltered());
-		Assertions.assertFalse(super.engine.getPlayer().getContexts().getLast().isAltered());
+		Assertions.assertTrue(nearlyEquals(
+			previousChipAmount.subtract(engine.getPlayer().getContexts().getLast().getBet().getAmount()),
+			engine.getPlayer().getChips(),
+			BlackjackConstants.DEFAULT_CHIP_SCALE
+		));
+		Assertions.assertFalse(engine.getActiveHandContext().isAltered());
+		Assertions.assertFalse(engine.getPlayer().getContexts().getLast().isAltered());
 	}
 
 	public final void initSplitHands(Runnable postSplitAction)
 	{
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			for (int count = 0; count < super.ruleset.getConfig().getMaximumSplitCount(); count++)
+			for (int count = 0; count < ruleset.getConfig().getMaximumSplitCount(); count++)
 			{
 				_initSplitHands();
 				postSplitAction.run();

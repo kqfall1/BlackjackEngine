@@ -8,30 +8,27 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class StandTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/StandTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.StandTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+		advanceToPlayerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			super.engine.playerStand();
-			Assertions.assertTrue(super.engine.getActiveHandContext().isAltered());
+			engine.playerStand();
+			Assertions.assertTrue(engine.getActiveHandContext().isAltered());
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

@@ -10,47 +10,40 @@ import org.junit.jupiter.api.RepeatedTest;
 
 public final class PlaceBetTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/PlaceBetTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.PlaceBetTest.log";
-
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+		initDependencies();
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var initialChipAmount = super.engine.getPlayer().getChips();
-		final var betAmount = super.advanceToPlayerTurn(initialChipAmount);
+		final var initialChipAmount = engine.getPlayer().getChips();
+		final var betAmount = advanceToPlayerTurn(initialChipAmount);
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
-			super.engine.playerStand();
-			Assertions.assertTrue(initialChipAmount.compareTo(super.engine.getPlayer().getChips()) > 0);
-			Assertions.assertNotNull(super.engine.getActiveHandContext().getBet());
-			Assertions.assertNotNull(super.engine.getActiveHandContext().getPot());
-			Assertions.assertTrue(
-				nearlyEquals(
-					betAmount.stripTrailingZeros(),
-					super.engine.getActiveHandContext().getBet().getAmount(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
-			Assertions.assertTrue(
-				nearlyEquals(
-					betAmount.multiply(BigDecimal.TWO).stripTrailingZeros(),
-					super.engine.getActiveHandContext().getPot().getAmount(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			engine.playerStand();
+			Assertions.assertTrue(initialChipAmount.compareTo(engine.getPlayer().getChips()) > 0);
+			Assertions.assertNotNull(engine.getActiveHandContext().getBet());
+			Assertions.assertNotNull(engine.getActiveHandContext().getPot());
+			Assertions.assertTrue(nearlyEquals(
+				betAmount.stripTrailingZeros(),
+				engine.getActiveHandContext().getBet().getAmount(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			));
+			Assertions.assertTrue(nearlyEquals(
+				betAmount.multiply(BigDecimal.TWO).stripTrailingZeros(),
+				engine.getActiveHandContext().getPot().getAmount(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			));
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

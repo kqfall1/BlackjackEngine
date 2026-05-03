@@ -11,65 +11,60 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ShowdownBlackjackTest extends CustomDeckTest
 {
 	private int blackjackMethodIndex;
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/ShowdownNormalTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.ShowdownTest.log";
 
 	@BeforeEach
 	@Override
 	public void init()
 	{
-		blackjackMethodIndex = super._initCardsForBlackjack();
-		super.initDependencies();
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
-		super.engine.getDealer().setCardSource(testDeck);
+		blackjackMethodIndex = _initCardsForBlackjack();
+		initDependencies();
+		initEngine();
+		engine.getDealer().setCardSource(testDeck);
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		final var initialChipAmount = super.engine.getPlayer().getChips();
-		super.advanceThroughDealerTurn(initialChipAmount);
-		final var chipAmountAfterBetting = super.engine.getPlayer().getChips();
-		final var potAmount = super.engine.getActiveHandContext().getPot().getAmount();
+		final var initialChipAmount = engine.getPlayer().getChips();
+		advanceThroughDealerTurn(initialChipAmount);
+		final var chipAmountAfterBetting = engine.getPlayer().getChips();
+		final var potAmount = engine.getActiveHandContext().getPot().getAmount();
 
-		if (super.engine.getState() == BlackjackEngineState.DEALER_TURN)
+		if (engine.getState() == BlackjackEngineState.DEALER_TURN)
 		{
-			super.engine.advanceAfterPlayerTurn();
+			engine.advanceAfterPlayerTurn();
 		}
 
-		super.engine.showdown();
+		engine.showdown();
 
 		if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT)
 		{
-			assertEquals(BlackjackConstants.TOP_SCORE, super.engine.getDealer().getHand().getScore());
-			assertTrue(super.engine.getActiveHandContext().getHand().getScore() < BlackjackConstants.TOP_SCORE);
-			assertTrue(nearlyEquals(chipAmountAfterBetting, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
+			assertEquals(BlackjackConstants.TOP_SCORE, engine.getDealer().getHand().getScore());
+			assertTrue(engine.getActiveHandContext().getHand().getScore() < BlackjackConstants.TOP_SCORE);
+			assertTrue(nearlyEquals(chipAmountAfterBetting, engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		}
-		else if (blackjackMethodIndex
-			< SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT + SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT)
+		else if (blackjackMethodIndex < SHOWDOWN_BLACKJACK_DEALER_METHOD_COUNT + SHOWDOWN_BLACKJACK_PLAYER_METHOD_COUNT)
 		{
-			assertEquals(BlackjackConstants.TOP_SCORE, super.engine.getActiveHandContext().getHand().getScore());
-			assertTrue(super.engine.getDealer().getHand().getScore() < BlackjackConstants.TOP_SCORE);
-			assertTrue(
-				nearlyEquals(
-					chipAmountAfterBetting.add(potAmount.multiply(BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier())),
-					super.engine.getPlayer().getChips(),
-					BlackjackConstants.DEFAULT_CHIP_SCALE
-				)
-			);
+			assertEquals(BlackjackConstants.TOP_SCORE, engine.getActiveHandContext().getHand().getScore());
+			assertTrue(engine.getDealer().getHand().getScore() < BlackjackConstants.TOP_SCORE);
+			assertTrue(nearlyEquals(
+				chipAmountAfterBetting.add(potAmount.multiply(BlackjackConstants.BLACKJACK_RATIO.getPayoutMultiplier())),
+				engine.getPlayer().getChips(),
+				BlackjackConstants.DEFAULT_CHIP_SCALE
+			));
 		}
 		else
 		{
 			assertTrue(
-				super.engine.getActiveHandContext().getHand().getScore()
-					== super.engine.getDealer().getHand().getScore()
-				&& super.engine.getDealer().getHand().getScore()
+				engine.getActiveHandContext().getHand().getScore()
+					== engine.getDealer().getHand().getScore()
+				&& engine.getDealer().getHand().getScore()
 					== BlackjackConstants.TOP_SCORE
 			);
-			assertTrue(nearlyEquals(initialChipAmount, super.engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
+			assertTrue(nearlyEquals(initialChipAmount, engine.getPlayer().getChips(), BlackjackConstants.DEFAULT_CHIP_SCALE));
 		}
 
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }

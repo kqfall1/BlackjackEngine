@@ -8,31 +8,29 @@ import org.junit.jupiter.api.RepeatedTest;
 
 final class SurrenderTest extends EngineTest
 {
-	private static final String LOG_FILE_PATH = "src/main/resources/tests/logs/SurrenderTest.log";
-	private static final String LOGGER_NAME = "com.github.kqfall1.java.blackjackEngine.controllers.playerAction.SurrenderTest.log";
-
 	@BeforeEach
 	@Override
-	public void init() {
-		super.initDependencies();
-		super.ruleset.getConfig().setSurrenderingAllowed(true);
-		super.initEngine(LOG_FILE_PATH, LOGGER_NAME);
+	public void init()
+	{
+		initDependencies();
+		ruleset.getConfig().setSurrenderingAllowed(true);
+		initEngine();
 	}
 
 	@Override
 	@RepeatedTest(TEST_ITERATIONS)
 	public void main()
 	{
-		super.advanceToPlayerTurn(super.engine.getPlayer().getChips());
+		advanceToPlayerTurn(engine.getPlayer().getChips());
 
-		if (super.engine.getState() == BlackjackEngineState.PLAYER_TURN)
+		if (engine.getState() == BlackjackEngineState.PLAYER_TURN)
 		{
 			Assertions.assertFalse(engine.getActiveHandContext().isAltered());
-			super.engine.playerSurrender();
-			Assertions.assertTrue(super.engine.getActiveHandContext().isSurrendered() && super.engine.getActiveHandContext().isAltered());
+			engine.playerSurrender();
+			Assertions.assertTrue(engine.getActiveHandContext().isSurrendered() && engine.getActiveHandContext().isAltered());
 		}
 
-		super.advanceThroughShowdownsAfterPlayerTurn();
-		super.advanceToEndOfRoundAfterShowdown();
+		advanceThroughShowdownsAfterPlayerTurn();
+		advanceToEndOfRoundAfterShowdown();
 	}
 }
