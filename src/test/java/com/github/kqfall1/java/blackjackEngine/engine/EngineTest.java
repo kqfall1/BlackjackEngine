@@ -123,7 +123,7 @@ public abstract class EngineTest
 				handContext.getPot().getAmount(),
 				BlackjackConstants.DEFAULT_CHIP_SCALE
 			));
-			handler.getOut().printf("You placed a bet of $%.2f.\n", handContext.getBet().getAmount());
+			handler.getOut().printf("You placed a bet of $%,.2f.\n", handContext.getBet().getAmount());
 		}
 
 		@Override
@@ -240,7 +240,7 @@ public abstract class EngineTest
 
 			if (wasSuccessful)
 			{
-				handler.getOut().printf("You have won your insurance bet and collect $%.2f.\n", playerWinnings);
+				handler.getOut().printf("You have won your insurance bet and collect $%,.2f.\n", playerWinnings);
 			}
 			else
 			{
@@ -284,11 +284,11 @@ public abstract class EngineTest
 			if (playerWon)
 			{
 				handler.getOut().printf(
-					"%s You have won the showdown and collect $%.2f.\n", completedString, playerWinnings);
+					"%s You have won the showdown and collect $%,.2f.\n", completedString, playerWinnings);
 			}
 			else if (playerWinnings.compareTo(BigDecimal.ZERO) > 0)
 			{
-				handler.getOut().printf("%s You did not win the showdown, yet still collect $%.2f.\n", completedString, playerWinnings);
+				handler.getOut().printf("%s You did not win the showdown, yet still collect $%,.2f.\n", completedString, playerWinnings);
 			}
 			else
 			{

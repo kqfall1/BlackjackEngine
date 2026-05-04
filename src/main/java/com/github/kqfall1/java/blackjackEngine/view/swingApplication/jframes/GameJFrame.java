@@ -319,7 +319,7 @@ public class GameJFrame extends BlackjackJFrame implements BlackjackEngineListen
             if (wasSuccessful)
             {
                 gameInfoJPanel.getEngineMessageJTextArea().append(String.format(
-                    "%s%.2f.\n\n",
+                    "%s%,.2f.\n\n",
                     UiConstants.GAME_MESSAGE_INSURANCE_BET_WON,
                     playerWinnings.doubleValue()
                 ));

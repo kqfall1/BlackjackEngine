@@ -48,7 +48,7 @@ public class BlackjackEngine
 	private static final String CLASS_NAME = "BlackjackEngine";
 	private final Dealer dealer;
 	private final BlackjackEngineListener listener;
-	private final Logger logger;
+	private Logger logger;
 	private final Player player;
 	private final BlackjackRuleset ruleset;
 	private Iterator<HandContext> showdownHandContextIterator;
@@ -74,7 +74,7 @@ public class BlackjackEngine
 			}
 			catch (IOException e)
 			{
-				throw new UncheckedIOException(e);
+				throwException(new UncheckedIOException(e), BlackjackEngine.class.getSimpleName());
 			}
 		}
 		else
@@ -265,7 +265,8 @@ public class BlackjackEngine
 		}
 		catch (NoMoreCardsException ex)
 		{
-			throw new UncheckedIOException(ex);
+			throwException(new UncheckedIOException(ex), methodName);
+			return null;
 		}
 	}
 
@@ -424,7 +425,7 @@ public class BlackjackEngine
 		assert getState() == BlackjackEngineState.BETTING : "getState() != BlackjackEngineState.BETTING";
 		getListener().onBetPlaced(getActiveHandContext());
 		getLogger().info(String.format(
-			"Player %s has placed a bet of $%.2f on their %s hand.",
+			"Player %s has placed a bet of $%,.2f on their %s hand.",
 			getPlayer(),
 			getActiveHandContext().getBet().getAmount(),
 			StringUtils.normalizeLower(getActiveHandContext().getType().toString())
@@ -509,15 +510,26 @@ public class BlackjackEngine
 		assert amount != null && amount.compareTo(BigDecimal.ZERO) > 0 : "amount == null || amount.compareTo(BigDecimal.ZERO) <= 0";
 		assert getActiveHandContextIndex() == HandContextType.MAIN.ordinal() : "activeHandContextIndex != HandContextType.MAIN.ordinal()";
 		assert getState() == BlackjackEngineState.BETTING : "getState() != BlackjackEngineState.BETTING";
-		if (getPlayer().getChips().compareTo(amount) < 0
-				|| (getPlayer().getChips().subtract(amount).compareTo(getRuleset().getConfig().getMinimumBetAmount()) < 0
-				&& getPlayer().getChips().subtract(amount).compareTo(BigDecimal.ZERO) != 0))
+		if (getPlayer().getChips().compareTo(amount) < 0)
 		{
 			throwException(new InsufficientChipsException(getPlayer(), amount), methodName);
 		}
+		else if (getPlayer().getChips().subtract(amount).compareTo(getRuleset().getConfig().getMinimumBetAmount()) < 0
+				&& getPlayer().getChips().subtract(amount).compareTo(BigDecimal.ZERO) != 0)
+		{
+			throwException(
+				new RuleViolationException(String.format(
+					"Cannot place a bet that leaves the player with a chip amount lower than %,.2f unless it is an all-in bet.",
+					getRuleset().getConfig().getMinimumBetAmount()
+				)), methodName
+			);
+		}
 		else if (getRuleset().getConfig().getMinimumBetAmount().compareTo(amount) > 0)
 		{
-			throw new RuleViolationException(String.format("Cannot place a bet lower than $%.2f.", getRuleset().getConfig().getMinimumBetAmount()));
+			throwException(
+				new RuleViolationException(String.format("Cannot place a bet lower than $%,.2f.", getRuleset().getConfig().getMinimumBetAmount())),
+				methodName
+			);
 		}
 		getListener().onBettingRoundStarted();
 		final var playerMainHand = new HandContext(new Bet(amount), HandContextType.MAIN);
