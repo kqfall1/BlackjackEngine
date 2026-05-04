@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Changed financial logic in BlackjackEngine.java and StandardBlackjackRuleset.java to prevent the player's chip amount from ever becoming less than the minimum bet amount unless it equals 0; added an all-in feature.">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Added comma-formatting to most formatting strings in the codebase; improved the exception-handling of BlackjackEngine.placeBet.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/model/engine/BlackjackEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/view/swingApplication/jframes/GameJFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/EngineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/github/kqfall1/java/blackjackEngine/engine/EngineTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,14 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Created GameCardsJPanel.java; am ready for engine integration.">
-      <option name="closed" value="true" />
-      <created>1772888568028</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1772888568028</updated>
     </task>
     <task id="LOCAL-00052" summary="Have began integrating BlackjackEngine.java and the Swing application.">
       <option name="closed" value="true" />
@@ -581,11 +571,18 @@
       <option name="project" value="LOCAL" />
       <updated>1777847363521</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="Added comma-formatting to most formatting strings in the codebase; improved the exception-handling of BlackjackEngine.placeBet.">
+      <option name="closed" value="true" />
+      <created>1777858243381</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1777858243381</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed broken tests - must verify the correctness of the test suite before proceeding." />
     <MESSAGE value="Fixed a bug in BlackjackEngine.java involving showdown logic; verified the correctness of the test suite." />
     <MESSAGE value="Polished UX for the Swing GUI application; added keystrokes for advancing the engine and submitting text input." />
     <MESSAGE value="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests." />
@@ -610,7 +607,8 @@
     <MESSAGE value="Improved Javadoc comments, source code formatting, and made minor tweaks to SwingApplication classes." />
     <MESSAGE value="Verified test suite assumptions and correctness; tweaked source code formatting and conventions." />
     <MESSAGE value="Changed financial logic in BlackjackEngine.java and StandardBlackjackRuleset.java to prevent the player's chip amount from ever becoming less than the minimum bet amount unless it equals 0; added an all-in feature." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed financial logic in BlackjackEngine.java and StandardBlackjackRuleset.java to prevent the player's chip amount from ever becoming less than the minimum bet amount unless it equals 0; added an all-in feature." />
+    <MESSAGE value="Added comma-formatting to most formatting strings in the codebase; improved the exception-handling of BlackjackEngine.placeBet." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added comma-formatting to most formatting strings in the codebase; improved the exception-handling of BlackjackEngine.placeBet." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
