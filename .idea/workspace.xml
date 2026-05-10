@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Tweaked">
+    <list default="true" id="210ac569-d108-4983-bd7d-dc92d9dac65f" name="Changes" comment="Re-introduced BlackjackRuleset.isHittingPossible.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/interfaces/BlackjackRuleset.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/kqfall1/java/blackjackEngine/interfaces/BlackjackRuleset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,14 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766720775435</updated>
-    </task>
-    <task id="LOCAL-00054" summary="Made a solid start on the Swing application/engine integration.">
-      <option name="closed" value="true" />
-      <created>1773013025545</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1773013025545</updated>
     </task>
     <task id="LOCAL-00055" summary="Optimized GameJFrame.java and fixed minor issues.">
       <option name="closed" value="true" />
@@ -582,11 +574,18 @@
       <option name="project" value="LOCAL" />
       <updated>1778377789741</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="Re-introduced BlackjackRuleset.isHittingPossible.">
+      <option name="closed" value="true" />
+      <created>1778380411401</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1778380411401</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added a split flag to HandContext.java; BlackjackEngine.java sets the split flag when appropriate; updated surrendering rules and tests." />
     <MESSAGE value="New game instances can be created from a GameJFrame now." />
     <MESSAGE value="Added logging to the Swing application; improved UX; bolstered StandardBlackjackRuleset.java." />
     <MESSAGE value="User configuration settings are stored and retrieved with the Preferences API; fixed a bug involving the new game action being invoked from the JMenu." />
@@ -611,7 +610,8 @@
     <MESSAGE value="Added comma-formatting to most formatting strings in the codebase; improved the exception-handling of BlackjackEngine.placeBet." />
     <MESSAGE value="Removed an unnecessary instance field from BlackjackEngine.java and tweaked the condition it requires to end." />
     <MESSAGE value="Moved Swing app files into a separate repo; re-arranged this repo; wrote a readme." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved Swing app files into a separate repo; re-arranged this repo; wrote a readme." />
+    <MESSAGE value="Re-introduced BlackjackRuleset.isHittingPossible." />
+    <option name="LAST_COMMIT_MESSAGE" value="Re-introduced BlackjackRuleset.isHittingPossible." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
