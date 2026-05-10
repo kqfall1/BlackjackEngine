@@ -59,6 +59,10 @@ public interface BlackjackRuleset
 	boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer);
 	boolean isDoublingDownPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 								   Player player);
+	default boolean isHittingPossible(HandContext activeHandContext, BlackjackEngineState currentState)
+	{
+		return activeHandContext.getHand().getScore() <= BlackjackConstants.TOP_SCORE && currentState == BlackjackEngineState.PLAYER_TURN;
+	}
 	boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState,
 									  Player player, Hand dealerHand);
 	boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState,
