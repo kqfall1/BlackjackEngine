@@ -1,16 +1,14 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackEngine;
-import com.github.kqfall1.java.blackjackEngine.model.cards.Card;
-import com.github.kqfall1.java.blackjackEngine.model.engine.*;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
-import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
-import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.hands.HandContext;
+import com.github.kqfall1.java.blackjackEngine.cards.Card;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.enums.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.hands.HandContext;
 import com.github.kqfall1.java.handlers.io.ConsoleIoHandler;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackEngineListener;
-import com.github.kqfall1.java.blackjackEngine.model.interfaces.BlackjackRuleset;
+import com.github.kqfall1.java.blackjackEngine.interfaces.BlackjackEngineListener;
+import com.github.kqfall1.java.blackjackEngine.interfaces.BlackjackRuleset;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.logging.Level;

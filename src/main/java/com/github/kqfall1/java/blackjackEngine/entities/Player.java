@@ -1,0 +1,80 @@
+package com.github.kqfall1.java.blackjackEngine.entities;
+
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.exceptions.InsufficientChipsException;
+import com.github.kqfall1.java.blackjackEngine.hands.HandContext;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * An actor that places {@code Bet} objects and plays at least one {@code Hand} before the {@code Dealer}
+ * in a blackjack betting round.
+ *
+ * @author kqfall1
+ * @since 14/12/2025
+ */
+public final class Player
+{
+	private BigDecimal chips;
+	private final List<HandContext> contexts;
+
+	public Player()
+	{
+		setChips(BigDecimal.ZERO);
+		contexts = new ArrayList<>();
+	}
+
+	public void addContext(HandContext context)
+	{
+		assert context != null && !getContexts().contains(context) : "context == null || getContexts().contains(context)";
+		contexts.add(context);
+	}
+
+	public void clearContexts()
+	{
+		contexts.clear();
+	}
+
+	public BigDecimal getChips()
+	{
+		return chips;
+	}
+
+	public List<HandContext> getContexts()
+	{
+		return List.copyOf(contexts);
+	}
+
+	public void removeContext(int contextIndex)
+	{
+		assert contextIndex >= 0 && contextIndex < contexts.size();
+		contexts.remove(contextIndex);
+	}
+
+	public void setChips(BigDecimal chips)
+	{
+		assert chips != null : "chips == null";
+
+		if (chips.compareTo(BigDecimal.ZERO) < 0)
+		{
+			throw new InsufficientChipsException(this, chips);
+		}
+
+		this.chips = chips
+			.stripTrailingZeros()
+			.setScale(BlackjackConstants.DEFAULT_CHIP_SCALE, RoundingMode.HALF_DOWN);
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format(
+			"%s[chips=%s,contexts=%s]",
+			getClass().getName(),
+			getChips(),
+			getContexts()
+		);
+	}
+}

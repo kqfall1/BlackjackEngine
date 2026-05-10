@@ -1,12 +1,12 @@
 package com.github.kqfall1.java.blackjackEngine.subsystems;
 
-import com.github.kqfall1.java.blackjackEngine.model.cards.*;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackRulesetConfiguration;
-import com.github.kqfall1.java.blackjackEngine.model.engine.StandardBlackjackRuleset;
-import com.github.kqfall1.java.blackjackEngine.model.enums.Rank;
-import com.github.kqfall1.java.blackjackEngine.model.enums.Suit;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
+import com.github.kqfall1.java.blackjackEngine.cards.*;
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackRulesetConfiguration;
+import com.github.kqfall1.java.blackjackEngine.engine.StandardBlackjackRuleset;
+import com.github.kqfall1.java.blackjackEngine.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.enums.Suit;
+import com.github.kqfall1.java.blackjackEngine.exceptions.NoMoreCardsException;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

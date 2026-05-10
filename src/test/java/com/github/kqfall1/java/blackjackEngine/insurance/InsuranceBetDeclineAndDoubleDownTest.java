@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.insurance;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import org.junit.jupiter.api.BeforeEach;

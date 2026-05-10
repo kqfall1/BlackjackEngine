@@ -1,8 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.rules.surrendering;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.RuleViolationException;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.exceptions.RuleViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

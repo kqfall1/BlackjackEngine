@@ -1,8 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.engine;
 
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
-import com.github.kqfall1.java.blackjackEngine.model.hands.Hand;
-import com.github.kqfall1.java.blackjackEngine.model.enums.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.enums.HandContextType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

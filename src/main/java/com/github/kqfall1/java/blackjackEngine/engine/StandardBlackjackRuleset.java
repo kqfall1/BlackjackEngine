@@ -1,0 +1,103 @@
+package com.github.kqfall1.java.blackjackEngine.engine;
+
+import com.github.kqfall1.java.blackjackEngine.entities.Dealer;
+import com.github.kqfall1.java.blackjackEngine.entities.Player;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.enums.HandContextType;
+import com.github.kqfall1.java.blackjackEngine.enums.Rank;
+import com.github.kqfall1.java.blackjackEngine.hands.Hand;
+import com.github.kqfall1.java.blackjackEngine.hands.HandContext;
+import com.github.kqfall1.java.blackjackEngine.interfaces.BlackjackRuleset;
+import java.math.BigDecimal;
+
+/**
+ * Represents the standard, North American rules of blackjack; determines valid game actions,
+ * especially given certain {@code BlackjackEngine} states.
+ *
+ * @author kqfall1
+ * @since 03/01/2025
+ */
+public final class StandardBlackjackRuleset implements BlackjackRuleset
+{
+	private final BlackjackRulesetConfiguration config;
+
+	public StandardBlackjackRuleset(BlackjackRulesetConfiguration config)
+	{
+		assert config != null : "config == null";
+		this.config = config;
+	}
+
+	@Override
+	public BlackjackRulesetConfiguration getConfig()
+	{
+		return config;
+	}
+
+	@Override
+	public boolean isDealerTurnActive(BlackjackEngineState currentState, Dealer dealer)
+	{
+		final var minimumScoreToStand =
+			config.getShouldDealerHitOnSoft17()
+			&& dealer.getHand().getScore() == BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE
+			&& dealer.getHand().isSoft()
+				? BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE + 1
+				: BlackjackConstants.DEFAULT_DEALER_MINIMUM_STAND_SCORE;
+
+		return currentState == BlackjackEngineState.DEALER_TURN && dealer.getHand().getScore() < minimumScoreToStand;
+	}
+
+	@Override
+	public boolean isDoublingDownPossible(HandContext activeHandContext, BlackjackEngineState currentState, Player player)
+	{
+		return currentState == BlackjackEngineState.PLAYER_TURN
+			&& !activeHandContext.isAltered()
+			&& (activeHandContext.getType() == HandContextType.MAIN || config.isDoublingDownOnSplitHandsAllowed())
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(BigDecimal.ZERO) == 0);
+	}
+
+	@Override
+	public boolean isInsuranceBetPossible(HandContext activeHandContext, BlackjackEngineState currentState, Player player, Hand dealerHand)
+	{
+		return (currentState == BlackjackEngineState.DEALING || currentState == BlackjackEngineState.INSURANCE_CHECK)
+			&& !activeHandContext.isAltered()
+			&& !activeHandContext.isSplit()
+			&& dealerHand.getCards().getFirst().getRank() == Rank.ACE
+			&& player.getChips().compareTo(activeHandContext.getBet().getHalf()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getHalf()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getHalf()).compareTo(BigDecimal.ZERO) == 0)
+			&& player.getContexts().size() == 1;
+	}
+
+	@Override
+	public boolean isSplittingPossible(HandContext activeHandContext, BlackjackEngineState currentState, int activeHandContextIndex, Player player)
+	{
+		return currentState == BlackjackEngineState.PLAYER_TURN
+			&& !activeHandContext.isAltered()
+			&& !activeHandContext.isSplit()
+			&& activeHandContext.getHand().isPocketPair()
+			&& (activeHandContext.getHand().getCards().getFirst().getRank() != Rank.ACE || getConfig().isSplittingAcesAllowed())
+		    && activeHandContextIndex < config.getMaximumSplitCount()
+			&& player.getChips().compareTo(activeHandContext.getBet().getAmount()) >= 0
+			&& (player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(getConfig().getMinimumBetAmount()) >= 0
+				|| player.getChips().subtract(activeHandContext.getBet().getAmount()).compareTo(BigDecimal.ZERO) == 0);
+	}
+
+	@Override
+	public boolean isSurrenderingPossible(HandContext activeHandContext, BlackjackEngineState currentState, Player player)
+	{
+		return currentState == BlackjackEngineState.PLAYER_TURN
+			&& config.isSurrenderingAllowed()
+			&& activeHandContext.getType() == HandContextType.MAIN
+			&& !activeHandContext.isAltered()
+			&& !activeHandContext.isSplit()
+			&& player.getChips().add(activeHandContext.getBet().getHalf()).compareTo(getConfig().getMinimumBetAmount()) >= 0;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("%s[config=%s]", getClass().getName(), config);
+	}
+}

@@ -1,9 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.subsystems;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.betting.Bet;
-import com.github.kqfall1.java.blackjackEngine.model.betting.Pot;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.betting.Bet;
+import com.github.kqfall1.java.blackjackEngine.betting.Pot;
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackConstants;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.assertEquals;

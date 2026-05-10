@@ -1,8 +1,8 @@
 package com.github.kqfall1.java.blackjackEngine.showdown;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;

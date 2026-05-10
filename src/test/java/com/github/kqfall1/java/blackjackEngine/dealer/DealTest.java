@@ -1,7 +1,7 @@
 package com.github.kqfall1.java.blackjackEngine.dealer;
 
 import com.github.kqfall1.java.blackjackEngine.engine.EngineTest;
-import com.github.kqfall1.java.blackjackEngine.model.engine.BlackjackConstants;
+import com.github.kqfall1.java.blackjackEngine.engine.BlackjackConstants;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;

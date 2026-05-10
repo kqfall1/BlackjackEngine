@@ -1,9 +1,9 @@
 package com.github.kqfall1.java.blackjackEngine.rules.soft17;
 
 import com.github.kqfall1.java.blackjackEngine.engine.CustomDeckTest;
-import com.github.kqfall1.java.blackjackEngine.model.entities.Dealer;
-import com.github.kqfall1.java.blackjackEngine.model.enums.BlackjackEngineState;
-import com.github.kqfall1.java.blackjackEngine.model.exceptions.NoMoreCardsException;
+import com.github.kqfall1.java.blackjackEngine.entities.Dealer;
+import com.github.kqfall1.java.blackjackEngine.enums.BlackjackEngineState;
+import com.github.kqfall1.java.blackjackEngine.exceptions.NoMoreCardsException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
