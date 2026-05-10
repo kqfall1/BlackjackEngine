@@ -6,7 +6,7 @@
     <groupId>com.github.kqfall1</groupId>
     <artifactId>blackjackEngine</artifactId>
     <packaging>jar</packaging>
-    <url>https://github.com/kqfall1/blackjackEngine</url>
+    <url>https://github.com/kqfall1/BlackjackEngine</url>
     <version>1.0.1</version>
     <build>
         <plugins>
