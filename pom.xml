@@ -7,7 +7,7 @@
     <artifactId>blackjackEngine</artifactId>
     <packaging>jar</packaging>
     <url>https://github.com/kqfall1/BlackjackEngine</url>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <build>
         <plugins>
             <plugin>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.github.kqfall1</groupId>
             <artifactId>kqfall1JavaUtils</artifactId>
-            <version>1.5.3</version>
+            <version>1.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
